@@ -3,10 +3,18 @@ from datetime import date
 from typing import Literal, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
-class CandidateEntry(BaseModel):
+class _BaseModelWithDateSerialization(BaseModel):
+    """支援日期序列化的基礎模型。"""
+    model_config = ConfigDict(
+        json_encoders={date: lambda v: v.isoformat()},
+        ser_json_timedelta='float'
+    )
+
+
+class CandidateEntry(_BaseModelWithDateSerialization):
     """進場候選股票。"""
     code: str
     name: str
@@ -14,14 +22,14 @@ class CandidateEntry(BaseModel):
     forced_entry_date: Optional[date] = None
 
 
-class EntryRule(BaseModel):
+class EntryRule(_BaseModelWithDateSerialization):
     """進場規則。"""
     price_basis: Literal["signal_close", "next_open", "user_specified"] = "next_open"
     user_price: Optional[float] = None
     require_signal: bool = True
 
 
-class ExitRule(BaseModel):
+class ExitRule(_BaseModelWithDateSerialization):
     """出場規則。"""
     use_exit_signal: bool = True
     use_stop_loss: bool = True
@@ -30,7 +38,7 @@ class ExitRule(BaseModel):
     exit_price_basis: Literal["signal_close", "next_open"] = "next_open"
 
 
-class PositionSizing(BaseModel):
+class PositionSizing(_BaseModelWithDateSerialization):
     """部位規模。"""
     mode: Literal["equal_weight", "fixed_jpy", "fixed_shares"] = "equal_weight"
     fixed_jpy: Optional[float] = None
@@ -38,14 +46,14 @@ class PositionSizing(BaseModel):
     max_concurrent_positions: int = 10
 
 
-class CostModel(BaseModel):
+class CostModel(_BaseModelWithDateSerialization):
     """成本模型。"""
     commission_pct: float = 0.001
     slippage_pct: float = 0.001
     tax_pct: float = 0.20315
 
 
-class SimulationConfig(BaseModel):
+class SimulationConfig(_BaseModelWithDateSerialization):
     """模擬設定。"""
     kind: Literal["backtest", "paper"]
     initial_capital: float
@@ -58,7 +66,7 @@ class SimulationConfig(BaseModel):
     cost_model: CostModel = Field(default_factory=CostModel)
 
 
-class Position(BaseModel):
+class Position(_BaseModelWithDateSerialization):
     """未平倉部位。"""
     code: str
     name: str
@@ -68,7 +76,7 @@ class Position(BaseModel):
     cost_basis: float  # entry_price * shares + commission
 
 
-class ClosedTrade(BaseModel):
+class ClosedTrade(_BaseModelWithDateSerialization):
     """已平倉交易。"""
     code: str
     name: str
@@ -85,7 +93,7 @@ class ClosedTrade(BaseModel):
     ]
 
 
-class EquityPoint(BaseModel):
+class EquityPoint(_BaseModelWithDateSerialization):
     """權益曲線資料點。"""
     date: date
     cash: float
@@ -93,7 +101,7 @@ class EquityPoint(BaseModel):
     equity: float
 
 
-class SimulationState(BaseModel):
+class SimulationState(_BaseModelWithDateSerialization):
     """模擬狀態。"""
     cash: float
     positions: list[Position] = Field(default_factory=list)
@@ -103,7 +111,7 @@ class SimulationState(BaseModel):
     pending_entries: list[CandidateEntry] = Field(default_factory=list)
 
 
-class Simulation(BaseModel):
+class Simulation(_BaseModelWithDateSerialization):
     """完整模擬物件。"""
     id: str
     name: str
@@ -114,7 +122,7 @@ class Simulation(BaseModel):
     status: Literal["draft", "running", "completed", "failed"] = "draft"
 
 
-class SimulationReport(BaseModel):
+class SimulationReport(_BaseModelWithDateSerialization):
     """模擬報告指標。"""
     id: str
     name: str

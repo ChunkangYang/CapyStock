@@ -40,7 +40,7 @@ class TestSimulationRouter:
         response = test_client.post(
             "/api/v1/simulation",
             params={"name": "Test Sim"},
-            json=base_config.model_dump(),
+            json=base_config.model_dump(mode='json'),
         )
 
         assert response.status_code == 200
@@ -55,12 +55,12 @@ class TestSimulationRouter:
         test_client.post(
             "/api/v1/simulation",
             params={"name": "Sim 1"},
-            json=base_config.model_dump(),
+            json=base_config.model_dump(mode='json'),
         )
         test_client.post(
             "/api/v1/simulation",
             params={"name": "Sim 2"},
-            json=base_config.model_dump(),
+            json=base_config.model_dump(mode='json'),
         )
 
         response = test_client.get("/api/v1/simulation")
@@ -74,7 +74,7 @@ class TestSimulationRouter:
         create_response = test_client.post(
             "/api/v1/simulation",
             params={"name": "Get Test"},
-            json=base_config.model_dump(),
+            json=base_config.model_dump(mode='json'),
         )
         sim_id = create_response.json()["id"]
 
@@ -94,7 +94,7 @@ class TestSimulationRouter:
         create_response = test_client.post(
             "/api/v1/simulation",
             params={"name": "Update Test"},
-            json=base_config.model_dump(),
+            json=base_config.model_dump(mode='json'),
         )
         sim_id = create_response.json()["id"]
 
@@ -103,7 +103,7 @@ class TestSimulationRouter:
 
         response = test_client.patch(
             f"/api/v1/simulation/{sim_id}",
-            json=new_config.model_dump(),
+            json=new_config.model_dump(mode='json'),
         )
 
         assert response.status_code == 200
@@ -115,7 +115,7 @@ class TestSimulationRouter:
         create_response = test_client.post(
             "/api/v1/simulation",
             params={"name": "Candidate Test"},
-            json=base_config.model_dump(),
+            json=base_config.model_dump(mode='json'),
         )
         sim_id = create_response.json()["id"]
 
@@ -137,7 +137,7 @@ class TestSimulationRouter:
         create_response = test_client.post(
             "/api/v1/simulation",
             params={"name": "Delete Test"},
-            json=base_config.model_dump(),
+            json=base_config.model_dump(mode='json'),
         )
         sim_id = create_response.json()["id"]
 
@@ -153,7 +153,7 @@ class TestSimulationRouter:
         create_response = test_client.post(
             "/api/v1/simulation",
             params={"name": "Report Test"},
-            json=base_config.model_dump(),
+            json=base_config.model_dump(mode='json'),
         )
         sim_id = create_response.json()["id"]
 
@@ -195,7 +195,7 @@ class TestSimulationRouter:
             create_response = test_client.post(
                 "/api/v1/simulation",
                 params={"name": "Run Backtest"},
-                json=base_config.model_dump(),
+                json=base_config.model_dump(mode='json'),
             )
             sim_id = create_response.json()["id"]
 
@@ -241,7 +241,7 @@ class TestFullSimulationFlow:
             create_response = test_client.post(
                 "/api/v1/simulation",
                 params={"name": "Complete Flow"},
-                json=base_config.model_dump(),
+                json=base_config.model_dump(mode='json'),
             )
             assert create_response.status_code == 200
             sim_id = create_response.json()["id"]
@@ -284,7 +284,7 @@ class TestErrorHandling:
         create_response = test_client.post(
             "/api/v1/simulation",
             params={"name": "Close Test"},
-            json=base_config.model_dump(),
+            json=base_config.model_dump(mode='json'),
         )
         sim_id = create_response.json()["id"]
 

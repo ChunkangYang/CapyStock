@@ -39,6 +39,40 @@ python -m capystock.main edinet --days 3 --all
 python -m capystock.main check --no-edinet
 ```
 
+## 前端開發
+
+```bash
+# 進入前端目錄
+cd frontend
+
+# 安裝依賴
+npm install
+
+# 開發伺服器（http://localhost:5173）
+npm run dev
+
+# 單元測試
+npm run test
+
+# E2E 測試（需先啟動前端伺服器）
+npm run test:e2e
+
+# 建置生產版本
+npm run build
+
+# 預覽生產版本
+npm run preview
+```
+
+前端已實裝頁面：
+- `/` — Dashboard
+- `/signals` — 進出場訊號列表 & 詳細分析
+- `/dividend` — 金雞高股息清單 & 基本面詳情
+- `/favorites` — 我的最愛（開發中）
+- `/simulation` — 模擬交易（開發中）
+
+後端 API 啟動：確保 `python -m api.main` 運行於 `http://localhost:8000`。
+
 ## EDINET 設定
 
 金融廳免費 API。申請 key：https://disclosure2.edinet-fsa.go.jp/weee0020.aspx
