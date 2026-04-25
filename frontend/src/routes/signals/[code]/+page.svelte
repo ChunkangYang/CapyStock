@@ -1,0 +1,299 @@
+<script lang="ts">
+  import { page } from '$app/stores';
+  import { onMount } from 'svelte';
+  import { api } from '$lib/api';
+  import KLineChart from '$lib/components/KLineChart.svelte';
+  import FlowBarChart from '$lib/components/FlowBarChart.svelte';
+  import MarginLineChart from '$lib/components/MarginLineChart.svelte';
+  import SignalTimeline from '$lib/components/SignalTimeline.svelte';
+  import ConditionGauge from '$lib/components/ConditionGauge.svelte';
+  import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
+  import type { SignalResult, PriceBar, FlowRow, MarginRow, EdinetEvent } from '$lib/types';
+
+  const code = $page.params.code;
+  let signal: SignalResult | null = null;
+  let prices: PriceBar[] = [];
+  let flows: FlowRow[] = [];
+  let margins: MarginRow[] = [];
+  let edinet: EdinetEvent[] = [];
+  let loading = true;
+  let error = '';
+
+  onMount(async () => {
+    try {
+      signal = await api(`/signals/${code}`);
+      prices = await api(`/signals/${code}/price?days=60`);
+      flows = await api(`/signals/${code}/flow?days=60`);
+      margins = await api(`/signals/${code}/margin?weeks=20`);
+      edinet = await api(`/signals/${code}/edinet?days=30`);
+    } catch (e) {
+      error = e instanceof Error ? e.message : '讀取資料失敗';
+    } finally {
+      loading = false;
+    }
+  });
+
+  function handleAddToWatchlist() {
+    // TODO: modal 輸入 start_price
+  }
+
+  function handleAddToSimulation() {
+    // TODO: 加入模擬清單
+  }
+</script>
+
+<div class="detail-page">
+  {#if loading}
+    <p>加載中...</p>
+  {:else if error}
+    <p class="error">{error}</p>
+  {:else if signal}
+    <div class="header">
+      <div class="info">
+        <span class="code">{signal.code}</span>
+        <span class="name">{signal.name}</span>
+        <span class="price">{signal.latest_price?.toFixed(0) ?? 'N/A'}</span>
+      </div>
+      <div class="actions">
+        <FavoriteToggle {code} name={signal.name} tag="speculative" />
+        <button class="btn btn-primary" on:click={handleAddToWatchlist}>加入 watchlist</button>
+        <button class="btn btn-secondary" on:click={handleAddToSimulation}>加入模擬</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="charts">
+        {#if prices.length}
+          <div class="chart-container">
+            <h3>K 線（60 日）</h3>
+            <KLineChart
+              {prices}
+              startPrice={signal.start_price}
+              recentLow={Math.min(...prices.map(p => p.low))}
+            />
+          </div>
+        {/if}
+
+        {#if flows.length}
+          <div class="chart-container">
+            <h3>法人買賣超</h3>
+            <FlowBarChart {flows} />
+          </div>
+        {/if}
+
+        {#if margins.length}
+          <div class="chart-container">
+            <h3>信用殘</h3>
+            <MarginLineChart {margins} />
+          </div>
+        {/if}
+
+        <div class="chart-container">
+          <h3>訊號時間軸</h3>
+          <SignalTimeline alerts={signal.alerts} />
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <ConditionGauge conditions={signal.conditions} />
+
+        <div class="card">
+          <h4>吃貨訊號</h4>
+          <p>{signal.accumulation_signal ? '✓ 是' : '✗ 否'}</p>
+        </div>
+
+        <div class="card">
+          <h4>停損狀態</h4>
+          <p>{signal.stop_loss_triggered ? '⚠ 已觸發' : '✓ 未觸發'}</p>
+        </div>
+
+        {#if edinet.length}
+          <div class="card">
+            <h4>EDINET 事件（30 日）</h4>
+            <div class="edinet-list">
+              {#each edinet as event}
+                <div class="event-item">
+                  <span class="date">{event.date}</span>
+                  <span class="filer">{event.filer}</span>
+                  <a href={event.pdf_url} target="_blank">{event.doc_type}</a>
+                </div>
+              {/each}
+            </div>
+          </div>
+        {/if}
+
+        {#if signal.notes.length}
+          <div class="card">
+            <h4>備註</h4>
+            <ul>
+              {#each signal.notes as note}
+                <li>{note}</li>
+              {/each}
+            </ul>
+          </div>
+        {/if}
+      </div>
+    </div>
+  {:else}
+    <p>找不到該股票</p>
+  {/if}
+</div>
+
+<style>
+  .detail-page {
+    padding: 24px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  .info {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+  }
+
+  .code {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .name {
+    color: #a1a1a1;
+  }
+
+  .price {
+    font-size: 20px;
+    color: #4ade80;
+    font-weight: bold;
+  }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .btn-primary {
+    background: #4ade80;
+    color: #000;
+  }
+
+  .btn-secondary {
+    background: #333;
+    color: #fff;
+    border: 1px solid #555;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 0.4fr;
+    gap: 24px;
+  }
+
+  .charts {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .chart-container {
+    background: #1a1a1a;
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .chart-container h3 {
+    color: #fff;
+    margin: 0 0 12px 0;
+    font-size: 14px;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card {
+    background: #1a1a1a;
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .card h4 {
+    color: #fff;
+    margin: 0 0 8px 0;
+    font-size: 13px;
+  }
+
+  .card p {
+    color: #4ade80;
+    margin: 0;
+  }
+
+  .edinet-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .event-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background: #0a0a0a;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  .date {
+    color: #888;
+  }
+
+  .filer {
+    color: #a1a1a1;
+  }
+
+  .event-item a {
+    color: #4ade80;
+    text-decoration: none;
+  }
+
+  .card ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .card li {
+    color: #a1a1a1;
+    font-size: 12px;
+    padding: 4px 0;
+  }
+
+  .error {
+    color: #f87171;
+  }
+
+  @media (max-width: 1200px) {
+    .content {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

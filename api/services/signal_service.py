@@ -1,0 +1,185 @@
+"""訊號分析服務（從 CLI 邏輯抽取成可重用服務）。"""
+from datetime import date
+from typing import Optional
+
+import pandas as pd
+
+from capystock import analyzer, edinet, scraper, storage
+from api.schemas.common import (
+    Alert, FlowRow, MarginRow, PriceBar, SignalConditions, SignalResult,
+)
+
+
+def get_price_history(code: str, days: int = 90) -> list[PriceBar]:
+    """取得股價 K 線歷史。"""
+    df, _ = scraper.fetch_price(code)
+    if df is None or df.empty:
+        return []
+
+    # 轉換為 schema
+    bars = []
+    for _, row in df.iterrows():
+        try:
+            bars.append(PriceBar(
+                date=pd.Timestamp(row["date"]).date(),
+                open=float(row["open"]),
+                high=float(row["high"]),
+                low=float(row["low"]),
+                close=float(row["close"]),
+                volume=float(row["volume"]),
+            ))
+        except (KeyError, ValueError, TypeError):
+            continue
+
+    # 只保留最後 N 天
+    if len(bars) > days:
+        bars = bars[-days:]
+    return bars
+
+
+def get_flow_history(code: str, days: int = 30) -> list[FlowRow]:
+    """取得投資部門別買賣超歷史。"""
+    df = scraper.fetch_flow(code)
+    if df is None or df.empty:
+        return []
+
+    rows = []
+    for _, row in df.iterrows():
+        try:
+            rows.append(FlowRow(
+                date=pd.Timestamp(row["date"]).date(),
+                foreign_net=float(row.get("foreign_net")) if pd.notna(row.get("foreign_net")) else None,
+                institution_net=float(row.get("institution_net")) if pd.notna(row.get("institution_net")) else None,
+                individual_net=float(row.get("individual_net")) if pd.notna(row.get("individual_net")) else None,
+            ))
+        except (KeyError, ValueError, TypeError):
+            continue
+
+    if len(rows) > days:
+        rows = rows[-days:]
+    return rows
+
+
+def get_margin_history(code: str, weeks: int = 12) -> list[MarginRow]:
+    """取得信用殘歷史。"""
+    df = scraper.fetch_margin(code)
+    if df is None or df.empty:
+        return []
+
+    rows = []
+    for _, row in df.iterrows():
+        try:
+            rows.append(MarginRow(
+                week=pd.Timestamp(row["week"]).date(),
+                margin_long=float(row["margin_long"]),
+                margin_short=float(row["margin_short"]),
+                ratio=float(row.get("ratio")) if pd.notna(row.get("ratio")) else None,
+            ))
+        except (KeyError, ValueError, TypeError):
+            continue
+
+    if len(rows) > weeks:
+        rows = rows[-weeks:]
+    return rows
+
+
+def get_edinet_events(code: str, days: int = 30) -> list[dict]:
+    """取得 EDINET 5% rule 事件（需要 EDINET_API_KEY）。"""
+    # 簡化實現：直接調用 edinet 模組
+    from capystock import config
+    if not config.EDINET_API_KEY:
+        return []
+    try:
+        reports = edinet.fetch_since(days=days, codes={code})
+        return [
+            {
+                "sec_code": r["sec_code"],
+                "submit_date": r["submit_date"],
+                "doc_type_code": r["doc_type_code"],
+                "filer_name": r["filer_name"],
+                "pdf_url": r["pdf_url"],
+            }
+            for r in reports
+        ]
+    except Exception:
+        return []
+
+
+def analyze_one(code: str, start_price: Optional[float] = None) -> SignalResult:
+    """分析單檔股票訊號。
+
+    Args:
+        code: 股票代碼
+        start_price: 起始價（若為 None，視為非 watchlist 股票）
+
+    Returns:
+        SignalResult 物件
+    """
+    # 取得股票名稱
+    name = scraper.fetch_name(code) or ""
+
+    # 取得價格、margin、flow 資料
+    price_df, _ = scraper.fetch_price(code)
+    margin_df = scraper.fetch_margin(code)
+    flow_df = scraper.fetch_flow(code)
+
+    # 使用既有的 analyzer 邏輯
+    if start_price is None:
+        # 若無 start_price，用最近 30 日低點 / 開盤價作為代理（測試用）
+        if price_df is not None and len(price_df) > 0:
+            start_price = float(price_df.iloc[-1]["close"])
+        else:
+            start_price = 0.0
+
+    snap, alerts = analyzer.analyze(
+        code, name, start_price, price_df, margin_df, flow_df,
+    )
+
+    # 轉換為 schema
+    conditions = SignalConditions(
+        cond_inst_sell=snap.cond_inst_sell,
+        cond_margin_surge=snap.cond_margin_surge,
+        cond_price_rise=snap.cond_price_rise,
+        matched=sum([snap.cond_inst_sell, snap.cond_margin_surge, snap.cond_price_rise]),
+    )
+
+    schema_alerts = [
+        Alert(
+            alert_type=a["alert_type"],
+            severity=a["severity"],
+            message=a["message"],
+            details=a.get("details", {}),
+        )
+        for a in alerts
+    ]
+
+    return SignalResult(
+        code=snap.code,
+        name=snap.name,
+        latest_price=snap.latest_price,
+        latest_date=snap.latest_date.date() if snap.latest_date else None,
+        start_price=start_price,
+        price_vs_start_pct=snap.price_vs_start_pct,
+        price_vs_recent_low_pct=snap.price_vs_recent_low_pct,
+        conditions=conditions,
+        stop_loss_triggered=snap.stop_loss_triggered,
+        accumulation_signal=snap.accumulation_signal,
+        flow_recent=snap.flow_recent,
+        margin_trend_note=snap.margin_trend_note,
+        notes=snap.notes,
+        alerts=schema_alerts,
+    )
+
+
+def analyze_watchlist() -> list[SignalResult]:
+    """分析整個追蹤清單的訊號。"""
+    wl = storage.load_watchlist()
+    results = []
+    for code, entry in wl.items():
+        try:
+            result = analyze_one(code, entry.get("start_price"))
+            results.append(result)
+        except Exception:
+            # 單檔失敗不中斷，記錄為空結果
+            continue
+    return results
