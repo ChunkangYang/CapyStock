@@ -174,6 +174,22 @@
       </div>
     {/if}
 
+    {#if report && sim.status === 'completed' && report.strategy_type}
+      <div class="strategy-row">
+        <span class="strategy-badge strategy-{report.strategy_type}">
+          {report.strategy_type === 'pure_signal' ? '純訊號策略' : report.strategy_type === 'signal_indicator' ? '訊號 + 指標策略' : '純指標策略'}
+        </span>
+        {#if Object.keys(report.exit_reason_breakdown ?? {}).length}
+          <div class="breakdown">
+            <span class="breakdown-label">出場原因：</span>
+            {#each Object.entries(report.exit_reason_breakdown) as [reason, cnt]}
+              <span class="breakdown-item">{reason} × {cnt}</span>
+            {/each}
+          </div>
+        {/if}
+      </div>
+    {/if}
+
     {#if sim.config.kind === 'paper' && sim.status === 'running'}
       <div class="status-cards">
         <div class="status-card">
@@ -547,5 +563,21 @@
 
   .trades-table {
     font-size: 12px;
+  }
+
+  .strategy-row {
+    display: flex; gap: 16px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .strategy-badge {
+    padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;
+  }
+  .strategy-pure_signal { background: #1e3a5f; color: #60a5fa; }
+  .strategy-signal_indicator { background: #1a3a1a; color: #4ade80; }
+  .strategy-pure_indicator { background: #3a1a3a; color: #e879f9; }
+  .breakdown { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .breakdown-label { color: #666; font-size: 12px; }
+  .breakdown-item {
+    background: #222; border: 1px solid #444; padding: 2px 8px;
+    border-radius: 4px; font-size: 12px; color: #ccc;
   }
 </style>

@@ -11,6 +11,7 @@ from api.schemas.simulation import (
     SimulationReport,
 )
 from api.services import simulation_service, signal_service
+from api.services.indicator_service import get_indicator_service
 
 router = APIRouter()
 
@@ -95,7 +96,7 @@ def run_simulation(sim_id: str):
                 except Exception:
                     pass
 
-            sim = simulation_service.run_backtest(sim_id, signal_service, price_cache)
+            sim = simulation_service.run_backtest(sim_id, signal_service, price_cache, indicator_service=get_indicator_service())
             return sim
         elif sim.config.kind == "paper":
             sim.status = "running"

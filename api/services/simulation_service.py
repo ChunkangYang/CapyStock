@@ -113,7 +113,7 @@ class SimulationService:
         self._save(sim)
         return sim
 
-    def run_backtest(self, sim_id: str, signal_service, price_cache: dict) -> Simulation:
+    def run_backtest(self, sim_id: str, signal_service, price_cache: dict, indicator_service=None) -> Simulation:
         """執行回測。"""
         sim = self.get(sim_id)
         if sim is None:
@@ -125,7 +125,7 @@ class SimulationService:
         self._save(sim)
 
         try:
-            run_backtest(sim, signal_service, price_cache)
+            run_backtest(sim, signal_service, price_cache, indicator_service=indicator_service)
             sim.status = "completed"
         except Exception as e:
             sim.status = "failed"
@@ -231,6 +231,8 @@ class SimulationService:
             losing_trades=metrics["losing_trades"],
             closed_trades=sim.state.closed_trades,
             equity_curve=sim.state.equity_curve,
+            exit_reason_breakdown=metrics.get("exit_reason_breakdown", {}),
+            strategy_type=metrics.get("strategy_type", "pure_signal"),
         )
 
     def delete(self, sim_id: str) -> None:
