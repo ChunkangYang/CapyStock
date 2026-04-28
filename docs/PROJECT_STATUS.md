@@ -1,34 +1,19 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-04-28（S16/S17/S18：比較模式、指標 UI、回測整合全部完成）
+2026-04-29（S19–S23：Milestone 6 全部完成）
 
 ## 目前待做（下一步）
 - ✅ **Milestone 3：Web UI（FastAPI + SvelteKit）** — 全部完成（S1–S8）— 詳見 [MILESTONE_03.md](MILESTONE_03.md)
 - ✅ **Milestone 4：自動化、排程、通知** — 全部完成（S9–S13）— 詳見 [MILESTONE_04.md](MILESTONE_04.md)
-  - ✅ S9：通知通道抽象（Email / LINE）
-  - ✅ S10：通知規則 + digest / realtime 整合
-  - ✅ S11：APScheduler 排程器 + daily_pipeline
-  - ✅ S12：通知 / 排程設定 UI + 健康監控頁
-  - ✅ S13：部署整合（Docker / Windows 服務） + 文件
 - ✅ **Milestone 5：技術指標與分析增強**（S14–S18）— 全部完成 — 詳見 [MILESTONE_05.md](MILESTONE_05.md)
-  - ✅ S14：RSI / MACD / 布林通道 / SMA / EMA 引擎
-  - ✅ S15：指標 API + scan score 融合
-  - ✅ S16：比較模式 service（最多 5 檔）+ 對比頁前端
-  - ✅ S17：前端技術指標 + 對比頁 UI（IndicatorOverlay / RSIPanel / MACDPanel）
-  - ✅ S18：技術指標接入 simulation 引擎（indicator_entry/exit + AND/OR logic）
-- [ ] **Milestone 6：資料源擴展 + 進階分析**（S19–S23）— 詳見 [MILESTONE_06.md](MILESTONE_06.md)
-  - [ ] S19：信用残自動抓取（多來源 ingest 層）
-  - [ ] S20：JPX 投資部門別週報 ingest
-  - [ ] S21：異常偵測 + 事件研究
-  - [ ] S22：策略參數 Sweep（網格回測）
-  - [ ] S23：資料管理面板 + 上傳介面
-- [ ] **Milestone 6：資料源擴展 + 進階分析**（S19–S23）— 詳見 [MILESTONE_06.md](MILESTONE_06.md)
-  - [ ] S19：信用残自動抓取（多來源 ingest 層）
-  - [ ] S20：JPX 投資部門別週報 ingest
-  - [ ] S21：異常偵測 + 事件研究
-  - [ ] S22：策略參數 Sweep（網格回測）
-  - [ ] S23：資料管理面板 + 上傳介面
+- ✅ **Milestone 6：資料源擴展 + 進階分析**（S19–S23）— 全部完成 — 詳見 [MILESTONE_06.md](MILESTONE_06.md)
+  - ✅ S19：信用残自動抓取（多來源 ingest 層）
+  - ✅ S20：JPX 投資部門別週報 ingest
+  - ✅ S21：異常偵測 + 事件研究
+  - ✅ S22：策略參數 Sweep（網格回測）
+  - ✅ S23：資料管理面板 + 上傳介面
+- **下一步**：Milestone 7（候選）— 多帳戶 / 雲端部署 / 行動 App
 
 ## 已完成 Sprint（詳細實作紀錄請見對應 detail design）
 
@@ -52,6 +37,11 @@
 | S16 | 比較模式 service + 對比頁（投機 + 金雞） | 2026-04-28 | [SPRINT_16.md](SPRINT_16.md) |
 | S17 | 前端技術指標元件 + signals 頁指標 toolbar | 2026-04-28 | [SPRINT_17.md](SPRINT_17.md) |
 | S18 | 技術指標接入回測引擎 + 報告增強 | 2026-04-28 | [SPRINT_18.md](SPRINT_18.md) |
+| S19 | 信用残 ingest 層（base + yahoo + minkabu + manual） | 2026-04-29 | [SPRINT_19.md](SPRINT_19.md) |
+| S20 | JPX 投資部門別 ingest + 個股估算 | 2026-04-29 | [SPRINT_20.md](SPRINT_20.md) |
+| S21 | 異常偵測 + 事件研究 | 2026-04-29 | [SPRINT_21.md](SPRINT_21.md) |
+| S22 | 策略參數 Sweep（網格回測 + 熱圖 UI） | 2026-04-29 | [SPRINT_22.md](SPRINT_22.md) |
+| S23 | 資料管理面板（/data /data/ingest /data/upload） | 2026-04-29 | [SPRINT_23.md](SPRINT_23.md) |
 
 ## Milestone 5 新增（S16–S18）
 
@@ -76,6 +66,39 @@
 - ✅ `frontend/src/lib/types.ts`：型別同步更新
 - ✅ simulation/new：Step 3 技術指標條件 UI
 - ✅ simulation/[id]：策略類型 badge + 出場原因分布
+
+## Milestone 6 新增（S19–S23）
+
+### 信用残 ingest（S19）
+- ✅ `capystock/ingest/base.py`：IngestionSource ABC + IngestionResult
+- ✅ `capystock/ingest/yahoo_jp_margin.py`：Yahoo Finance Japan 爬蟲
+- ✅ `capystock/ingest/minkabu_margin.py`：Minkabu fallback 爬蟲
+- ✅ `capystock/ingest/manual_csv.py`：多欄位別名 normalize + 單位自動轉換
+- ✅ `api/schemas/ingest.py`：IngestionResult + CacheStatus + IngestStatusResponse
+- ✅ `api/services/ingest_service.py`：fallback chain + cache 管理
+- ✅ `api/routers/ingest.py`：POST /ingest/margin/{code}, /flow/{code}, /upload, GET /status/{code}
+
+### JPX flow ingest（S20）
+- ✅ `capystock/ingest/jpx_flow.py`：JPX Excel 下載 + 解析 + 個股估算
+- ✅ `api/routers/ingest.py`：POST /ingest/jpx-weekly, GET /ingest/market-flow
+
+### 異常偵測 + 事件研究（S21）
+- ✅ `api/schemas/analytics.py`：AnomalyEvent + EventStudyResult
+- ✅ `api/services/anomaly_service.py`：volume_spike / price_jump / gap_up / gap_down
+- ✅ `api/services/event_study_service.py`：AR / AAR / CAR 計算
+- ✅ `api/routers/analytics.py`：GET /analytics/anomaly/{code}, POST /analytics/event-study/{code}
+
+### 策略參數 Sweep（S22）
+- ✅ `api/schemas/sweep.py`：ParamGrid / SweepRequest / SweepResult / SweepRow
+- ✅ `api/services/strategy_sweep_service.py`：笛卡兒積 + 並行 ProcessPoolExecutor
+- ✅ `api/routers/sweep.py`：POST /sweep/run, GET /{job_id}, GET /{job_id}/stream, DELETE /{job_id}
+- ✅ `frontend/src/routes/simulation/sweep/+page.svelte`：熱圖 + 排行榜
+
+### 資料管理面板（S23）
+- ✅ `api/routers/data.py`：GET /data/overview, POST /data/batch-ingest, SSE stream
+- ✅ `frontend/src/routes/data/+page.svelte`：cache 狀態總覽（顏色警示）
+- ✅ `frontend/src/routes/data/ingest/+page.svelte`：批量抓取 + SSE 進度
+- ✅ `frontend/src/routes/data/upload/+page.svelte`：拖拉上傳 + 預覽
 
 ## 核心 / EDINET / 基本面（pre-S1）
 
