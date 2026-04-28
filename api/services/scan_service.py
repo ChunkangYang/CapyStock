@@ -21,8 +21,8 @@ def error_path(kind: str, date_str: str) -> Path:
     return SCAN_SNAPSHOTS_DIR / f"_errors_{kind}_{date_str}.csv"
 
 
-def compute_score(result, events) -> int:
-    """計算訊號評分：accumulation +3, exit -2, stop_loss -3, EDINET 350 +2, 360 +1"""
+def compute_score(result, events, include_technical: bool = True) -> int:
+    """計算訊號評分：accumulation +3, exit -2, stop_loss -3, EDINET 350 +2, 360 +1, technical_score"""
     score = 0
 
     for alert in result.alerts:
@@ -41,10 +41,17 @@ def compute_score(result, events) -> int:
         elif doc_type_code == "360":
             score += 1
 
+    if include_technical:
+        score += int(round(getattr(result, "technical_score", 0.0)))
+
     return score
 
 
-def run_signals_scan(universe: list[dict], clock: Optional[date] = None) -> tuple[list[SignalScanRow], list[dict]]:
+def run_signals_scan(
+    universe: list[dict],
+    clock: Optional[date] = None,
+    include_technical: bool = True,
+) -> tuple[list[SignalScanRow], list[dict]]:
     """掃描所有股票的訊號，回傳 (rows, errors)"""
     if clock is None:
         clock = date.today()
@@ -60,7 +67,7 @@ def run_signals_scan(universe: list[dict], clock: Optional[date] = None) -> tupl
         try:
             result = analyze_one(code)
             events = get_edinet_events(code, days=3)
-            score = compute_score(result, events)
+            score = compute_score(result, events, include_technical=include_technical)
 
             # 統計 alert 數量
             has_accumulation = any(a.alert_type == "accumulation" for a in result.alerts)

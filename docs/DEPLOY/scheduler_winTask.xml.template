@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<!--
+  CapyStock — Windows Task Scheduler 範本
+
+  使用方式：
+    1. 將此檔複製為 scheduler_winTask.xml，填入 {{PROJECT_DIR}} / {{USER}} 等變數
+    2. PowerShell 以管理員身分執行：
+         schtasks /Create /TN "CapyStock" /XML scheduler_winTask.xml
+    3. 工作建立後系統開機就會啟動 uvicorn，APScheduler 在進程內排程其餘 jobs
+-->
+<Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task" version="1.4">
+  <RegistrationInfo>
+    <Description>CapyStock API + APScheduler in-process</Description>
+    <Author>{{USER}}</Author>
+  </RegistrationInfo>
+  <Triggers>
+    <BootTrigger>
+      <Enabled>true</Enabled>
+      <Delay>PT1M</Delay>
+    </BootTrigger>
+    <LogonTrigger>
+      <Enabled>true</Enabled>
+      <UserId>{{USER}}</UserId>
+    </LogonTrigger>
+  </Triggers>
+  <Principals>
+    <Principal id="Author">
+      <UserId>{{USER}}</UserId>
+      <LogonType>InteractiveToken</LogonType>
+      <RunLevel>LeastPrivilege</RunLevel>
+    </Principal>
+  </Principals>
+  <Settings>
+    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+    <AllowHardTerminate>true</AllowHardTerminate>
+    <StartWhenAvailable>true</StartWhenAvailable>
+    <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+    <Enabled>true</Enabled>
+    <Hidden>false</Hidden>
+    <RunOnlyIfIdle>false</RunOnlyIfIdle>
+    <WakeToRun>false</WakeToRun>
+    <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+    <Priority>7</Priority>
+    <RestartOnFailure>
+      <Interval>PT5M</Interval>
+      <Count>3</Count>
+    </RestartOnFailure>
+  </Settings>
+  <Actions Context="Author">
+    <Exec>
+      <Command>powershell.exe</Command>
+      <Arguments>-NoProfile -WindowStyle Hidden -Command "cd '{{PROJECT_DIR}}'; uvicorn api.main:app --host 0.0.0.0 --port 8000"</Arguments>
+      <WorkingDirectory>{{PROJECT_DIR}}</WorkingDirectory>
+    </Exec>
+  </Actions>
+</Task>
