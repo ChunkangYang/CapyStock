@@ -1,8 +1,11 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import { onMount } from 'svelte';
+  // @ts-ignore – $app/stores types resolved at SvelteKit build time
+  import { page } from '$app/stores';
   import { api } from '$lib/api';
-  import KLineChart from '$lib/components/KLineChart.svelte';
+  import IndicatorOverlay from '$lib/components/IndicatorOverlay.svelte';
+  import RSIPanel from '$lib/components/RSIPanel.svelte';
+  import MACDPanel from '$lib/components/MACDPanel.svelte';
   import FlowBarChart from '$lib/components/FlowBarChart.svelte';
   import MarginLineChart from '$lib/components/MarginLineChart.svelte';
   import SignalTimeline from '$lib/components/SignalTimeline.svelte';
@@ -19,13 +22,57 @@
   let loading = true;
   let error = '';
 
+  // indicator data
+  type IndicatorSeries = { name: string; dates: string[]; values: (number | null)[] };
+  type IndicatorBundle = { code: string; series: Record<string, IndicatorSeries>; signals: any[] };
+  let indBundle: IndicatorBundle | null = null;
+
+  // toolbar toggles
+  let showSma5 = false;
+  let showSma20 = true;
+  let showSma60 = false;
+  let showSma120 = false;
+  let showEma12 = false;
+  let showEma26 = false;
+  let showBB = false;
+  let showRSI = false;
+  let showMACD = false;
+
+  function seriesAsDateValue(s: IndicatorSeries | undefined): { date: string; value: number | null }[] {
+    if (!s) return [];
+    return s.dates.map((d, i) => ({ date: d, value: s.values[i] }));
+  }
+
+  $: smaData = {
+    sma_5: seriesAsDateValue(indBundle?.series['sma_5']),
+    sma_20: seriesAsDateValue(indBundle?.series['sma_20']),
+    sma_60: seriesAsDateValue(indBundle?.series['sma_60']),
+    sma_120: seriesAsDateValue(indBundle?.series['sma_120']),
+  };
+  $: emaData = {
+    ema_12: seriesAsDateValue(indBundle?.series['ema_12']),
+    ema_26: seriesAsDateValue(indBundle?.series['ema_26']),
+  };
+  $: bbData = indBundle ? {
+    upper: seriesAsDateValue(indBundle.series['bb_upper']),
+    mid: seriesAsDateValue(indBundle.series['bb_mid']),
+    lower: seriesAsDateValue(indBundle.series['bb_lower']),
+  } : null;
+  $: rsiData = seriesAsDateValue(indBundle?.series['rsi_14']);
+  $: macdLineData = seriesAsDateValue(indBundle?.series['macd']);
+  $: macdSignalData = seriesAsDateValue(indBundle?.series['macd_signal']);
+  $: macdHistData = seriesAsDateValue(indBundle?.series['macd_hist']);
+
   onMount(async () => {
     try {
-      signal = await api(`/signals/${code}`);
-      prices = await api(`/signals/${code}/price?days=60`);
-      flows = await api(`/signals/${code}/flow?days=60`);
-      margins = await api(`/signals/${code}/margin?weeks=20`);
-      edinet = await api(`/signals/${code}/edinet?days=30`);
+      [signal, prices, flows, margins, edinet, indBundle] = await Promise.all([
+        api<SignalResult>(`/signals/${code}`),
+        api<PriceBar[]>(`/signals/${code}/price?days=120`),
+        api<FlowRow[]>(`/signals/${code}/flow?days=60`),
+        api<MarginRow[]>(`/signals/${code}/margin?weeks=20`),
+        api<EdinetEvent[]>(`/signals/${code}/edinet?days=30`),
+        api<IndicatorBundle>(`/indicators/${code}?days=120&include=sma_5,sma_20,sma_60,sma_120,ema_12,ema_26,rsi_14,macd,macd_signal,macd_hist,bb_upper,bb_mid,bb_lower`),
+      ]);
     } catch (e) {
       error = e instanceof Error ? e.message : '讀取資料失敗';
     } finally {
@@ -33,12 +80,12 @@
     }
   });
 
-  function handleAddToWatchlist() {
-    // TODO: modal 輸入 start_price
-  }
+  $: indSignals = (indBundle?.signals ?? []).slice(0, 15);
 
-  function handleAddToSimulation() {
-    // TODO: 加入模擬清單
+  function strengthColor(s: string): string {
+    if (s === 'strong') return '#4ade80';
+    if (s === 'moderate') return '#facc15';
+    return '#a1a1a1';
   }
 </script>
 
@@ -56,21 +103,54 @@
       </div>
       <div class="actions">
         <FavoriteToggle {code} name={signal.name} tag="speculative" />
-        <button class="btn btn-primary" on:click={handleAddToWatchlist}>加入 watchlist</button>
-        <button class="btn btn-secondary" on:click={handleAddToSimulation}>加入模擬</button>
+        <a href="/compare?codes={code}" class="btn btn-secondary">對比模式</a>
       </div>
     </div>
 
     <div class="content">
       <div class="charts">
+        <!-- Indicator toolbar -->
+        <div class="toolbar">
+          <span class="toolbar-label">SMA：</span>
+          <label><input type="checkbox" bind:checked={showSma5} /> 5</label>
+          <label><input type="checkbox" bind:checked={showSma20} /> 20</label>
+          <label><input type="checkbox" bind:checked={showSma60} /> 60</label>
+          <label><input type="checkbox" bind:checked={showSma120} /> 120</label>
+          <span class="toolbar-sep">｜</span>
+          <span class="toolbar-label">EMA：</span>
+          <label><input type="checkbox" bind:checked={showEma12} /> 12</label>
+          <label><input type="checkbox" bind:checked={showEma26} /> 26</label>
+          <span class="toolbar-sep">｜</span>
+          <label><input type="checkbox" bind:checked={showBB} /> 布林通道</label>
+          <span class="toolbar-sep">｜</span>
+          <label><input type="checkbox" bind:checked={showRSI} /> RSI</label>
+          <label><input type="checkbox" bind:checked={showMACD} /> MACD</label>
+        </div>
+
+        <!-- K 線 + 指標 overlay -->
         {#if prices.length}
           <div class="chart-container">
-            <h3>K 線（60 日）</h3>
-            <KLineChart
+            <h3>K 線（120 日）</h3>
+            <IndicatorOverlay
               {prices}
-              startPrice={signal.start_price}
-              recentLow={Math.min(...prices.map(p => p.low))}
+              {smaData} {emaData} {bbData}
+              {showSma5} {showSma20} {showSma60} {showSma120}
+              {showEma12} {showEma26} {showBB}
             />
+          </div>
+        {/if}
+
+        <!-- RSI 子圖（可摺疊） -->
+        {#if showRSI && rsiData.length}
+          <div class="chart-container sub-chart">
+            <RSIPanel {rsiData} />
+          </div>
+        {/if}
+
+        <!-- MACD 子圖 -->
+        {#if showMACD && macdLineData.length}
+          <div class="chart-container sub-chart">
+            <MACDPanel macdData={macdLineData} signalData={macdSignalData} histData={macdHistData} />
           </div>
         {/if}
 
@@ -107,6 +187,22 @@
           <p>{signal.stop_loss_triggered ? '⚠ 已觸發' : '✓ 未觸發'}</p>
         </div>
 
+        <!-- 指標訊號卡片 -->
+        {#if indSignals.length}
+          <div class="card">
+            <h4>指標訊號（近 30 日）</h4>
+            <div class="ind-signal-list">
+              {#each indSignals as s}
+                <div class="ind-sig-item">
+                  <span class="ind-date">{s.date}</span>
+                  <span class="ind-name">{s.name}</span>
+                  <span class="ind-strength" style="color:{strengthColor(s.strength)}">{s.strength}</span>
+                </div>
+              {/each}
+            </div>
+          </div>
+        {/if}
+
         {#if edinet.length}
           <div class="card">
             <h4>EDINET 事件（30 日）</h4>
@@ -140,160 +236,55 @@
 </div>
 
 <style>
-  .detail-page {
-    padding: 24px;
-  }
+  .detail-page { padding: 24px; }
 
   .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #2a2a2a;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #2a2a2a;
   }
+  .info { display: flex; gap: 16px; align-items: baseline; }
+  .code { font-size: 18px; font-weight: bold; color: #fff; }
+  .name { color: #a1a1a1; }
+  .price { font-size: 20px; color: #4ade80; font-weight: bold; }
+  .actions { display: flex; gap: 8px; align-items: center; }
+  .btn { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; text-decoration: none; }
+  .btn-secondary { background: #333; color: #fff; border: 1px solid #555; }
 
-  .info {
-    display: flex;
-    gap: 16px;
-    align-items: baseline;
+  .toolbar {
+    display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+    background: #1a1a1a; padding: 10px 16px; border-radius: 8px; margin-bottom: 4px;
+    font-size: 13px; color: #a1a1a1;
   }
+  .toolbar label { display: flex; align-items: center; gap: 4px; cursor: pointer; color: #ccc; }
+  .toolbar-label { color: #666; }
+  .toolbar-sep { color: #444; }
 
-  .code {
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-  }
+  .content { display: grid; grid-template-columns: 1fr 0.4fr; gap: 24px; }
+  .charts { display: flex; flex-direction: column; gap: 16px; }
+  .chart-container { background: #1a1a1a; padding: 16px; border-radius: 8px; }
+  .sub-chart { padding: 8px 16px; }
+  .chart-container h3 { color: #fff; margin: 0 0 12px 0; font-size: 14px; }
 
-  .name {
-    color: #a1a1a1;
-  }
+  .sidebar { display: flex; flex-direction: column; gap: 16px; }
+  .card { background: #1a1a1a; padding: 16px; border-radius: 8px; }
+  .card h4 { color: #fff; margin: 0 0 8px 0; font-size: 13px; }
+  .card p { color: #4ade80; margin: 0; }
 
-  .price {
-    font-size: 20px;
-    color: #4ade80;
-    font-weight: bold;
-  }
+  .ind-signal-list { display: flex; flex-direction: column; gap: 6px; }
+  .ind-sig-item { display: flex; gap: 6px; font-size: 12px; align-items: center; }
+  .ind-date { color: #666; min-width: 70px; }
+  .ind-name { color: #ccc; flex: 1; }
+  .ind-strength { font-size: 11px; font-weight: 600; }
 
-  .actions {
-    display: flex;
-    gap: 8px;
-  }
+  .edinet-list { display: flex; flex-direction: column; gap: 8px; }
+  .event-item { display: flex; flex-direction: column; gap: 4px; padding: 8px; background: #0a0a0a; border-radius: 4px; font-size: 12px; }
+  .date { color: #888; }
+  .filer { color: #a1a1a1; }
+  .event-item a { color: #4ade80; text-decoration: none; }
 
-  .btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-  }
+  .card ul { margin: 0; padding: 0; list-style: none; }
+  .card li { color: #a1a1a1; font-size: 12px; padding: 4px 0; }
+  .error { color: #f87171; }
 
-  .btn-primary {
-    background: #4ade80;
-    color: #000;
-  }
-
-  .btn-secondary {
-    background: #333;
-    color: #fff;
-    border: 1px solid #555;
-  }
-
-  .content {
-    display: grid;
-    grid-template-columns: 1fr 0.4fr;
-    gap: 24px;
-  }
-
-  .charts {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .chart-container {
-    background: #1a1a1a;
-    padding: 16px;
-    border-radius: 8px;
-  }
-
-  .chart-container h3 {
-    color: #fff;
-    margin: 0 0 12px 0;
-    font-size: 14px;
-  }
-
-  .sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .card {
-    background: #1a1a1a;
-    padding: 16px;
-    border-radius: 8px;
-  }
-
-  .card h4 {
-    color: #fff;
-    margin: 0 0 8px 0;
-    font-size: 13px;
-  }
-
-  .card p {
-    color: #4ade80;
-    margin: 0;
-  }
-
-  .edinet-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .event-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 8px;
-    background: #0a0a0a;
-    border-radius: 4px;
-    font-size: 12px;
-  }
-
-  .date {
-    color: #888;
-  }
-
-  .filer {
-    color: #a1a1a1;
-  }
-
-  .event-item a {
-    color: #4ade80;
-    text-decoration: none;
-  }
-
-  .card ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .card li {
-    color: #a1a1a1;
-    font-size: 12px;
-    padding: 4px 0;
-  }
-
-  .error {
-    color: #f87171;
-  }
-
-  @media (max-width: 1200px) {
-    .content {
-      grid-template-columns: 1fr;
-    }
-  }
+  @media (max-width: 1200px) { .content { grid-template-columns: 1fr; } }
 </style>

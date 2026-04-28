@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  // @ts-ignore – $app/stores types resolved at SvelteKit build time
   import { page } from '$app/stores';
+  // @ts-ignore
   import { goto } from '$app/navigation';
   import { api } from '$lib/api';
   import ComparePanel from '$lib/components/ComparePanel.svelte';
