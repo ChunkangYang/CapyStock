@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from api.routers import (
-    analytics, compare, dividend, favorites, health, indicators, ingest, meta, notify, scan, scheduler, signals, simulation, sweep, watchlist,
+    analytics, compare, data, dividend, favorites, health, indicators, ingest, meta, notify, scan, scheduler, signals, simulation, sweep, watchlist,
 )
 from api.services import scheduler_service as scheduler_service_module
 
@@ -59,6 +59,7 @@ app.include_router(compare.router, prefix="/api/v1", tags=["compare"])
 app.include_router(ingest.router, prefix="/api/v1", tags=["ingest"])
 app.include_router(analytics.router, prefix="/api/v1", tags=["analytics"])
 app.include_router(sweep.router, prefix="/api/v1", tags=["sweep"])
+app.include_router(data.router, prefix="/api/v1", tags=["data"])
 
 
 _FRONTEND_DIR = Path(
