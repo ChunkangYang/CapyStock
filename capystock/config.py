@@ -7,6 +7,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 CACHE_DIR = DATA_DIR / "cache"
 WATCHLIST_PATH = DATA_DIR / "watchlist.json"
+PORTFOLIO_PATH = DATA_DIR / "portfolio.json"
 LOG_PATH = DATA_DIR / "log.csv"
 ENV_PATH = DATA_DIR / ".env"
 EDINET_CACHE_DIR = CACHE_DIR / "edinet"
