@@ -76,6 +76,8 @@ cd frontend && npm install && npm run dev
 - 步驟 3 列出兩檔，含追蹤起始價 2500 / 150
 - 步驟 5 僅剩 9432
 
+**結果**：✅ Pass（2026-05-04）｜證據：[UAT_GROUP_A_CLI.md](EVIDENCES/UAT_GROUP_A_CLI.md)
+
 #### TC-CLI-02 check 主流程（kabutan）
 **步驟**：`python -m capystock.main check`
 **預期**：
@@ -83,15 +85,21 @@ cd frontend && npm install && npm run dev
 - 若 kabutan 失敗自動 fallback 到 yfinance（觀察 log 訊息）
 - 三選二警告 / 停損 / 吃貨訊號正確標示
 
+**結果**：✅ Pass（2026-05-04）｜kabutan 失敗自動 fallback yfinance，表格欄位完整｜IMP-WIN-001：Windows cp950 console 輸出 UnicodeEncodeError（非阻斷）
+
 #### TC-CLI-03 check 單一股票 + EDINET
 **步驟**：`python -m capystock.main check --code 7203 --edinet-days 7`
 **預期**：
 - 僅檢查 7203
 - 表格附帶近 7 日 EDINET 大量保有報告（350/360）摘要
 
+**結果**：✅ Pass（2026-05-04）｜僅輸出 7203，EDINET API 正常呼叫，7203 近 7 日無申報（實際市場狀況，靜默略過屬預期）
+
 #### TC-CLI-04 EDINET 獨立查詢
 **步驟**：`python -m capystock.main edinet --days 30 --all`
 **預期**：30 日內全部 5% rule 申報列表，可看到 docTypeCode、提出者、対象証券コード
+
+**結果**：✅ Pass（2026-05-04）｜回傳數百筆，欄位含 Date / Code / Kind（新規/変更）/ Filer / URL
 
 #### TC-CLI-05 fundamental 評分
 **步驟**：`python -m capystock.main fundamental 3543`
@@ -100,45 +108,59 @@ cd frontend && npm install && npm run dev
 - 評等為 STRONG / HEALTHY / CAUTION / RISKY 之一
 - 即使部分指標缺值，仍可輸出 Partial Data 評分（S24 驗證點）
 
+**結果**：✅ Pass（2026-05-04）｜8 指標顯示（DPS=WARN，其餘 N/A），評等 CAUTION，Partial Data 正常
+
 #### TC-CLI-06 log 警示歷史
 **前置**：先執行 check 數次累積 log
 **步驟**：`python -m capystock.main log --days 30`
 **預期**：依日期排序輸出 30 日內所有警示
+
+**結果**：✅ Pass（2026-05-04）｜依日期升序，涵蓋 stop_loss / exit / edinet_5pct / accumulation / fundamental 各類型
 
 ---
 
 ### 群組 B：Backend API（M3 / S1–S3）
 
 #### TC-API-01 健康檢查
-**步驟**：GET `http://localhost:8000/health`
+**步驟**：GET `http://localhost:8000/api/v1/health`（實際前綴 `/api/v1/`）
 **預期**：200，回傳 `{"status":"ok",...}`
+
+**結果**：✅ Pass（2026-05-04）｜`HTTP 200 {"status":"ok","version":"0.1.0"}`｜證據：[UAT_GROUP_B_API.md](EVIDENCES/UAT_GROUP_B_API.md)
 
 #### TC-API-02 OpenAPI 文件
 **步驟**：開啟 `/docs`
 **預期**：Swagger UI 顯示所有 router（watchlist、signals、dividend、scan、favorites、simulation、notify、scheduler、health、indicators、compare、ingest、analytics、sweep、data）
 
+**結果**：✅ Pass（2026-05-04）｜全部 15 個 router tags 存在
+
 #### TC-API-03 Watchlist CRUD
 **步驟**：
-1. POST `/watchlist` body `{"code":"7203","entry_price":2500}`
-2. GET `/watchlist`
-3. DELETE `/watchlist/7203`
+1. POST `/api/v1/watchlist` body `{"code":"7203","start_price":2500}`（注意：欄位為 `start_price`）
+2. GET `/api/v1/watchlist`
+3. DELETE `/api/v1/watchlist/7203`
 
 **預期**：對應寫入 / 讀取 / 刪除 `data/watchlist.json`
+
+**結果**：✅ Pass（2026-05-04）｜CRUD 全流程正常｜IMP-DOC-001：UAT 原記 `entry_price`，實際欄位為 `start_price`
 
 #### TC-API-04 全市場掃描快照
 **步驟**：
 1. 執行掃描 worker 產生 snapshot
-2. GET `/scan/signals`、`/scan/dividend?order_by=est_yield&desc=true`
+2. GET `/api/v1/scan/signals`、`/api/v1/scan/dividend?order_by=est_yield&desc=true`
 
 **預期**：回傳當日 snapshot；無快照時 404 並含明確訊息
 
+**結果**：✅ Pass（2026-05-04）｜signals / dividend 均 200，含 score / est_yield / overall 評等欄位，依 est_yield 降序正確
+
 #### TC-API-05 Favorites
 **步驟**：
-1. POST `/favorites/7203`
-2. GET `/favorites` → 應為 array
-3. DELETE `/favorites/7203`
+1. POST `/api/v1/favorites` body `{"code":"7203","tag":"speculative"}`
+2. GET `/api/v1/favorites` → 應為 array
+3. DELETE `/api/v1/favorites/7203`
 
 **預期**：array 形式正確（BUG-001 防回歸）
+
+**結果**：✅ Pass（2026-05-04）｜GET 回傳 JSON array（BUG-001 防回歸 ✓）｜IMP-DOC-001：POST 路徑應為 `POST /favorites` + body，非路徑參數
 
 ---
 
