@@ -1,0 +1,17 @@
+services:
+  capystock:
+    build: .
+    image: capystock:latest
+    container_name: capystock
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - TZ=Asia/Tokyo
+      - CAPYSTOCK_FRONTEND_DIR=/app/frontend/dist
+      # 排程器預設啟用；若要在 container 中關閉設為 1
+      # - CAPYSTOCK_SCHEDULER_DISABLED=1
+    env_file:
+      - ./data/.env
+    restart: unless-stopped

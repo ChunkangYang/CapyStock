@@ -18,13 +18,23 @@
         <a href="/" class:active={currentPath === '/'}>Dashboard</a>
       </li>
       <li>
-        <a href="/signals" class:active={currentPath.startsWith('/signals')}>
+        <a href="/signals" class:active={currentPath.startsWith('/signals') && !currentPath.startsWith('/signals/compare')}>
           投機訊號
         </a>
       </li>
       <li>
-        <a href="/dividend" class:active={currentPath.startsWith('/dividend')}>
+        <a href="/compare" class:active={currentPath.startsWith('/compare')}>
+          投機對比
+        </a>
+      </li>
+      <li>
+        <a href="/dividend" class:active={currentPath.startsWith('/dividend') && !currentPath.startsWith('/dividend/compare')}>
           金雞高股息
+        </a>
+      </li>
+      <li>
+        <a href="/dividend/compare" class:active={currentPath.startsWith('/dividend/compare')}>
+          金雞對比
         </a>
       </li>
       <li>
@@ -38,6 +48,11 @@
           class:active={currentPath.startsWith('/simulation')}
         >
           模擬交易
+        </a>
+      </li>
+      <li>
+        <a href="/settings/notifications" class:active={currentPath.startsWith('/settings')}>
+          設定
         </a>
       </li>
     </ul>

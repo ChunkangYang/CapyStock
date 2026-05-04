@@ -5,6 +5,7 @@ from typing import Optional
 import pandas as pd
 
 from capystock import analyzer, edinet, scraper, storage
+from capystock.indicators import IndicatorSignal, PriceBar as IndicatorPriceBar, detect_signals
 from api.schemas.common import (
     Alert, FlowRow, MarginRow, PriceBar, SignalConditions, SignalResult,
 )
@@ -93,16 +94,32 @@ def get_edinet_events(code: str, days: int = 30) -> list[dict]:
         reports = edinet.fetch_since(days=days, codes={code})
         return [
             {
-                "sec_code": r["sec_code"],
-                "submit_date": r["submit_date"],
-                "doc_type_code": r["doc_type_code"],
-                "filer_name": r["filer_name"],
+                "date": r["submit_date"],
+                "filer": r["filer_name"],
+                "doc_type": r["doc_type_code"],
                 "pdf_url": r["pdf_url"],
             }
             for r in reports
         ]
     except Exception:
         return []
+
+
+_SIGNAL_WEIGHTS = {
+    "macd_golden_cross": 1.0,
+    "macd_dead_cross": -1.0,
+    "sma_golden_cross_5_20": 1.0,
+    "sma_dead_cross_5_20": -1.0,
+    "rsi_oversold": 0.5,
+    "rsi_overbought": -0.5,
+    "bb_breakout_up": 0.5,
+    "bb_breakout_down": -0.5,
+}
+
+
+def _compute_technical_score(signals: list[IndicatorSignal]) -> float:
+    score = sum(_SIGNAL_WEIGHTS.get(s.name, 0.0) for s in signals)
+    return float(max(-3.0, min(3.0, score)))
 
 
 def analyze_one(code: str, start_price: Optional[float] = None) -> SignalResult:
@@ -153,6 +170,32 @@ def analyze_one(code: str, start_price: Optional[float] = None) -> SignalResult:
         for a in alerts
     ]
 
+    # 計算技術指標訊號
+    indicator_signals: list[IndicatorSignal] = []
+    technical_score: float = 0.0
+    try:
+        if price_df is not None and not price_df.empty:
+            ind_bars: list[IndicatorPriceBar] = []
+            for _, row in price_df.iterrows():
+                try:
+                    ind_bars.append(IndicatorPriceBar(
+                        date=pd.Timestamp(row["date"]).date(),
+                        open=float(row["open"]),
+                        high=float(row["high"]),
+                        low=float(row["low"]),
+                        close=float(row["close"]),
+                        volume=float(row.get("volume", 0)),
+                    ))
+                except (KeyError, ValueError, TypeError):
+                    continue
+
+            if ind_bars:
+                today_date = ind_bars[-1].date
+                indicator_signals = detect_signals(ind_bars, today_date)
+                technical_score = _compute_technical_score(indicator_signals)
+    except Exception:
+        pass
+
     return SignalResult(
         code=snap.code,
         name=snap.name,
@@ -168,6 +211,8 @@ def analyze_one(code: str, start_price: Optional[float] = None) -> SignalResult:
         margin_trend_note=snap.margin_trend_note,
         notes=snap.notes,
         alerts=schema_alerts,
+        indicator_signals=indicator_signals,
+        technical_score=technical_score,
     )
 
 

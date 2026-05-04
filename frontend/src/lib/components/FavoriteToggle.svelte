@@ -9,7 +9,7 @@
   let isFavorite = false;
   let loading = false;
 
-  $: isFavorite = $favorites.some(f => f.code === code && f.tags.includes(tag));
+  $: isFavorite = !!$favorites[code]?.tags?.includes(tag);
 
   async function toggle() {
     if (loading) return;
@@ -18,20 +18,35 @@
     try {
       if (isFavorite) {
         await api(`/favorites/${code}?tag=${tag}`, { method: 'DELETE' });
-        favorites.update(fav => fav.filter(f => f.code !== code || !f.tags.includes(tag)));
+        favorites.update(fav => {
+          const updated = { ...fav };
+          const entry = updated[code];
+          if (entry) {
+            entry.tags = entry.tags.filter(t => t !== tag);
+            if (entry.tags.length === 0) delete updated[code];
+          }
+          return updated;
+        });
       } else {
         await api('/favorites', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ code, name, tag }),
         });
-        if (!$favorites.some(f => f.code === code)) {
-          favorites.update(fav => [...fav, { code, name, tags: [tag], added_at: new Date().toISOString(), note: '' }]);
-        } else {
-          favorites.update(fav => fav.map(f =>
-            f.code === code ? { ...f, tags: [...new Set([...f.tags, tag])] } : f
-          ));
-        }
+        favorites.update(fav => {
+          const existing = fav[code];
+          const tags = existing ? [...new Set([...existing.tags, tag])] : [tag];
+          return {
+            ...fav,
+            [code]: {
+              code,
+              name,
+              tags,
+              added_at: existing?.added_at ?? new Date().toISOString(),
+              note: existing?.note ?? '',
+            },
+          };
+        });
       }
     } catch (e) {
       console.error('Failed to toggle favorite:', e);

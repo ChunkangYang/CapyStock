@@ -6,10 +6,30 @@ from api.schemas.common import SignalResult
 from api.schemas.simulation import (
     ClosedTrade,
     EquityPoint,
+    IndicatorCondition,
     Position,
     Simulation,
     SimulationState,
 )
+
+
+def check_indicator_condition(
+    code: str,
+    today: date,
+    conds: list[IndicatorCondition],
+    logic: str,
+    indicator_service,
+) -> bool:
+    """檢查技術指標條件是否成立。"""
+    if not conds:
+        return True
+    try:
+        bundle = indicator_service.get_bundle(code, days=120)
+        today_signals = {s.name for s in bundle.signals if s.date == today}
+        matches = [c.type in today_signals for c in conds]
+        return all(matches) if logic == "and" else any(matches)
+    except Exception:
+        return False
 
 
 def resolve_entry_price(
@@ -79,12 +99,16 @@ def decide_exit_reason(
     exit_rule_max_hold_days: Optional[int],
     has_exit_signal: bool,
     has_stop_loss: bool,
+    has_indicator_exit: bool = False,
 ) -> Optional[str]:
     """判斷是否觸發出場條件，返回出場原因或 None。"""
     if latest_price is None:
         return None
 
     hold_days = (today - pos.entry_date).days
+
+    if has_indicator_exit:
+        return "indicator_exit"
 
     if exit_rule_use_exit_signal and has_exit_signal:
         return "exit_signal"
@@ -109,6 +133,7 @@ def run_one_day(
     today: date,
     signal_service,
     price_cache: dict,  # {code: {date: {close, open}}}
+    indicator_service=None,
 ) -> None:
     """執行一天的回測邏輯。
 
@@ -162,6 +187,16 @@ def run_one_day(
                     state.pending_entries.remove(cand)
                     continue
             except Exception:
+                continue
+
+        # 檢查技術指標進場條件
+        if cfg.entry_rule.indicator_entry and indicator_service is not None:
+            if not check_indicator_condition(
+                cand.code, today,
+                cfg.entry_rule.indicator_entry,
+                cfg.entry_rule.indicator_entry_logic,
+                indicator_service,
+            ):
                 continue
 
         # 檢查部位限制
@@ -235,6 +270,16 @@ def run_one_day(
             except Exception:
                 pass
 
+        # 檢查技術指標出場條件
+        has_indicator_exit = False
+        if cfg.exit_rule.indicator_exit and indicator_service is not None:
+            has_indicator_exit = check_indicator_condition(
+                pos.code, today,
+                cfg.exit_rule.indicator_exit,
+                cfg.exit_rule.indicator_exit_logic,
+                indicator_service,
+            )
+
         # 決定出場原因
         exit_reason = decide_exit_reason(
             pos,
@@ -246,6 +291,7 @@ def run_one_day(
             cfg.exit_rule.max_hold_days,
             has_exit_signal,
             has_stop_loss,
+            has_indicator_exit=has_indicator_exit,
         )
 
         if exit_reason:
@@ -328,6 +374,7 @@ def run_backtest(
     sim: Simulation,
     signal_service,
     price_cache: dict,
+    indicator_service=None,
 ) -> None:
     """執行完整回測：從 start_date 走到 end_date。"""
     cfg = sim.config
@@ -337,7 +384,7 @@ def run_backtest(
     end = cfg.end_date or current
 
     while current <= end:
-        run_one_day(sim, current, signal_service, price_cache)
+        run_one_day(sim, current, signal_service, price_cache, indicator_service=indicator_service)
         current += timedelta(days=1)
 
     # 結束時平倉所有部位（end_of_sim）
@@ -409,6 +456,23 @@ def calculate_report_metrics(sim: Simulation) -> dict:
     loss_sum = abs(sum(t.pnl_jpy for t in state.closed_trades if t.pnl_jpy < 0))
     profit_factor = (wins_sum / loss_sum) if loss_sum > 0 else None
 
+    # exit_reason_breakdown
+    breakdown: dict[str, int] = {}
+    for t in state.closed_trades:
+        breakdown[t.exit_reason] = breakdown.get(t.exit_reason, 0) + 1
+
+    # strategy_type
+    cfg = sim.config
+    has_ind_entry = bool(cfg.entry_rule.indicator_entry)
+    has_ind_exit = bool(cfg.exit_rule.indicator_exit)
+    has_sig = cfg.entry_rule.require_signal
+    if (has_ind_entry or has_ind_exit) and not has_sig:
+        strategy_type = "pure_indicator"
+    elif (has_ind_entry or has_ind_exit) and has_sig:
+        strategy_type = "signal_indicator"
+    else:
+        strategy_type = "pure_signal"
+
     return {
         "total_return_pct": total_return_pct,
         "annualized_return_pct": annualized_return_pct,
@@ -419,4 +483,6 @@ def calculate_report_metrics(sim: Simulation) -> dict:
         "profit_factor": profit_factor,
         "winning_trades": winning_trades,
         "losing_trades": losing_trades,
+        "exit_reason_breakdown": breakdown,
+        "strategy_type": strategy_type,
     }

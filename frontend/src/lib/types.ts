@@ -132,10 +132,22 @@ export interface CandidateEntry {
   forced_entry_date: string | null;
 }
 
+export type IndicatorConditionType =
+  | 'rsi_oversold' | 'rsi_overbought'
+  | 'macd_golden_cross' | 'macd_dead_cross'
+  | 'sma_cross' | 'bb_breakout_up' | 'bb_breakout_down';
+
+export interface IndicatorCondition {
+  type: IndicatorConditionType;
+  params: Record<string, unknown>;
+}
+
 export interface EntryRule {
   price_basis: 'signal_close' | 'next_open' | 'user_specified';
   user_price: number | null;
   require_signal: boolean;
+  indicator_entry: IndicatorCondition[];
+  indicator_entry_logic: 'and' | 'or';
 }
 
 export interface ExitRule {
@@ -144,6 +156,8 @@ export interface ExitRule {
   take_profit_pct: number | null;
   max_hold_days: number | null;
   exit_price_basis: 'signal_close' | 'next_open';
+  indicator_exit: IndicatorCondition[];
+  indicator_exit_logic: 'and' | 'or';
 }
 
 export interface PositionSizing {
@@ -191,7 +205,7 @@ export interface ClosedTrade {
   pnl_jpy: number;
   pnl_pct: number;
   hold_days: number;
-  exit_reason: 'exit_signal' | 'stop_loss' | 'take_profit' | 'max_hold' | 'end_of_sim' | 'manual';
+  exit_reason: 'exit_signal' | 'stop_loss' | 'take_profit' | 'max_hold' | 'end_of_sim' | 'manual' | 'indicator_exit';
 }
 
 export interface EquityPoint {
@@ -238,4 +252,6 @@ export interface SimulationReport {
   total_trades: number;
   closed_trades: ClosedTrade[];
   equity_curve: EquityPoint[];
+  exit_reason_breakdown: Record<string, number>;
+  strategy_type: 'pure_signal' | 'signal_indicator' | 'pure_indicator';
 }

@@ -4,6 +4,8 @@ from typing import Literal, Optional
 
 from pydantic import BaseModel, Field
 
+from capystock.indicators import IndicatorSignal
+
 
 class WatchlistEntry(BaseModel):
     """追蹤清單項目。"""
@@ -80,6 +82,8 @@ class SignalResult(BaseModel):
     margin_trend_note: str = ""
     notes: list[str] = Field(default_factory=list)
     alerts: list[Alert] = Field(default_factory=list)
+    indicator_signals: list[IndicatorSignal] = Field(default_factory=list)
+    technical_score: float = 0.0
 
 
 class FundamentalMetric(BaseModel):

@@ -1,0 +1,15 @@
+# CapyStock — Linux/macOS cron 範例
+#
+# APScheduler 已在 uvicorn 進程內處理排程，cron 只用來確保 uvicorn 隨開機啟動。
+# 若要把 APScheduler 關閉、由 cron 直接呼叫各 worker，將下方 jobs 取消註解。
+#
+# m  h  dom mon dow  command
+# 開機自動啟動 uvicorn（APScheduler 隨之啟動）
+@reboot           cd /opt/capystock && /usr/bin/uvicorn api.main:app --host 0.0.0.0 --port 8000 >> /var/log/capystock.log 2>&1
+
+# ── 純 cron 模式（CAPYSTOCK_SCHEDULER_DISABLED=1） ─────────────
+# 0  6  *   *   1-5  cd /opt/capystock && /usr/bin/python -m api.workers.scan_worker --kind signals
+# 30 6  *   *   1    cd /opt/capystock && /usr/bin/python -m api.workers.scan_worker --kind dividend
+# 0  7  *   *   1-5  cd /opt/capystock && /usr/bin/python -m api.workers.paper_worker
+# 0  8  *   *   1-5  cd /opt/capystock && /usr/bin/python -m api.workers.daily_pipeline
+# */30 *  *  *  *    cd /opt/capystock && /usr/bin/python -m api.workers.healthcheck

@@ -48,3 +48,4 @@ class JobStatus(BaseModel):
 
 class ScanRunRequest(BaseModel):
     kind: str
+    include_technical: bool = True

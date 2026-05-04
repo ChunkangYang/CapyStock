@@ -1,0 +1,30 @@
+{
+  "rules": [
+    {
+      "id": "rule_signal_high_score",
+      "enabled": true,
+      "name": "投機 score ≥ 80 即時 push",
+      "trigger": {
+        "type": "signal",
+        "min_score": 80
+      },
+      "channels": [
+        "email"
+      ],
+      "delivery": "realtime"
+    },
+    {
+      "id": "rule_daily_digest",
+      "enabled": true,
+      "name": "每日 18:00 digest",
+      "trigger": {
+        "type": "digest"
+      },
+      "schedule": "0 18 * * *",
+      "channels": [
+        "email"
+      ],
+      "delivery": "digest"
+    }
+  ]
+}

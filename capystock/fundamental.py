@@ -13,6 +13,7 @@ CSV 欄位：year, sales, eps, op_margin, equity_ratio, op_cf, cash, dps, payout
 from __future__ import annotations
 
 import json
+import re
 import time
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -57,6 +58,18 @@ METRIC_LABELS = {
     "dps":          ("一株配当", "1株配当", "配当金"),
     "payout":       ("配当性向",),
 }
+
+# 年份 row label 偵測：'2021年2月'、'2024年3月' 等
+_YEAR_LABEL_RE = re.compile(r'^\d{4}年\d{1,2}月$')
+
+# 橫向 dividend 表格欄位 index
+_DIV_COL_KUBUN  = 0   # 区分（実績/修正/予想）
+_DIV_COL_TOTAL  = 3   # 合計（分割前）
+_DIV_COL_ADJ    = 4   # 分割調整後年間 DPS
+_DIV_COL_YIELD  = 5   # 配当利回り（不使用，僅備查）
+
+# 有效 区分 類型（排除未來預測）
+_VALID_KUBUN = {'実績', '修正'}
 
 _last_request_at = 0.0
 
@@ -144,6 +157,35 @@ def _find_row(tables: list[dict[str, list[str]]], keywords: tuple[str, ...]) -> 
     return None
 
 
+def _is_transposed_dividend(table: dict) -> bool:
+    """判斷 table 是否為橫向格式（年份為 row label）。"""
+    year_rows = sum(1 for k in table if _YEAR_LABEL_RE.match(k))
+    return year_rows >= 3
+
+
+def _extract_transposed_dps(table: dict) -> dict[str, list[float | None]]:
+    """從橫向 dividend 表格取出 DPS 時序。"""
+    rows: list[tuple[str, float | None]] = []
+    for label, vals in table.items():
+        if not _YEAR_LABEL_RE.match(label):
+            continue
+        if len(vals) <= _DIV_COL_ADJ:
+            continue
+        kubun = vals[_DIV_COL_KUBUN].strip()
+        if kubun not in _VALID_KUBUN:
+            continue
+        dps = _parse_value(vals[_DIV_COL_ADJ])
+        if dps is not None and dps <= 0:
+            dps = None
+        rows.append((label, dps))
+
+    if not rows:
+        return {}
+
+    rows.sort(key=lambda x: x[0])
+    return {"dps": [v for _, v in rows]}
+
+
 def _fetch_irbank(code: str) -> Optional[dict[str, list[float | None]]]:
     """回傳 {metric: [値...]}；全部指標都抓不到則回傳 None。"""
     html_settlement = _get(f"{IRBANK_BASE}/{code}/settlement")
@@ -155,20 +197,31 @@ def _fetch_irbank(code: str) -> Optional[dict[str, list[float | None]]]:
     if html_settlement:
         tables.extend(_scrape_tables(html_settlement))
     if html_dividend:
-        tables.extend(_scrape_tables(html_dividend))
+        div_tables = _scrape_tables(html_dividend)
+        standard_div = [t for t in div_tables if not _is_transposed_dividend(t)]
+        tables.extend(standard_div)
 
     result: dict[str, list[float | None]] = {}
     for metric, kws in METRIC_LABELS.items():
         vals = _find_row(tables, kws)
-        if vals is None:
-            result[metric] = []
-            continue
-        result[metric] = [_parse_value(v) for v in vals]
+        result[metric] = [_parse_value(v) for v in vals] if vals else []
 
-    # 至少要抓到 3 個指標且每個有 ≥3 個年度才視為有效
-    valid = sum(1 for v in result.values() if len([x for x in v if x is not None]) >= 3)
-    if valid < 3:
+    if html_dividend and not html_settlement:
+        for t in _scrape_tables(html_dividend):
+            if _is_transposed_dividend(t):
+                partial = _extract_transposed_dps(t)
+                for k, v in partial.items():
+                    if not result.get(k):
+                        result[k] = v
+                break
+
+    valid = sum(
+        1 for v in result.values()
+        if len([x for x in v if x is not None]) >= 3
+    )
+    if valid < 1:
         return None
+
     return result
 
 

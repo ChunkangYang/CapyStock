@@ -9,7 +9,8 @@
     ExitRule,
     PositionSizing,
     CostModel,
-    SignalScanRow
+    SignalScanRow,
+    IndicatorConditionType,
   } from '$lib/types';
 
   let step = 1;
@@ -48,6 +49,21 @@
   let commissionPct = 0.001;
   let slippagePct = 0.001;
   let taxPct = 0.20315;
+
+  // Step 3: 技術指標條件
+  const INDICATOR_TYPES: { value: IndicatorConditionType; label: string }[] = [
+    { value: 'rsi_oversold', label: 'RSI 超賣（< 30）' },
+    { value: 'rsi_overbought', label: 'RSI 超買（> 70）' },
+    { value: 'macd_golden_cross', label: 'MACD 金叉' },
+    { value: 'macd_dead_cross', label: 'MACD 死叉' },
+    { value: 'sma_cross', label: 'SMA 交叉' },
+    { value: 'bb_breakout_up', label: '布林通道上突破' },
+    { value: 'bb_breakout_down', label: '布林通道下突破' },
+  ];
+  let indicatorEntry: IndicatorConditionType[] = [];
+  let indicatorEntryLogic: 'and' | 'or' = 'or';
+  let indicatorExit: IndicatorConditionType[] = [];
+  let indicatorExitLogic: 'and' | 'or' = 'or';
 
   async function loadSignals() {
     loadingSignals = true;
@@ -124,7 +140,9 @@
       const entryRule: EntryRule = {
         price_basis: entryPriceBasis,
         user_price: entryPriceBasis === 'user_specified' ? userPrices[candidates[0]?.code] || 0 : null,
-        require_signal: requireSignal
+        require_signal: requireSignal,
+        indicator_entry: indicatorEntry.map(t => ({ type: t, params: {} })),
+        indicator_entry_logic: indicatorEntryLogic,
       };
 
       const exitRule: ExitRule = {
@@ -132,7 +150,9 @@
         use_stop_loss: exitUseStopLoss,
         take_profit_pct: exitTakeProfitPct || null,
         max_hold_days: exitMaxHoldDays || null,
-        exit_price_basis: exitPriceBasis
+        exit_price_basis: exitPriceBasis,
+        indicator_exit: indicatorExit.map(t => ({ type: t, params: {} })),
+        indicator_exit_logic: indicatorExitLogic,
       };
 
       const positionSizing: PositionSizing = {
@@ -449,6 +469,55 @@
             <div class="form-group">
               <label>最多同時持倉數</label>
               <input type="number" bind:value={maxConcurrentPositions} min="1" max="20" />
+            </div>
+          </div>
+
+          <!-- 技術指標條件 -->
+          <div class="rule-group ind-group">
+            <h3>技術指標條件（可選）</h3>
+            <div class="form-group">
+              <label>進場指標條件</label>
+              <div class="ind-checks">
+                {#each INDICATOR_TYPES as t}
+                  <label class="ind-label">
+                    <input type="checkbox" value={t.value}
+                      checked={indicatorEntry.includes(t.value)}
+                      on:change={(e) => {
+                        if (e.currentTarget.checked) indicatorEntry = [...indicatorEntry, t.value];
+                        else indicatorEntry = indicatorEntry.filter(x => x !== t.value);
+                      }} />
+                    {t.label}
+                  </label>
+                {/each}
+              </div>
+              {#if indicatorEntry.length > 1}
+                <div class="logic-toggle">
+                  <label><input type="radio" bind:group={indicatorEntryLogic} value="or" /> 任一成立（OR）</label>
+                  <label><input type="radio" bind:group={indicatorEntryLogic} value="and" /> 全部成立（AND）</label>
+                </div>
+              {/if}
+            </div>
+            <div class="form-group">
+              <label>出場指標條件</label>
+              <div class="ind-checks">
+                {#each INDICATOR_TYPES as t}
+                  <label class="ind-label">
+                    <input type="checkbox" value={t.value}
+                      checked={indicatorExit.includes(t.value)}
+                      on:change={(e) => {
+                        if (e.currentTarget.checked) indicatorExit = [...indicatorExit, t.value];
+                        else indicatorExit = indicatorExit.filter(x => x !== t.value);
+                      }} />
+                    {t.label}
+                  </label>
+                {/each}
+              </div>
+              {#if indicatorExit.length > 1}
+                <div class="logic-toggle">
+                  <label><input type="radio" bind:group={indicatorExitLogic} value="or" /> 任一成立（OR）</label>
+                  <label><input type="radio" bind:group={indicatorExitLogic} value="and" /> 全部成立（AND）</label>
+                </div>
+              {/if}
             </div>
           </div>
 
@@ -794,5 +863,40 @@
     text-align: center;
     color: #999;
     padding: 20px;
+  }
+
+  .ind-group {
+    grid-column: 1 / -1;
+  }
+
+  .ind-checks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .ind-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ccc;
+    font-size: 13px;
+    margin-bottom: 0;
+  }
+
+  .logic-toggle {
+    display: flex;
+    gap: 16px;
+    margin-top: 6px;
+  }
+
+  .logic-toggle label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #a1a1a1;
+    font-size: 13px;
+    margin-bottom: 0;
   }
 </style>

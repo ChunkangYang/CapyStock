@@ -6,6 +6,16 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field
 
 
+class IndicatorCondition(BaseModel):
+    """技術指標條件。"""
+    type: Literal[
+        "rsi_oversold", "rsi_overbought",
+        "macd_golden_cross", "macd_dead_cross",
+        "sma_cross", "bb_breakout_up", "bb_breakout_down",
+    ]
+    params: dict = Field(default_factory=dict)
+
+
 class _BaseModelWithDateSerialization(BaseModel):
     """支援日期序列化的基礎模型。"""
     model_config = ConfigDict(
@@ -27,6 +37,8 @@ class EntryRule(_BaseModelWithDateSerialization):
     price_basis: Literal["signal_close", "next_open", "user_specified"] = "next_open"
     user_price: Optional[float] = None
     require_signal: bool = True
+    indicator_entry: list[IndicatorCondition] = Field(default_factory=list)
+    indicator_entry_logic: Literal["and", "or"] = "or"
 
 
 class ExitRule(_BaseModelWithDateSerialization):
@@ -36,6 +48,8 @@ class ExitRule(_BaseModelWithDateSerialization):
     take_profit_pct: Optional[float] = None
     max_hold_days: Optional[int] = None
     exit_price_basis: Literal["signal_close", "next_open"] = "next_open"
+    indicator_exit: list[IndicatorCondition] = Field(default_factory=list)
+    indicator_exit_logic: Literal["and", "or"] = "or"
 
 
 class PositionSizing(_BaseModelWithDateSerialization):
@@ -89,7 +103,7 @@ class ClosedTrade(_BaseModelWithDateSerialization):
     pnl_pct: float
     hold_days: int
     exit_reason: Literal[
-        "exit_signal", "stop_loss", "take_profit", "max_hold", "end_of_sim", "manual"
+        "exit_signal", "stop_loss", "take_profit", "max_hold", "end_of_sim", "manual", "indicator_exit"
     ]
 
 
@@ -144,3 +158,5 @@ class SimulationReport(_BaseModelWithDateSerialization):
     losing_trades: int
     closed_trades: list[ClosedTrade] = Field(default_factory=list)
     equity_curve: list[EquityPoint] = Field(default_factory=list)
+    exit_reason_breakdown: dict[str, int] = Field(default_factory=dict)
+    strategy_type: Literal["pure_signal", "signal_indicator", "pure_indicator"] = "pure_signal"

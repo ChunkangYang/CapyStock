@@ -122,7 +122,8 @@ def run_scan(req: ScanRunRequest, async_mode: bool = Query(False)) -> JobStatus:
             today_str = datetime.now().strftime("%Y-%m-%d")
 
             if req.kind == "signals":
-                rows, errors = scan_service.run_signals_scan(universe)
+                include_technical = req.include_technical if hasattr(req, "include_technical") else True
+                rows, errors = scan_service.run_signals_scan(universe, include_technical=include_technical)
                 scan_service.write_snapshot("signals", rows, today_str)
                 if errors:
                     scan_service.write_errors("signals", errors, today_str)
