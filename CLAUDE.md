@@ -1,5 +1,26 @@
 # CapyStock — 日股籌碼分析工具
 
+## 🔴 絕對規則（最高優先，違反即 P0）
+
+### 1. 嚴禁刪除指令
+- **禁止使用任何刪除/清空指令**：`rm`（含任何旗標）、`Remove-Item`、`del`、`erase`、`git clean`、`git stash`、`git reset --hard`、`git checkout -- *`、`git restore .` 等
+- **要「移除」檔案時，唯一作法**：改名加 `DELETE_` prefix，例如 `mv old.py DELETE_old.py` 或 `Rename-Item old.py DELETE_old.py`
+- 是否真的要刪由使用者自己 review 跟手動清理
+- 例外：無
+
+### 2. 所有生成/修改的檔案必須立刻 git commit
+- Claude 建立或修改的任何檔案（docs、tests、code、config…）都視為有意義
+- 完成一個邏輯單元就 `git add <files> && git commit -m "<msg>"`，**不必詢問使用者**
+- 不要擅自判斷「這是暫存/廢棄/無意義」而不 commit — 不要的使用者會自己 revert
+- 「邏輯單元」：完成一個子任務 / 新建 .md / 一輪測試完 / chat 結束前
+- chat session 最後一個動作必為 commit
+- 不 push（push 仍需明確要求）
+- .gitignore 已排除的路徑（`data/cache/`、`__pycache__/` 等）不用塞
+
+違反這兩條會造成使用者資料永久遺失（已發生過：UAT.md、scan_snapshots/*.parquet）。
+
+---
+
 ## 專案目標
 追蹤日本上市股票的主力動向（外資/法人買賣超、信用残變化、股價位階），
 輸出持倉警告、停損觸發、吃貨訊號，輔助進出場判斷。
