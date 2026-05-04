@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { api } from '$lib/api';
+  import { api, ApiError } from '$lib/api';
   import DataTable from '$lib/components/DataTable.svelte';
   import type { SignalScanRow, SignalResult } from '$lib/types';
 
@@ -9,6 +9,7 @@
   let data: SignalScanRow[] = [];
   let loading = true;
   let error = '';
+  let noSnapshot = false;
 
   onMount(async () => {
     await loadData();
@@ -17,6 +18,7 @@
   async function loadData() {
     loading = true;
     error = '';
+    noSnapshot = false;
     data = [];
 
     try {
@@ -56,7 +58,11 @@
         }));
       }
     } catch (e) {
-      error = e instanceof Error ? e.message : '讀取資料失敗';
+      if (e instanceof ApiError && e.status === 404 && activeTab === 'market') {
+        noSnapshot = true;
+      } else {
+        error = e instanceof Error ? e.message : '讀取資料失敗';
+      }
     } finally {
       loading = false;
     }
@@ -104,8 +110,12 @@
     <p class="loading">加載中...</p>
   {:else if error}
     <p class="error">{error}</p>
+  {:else if noSnapshot}
+    <div class="empty-state">
+      <p>尚無投機訊號掃描快照。請至 <a href="/data">資料管理</a> 或執行掃描排程後再回來。</p>
+    </div>
   {:else}
-    <DataTable {data} {onRowClick: handleRowClick} />
+    <DataTable {data} onRowClick={handleRowClick} />
   {/if}
 </div>
 
@@ -158,5 +168,18 @@
 
   .error {
     color: #f87171;
+  }
+
+  .empty-state {
+    text-align: center;
+    color: #aaa;
+    padding: 60px 20px;
+    background: #1d1d1d;
+    border: 1px dashed #333;
+    border-radius: 8px;
+  }
+
+  .empty-state a {
+    color: #4ade80;
   }
 </style>

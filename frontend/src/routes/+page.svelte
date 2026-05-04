@@ -8,24 +8,36 @@
   let topDividends: any[] = [];
   let loading = true;
   let error: string | null = null;
+  let noSnapshot = false;
+
+  // 僅在「真的失敗」時把錯誤丟出；snapshot 尚未產生（404）視為空狀態。
+  async function loadOptional<T>(path: string, fallback: T): Promise<T> {
+    try {
+      return (await api<T>(path)) ?? fallback;
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      if (msg.includes('404') || /No snapshot/i.test(msg)) {
+        noSnapshot = true;
+        return fallback;
+      }
+      throw e;
+    }
+  }
 
   onMount(async () => {
     try {
-      // Load watchlist
-      watchlist = await api('/watchlist');
+      watchlist = await api<WatchlistEntry[]>('/watchlist');
 
-      // Load recent signals
-      const signalsData = await api<{ [key: string]: SignalScanRow[] }>(
-        '/scan/signals',
-      );
-      recentSignals = Object.values(signalsData || {})
-        .flat()
+      const signals = await loadOptional<SignalScanRow[]>('/scan/signals', []);
+      recentSignals = [...signals]
         .sort((a, b) => b.score - a.score)
         .slice(0, 5);
 
-      // Load top dividends
-      const dividendData = await api('/scan/dividend?order_by=est_yield&desc=true&limit=5');
-      topDividends = dividendData || [];
+      topDividends = await loadOptional<any[]>(
+        '/scan/dividend?order_by=est_yield&desc=true',
+        [],
+      );
+      topDividends = topDividends.slice(0, 5);
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to load data';
       console.error(error);
@@ -40,6 +52,10 @@
 
   {#if error}
     <div class="error-banner">{error}</div>
+  {:else if noSnapshot}
+    <div class="info-banner">
+      尚未產生掃描快照。請先執行 <code>POST /api/v1/scan/run</code>（kind=signals / dividend）或等待 daily_pipeline 排程跑完。
+    </div>
   {/if}
 
   <div class="cards-grid">
@@ -124,6 +140,23 @@
     padding: 12px 16px;
     border-radius: 4px;
     margin-bottom: 20px;
+  }
+
+  .info-banner {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .info-banner code {
+    background-color: #0f172a;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: #93c5fd;
   }
 
   .cards-grid {

@@ -6,8 +6,14 @@ export const favorites = writable<Record<string, FavoriteEntry>>({});
 
 export async function loadFavorites() {
   try {
-    const data = await api<Record<string, FavoriteEntry>>('/favorites');
-    favorites.set(data || {});
+    const data = await api<FavoriteEntry[] | Record<string, FavoriteEntry>>('/favorites');
+    if (Array.isArray(data)) {
+      const map: Record<string, FavoriteEntry> = {};
+      for (const entry of data) map[entry.code] = entry;
+      favorites.set(map);
+    } else {
+      favorites.set(data || {});
+    }
   } catch (error) {
     console.error('Failed to load favorites:', error);
     favorites.set({});

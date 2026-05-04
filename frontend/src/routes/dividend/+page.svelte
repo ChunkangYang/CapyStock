@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { api } from '$lib/api';
+  import { api, ApiError } from '$lib/api';
   import type { DividendScanRow } from '$lib/types';
   import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
   import { favorites } from '$lib/stores/favorites';
@@ -21,6 +21,7 @@
 
   let loading = true;
   let error = '';
+  let noSnapshot = false;
   let rows: DividendScanRow[] = [];
   let filtered: DividendScanRow[] = [];
 
@@ -48,7 +49,11 @@
       rows = data;
       applyFiltersAndSort();
     } catch (e) {
-      error = String(e);
+      if (e instanceof ApiError && e.status === 404) {
+        noSnapshot = true;
+      } else {
+        error = e instanceof Error ? e.message : String(e);
+      }
     } finally {
       loading = false;
     }
@@ -56,7 +61,9 @@
 
   function applyFiltersAndSort() {
     const favoriteSet = new Set(
-      $favorites.filter((f: { tags: string[] }) => f.tags.includes('dividend')).map((f: { code: string }) => f.code)
+      Object.values($favorites)
+        .filter((f: { tags: string[] }) => f.tags?.includes('dividend'))
+        .map((f: { code: string }) => f.code)
     );
 
     let result = rows.filter((row) => {
@@ -121,6 +128,12 @@
 
   {#if error}
     <div class="error">{error}</div>
+  {/if}
+
+  {#if noSnapshot}
+    <div class="empty-state">
+      <p>尚無金雞掃描快照。請至 <a href="/data">資料管理</a> 或執行掃描排程後再回來。</p>
+    </div>
   {/if}
 
   <div class="filters">
@@ -221,12 +234,14 @@
         {#each filtered as row (row.code)}
           <tr on:click={() => (window.location.href = `/dividend/${row.code}`)}>
             <td class="favorite-cell">
-              <FavoriteToggle
-                code={row.code}
-                name={row.name}
-                tag="dividend"
-                on:click|stopPropagation
-              />
+              <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+              <span on:click|stopPropagation>
+                <FavoriteToggle
+                  code={row.code}
+                  name={row.name}
+                  tag="dividend"
+                />
+              </span>
             </td>
             <td class="code">{row.code}</td>
             <td class="name">{row.name}</td>
@@ -454,5 +469,18 @@
     text-align: center;
     color: #888;
     padding: 40px;
+  }
+
+  .empty-state {
+    text-align: center;
+    color: #aaa;
+    padding: 60px 20px;
+    background: #1d1d1d;
+    border: 1px dashed #333;
+    border-radius: 8px;
+  }
+
+  .empty-state a {
+    color: #4ade80;
   }
 </style>
