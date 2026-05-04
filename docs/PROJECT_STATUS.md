@@ -1,7 +1,7 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-04-29（S19–S23：Milestone 6 全部完成）
+2026-05-04（SvelteKit SPA 路由 + favorites store / FavoriteToggle 型別不一致 bug 全部修復並 Playwright 驗證）
 
 ## 目前待做（下一步）
 - ✅ **Milestone 3：Web UI（FastAPI + SvelteKit）** — 全部完成（S1–S8）— 詳見 [MILESTONE_03.md](MILESTONE_03.md)
@@ -13,7 +13,17 @@
   - ✅ S21：異常偵測 + 事件研究
   - ✅ S22：策略參數 Sweep（網格回測）
   - ✅ S23：資料管理面板 + 上傳介面
-- **下一步**：Milestone 7（候選）— 多帳戶 / 雲端部署 / 行動 App
+- ✅ **Milestone 7：基本面評分增強**（S24）— 全部完成 — 詳見 [S24_DETAIL_DESIGN.md](S24_DETAIL_DESIGN.md)
+  - ✅ S24：IR Bank 橫向表格解析 + Partial Data 支援（3543 コメダHD 成功評分）
+- **下一步**：
+  - ✅ SvelteKit SPA 路由 + 金雞/投機頁面 bug 修復（2026-05-04）
+    - `api/main.py` SPA fallback：顯式 catch-all → index.html，僅 `/api/*` 與 docs 排除
+    - `frontend/src/lib/stores/favorites.ts` 修正 `loadFavorites`：API 回傳 array，store 維持 Record；自動轉換
+    - `frontend/src/lib/components/FavoriteToggle.svelte`：將 array-based 操作改為 Record-based（修 `r.filter is not a function`）
+    - `frontend/src/routes/dividend/+page.svelte`、`signals/+page.svelte`：404（無 snapshot）視為空狀態，提示「尚無快照，請至資料管理」
+    - Playwright 驗證 `/dividend`、`/signals`、`/signals/7203` 皆 200 + 空狀態正確顯示
+  - 修復 BUG-001（toast 動畫 + channel dot 更新）
+  - 評估是否規劃 M8
 
 ## 已完成 Sprint（詳細實作紀錄請見對應 detail design）
 
@@ -42,6 +52,7 @@
 | S21 | 異常偵測 + 事件研究 | 2026-04-29 | [SPRINT_21.md](SPRINT_21.md) |
 | S22 | 策略參數 Sweep（網格回測 + 熱圖 UI） | 2026-04-29 | [SPRINT_22.md](SPRINT_22.md) |
 | S23 | 資料管理面板（/data /data/ingest /data/upload） | 2026-04-29 | [SPRINT_23.md](SPRINT_23.md) |
+| S24 | IR Bank 橫向表格解析 + Partial Data 支援 | 2026-05-03 | [S24_DETAIL_DESIGN.md](S24_DETAIL_DESIGN.md) |
 
 ## Milestone 5 新增（S16–S18）
 
