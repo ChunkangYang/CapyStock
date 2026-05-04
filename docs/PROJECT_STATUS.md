@@ -1,7 +1,7 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-05-04（SvelteKit SPA 路由 + favorites store / FavoriteToggle 型別不一致 bug 全部修復並 Playwright 驗證）
+2026-05-04（S25 持倉管理：CLI portfolio / API /portfolio / Dashboard 4 區塊 / /portfolio 管理頁）
 
 ## 目前待做（下一步）
 - ✅ **Milestone 3：Web UI（FastAPI + SvelteKit）** — 全部完成（S1–S8）— 詳見 [MILESTONE_03.md](MILESTONE_03.md)
@@ -15,6 +15,8 @@
   - ✅ S23：資料管理面板 + 上傳介面
 - ✅ **Milestone 7：基本面評分增強**（S24）— 全部完成 — 詳見 [S24_DETAIL_DESIGN.md](S24_DETAIL_DESIGN.md)
   - ✅ S24：IR Bank 橫向表格解析 + Partial Data 支援（3543 コメダHD 成功評分）
+- ✅ **Milestone 8：持倉管理**（S25）— 全部完成 — 詳見 [SPRINT_25.md](SPRINT_25.md)
+  - ✅ S25：CLI portfolio / API /portfolio / Dashboard 4 區塊分離 / /portfolio 管理頁
 - **下一步**：
   - ✅ SvelteKit SPA 路由 + 金雞/投機頁面 bug 修復（2026-05-04）
     - `api/main.py` SPA fallback：顯式 catch-all → index.html，僅 `/api/*` 與 docs 排除
@@ -53,6 +55,7 @@
 | S22 | 策略參數 Sweep（網格回測 + 熱圖 UI） | 2026-04-29 | [SPRINT_22.md](SPRINT_22.md) |
 | S23 | 資料管理面板（/data /data/ingest /data/upload） | 2026-04-29 | [SPRINT_23.md](SPRINT_23.md) |
 | S24 | IR Bank 橫向表格解析 + Partial Data 支援 | 2026-05-03 | [S24_DETAIL_DESIGN.md](S24_DETAIL_DESIGN.md) |
+| S25 | 持倉管理（Portfolio CLI + API + Frontend） | 2026-05-04 | [SPRINT_25.md](SPRINT_25.md) |
 
 ## Milestone 5 新增（S16–S18）
 

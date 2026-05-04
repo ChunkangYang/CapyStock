@@ -1,5 +1,18 @@
 # Human TODO — 需要人工介入的任務
 
+## Sprint 25：持倉管理（S25）
+
+### T25-07/08 Dashboard 前端畫面確認
+- **狀態**：待人工確認
+- **理由**：需瀏覽器確認 Dashboard 4 區塊（持倉/追蹤清單/訊號/金雞）正確顯示
+- **步驟**：
+  1. 啟動 `npm run dev`（frontend dev server）
+  2. 開啟 `http://localhost:5173`
+  3. 確認「持倉狀態」顯示 portfolio 資料（買入股票）
+  4. 確認「追蹤清單」顯示 watchlist 資料（關注股票）
+  5. 兩者已明確分開
+  6. 前往 `/portfolio` 確認持倉管理頁可正常新增/平倉
+
 ## Sprint 6：金雞高股息儀表板
 
 ### E2E 測試 Playwright 瀏覽器安裝
