@@ -38,6 +38,11 @@
         </a>
       </li>
       <li>
+        <a href="/portfolio" class:active={currentPath.startsWith('/portfolio')}>
+          持倉管理
+        </a>
+      </li>
+      <li>
         <a href="/favorites" class:active={currentPath.startsWith('/favorites')}>
           我的最愛
         </a>

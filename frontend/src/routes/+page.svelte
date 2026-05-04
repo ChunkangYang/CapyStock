@@ -1,16 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { api } from '$lib/api';
-  import type { SignalResult, WatchlistEntry, SignalScanRow } from '$lib/types';
+  import type { WatchlistEntry, SignalScanRow, PortfolioEntry } from '$lib/types';
 
   let watchlist: WatchlistEntry[] = [];
+  let portfolioEntries: PortfolioEntry[] = [];
   let recentSignals: SignalScanRow[] = [];
   let topDividends: any[] = [];
   let loading = true;
   let error: string | null = null;
   let noSnapshot = false;
 
-  // 僅在「真的失敗」時把錯誤丟出；snapshot 尚未產生（404）視為空狀態。
   async function loadOptional<T>(path: string, fallback: T): Promise<T> {
     try {
       return (await api<T>(path)) ?? fallback;
@@ -26,18 +26,17 @@
 
   onMount(async () => {
     try {
-      watchlist = await api<WatchlistEntry[]>('/watchlist');
+      [watchlist, portfolioEntries] = await Promise.all([
+        api<WatchlistEntry[]>('/watchlist'),
+        loadOptional<PortfolioEntry[]>('/portfolio?open_only=true', []),
+      ]);
 
       const signals = await loadOptional<SignalScanRow[]>('/scan/signals', []);
-      recentSignals = [...signals]
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 5);
+      recentSignals = [...signals].sort((a, b) => b.score - a.score).slice(0, 5);
 
-      topDividends = await loadOptional<any[]>(
-        '/scan/dividend?order_by=est_yield&desc=true',
-        [],
-      );
-      topDividends = topDividends.slice(0, 5);
+      topDividends = (
+        await loadOptional<any[]>('/scan/dividend?order_by=est_yield&desc=true', [])
+      ).slice(0, 5);
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to load data';
       console.error(error);
@@ -45,6 +44,12 @@
       loading = false;
     }
   });
+
+  $: totalOpenLots = portfolioEntries.reduce((s, e) => s + e.lots.length, 0);
+  $: totalPnl = portfolioEntries.reduce(
+    (s, e) => s + (e.total_unrealized_pnl ?? 0),
+    0,
+  );
 </script>
 
 <div class="dashboard">
@@ -54,17 +59,50 @@
     <div class="error-banner">{error}</div>
   {:else if noSnapshot}
     <div class="info-banner">
-      尚未產生掃描快照。請先執行 <code>POST /api/v1/scan/run</code>（kind=signals / dividend）或等待 daily_pipeline 排程跑完。
+      尚無快照，請至資料管理執行掃描或等待 daily_pipeline 排程。
     </div>
   {/if}
 
   <div class="cards-grid">
-    <!-- Watchlist Card -->
+    <!-- 持倉狀態（Portfolio） -->
     <div class="card">
-      <h2>持倉狀態 <span class="count-badge">{watchlist.length}</span></h2>
+      <h2>持倉狀態 <span class="count-badge">{totalOpenLots}</span></h2>
+      <div class="card-content">
+        {#if portfolioEntries.length === 0}
+          <p class="empty">尚無持倉。請至 <a href="/portfolio">持倉管理</a> 新增買入記錄。</p>
+        {:else}
+          <div class="watchlist-list">
+            {#each portfolioEntries.slice(0, 4) as entry}
+              <div class="watchlist-item">
+                <span class="wl-code">{entry.code}</span>
+                <span class="wl-name">{entry.name || '—'}</span>
+                {#if entry.total_unrealized_pnl !== null}
+                  <span class="wl-pnl" class:pos={entry.total_unrealized_pnl >= 0}
+                    class:neg={entry.total_unrealized_pnl < 0}>
+                    {entry.total_unrealized_pnl >= 0 ? '+' : ''}{entry.total_unrealized_pnl.toLocaleString()}
+                  </span>
+                {:else}
+                  <span class="wl-price">¥{entry.total_cost.toLocaleString()}</span>
+                {/if}
+              </div>
+            {/each}
+          </div>
+          {#if totalOpenLots > 0}
+            <div class="pnl-summary" class:pos={totalPnl >= 0} class:neg={totalPnl < 0}>
+              總未實現損益 {totalPnl >= 0 ? '+' : ''}¥{totalPnl.toLocaleString()}
+            </div>
+          {/if}
+        {/if}
+      </div>
+      <a href="/portfolio" class="link">管理持倉</a>
+    </div>
+
+    <!-- 追蹤清單（Watchlist） -->
+    <div class="card">
+      <h2>追蹤清單 <span class="count-badge">{watchlist.length}</span></h2>
       <div class="card-content">
         {#if watchlist.length === 0}
-          <p class="empty">尚無持倉。請至 <a href="/signals">訊號頁</a> 新增。</p>
+          <p class="empty">追蹤清單為空。使用 CLI <code>add</code> 加入關注股票。</p>
         {:else}
           <div class="watchlist-list">
             {#each watchlist.slice(0, 5) as entry}
@@ -80,10 +118,10 @@
           </div>
         {/if}
       </div>
-      <a href="/signals" class="link">查看全部訊號</a>
+      <a href="/signals" class="link">查看訊號</a>
     </div>
 
-    <!-- Today's Signals Card -->
+    <!-- 今日訊號 -->
     <div class="card">
       <h2>今日訊號</h2>
       <div class="card-content">
@@ -92,9 +130,7 @@
             {#each recentSignals.slice(0, 3) as signal}
               <div class="signal-item">
                 <span class="code">{signal.code}</span>
-                <span class="score" class:positive={signal.score > 0}>
-                  +{signal.score}
-                </span>
+                <span class="score" class:positive={signal.score > 0}>+{signal.score}</span>
               </div>
             {/each}
           </div>
@@ -105,7 +141,7 @@
       <a href="/signals" class="link">查看全部</a>
     </div>
 
-    <!-- Top Dividends Card -->
+    <!-- 金雞 Top -->
     <div class="card">
       <h2>金雞 Top</h2>
       <div class="card-content">
@@ -114,9 +150,7 @@
             {#each topDividends.slice(0, 3) as div}
               <div class="dividend-item">
                 <span class="code">{div.code}</span>
-                <span class="yield">
-                  {((div.est_yield || 0) * 100).toFixed(2)}%
-                </span>
+                <span class="yield">{((div.est_yield || 0) * 100).toFixed(2)}%</span>
               </div>
             {/each}
           </div>
@@ -317,6 +351,24 @@
     text-align: right;
     margin: 4px 0 0 0;
   }
+
+  .wl-pnl {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .wl-pnl.pos { color: #4ade80; }
+  .wl-pnl.neg { color: #f87171; }
+
+  .pnl-summary {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .pnl-summary.pos { color: #4ade80; }
+  .pnl-summary.neg { color: #f87171; }
 
   .link {
     display: inline-block;
