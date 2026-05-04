@@ -19,6 +19,7 @@ async def lifespan(app: FastAPI):
     if os.environ.get("CAPYSTOCK_SCHEDULER_DISABLED") != "1":
         try:
             scheduler_service_module.get_scheduler_service().start()
+            print("[scheduler] started")
         except Exception as e:
             print(f"[scheduler] startup failed: {e}")
     yield

@@ -5,104 +5,119 @@
   import DataTable from '$lib/components/DataTable.svelte';
   import type { SignalScanRow, SignalResult } from '$lib/types';
 
-  let activeTab: 'market' | 'watchlist' | 'favorites' = 'market';
+  const TABS = ['market', 'watchlist', 'favorites'] as const;
+  type Tab = (typeof TABS)[number];
+
+  let activeTab: Tab = 'market';
   let data: SignalScanRow[] = [];
   let loading = true;
   let error = '';
   let noSnapshot = false;
+
+  // race condition guard：每次 loadData 產生新 id，async 完成後只有最新 id 才更新 state
+  let _loadSeq = 0;
 
   onMount(async () => {
     await loadData();
   });
 
   async function loadData() {
+    const seq = ++_loadSeq;
     loading = true;
     error = '';
     noSnapshot = false;
-    data = [];
 
     try {
+      let result: SignalScanRow[] = [];
+
       if (activeTab === 'market') {
-        data = await api('/scan/signals');
+        result = await api('/scan/signals');
       } else if (activeTab === 'watchlist') {
-        const watchlist = await api('/watchlist');
-        const results = await Promise.all(
-          watchlist.map(w => api(`/signals/${w.code}`))
-        );
-        data = results.map(r => ({
-          code: r.code,
-          name: r.name,
-          latest_price: r.latest_price ?? 0,
-          has_accumulation: r.accumulation_signal,
-          has_exit: (r.alerts ?? []).some(a => a.alert_type === 'exit'),
-          has_stop_loss: r.stop_loss_triggered,
-          edinet_recent_count: 0,
-          score: 0,
-          generated_at: new Date().toISOString(),
-        }));
+        // 批次呼叫 /signals（analyze_watchlist），避免 N+1
+        const watchlistSignals: SignalResult[] = await api('/signals');
+        result = watchlistSignals.map(r => toScanRow(r));
       } else if (activeTab === 'favorites') {
         const favorites = await api('/favorites?tag=speculative');
-        const results = await Promise.all(
-          favorites.map(f => api(`/signals/${f.code}`))
+        const results: SignalResult[] = await Promise.all(
+          favorites.map((f: { code: string }) => api(`/signals/${f.code}`))
         );
-        data = results.map(r => ({
-          code: r.code,
-          name: r.name,
-          latest_price: r.latest_price ?? 0,
-          has_accumulation: r.accumulation_signal,
-          has_exit: (r.alerts ?? []).some(a => a.alert_type === 'exit'),
-          has_stop_loss: r.stop_loss_triggered,
-          edinet_recent_count: 0,
-          score: 0,
-          generated_at: new Date().toISOString(),
-        }));
+        result = results.map(r => toScanRow(r));
       }
+
+      if (seq !== _loadSeq) return; // stale — discard
+      data = result;
     } catch (e) {
+      if (seq !== _loadSeq) return;
       if (e instanceof ApiError && e.status === 404 && activeTab === 'market') {
         noSnapshot = true;
       } else {
         error = e instanceof Error ? e.message : '讀取資料失敗';
       }
     } finally {
-      loading = false;
+      if (seq === _loadSeq) loading = false;
     }
   }
 
-  function handleTabChange(tab: typeof activeTab) {
+  function toScanRow(r: SignalResult): SignalScanRow {
+    return {
+      code: r.code,
+      name: r.name,
+      latest_price: r.latest_price ?? 0,
+      has_accumulation: r.accumulation_signal,
+      has_exit: (r.alerts ?? []).some(a => a.alert_type === 'exit'),
+      has_stop_loss: r.stop_loss_triggered,
+      edinet_recent_count: 0,
+      score: r.technical_score ?? 0,
+      generated_at: new Date().toISOString(),
+    };
+  }
+
+  function handleTabChange(tab: Tab) {
+    if (tab === activeTab) return;
     activeTab = tab;
     loadData();
+  }
+
+  function handleTabKeydown(e: KeyboardEvent, idx: number) {
+    let next = idx;
+    if (e.key === 'ArrowRight') next = (idx + 1) % TABS.length;
+    else if (e.key === 'ArrowLeft') next = (idx - 1 + TABS.length) % TABS.length;
+    else return;
+    e.preventDefault();
+    handleTabChange(TABS[next]);
+    // move focus to newly-active tab
+    const tabEls = document.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+    tabEls[next]?.focus();
   }
 
   function handleRowClick(code: string) {
     goto(`/signals/${code}`);
   }
+
+  const TAB_LABELS: Record<Tab, string> = {
+    market: '全市場訊號',
+    watchlist: '我的持倉',
+    favorites: '我的最愛',
+  };
 </script>
 
 <div class="signals-page">
   <div class="header">
     <h1>投機訊號</h1>
-    <div class="tabs">
-      <button
-        class="tab"
-        class:active={activeTab === 'market'}
-        on:click={() => handleTabChange('market')}
-      >
-        全市場訊號
-      </button>
-      <button
-        class="tab"
-        class:active={activeTab === 'watchlist'}
-        on:click={() => handleTabChange('watchlist')}
-      >
-        我的持倉
-      </button>
-      <button
-        class="tab"
-        class:active={activeTab === 'favorites'}
-        on:click={() => handleTabChange('favorites')}
-      >
-        我的最愛
-      </button>
+    <div class="tabs" role="tablist" aria-label="訊號分類">
+      {#each TABS as tab, i}
+        <button
+          role="tab"
+          class="tab"
+          class:active={activeTab === tab}
+          aria-selected={activeTab === tab}
+          tabindex={activeTab === tab ? 0 : -1}
+          on:click={() => handleTabChange(tab)}
+          on:keydown={e => handleTabKeydown(e, i)}
+        >
+          {TAB_LABELS[tab]}
+        </button>
+      {/each}
     </div>
   </div>
 
@@ -152,6 +167,12 @@
 
   .tab:hover {
     color: #fff;
+  }
+
+  .tab:focus-visible {
+    outline: 2px solid #4ade80;
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
   .tab.active {

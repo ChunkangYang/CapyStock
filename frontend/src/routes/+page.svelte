@@ -61,18 +61,26 @@
   <div class="cards-grid">
     <!-- Watchlist Card -->
     <div class="card">
-      <h2>持倉狀態</h2>
+      <h2>持倉狀態 <span class="count-badge">{watchlist.length}</span></h2>
       <div class="card-content">
-        <div class="stat">
-          <span class="label">追蹤數</span>
-          <span class="value">{watchlist.length}</span>
-        </div>
-        <div class="stat">
-          <span class="label">最近警告</span>
-          <span class="value">—</span>
-        </div>
+        {#if watchlist.length === 0}
+          <p class="empty">尚無持倉。請至 <a href="/signals">訊號頁</a> 新增。</p>
+        {:else}
+          <div class="watchlist-list">
+            {#each watchlist.slice(0, 5) as entry}
+              <div class="watchlist-item">
+                <span class="wl-code">{entry.code}</span>
+                <span class="wl-name">{entry.name || '—'}</span>
+                <span class="wl-price">¥{entry.start_price.toLocaleString()}</span>
+              </div>
+            {/each}
+            {#if watchlist.length > 5}
+              <p class="more-hint">…還有 {watchlist.length - 5} 檔</p>
+            {/if}
+          </div>
+        {/if}
       </div>
-      <a href="/signals" class="link">查看詳情</a>
+      <a href="/signals" class="link">查看全部訊號</a>
     </div>
 
     <!-- Today's Signals Card -->
@@ -251,6 +259,63 @@
     text-align: center;
     padding: 20px;
     margin: 0;
+  }
+
+  .count-badge {
+    display: inline-block;
+    background: #374151;
+    color: #9ca3af;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .watchlist-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .watchlist-item {
+    display: grid;
+    grid-template-columns: 52px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid #222;
+    font-size: 13px;
+  }
+
+  .watchlist-item:last-of-type {
+    border-bottom: none;
+  }
+
+  .wl-code {
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .wl-name {
+    color: #a1a1a1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .wl-price {
+    color: #4ade80;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .more-hint {
+    color: #555;
+    font-size: 12px;
+    text-align: right;
+    margin: 4px 0 0 0;
   }
 
   .link {

@@ -94,10 +94,9 @@ def get_edinet_events(code: str, days: int = 30) -> list[dict]:
         reports = edinet.fetch_since(days=days, codes={code})
         return [
             {
-                "sec_code": r["sec_code"],
-                "submit_date": r["submit_date"],
-                "doc_type_code": r["doc_type_code"],
-                "filer_name": r["filer_name"],
+                "date": r["submit_date"],
+                "filer": r["filer_name"],
+                "doc_type": r["doc_type_code"],
                 "pdf_url": r["pdf_url"],
             }
             for r in reports
