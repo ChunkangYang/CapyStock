@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { page } from '$app/stores';
   import { loadFavorites } from '$lib/stores/favorites';
   import './styles.css';
 
-  let currentPath = '/';
+  $: currentPath = $page.url.pathname;
 
   onMount(() => {
     loadFavorites();
