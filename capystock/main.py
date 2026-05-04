@@ -14,7 +14,7 @@ from datetime import datetime
 
 from tabulate import tabulate
 
-from . import analyzer, config, edinet, fundamental, scraper, storage
+from . import analyzer, config, edinet, fundamental, portfolio, scraper, storage
 
 
 def _fmt_pct(v: float | None) -> str:
@@ -210,6 +210,61 @@ def cmd_fundamental(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_portfolio_add(args: argparse.Namespace) -> int:
+    name = scraper.fetch_name(args.code) or ""
+    lot = portfolio.add_lot(
+        code=args.code,
+        name=name,
+        entry_price=args.entry_price,
+        quantity=args.quantity,
+        note=args.note or "",
+    )
+    print(f"✓ 持倉新增：{args.code}（{name or '未知'}）"
+          f" {args.quantity}股 @ {args.entry_price:,.0f}  lot_id={lot['id']}")
+    return 0
+
+
+def cmd_portfolio_list(_args: argparse.Namespace) -> int:
+    open_lots = portfolio.list_open()
+    if not open_lots:
+        print("目前無持倉")
+        return 0
+    rows = []
+    for lot in open_lots:
+        df, _ = scraper.fetch_price(lot["code"])
+        current = float(df["close"].iloc[-1]) if df is not None and not df.empty else None
+        unrealized = ((current - lot["entry_price"]) * lot["quantity"]) if current else None
+        pct = ((current / lot["entry_price"] - 1) * 100) if current else None
+        rows.append([
+            lot["code"],
+            lot["name"],
+            f"{lot['entry_price']:,.0f}",
+            lot["quantity"],
+            f"{current:,.0f}" if current else "—",
+            f"{unrealized:+,.0f}" if unrealized is not None else "—",
+            f"{pct:+.1f}%" if pct is not None else "—",
+            lot["entry_date"],
+            lot["id"][:8],
+        ])
+    print(tabulate(
+        rows,
+        headers=["Code", "Name", "買入價", "數量", "現價", "未實現損益", "報酬率", "買入日", "lot_id(前8)"],
+        tablefmt="github",
+    ))
+    return 0
+
+
+def cmd_portfolio_close(args: argparse.Namespace) -> int:
+    lot = portfolio.close_lot(args.code, args.lot_id, args.exit_price)
+    if lot is None:
+        print(f"✗ 找不到 {args.code} 的 lot_id={args.lot_id}（或已平倉）")
+        return 1
+    pnl = (args.exit_price - lot["entry_price"]) * lot["quantity"]
+    pct = (args.exit_price / lot["entry_price"] - 1) * 100
+    print(f"✓ 平倉完成：{args.code} @ {args.exit_price:,.0f}  損益 {pnl:+,.0f}（{pct:+.1f}%）")
+    return 0
+
+
 def cmd_list(_args: argparse.Namespace) -> int:
     wl = storage.load_watchlist()
     if not wl:
@@ -261,6 +316,26 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_list = sub.add_parser("list", help="顯示追蹤清單")
     p_list.set_defaults(func=cmd_list)
+
+    # portfolio 子命令群
+    p_pf = sub.add_parser("portfolio", help="持倉管理")
+    pf_sub = p_pf.add_subparsers(dest="pf_cmd", required=True)
+
+    p_pf_add = pf_sub.add_parser("add", help="新增買入紀錄")
+    p_pf_add.add_argument("code")
+    p_pf_add.add_argument("entry_price", type=float, help="買入價")
+    p_pf_add.add_argument("quantity", type=int, help="買入股數")
+    p_pf_add.add_argument("--note", default="", help="備注")
+    p_pf_add.set_defaults(func=cmd_portfolio_add)
+
+    p_pf_list = pf_sub.add_parser("list", help="顯示未平倉持倉")
+    p_pf_list.set_defaults(func=cmd_portfolio_list)
+
+    p_pf_close = pf_sub.add_parser("close", help="平倉")
+    p_pf_close.add_argument("code")
+    p_pf_close.add_argument("lot_id", help="lot ID（前8碼即可唯一識別）")
+    p_pf_close.add_argument("exit_price", type=float, help="賣出價")
+    p_pf_close.set_defaults(func=cmd_portfolio_close)
 
     return p
 
