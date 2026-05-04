@@ -124,6 +124,29 @@ export interface WatchlistEntry {
   start_price: number;
 }
 
+export interface PortfolioLot {
+  id: string;
+  code: string;
+  name: string;
+  entry_price: number;
+  quantity: number;
+  entry_date: string;
+  exit_price: number | null;
+  exit_date: string | null;
+  note: string;
+  current_price: number | null;
+  unrealized_pnl: number | null;
+  return_pct: number | null;
+}
+
+export interface PortfolioEntry {
+  code: string;
+  name: string;
+  lots: PortfolioLot[];
+  total_cost: number;
+  total_unrealized_pnl: number | null;
+}
+
 // Simulation types
 export interface CandidateEntry {
   code: string;
