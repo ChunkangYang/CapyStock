@@ -47,7 +47,7 @@
 <div class="simulation-page">
   <div class="header">
     <h1>模擬交易</h1>
-    <a href="/simulation/new" class="btn btn-primary">+ 新モデル</a>
+    <a href="/simulation/new" class="btn btn-primary">+ 新建模擬</a>
   </div>
 
   {#if error}

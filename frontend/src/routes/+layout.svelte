@@ -62,6 +62,11 @@
         </a>
       </li>
       <li>
+        <a href="/data" class:active={currentPath.startsWith('/data')}>
+          資料管理
+        </a>
+      </li>
+      <li>
         <a href="/settings/notifications" class:active={currentPath.startsWith('/settings')}>
           設定
         </a>
