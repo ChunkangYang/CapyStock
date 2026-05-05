@@ -170,30 +170,31 @@ cd frontend && npm install && npm run dev
 **步驟**：開啟 `/`
 **預期**：
 - 載入無 console 錯誤
-- 顯示「追蹤清單」、「Top Signals」、「Top Dividend」三區塊
-- 無 snapshot 時顯示「尚無快照，請至資料管理」提示而非整頁錯誤
+- 顯示「持倉狀態」、「追蹤清單」、「今日訊號」、「金雞 Top」四個區塊
+- 無 snapshot 時「今日訊號」與「金雞 Top」顯示「尚無快照，請至資料管理」提示而非整頁錯誤
 
 #### TC-UI-02 SPA 路由 fallback
 **步驟**：直接於瀏覽器網址列輸入 `/signals/7203` 並重新整理
 **預期**：FastAPI catch-all 回傳 SPA index，路由正常解析（不出現 FastAPI 404 JSON）
 
 #### TC-UI-03 全域導航
-**步驟**：點擊側欄 / 上方所有連結
-**預期**：投機（Signals）/ 金雞（Dividend）/ 比較 / 模擬 / Sweep / 資料 / 設定 全部可達且高亮目前頁
+**步驟**：點擊側欄所有連結
+**預期**：Dashboard / 投機訊號 / 投機對比 / 金雞高股息 / 金雞對比 / 持倉管理 / 追蹤清單 / 我的最愛 / 模擬交易 / 設定 全部可達且高亮目前頁
 
 ---
 
-### 群組 D：投機儀表板（S5 / S17）
+### 群組 D：投機訊號（S5 / S17）
 
 #### TC-SIG-01 列表頁
-**步驟**：`/signals`
+**步驟**：前往「投機訊號」（`/signals`）
 **預期**：
+- 頁面顯示「投機訊號」標題
 - 表格依 score 排序
-- 可篩選 / 翻頁
-- 無 snapshot 時顯示空狀態指引
+- 可切換「全市場訊號」/「我的持倉」/「我的最愛」分頁
+- 無 snapshot 時顯示「尚無投機訊號掃描快照」空狀態指引
 
 #### TC-SIG-02 個股頁
-**步驟**：`/signals/7203`
+**步驟**：前往「投機訊號」 → 點入個股（`/signals/7203`）
 **預期**：
 - 上方 K 線 / 收盤折線
 - 指標 toolbar：RSI / MACD / BB / SMA / EMA / ATR / KD 可勾選
@@ -201,19 +202,19 @@ cd frontend && npm install && npm run dev
 - 指標訊號卡片（買賣建議）顯示
 
 #### TC-SIG-03 收藏切換
-**步驟**：點 ★
-**預期**：立即變色，重新整理仍保留（store 為 Record-based，FavoriteToggle 不噴 `r.filter is not a function`）
+**步驟**：在投機訊號個股頁點 ★
+**預期**：立即變色，重新整理仍保留（store 為 Record-based，不噴 `r.filter is not a function`）
 
 ---
 
-### 群組 E：金雞儀表板（S6）
+### 群組 E：金雞高股息（S6）
 
 #### TC-DIV-01 列表頁
-**步驟**：`/dividend`
-**預期**：欄位含 est_yield、payout_ratio、健康評等；可排序
+**步驟**：前往「金雞高股息」（`/dividend`）
+**預期**：頁面顯示「金雞高股息」標題；欄位含 est_yield、payout_ratio、健康評等；可排序
 
 #### TC-DIV-02 個股頁
-**步驟**：`/dividend/7203`
+**步驟**：前往「金雞高股息」 → 點入個股（`/dividend/7203`）
 **預期**：歷史配息、殖利率走勢、基本面 8 指標雷達 / 表格
 
 ---
@@ -221,11 +222,11 @@ cd frontend && npm install && npm run dev
 ### 群組 F：比較模式（S16）
 
 #### TC-CMP-01 投機對比
-**步驟**：`/compare?codes=7203,9432,6758`
+**步驟**：前往「投機對比」（`/compare?codes=7203,9432,6758`）
 **預期**：相關性矩陣熱圖 + 對齊後價格走勢
 
 #### TC-CMP-02 金雞對比
-**步驟**：`/dividend/compare?codes=7203,9432`
+**步驟**：前往「金雞對比」（`/dividend/compare?codes=7203,9432`）
 **預期**：殖利率 / 配息歷史對比表
 
 ---
@@ -233,7 +234,7 @@ cd frontend && npm install && npm run dev
 ### 群組 G：模擬交易（S7 / S8 / S18）
 
 #### TC-SIM-01 建立模擬（基本）
-**步驟**：`/simulation/new` → Step1 標的 → Step2 區間/資金 → Step3 條件 → 送出
+**步驟**：前往「模擬交易」（`/simulation`）→ 點「+ 新建模擬」→ Step1 標的 → Step2 區間/資金 → Step3 條件 → 送出
 **預期**：跳轉 `/simulation/[id]` 顯示權益曲線、交易明細、績效指標
 
 #### TC-SIM-02 技術指標條件
@@ -241,50 +242,50 @@ cd frontend && npm install && npm run dev
 **預期**：報告中 strategy_type 標示為「技術指標」，出場原因分布含 indicator_exit
 
 #### TC-SIM-03 模擬列表
-**步驟**：`/simulation`
+**步驟**：前往「模擬交易」（`/simulation`）
 **預期**：列出 `data/simulations/*.json` 全部結果，可點入
 
 ---
 
-### 群組 H：策略 Sweep（S22）
+### 群組 H：策略參數 Sweep（S22）
 
 #### TC-SWP-01 啟動 sweep
-**步驟**：`/simulation/sweep` 設定 ParamGrid（如 RSI 進場 25/30/35 × 出場 65/70/75）→ Run
+**步驟**：前往「模擬交易」→「策略參數 Sweep（網格回測）」（`/simulation/sweep`）→ 設定參數網格（如停損 5/8/10 × 獲利了結 15/20/25）→ 點「執行 Sweep」
 **預期**：
 - SSE 即時更新進度
-- 完成後顯示熱圖（兩參數網格 × Sharpe / 報酬）
+- 完成後顯示熱圖（stop_loss × take_profit → 總報酬%）
 - 排行榜 Top N
 
 #### TC-SWP-02 取消 sweep
 **步驟**：執行中按取消
-**預期**：DELETE `/sweep/{job_id}` 成功，UI 回到 idle
+**預期**：後端（`DELETE /api/v1/sweep/{job_id}`）成功，UI 回到 idle
 
 ---
 
 ### 群組 I：通知與排程（S9–S12）
 
 #### TC-NTF-01 通道設定
-**步驟**：`/settings/notifications` → 啟用 Email、填寫 SMTP；啟用 LINE Notify token
+**步驟**：前往「設定」→「通知」（`/settings/notifications`）→ 在「Channels」區塊啟用 Email、填寫 SMTP；啟用 LINE Notify token
 **預期**：寫入設定檔；連線測試按鈕顯示成功 / 失敗
 
 #### TC-NTF-02 規則
-**步驟**：建立規則「投機 score≥80 即時 push」、「每日 18:00 digest」
-**預期**：保存後可見列表；可啟停
+**步驟**：在「設定」→「通知」頁的「Rules」區塊，點「+ 新規則」，建立「投機 score≥80 即時 push」、「每日 18:00 digest」
+**預期**：保存後在 Rules 清單可見；可啟停
 
 #### TC-NTF-03 排程
-**步驟**：`/settings/scheduler` 啟用 daily_pipeline，設 09:30 / 18:00
+**步驟**：前往「設定」→「排程」（`/settings/scheduler`）啟用 daily_pipeline，設 09:30 / 18:00
 **預期**：APScheduler 註冊；下次執行時間正確顯示
 
 #### TC-NTF-04 健康監控
-**步驟**：`/settings/health`
+**步驟**：前往「設定」→「健康」（`/settings/health`）
 **預期**：顯示最近 N 次 job 執行紀錄、成功 / 失敗、耗時、錯誤訊息
 
 ---
 
-### 群組 J：資料 Ingest（S19 / S20 / S23）
+### 群組 J：資料管理（S19 / S20 / S23）
 
 #### TC-ING-01 信用残自動抓取
-**步驟**：`/data/ingest` 選 7203 → margin → Run
+**步驟**：前往「資料管理」（`/data`）→ 點「批量抓取」→ 選 7203 → margin → Run（API: `POST /api/v1/ingest/margin`）
 **預期**：fallback chain（yahoo → minkabu）任一成功即寫入 `data/cache/7203_margin.csv`；UI 顯示來源與筆數
 
 #### TC-ING-02 投資部門別（個股估算）
@@ -292,19 +293,19 @@ cd frontend && npm install && npm run dev
 **預期**：寫入 `{code}_flow.csv`
 
 #### TC-ING-03 JPX 週報
-**步驟**：POST `/ingest/jpx-weekly`（或 UI 觸發）
-**預期**：下載解析 Excel；GET `/ingest/market-flow` 可讀取
+**步驟**：在「資料管理」觸發 JPX 週報（API: `POST /api/v1/ingest/jpx-weekly`）
+**預期**：下載解析 Excel；API `GET /api/v1/ingest/market-flow` 可讀取
 
 #### TC-ING-04 手動上傳
-**步驟**：`/data/upload` 拖入 CSV（含 alias 欄名如 `週,信用買残,信用売残`）
+**步驟**：在「資料管理」點「上傳資料」（`/data`）→ 拖入 CSV（含 alias 欄名如 `週,信用買残,信用売残`）
 **預期**：預覽欄位 normalize 後正確；確認後寫入 cache
 
 #### TC-ING-05 資料總覽
-**步驟**：`/data`
-**預期**：每檔股票顯示 price / margin / flow cache 狀態與最新日期；過舊以紅 / 黃顏色警示
+**步驟**：前往「資料管理」（`/data`）
+**預期**：每檔股票顯示 price / margin / flow cache 狀態與最新日期；過舊以紅（>30日）/ 黃（7–30日）顏色警示
 
 #### TC-ING-06 批量 ingest（SSE）
-**步驟**：`/data/ingest` 全選 → Run All
+**步驟**：在「資料管理」點「批量抓取」→ 全選 → Run All
 **預期**：SSE 即時逐檔回報成功 / 失敗
 
 ---
@@ -312,15 +313,15 @@ cd frontend && npm install && npm run dev
 ### 群組 K：分析增強（S15 / S21）
 
 #### TC-ANL-01 指標 API
-**步驟**：GET `/indicators/7203?series=rsi,macd,bb`
+**步驟**：`GET /api/v1/indicators/7203?series=rsi,macd,bb`
 **預期**：JSON 含時序，數值與 capystock 計算一致
 
 #### TC-ANL-02 異常偵測
-**步驟**：GET `/analytics/anomaly/7203?days=60`
+**步驟**：`GET /api/v1/analytics/anomaly/7203?days=60`
 **預期**：列出 volume_spike / price_jump / gap_up / gap_down 事件，附 z-score
 
 #### TC-ANL-03 事件研究
-**步驟**：POST `/analytics/event-study/7203` body 含事件日期清單
+**步驟**：`POST /api/v1/analytics/event-study/7203` body 含事件日期清單
 **預期**：回傳 AR / AAR / CAR 序列（事件窗口 ±N 日）
 
 ---
@@ -356,7 +357,7 @@ cd frontend && npm install && npm run dev
 **預期**：fade-in / fade-out 平滑，無閃爍
 
 #### TC-REG-02 Channel dot 即時更新
-**步驟**：`/settings/notifications` 切換通道狀態
+**步驟**：前往「設定」→「通知」（`/settings/notifications`）→ 在「Channels」區塊切換通道狀態
 **預期**：頁首通道狀態小點即時換色，無需重新整理
 
 #### TC-REG-03 SPA 直連深層路由
