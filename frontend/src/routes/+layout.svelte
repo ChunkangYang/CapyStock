@@ -44,6 +44,11 @@
         </a>
       </li>
       <li>
+        <a href="/watchlist" class:active={currentPath.startsWith('/watchlist')}>
+          追蹤清單
+        </a>
+      </li>
+      <li>
         <a href="/favorites" class:active={currentPath.startsWith('/favorites')}>
           我的最愛
         </a>

@@ -1,7 +1,7 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-05-04（S25 持倉管理：CLI portfolio / API /portfolio / Dashboard 4 區塊 / /portfolio 管理頁）
+2026-05-05（IMP-001：新增 /watchlist 前端追蹤清單管理頁）
 
 ## 目前待做（下一步）
 - ✅ **Milestone 3：Web UI（FastAPI + SvelteKit）** — 全部完成（S1–S8）— 詳見 [MILESTONE_03.md](MILESTONE_03.md)
@@ -24,6 +24,7 @@
     - `frontend/src/lib/components/FavoriteToggle.svelte`：將 array-based 操作改為 Record-based（修 `r.filter is not a function`）
     - `frontend/src/routes/dividend/+page.svelte`、`signals/+page.svelte`：404（無 snapshot）視為空狀態，提示「尚無快照，請至資料管理」
     - Playwright 驗證 `/dividend`、`/signals`、`/signals/7203` 皆 200 + 空狀態正確顯示
+  - ✅ IMP-001：/watchlist 前端追蹤清單管理頁（2026-05-05）
   - 修復 BUG-001（toast 動畫 + channel dot 更新）
   - 評估是否規劃 M8
 
