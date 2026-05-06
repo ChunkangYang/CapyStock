@@ -20,6 +20,16 @@
 
   const COLORS = ['#4ade80', '#60a5fa', '#f97316', '#e879f9', '#facc15'];
   const SCORE_COLOR: Record<string, string> = { PASS: '#4ade80', WARN: '#facc15', FAIL: '#f87171', 'N/A': '#666' };
+  const METRIC_ZH: Record<string, string> = {
+    sales:        '營業收入',
+    eps:          '每股盈餘（EPS）',
+    op_margin:    '營業利益率',
+    equity_ratio: '自有資本比率',
+    op_cf:        '營業現金流',
+    cash:         '現金及等價物',
+    dps:          '每股配息（DPS）',
+    payout:       '配息率',
+  };
 
   let inputCode = '';
   let codes: string[] = [];
@@ -178,7 +188,7 @@
                 y2={200 + 150 * Math.sin(angle)}
                 stroke="#444" stroke-width="1" />
               {@const lp = labelPos(i, metrics.length, 200, 200, 150)}
-              <text x={lp.x} y={lp.y} text-anchor="middle" dominant-baseline="middle" fill="#888" font-size="10">{m}</text>
+              <text x={lp.x} y={lp.y} text-anchor="middle" dominant-baseline="middle" fill="#888" font-size="10">{METRIC_ZH[m] ?? m}</text>
             {/each}
             <!-- 各 code -->
             {#each bundle.codes as code, ci}
@@ -246,7 +256,7 @@
           <tbody>
             {#each metrics as m}
               <tr>
-                <td>{m}</td>
+                <td>{METRIC_ZH[m] ?? m}</td>
                 {#each bundle.codes as code}
                   {@const rpt = bundle.fundamentals[code]}
                   {@const met = rpt?.metrics.find(x => x.metric === m)}

@@ -49,7 +49,7 @@ METRIC_DISPLAY = {
 
 # IR Bank 頁面表格 row label 關鍵字（模糊比對）
 METRIC_LABELS = {
-    "sales":        ("売上高", "売上収益"),
+    "sales":        ("売上高", "売上収益", "営業収益", "経常収益"),
     "eps":          ("EPS", "一株当り利益", "1株当り利益", "一株利益"),
     "op_margin":    ("営業利益率",),
     "equity_ratio": ("自己資本比率",),
@@ -181,6 +181,9 @@ def _scrape_tables(html: str) -> list[dict[str, list[str]]]:
 _RESULTS_COL_MAP: dict[str, str] = {
     "売上":        "sales",
     "売上高":      "sales",
+    "売上収益":    "sales",
+    "営業収益":    "sales",
+    "経常収益":    "sales",
     "EPS":         "eps",
     "営利率":      "op_margin",
     "営業利益率":  "op_margin",
