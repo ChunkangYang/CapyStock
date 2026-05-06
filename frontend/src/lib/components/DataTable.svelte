@@ -1,5 +1,6 @@
 <script lang="ts">
   import FavoriteToggle from './FavoriteToggle.svelte';
+  import { favorites } from '$lib/stores/favorites';
   import type { SignalScanRow } from '$lib/types';
 
   export let data: SignalScanRow[] = [];
@@ -7,8 +8,20 @@
   export let onRefreshRow: ((code: string) => void) | null = null;
   export let refreshingCodes: Set<string> = new Set();
 
-  type SortKey = 'score' | 'latest_price' | 'edinet_recent_count';
+  type SortKey = 'favorite' | 'code' | 'name' | 'latest_price' | 'c1' | 'c2' | 'c3' | 'edinet_recent_count' | 'score';
   type SortOrder = 'asc' | 'desc';
+
+  const DEFAULT_ORDER: Record<SortKey, SortOrder> = {
+    favorite: 'desc',
+    code: 'asc',
+    name: 'asc',
+    latest_price: 'desc',
+    c1: 'desc',
+    c2: 'desc',
+    c3: 'desc',
+    edinet_recent_count: 'desc',
+    score: 'desc',
+  };
 
   let sortKey: SortKey = 'score';
   let sortOrder: SortOrder = 'desc';
@@ -17,6 +30,20 @@
   let filterExit = false;
   let filterStopLoss = false;
   let minScore = 0;
+
+  function getSortValue(row: SignalScanRow, key: SortKey, favMap: Record<string, { tags: string[] }>): number | string {
+    switch (key) {
+      case 'favorite': return favMap[row.code]?.tags?.includes('speculative') ? 1 : 0;
+      case 'code': return row.code;
+      case 'name': return row.name;
+      case 'latest_price': return row.latest_price ?? 0;
+      case 'c1': return row.has_accumulation ? 1 : 0;
+      case 'c2': return row.has_exit ? 1 : 0;
+      case 'c3': return row.has_stop_loss ? 1 : 0;
+      case 'edinet_recent_count': return row.edinet_recent_count ?? 0;
+      case 'score': return row.score ?? 0;
+    }
+  }
 
   $: filteredData = data.filter(row => {
     if (filterAccumulation && !row.has_accumulation) return false;
@@ -27,12 +54,17 @@
   });
 
   $: sortedData = [...filteredData].sort((a, b) => {
-    let aVal = a[sortKey];
-    let bVal = b[sortKey];
-    if (aVal === null || aVal === undefined) aVal = 0;
-    if (bVal === null || bVal === undefined) bVal = 0;
+    const aVal = getSortValue(a, sortKey, $favorites as Record<string, { tags: string[] }>);
+    const bVal = getSortValue(b, sortKey, $favorites as Record<string, { tags: string[] }>);
 
-    const compare = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+    if (typeof aVal === 'string' && typeof bVal === 'string') {
+      const compare = aVal.localeCompare(bVal, 'ja');
+      return sortOrder === 'asc' ? compare : -compare;
+    }
+
+    const an = aVal as number;
+    const bn = bVal as number;
+    const compare = an < bn ? -1 : an > bn ? 1 : 0;
     return sortOrder === 'asc' ? compare : -compare;
   });
 
@@ -41,7 +73,7 @@
       sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
     } else {
       sortKey = key;
-      sortOrder = 'desc';
+      sortOrder = DEFAULT_ORDER[key];
     }
   }
 
@@ -82,35 +114,50 @@
   <table>
     <thead>
       <tr>
-        <th>★</th>
-        <th>代號</th>
-        <th>名稱</th>
         <th>
-          <button class="sort-btn" on:click={() => toggleSort('latest_price')}>
-            價格
-            {#if sortKey === 'latest_price'}
-              {sortOrder === 'asc' ? '▲' : '▼'}
-            {/if}
+          <button class="sort-btn" class:active={sortKey === 'favorite'} on:click={() => toggleSort('favorite')}>
+            ★{#if sortKey === 'favorite'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
-        <th>C1</th>
-        <th>C2</th>
-        <th>C3</th>
+        <th>
+          <button class="sort-btn" class:active={sortKey === 'code'} on:click={() => toggleSort('code')}>
+            代號{#if sortKey === 'code'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+          </button>
+        </th>
+        <th>
+          <button class="sort-btn" class:active={sortKey === 'name'} on:click={() => toggleSort('name')}>
+            名稱{#if sortKey === 'name'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+          </button>
+        </th>
+        <th>
+          <button class="sort-btn" class:active={sortKey === 'latest_price'} on:click={() => toggleSort('latest_price')}>
+            價格{#if sortKey === 'latest_price'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+          </button>
+        </th>
+        <th>
+          <button class="sort-btn" class:active={sortKey === 'c1'} on:click={() => toggleSort('c1')}>
+            C1{#if sortKey === 'c1'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+          </button>
+        </th>
+        <th>
+          <button class="sort-btn" class:active={sortKey === 'c2'} on:click={() => toggleSort('c2')}>
+            C2{#if sortKey === 'c2'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+          </button>
+        </th>
+        <th>
+          <button class="sort-btn" class:active={sortKey === 'c3'} on:click={() => toggleSort('c3')}>
+            C3{#if sortKey === 'c3'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+          </button>
+        </th>
         <th>訊號</th>
         <th>
-          <button class="sort-btn" on:click={() => toggleSort('edinet_recent_count')}>
-            EDINET
-            {#if sortKey === 'edinet_recent_count'}
-              {sortOrder === 'asc' ? '▲' : '▼'}
-            {/if}
+          <button class="sort-btn" class:active={sortKey === 'edinet_recent_count'} on:click={() => toggleSort('edinet_recent_count')}>
+            EDINET{#if sortKey === 'edinet_recent_count'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
         <th>
-          <button class="sort-btn" on:click={() => toggleSort('score')}>
-            Score
-            {#if sortKey === 'score'}
-              {sortOrder === 'asc' ? '▲' : '▼'}
-            {/if}
+          <button class="sort-btn" class:active={sortKey === 'score'} on:click={() => toggleSort('score')}>
+            Score{#if sortKey === 'score'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
         {#if onRefreshRow}
@@ -284,6 +331,10 @@
   }
 
   .sort-btn:hover {
+    color: #4ade80;
+  }
+
+  .sort-btn.active {
     color: #4ade80;
   }
 
