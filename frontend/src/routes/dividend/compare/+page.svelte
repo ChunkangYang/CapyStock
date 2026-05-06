@@ -16,7 +16,7 @@
     dividend_history: Record<string, DpsRow[]>;
     radar_normalized: Record<string, Record<string, float>>;
   };
-  type WatchlistRow = { code: string; name: string; start_price: number };
+  type DividendScanRow = { code: string; name: string; overall: string; est_yield: number | null };
 
   const COLORS = ['#4ade80', '#60a5fa', '#f97316', '#e879f9', '#facc15'];
   const SCORE_COLOR: Record<string, string> = { PASS: '#4ade80', WARN: '#facc15', FAIL: '#f87171', 'N/A': '#666' };
@@ -30,7 +30,7 @@
   // picker state
   let pickerOpen = false;
   let pickerLoading = false;
-  let pickerRows: WatchlistRow[] = [];
+  let pickerRows: DividendScanRow[] = [];
   let pickerSelected: Set<string> = new Set();
 
   onMount(() => {
@@ -70,7 +70,8 @@
     if (pickerRows.length === 0) {
       pickerLoading = true;
       try {
-        pickerRows = await api<WatchlistRow[]>('/watchlist');
+        pickerRows = await api<DividendScanRow[]>('/scan/dividend');
+        pickerRows = pickerRows.sort((a, b) => (b.est_yield ?? 0) - (a.est_yield ?? 0));
       } catch {
         pickerRows = [];
       } finally {
@@ -270,13 +271,13 @@
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="picker-modal" on:click|stopPropagation>
       <div class="picker-header">
-        <span>從追蹤清單選取（最多 5 檔）</span>
+        <span>從高股息掃描清單選取（最多 5 檔）</span>
         <button class="close-btn" on:click={() => (pickerOpen = false)}>✕</button>
       </div>
       {#if pickerLoading}
         <div class="picker-loading"><LoadingSpinner /></div>
       {:else if pickerRows.length === 0}
-        <p class="picker-empty">追蹤清單為空</p>
+        <p class="picker-empty">尚無高股息掃描快照</p>
       {:else}
         <div class="picker-list">
           {#each pickerRows as row}
@@ -299,6 +300,10 @@
               />
               <span class="picker-code">{row.code}</span>
               <span class="picker-name">{row.name}</span>
+              <span class="picker-overall" style="color:{row.overall === 'PASS' ? '#4ade80' : row.overall === 'WARN' ? '#facc15' : '#f87171'}">{row.overall}</span>
+              {#if row.est_yield != null}
+                <span class="picker-yield">{(row.est_yield * 100).toFixed(1)}%</span>
+              {/if}
             </div>
           {/each}
         </div>
@@ -375,6 +380,8 @@
   .picker-row.disabled { opacity: 0.4; cursor: default; }
   .picker-code { font-size: 13px; font-weight: bold; color: #fff; width: 56px; flex-shrink: 0; }
   .picker-name { font-size: 13px; color: #a1a1a1; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .picker-overall { font-size: 12px; flex-shrink: 0; font-weight: bold; }
+  .picker-yield { font-size: 12px; color: #4ade80; flex-shrink: 0; min-width: 40px; text-align: right; }
   .picker-footer {
     display: flex; justify-content: space-between; align-items: center;
     padding: 12px 16px; border-top: 1px solid #333;
