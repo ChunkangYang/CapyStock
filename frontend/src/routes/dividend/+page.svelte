@@ -183,8 +183,8 @@
       <input
         type="range"
         min="0"
-        max="10"
-        step="0.1"
+        max="0.15"
+        step="0.001"
         bind:value={filters.minYield}
         on:change={() => applyFiltersAndSort()}
       />
@@ -207,8 +207,8 @@
       <input
         type="range"
         min="0"
-        max="80"
-        step="1"
+        max="1.0"
+        step="0.01"
         bind:value={filters.minEquityRatio}
         on:change={() => applyFiltersAndSort()}
       />
