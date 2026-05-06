@@ -50,7 +50,7 @@
 
   async function load() {
     if (!codes.length) return;
-    const cacheKey = `${codes.join(',')}:${days}`;
+    const cacheKey = `${[...codes].sort().join(',')}:${days}`;
     if (bundleCache.has(cacheKey)) {
       bundle = bundleCache.get(cacheKey)!;
       goto(`/compare?codes=${codes.join(',')}&days=${days}`, { replaceState: true });
