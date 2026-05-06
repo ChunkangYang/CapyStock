@@ -92,12 +92,13 @@ def run_simulation(sim_id: str):
                 try:
                     prices = signal_service.get_price_history(cand.code, days=days_needed)
                     price_cache[cand.code] = {
-                        p.date: {"open": p.open, "close": p.close} for p in prices
+                        p.date: {"open": p.open, "high": p.high, "low": p.low, "close": p.close, "volume": p.volume}
+                        for p in prices
                     }
                 except Exception:
                     pass
 
-            sim = simulation_service.run_backtest(sim_id, signal_service, price_cache, indicator_service=get_indicator_service())
+            sim = simulation_service.run_backtest(sim_id, signal_service, price_cache)
             return sim
         elif sim.config.kind == "paper":
             sim.status = "running"

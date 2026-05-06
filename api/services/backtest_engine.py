@@ -18,15 +18,33 @@ def check_indicator_condition(
     today: date,
     conds: list[IndicatorCondition],
     logic: str,
-    indicator_service,
+    price_cache: dict,
 ) -> bool:
-    """檢查技術指標條件是否成立。"""
+    """從 price_cache 計算歷史指標，檢查 today 當日條件是否成立。"""
     if not conds:
         return True
     try:
-        bundle = indicator_service.get_bundle(code, days=120)
-        today_signals = {s.name for s in bundle.signals if s.date == today}
-        matches = [c.type in today_signals for c in conds]
+        from capystock.indicators import PriceBar, detect_signals
+        code_cache = price_cache.get(code, {})
+        if not code_cache:
+            return False
+        sorted_dates = sorted(d for d in code_cache if d <= today)
+        if len(sorted_dates) < 27:
+            return False
+        bars = [
+            PriceBar(
+                date=d,
+                open=code_cache[d].get("open", code_cache[d]["close"]),
+                high=code_cache[d].get("high", code_cache[d]["close"]),
+                low=code_cache[d].get("low", code_cache[d]["close"]),
+                close=code_cache[d]["close"],
+                volume=code_cache[d].get("volume", 0.0),
+            )
+            for d in sorted_dates
+        ]
+        signals = detect_signals(bars, today, lookback_days=1)
+        signal_names = {s.name for s in signals}
+        matches = [c.type in signal_names for c in conds]
         return all(matches) if logic == "and" else any(matches)
     except Exception:
         return False
@@ -132,8 +150,7 @@ def run_one_day(
     sim: Simulation,
     today: date,
     signal_service,
-    price_cache: dict,  # {code: {date: {close, open}}}
-    indicator_service=None,
+    price_cache: dict,  # {code: {date: {open, high, low, close, volume}}}
 ) -> None:
     """執行一天的回測邏輯。
 
@@ -183,12 +200,12 @@ def run_one_day(
         # paper trading 的推進邏輯才做此檢查
 
         # 檢查技術指標進場條件
-        if cfg.entry_rule.indicator_entry and indicator_service is not None:
+        if cfg.entry_rule.indicator_entry:
             if not check_indicator_condition(
                 cand.code, today,
                 cfg.entry_rule.indicator_entry,
                 cfg.entry_rule.indicator_entry_logic,
-                indicator_service,
+                price_cache,
             ):
                 continue
 
@@ -265,12 +282,12 @@ def run_one_day(
 
         # 檢查技術指標出場條件
         has_indicator_exit = False
-        if cfg.exit_rule.indicator_exit and indicator_service is not None:
+        if cfg.exit_rule.indicator_exit:
             has_indicator_exit = check_indicator_condition(
                 pos.code, today,
                 cfg.exit_rule.indicator_exit,
                 cfg.exit_rule.indicator_exit_logic,
-                indicator_service,
+                price_cache,
             )
 
         # 決定出場原因
@@ -367,7 +384,6 @@ def run_backtest(
     sim: Simulation,
     signal_service,
     price_cache: dict,
-    indicator_service=None,
 ) -> None:
     """執行完整回測：從 start_date 走到 end_date。"""
     cfg = sim.config
@@ -377,7 +393,7 @@ def run_backtest(
     end = cfg.end_date or current
 
     while current <= end:
-        run_one_day(sim, current, signal_service, price_cache, indicator_service=indicator_service)
+        run_one_day(sim, current, signal_service, price_cache)
         current += timedelta(days=1)
 
     # 結束時平倉所有部位（end_of_sim）

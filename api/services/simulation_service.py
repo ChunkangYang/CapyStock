@@ -113,7 +113,7 @@ class SimulationService:
         self._save(sim)
         return sim
 
-    def run_backtest(self, sim_id: str, signal_service, price_cache: dict, indicator_service=None) -> Simulation:
+    def run_backtest(self, sim_id: str, signal_service, price_cache: dict) -> Simulation:
         """執行回測。"""
         sim = self.get(sim_id)
         if sim is None:
@@ -125,7 +125,7 @@ class SimulationService:
         self._save(sim)
 
         try:
-            _engine_run_backtest(sim, signal_service, price_cache, indicator_service=indicator_service)
+            _engine_run_backtest(sim, signal_service, price_cache)
             sim.status = "completed"
         except Exception as e:
             sim.status = "failed"
@@ -317,10 +317,10 @@ def add_candidate(
 
 
 def run_backtest(
-    sim_id: str, signal_service, price_cache: dict, indicator_service=None
+    sim_id: str, signal_service, price_cache: dict
 ) -> Simulation:
     """執行回測。"""
-    return _get_service().run_backtest(sim_id, signal_service, price_cache, indicator_service=indicator_service)
+    return _get_service().run_backtest(sim_id, signal_service, price_cache)
 
 
 def advance_paper(
