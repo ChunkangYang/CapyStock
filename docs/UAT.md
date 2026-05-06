@@ -173,13 +173,13 @@ cd frontend && npm install && npm run dev
 - 頁面標題顯示「Dashboard」
 - 顯示四張卡片，標題依序為「持倉狀態」、「追蹤清單」、「今日訊號」、「金雞 Top」
 - 持倉卡片空狀態：「尚無持倉。請至 持倉管理 新增買入記錄。」
-- 追蹤清單卡片空狀態：「追蹤清單為空。使用 CLI `add` 加入關注股票。」
+- 追蹤清單卡片空狀態：「追蹤清單為空。請至 追蹤清單 新增關注股票。」
 - 今日訊號 / 金雞 Top 空狀態：「暫無訊號」、「暫無資料」
-- 無 snapshot 時頁面上方提示：「尚無快照，請至資料管理執行掃描或等待 daily_pipeline 排程。」
+- 頁面上方橫幅提示：「尚無快照，請至資料管理執行掃描或等待 daily_pipeline 排程。」
 
 #### TC-UI-02 SPA 路由 fallback
 **步驟**：直接於瀏覽器網址列輸入 `/signals/7203` 並重新整理
-**預期**：FastAPI catch-all 回傳 SPA index，路由正常解析（不出現 FastAPI 404 JSON）
+**預期**：直接顯示頁面內容，不出現 404 錯誤訊息
 
 #### TC-UI-03 全域導航
 **步驟**：點擊側欄所有連結
@@ -195,7 +195,7 @@ cd frontend && npm install && npm run dev
 - 頁面標題：「投機訊號」
 - 表格依 score 排序
 - 分頁按鈕：「全市場訊號」、「我的持倉」、「我的最愛」
-- 無 snapshot 時顯示：「尚無投機訊號掃描快照。請至 資料管理 或執行掃描排程後再回來。」
+- 空資料時顯示：「尚無投機訊號掃描快照。請至 資料管理 或執行掃描排程後再回來。」
 
 #### TC-SIG-02 個股頁
 **步驟**：前往「投機訊號」 → 點入個股（`/signals/7203`）
@@ -220,7 +220,7 @@ cd frontend && npm install && npm run dev
 - 表格欄位依序：★ / Code / Name / Overall / DPS / Yield / 連無減配 / Payout Avg / 自己資本比 / EPS Growth / 指標
 - 篩選器標籤：Overall / 殖利率最低值 / 無減配年數 / 自己資本比率 / 配當性向上限 / 只看我的最愛
 - 表格可點擊欄位標題排序
-- 無 snapshot 時顯示：「尚無金雞掃描快照。請至 資料管理 或執行掃描排程後再回來。」
+- 空資料時顯示：「尚無金雞掃描快照。請至 資料管理 或執行掃描排程後再回來。」
 
 #### TC-DIV-02 個股頁
 **步驟**：前往「金雞高股息」 → 點入個股（`/dividend/7203`）
@@ -317,7 +317,7 @@ cd frontend && npm install && npm run dev
 **預期**：
 - 頁面標題：「資料管理」
 - 右上角按鈕：「批量抓取」（藍）、「上傳資料」（綠）
-- fallback chain（yahoo → minkabu）任一成功即寫入 `data/cache/7203_margin.csv`；UI 顯示來源與筆數
+- 成功後 UI 顯示來源與筆數；資料寫入 `data/cache/7203_margin.csv`
 
 #### TC-ING-02 投資部門別（個股估算）
 **步驟**：同頁，選 flow → Run
@@ -365,7 +365,7 @@ cd frontend && npm install && npm run dev
 
 #### TC-FUN-01 IR Bank 橫向表格解析
 **步驟**：`python -m capystock.main fundamental 3543`（コメダHD）
-**預期**：成功評分（先前舊解析會失敗，S24 修復點）；顯示完整 8 指標
+**預期**：顯示完整 8 指標與評等
 
 #### TC-FUN-02 Partial Data
 **步驟**：對僅有 5–6 項可解析的個股執行 fundamental

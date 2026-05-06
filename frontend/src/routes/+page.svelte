@@ -102,7 +102,7 @@
       <h2>追蹤清單 <span class="count-badge">{watchlist.length}</span></h2>
       <div class="card-content">
         {#if watchlist.length === 0}
-          <p class="empty">追蹤清單為空。使用 CLI <code>add</code> 加入關注股票。</p>
+          <p class="empty">追蹤清單為空。請至 <a href="/watchlist">追蹤清單</a> 新增關注股票。</p>
         {:else}
           <div class="watchlist-list">
             {#each watchlist.slice(0, 5) as entry}
