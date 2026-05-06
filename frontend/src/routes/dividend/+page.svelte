@@ -69,10 +69,10 @@
 
     let result = rows.filter((row) => {
       if (!filters.overall.has(row.overall)) return false;
-      if (row.est_yield < filters.minYield) return false;
+      if (filters.minYield > 0 && (row.est_yield == null || row.est_yield < filters.minYield)) return false;
       if (row.dps_streak_no_cut < filters.minDpsStreak) return false;
-      if (row.equity_ratio_latest < filters.minEquityRatio) return false;
-      if (row.payout_avg > filters.maxPayoutRatio) return false;
+      if (filters.minEquityRatio > 0 && (row.equity_ratio_latest == null || row.equity_ratio_latest < filters.minEquityRatio)) return false;
+      if (row.payout_avg != null && row.payout_avg * 100 > filters.maxPayoutRatio) return false;
       if (filters.onlyFavorites && !favoriteSet.has(row.code)) return false;
       return true;
     });
@@ -249,12 +249,12 @@
             <td class="overall" style="color: {getOverallColor(row.overall)}">
               {row.overall}
             </td>
-            <td class="number">{row.latest_dps.toFixed(2)}</td>
-            <td class="number">{(row.est_yield * 100).toFixed(2)}%</td>
+            <td class="number">{row.latest_dps != null ? row.latest_dps.toFixed(2) : '-'}</td>
+            <td class="number">{row.est_yield != null ? (row.est_yield * 100).toFixed(2) + '%' : '-'}</td>
             <td class="number">{row.dps_streak_no_cut}</td>
-            <td class="number">{(row.payout_avg * 100).toFixed(1)}%</td>
-            <td class="number">{(row.equity_ratio_latest * 100).toFixed(1)}%</td>
-            <td class="number">{(row.eps_growth * 100).toFixed(1)}%</td>
+            <td class="number">{row.payout_avg != null ? (row.payout_avg * 100).toFixed(1) + '%' : '-'}</td>
+            <td class="number">{row.equity_ratio_latest != null ? (row.equity_ratio_latest * 100).toFixed(1) + '%' : '-'}</td>
+            <td class="number">{row.eps_growth != null ? (row.eps_growth * 100).toFixed(1) + '%' : '-'}</td>
             <td class="metrics">
               <div class="stacked-bar">
                 <div
