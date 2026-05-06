@@ -17,6 +17,8 @@
   let error = '';
   let showSuccess = false;
   let successMessage = '';
+  let isRunning = false;
+  let runningMessage = '';
 
   // Step 1: Basic settings
   let name = '';
@@ -189,13 +191,20 @@
       });
 
       if (kind === 'backtest') {
-        await api(`/simulation/${sim.id}/run`, { method: 'POST' });
-        successMessage = `「${name}」回測完成，即將返回模擬交易列表。`;
+        isRunning = true;
+        runningMessage = `「${name}」建立完成，回測執行中…`;
+        try {
+          await api(`/simulation/${sim.id}/run`, { method: 'POST' });
+          successMessage = `「${name}」回測完成！`;
+        } finally {
+          isRunning = false;
+        }
       } else {
-        successMessage = `「${name}」已建立，即將返回模擬交易列表。`;
+        successMessage = `「${name}」已建立。`;
       }
       showSuccess = true;
     } catch (e) {
+      isRunning = false;
       error = e instanceof Error ? e.message : 'Failed to create simulation';
     }
   }
@@ -539,6 +548,15 @@
               <input type="number" bind:value={taxPct} min="0" step="0.0001" />
             </div>
           </div>
+        </div>
+      </div>
+    {/if}
+
+    {#if isRunning}
+      <div class="modal-overlay">
+        <div class="modal-box">
+          <div class="spinner"></div>
+          <p>{runningMessage}</p>
         </div>
       </div>
     {/if}
@@ -900,6 +918,20 @@
     color: #e5e5e5;
     font-size: 16px;
     margin: 0 0 24px 0;
+  }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #333;
+    border-top-color: #4ade80;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 
   .ind-group {
