@@ -121,6 +121,12 @@ class SimulationService:
         if sim.config.kind != "backtest":
             raise ValueError(f"Simulation is not backtest type")
 
+        # 重置 state，讓重新執行從頭開始
+        sim.state = SimulationState(
+            cash=sim.config.initial_capital,
+            cursor_date=sim.config.start_date,
+            pending_entries=sim.config.candidates.copy(),
+        )
         sim.status = "running"
         self._save(sim)
 
