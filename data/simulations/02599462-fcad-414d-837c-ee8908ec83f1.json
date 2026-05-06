@@ -1,0 +1,289 @@
+{
+  "id": "02599462-fcad-414d-837c-ee8908ec83f1",
+  "name": "LOL",
+  "kind": "backtest",
+  "created_at": "2026-05-06T11:37:08.918927",
+  "config": {
+    "kind": "backtest",
+    "initial_capital": 1000000.0,
+    "start_date": "2026-04-01",
+    "end_date": "2026-05-06",
+    "candidates": [
+      {
+        "code": "7203",
+        "name": "\u30c8\u30e8\u30bf\u81ea\u52d5\u8eca",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      }
+    ],
+    "entry_rule": {
+      "price_basis": "next_open",
+      "user_price": null,
+      "require_signal": true,
+      "indicator_entry": [
+        {
+          "type": "bb_breakout_down",
+          "params": {}
+        },
+        {
+          "type": "bb_breakout_up",
+          "params": {}
+        }
+      ],
+      "indicator_entry_logic": "or"
+    },
+    "exit_rule": {
+      "use_exit_signal": true,
+      "use_stop_loss": true,
+      "take_profit_pct": 0.1,
+      "max_hold_days": 30,
+      "exit_price_basis": "next_open",
+      "indicator_exit": [],
+      "indicator_exit_logic": "or"
+    },
+    "position_sizing": {
+      "mode": "equal_weight",
+      "fixed_jpy": null,
+      "fixed_shares": null,
+      "max_concurrent_positions": 10
+    },
+    "cost_model": {
+      "commission_pct": 0.001,
+      "slippage_pct": 0.001,
+      "tax_pct": 0.20315
+    }
+  },
+  "state": {
+    "cash": 1000000.0,
+    "positions": [],
+    "closed_trades": [],
+    "equity_curve": [
+      {
+        "date": "2026-04-01",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-02",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-03",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-04",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-05",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-06",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-07",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-08",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-09",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-10",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-11",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-12",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-13",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-14",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-15",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-16",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-17",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-18",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-19",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-20",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-21",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-22",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-23",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-24",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-25",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-26",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-27",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-28",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-29",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-04-30",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-05-01",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-05-02",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-05-03",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-05-04",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-05-05",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-05-06",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      }
+    ],
+    "cursor_date": "2026-05-06",
+    "pending_entries": [
+      {
+        "code": "7203",
+        "name": "\u30c8\u30e8\u30bf\u81ea\u52d5\u8eca",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      }
+    ]
+  },
+  "status": "completed"
+}

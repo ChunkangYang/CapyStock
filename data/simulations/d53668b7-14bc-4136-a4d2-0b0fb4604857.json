@@ -1,0 +1,783 @@
+{
+  "id": "d53668b7-14bc-4136-a4d2-0b0fb4604857",
+  "name": "41412412341",
+  "kind": "backtest",
+  "created_at": "2026-05-06T13:40:49.852631",
+  "config": {
+    "kind": "backtest",
+    "initial_capital": 1000000.0,
+    "start_date": "2026-01-10",
+    "end_date": "2026-05-06",
+    "candidates": [
+      {
+        "code": "6758",
+        "name": "ソニーグループ",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      }
+    ],
+    "entry_rule": {
+      "price_basis": "next_open",
+      "user_price": null,
+      "require_signal": false,
+      "indicator_entry": [
+        {
+          "type": "rsi_oversold",
+          "params": {}
+        }
+      ],
+      "indicator_entry_logic": "or"
+    },
+    "exit_rule": {
+      "use_exit_signal": false,
+      "use_stop_loss": true,
+      "take_profit_pct": 10.0,
+      "max_hold_days": 60,
+      "exit_price_basis": "next_open",
+      "indicator_exit": [
+        {
+          "type": "rsi_overbought",
+          "params": {}
+        }
+      ],
+      "indicator_exit_logic": "or"
+    },
+    "position_sizing": {
+      "mode": "equal_weight",
+      "fixed_jpy": null,
+      "fixed_shares": null,
+      "max_concurrent_positions": 10
+    },
+    "cost_model": {
+      "commission_pct": 0.001,
+      "slippage_pct": 0.001,
+      "tax_pct": 0.20315
+    }
+  },
+  "state": {
+    "cash": 990526.12,
+    "positions": [],
+    "closed_trades": [
+      {
+        "code": "6758",
+        "name": "ソニーグループ",
+        "entry_date": "2026-01-19",
+        "entry_price": 3770.0,
+        "exit_date": "2026-01-27",
+        "exit_price": 3420.0,
+        "shares": 26,
+        "pnl_jpy": -9473.879999999976,
+        "pnl_pct": -0.09645960069251394,
+        "hold_days": 8,
+        "exit_reason": "stop_loss"
+      }
+    ],
+    "equity_curve": [
+      {
+        "date": "2026-01-10",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-01-11",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-01-12",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-01-13",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-01-14",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-01-15",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-01-16",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-01-17",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-01-18",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      },
+      {
+        "date": "2026-01-19",
+        "cash": 901783.96,
+        "market_value": 98280.0,
+        "equity": 1000063.96
+      },
+      {
+        "date": "2026-01-20",
+        "cash": 901783.96,
+        "market_value": 97136.0,
+        "equity": 998919.96
+      },
+      {
+        "date": "2026-01-21",
+        "cash": 901783.96,
+        "market_value": 96226.0,
+        "equity": 998009.96
+      },
+      {
+        "date": "2026-01-22",
+        "cash": 901783.96,
+        "market_value": 94406.0,
+        "equity": 996189.96
+      },
+      {
+        "date": "2026-01-23",
+        "cash": 901783.96,
+        "market_value": 93964.0,
+        "equity": 995747.96
+      },
+      {
+        "date": "2026-01-24",
+        "cash": 901783.96,
+        "market_value": 0.0,
+        "equity": 901783.96
+      },
+      {
+        "date": "2026-01-25",
+        "cash": 901783.96,
+        "market_value": 0.0,
+        "equity": 901783.96
+      },
+      {
+        "date": "2026-01-26",
+        "cash": 901783.96,
+        "market_value": 92196.0,
+        "equity": 993979.96
+      },
+      {
+        "date": "2026-01-27",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-01-28",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-01-29",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-01-30",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-01-31",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-01",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-02",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-03",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-04",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-05",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-06",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-07",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-08",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-09",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-10",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-11",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-12",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-13",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-14",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-15",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-16",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-17",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-18",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-19",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-20",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-21",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-22",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-23",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-24",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-25",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-26",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-27",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-02-28",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-01",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-02",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-03",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-04",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-05",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-06",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-07",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-08",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-09",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-10",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-11",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-12",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-13",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-14",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-15",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-16",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-17",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-18",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-19",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-20",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-21",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-22",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-23",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-24",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-25",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-26",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-27",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-28",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-29",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-30",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-03-31",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-01",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-02",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-03",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-04",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-05",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-06",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-07",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-08",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-09",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-10",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-11",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-12",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-13",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-14",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-15",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-16",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-17",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-18",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-19",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-20",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-21",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-22",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-23",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-24",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-25",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-26",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-27",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-28",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-29",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-04-30",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-05-01",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-05-02",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-05-03",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-05-04",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-05-05",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      },
+      {
+        "date": "2026-05-06",
+        "cash": 990526.12,
+        "market_value": 0.0,
+        "equity": 990526.12
+      }
+    ],
+    "cursor_date": "2026-05-06",
+    "pending_entries": []
+  },
+  "status": "completed"
+}

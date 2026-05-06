@@ -1,0 +1,80 @@
+{
+  "id": "a5ada81a-def5-40ee-8546-bbf62e8514b7",
+  "name": "QEW",
+  "kind": "backtest",
+  "created_at": "2026-05-06T11:56:53.468428",
+  "config": {
+    "kind": "backtest",
+    "initial_capital": 1000000.0,
+    "start_date": "2026-05-06",
+    "end_date": "2026-05-06",
+    "candidates": [
+      {
+        "code": "7203",
+        "name": "\u30c8\u30e8\u30bf\u81ea\u52d5\u8eca",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      }
+    ],
+    "entry_rule": {
+      "price_basis": "next_open",
+      "user_price": null,
+      "require_signal": false,
+      "indicator_entry": [
+        {
+          "type": "rsi_oversold",
+          "params": {}
+        }
+      ],
+      "indicator_entry_logic": "or"
+    },
+    "exit_rule": {
+      "use_exit_signal": false,
+      "use_stop_loss": true,
+      "take_profit_pct": null,
+      "max_hold_days": null,
+      "exit_price_basis": "next_open",
+      "indicator_exit": [
+        {
+          "type": "rsi_overbought",
+          "params": {}
+        }
+      ],
+      "indicator_exit_logic": "or"
+    },
+    "position_sizing": {
+      "mode": "equal_weight",
+      "fixed_jpy": null,
+      "fixed_shares": null,
+      "max_concurrent_positions": 10
+    },
+    "cost_model": {
+      "commission_pct": 0.001,
+      "slippage_pct": 0.001,
+      "tax_pct": 0.20315
+    }
+  },
+  "state": {
+    "cash": 1000000.0,
+    "positions": [],
+    "closed_trades": [],
+    "equity_curve": [
+      {
+        "date": "2026-05-06",
+        "cash": 1000000.0,
+        "market_value": 0.0,
+        "equity": 1000000.0
+      }
+    ],
+    "cursor_date": "2026-05-06",
+    "pending_entries": [
+      {
+        "code": "7203",
+        "name": "\u30c8\u30e8\u30bf\u81ea\u52d5\u8eca",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      }
+    ]
+  },
+  "status": "completed"
+}
