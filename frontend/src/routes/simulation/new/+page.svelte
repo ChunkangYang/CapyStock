@@ -180,10 +180,10 @@
         cost_model: costModel
       };
 
-      const sim = await api<Simulation>('/simulation', {
+      const sim = await api<Simulation>(`/simulation?name=${encodeURIComponent(name)}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, config })
+        body: JSON.stringify(config)
       });
 
       if (kind === 'backtest') {
