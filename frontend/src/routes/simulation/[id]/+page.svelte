@@ -100,6 +100,19 @@
     return (value * 100).toFixed(2) + '%';
   }
 
+  const EXIT_REASON_LABELS: Record<string, string> = {
+    stop_loss: '停損',
+    take_profit: '獲利了結',
+    max_hold: '到期出場',
+    end_of_sim: '回測結束',
+    exit_signal: '出場訊號',
+    indicator_exit: '指標出場',
+  };
+
+  function formatExitReason(reason: string): string {
+    return EXIT_REASON_LABELS[reason] ?? reason;
+  }
+
   function formatDate(dateStr: string): string {
     return new Date(dateStr).toLocaleDateString('ja-JP');
   }
@@ -281,7 +294,7 @@
                     {formatPercent(trade.pnl_pct)}
                   </td>
                   <td>{trade.hold_days}</td>
-                  <td class="reason">{trade.exit_reason}</td>
+                  <td class="reason">{formatExitReason(trade.exit_reason)}</td>
                 </tr>
               {/each}
             </tbody>

@@ -430,7 +430,7 @@ def calculate_report_metrics(sim: Simulation) -> dict:
     initial_capital = cfg.initial_capital
     final_equity = state.equity_curve[-1].equity
     total_return = final_equity - initial_capital
-    total_return_pct = (total_return / initial_capital * 100) if initial_capital != 0 else 0
+    total_return_pct = (total_return / initial_capital) if initial_capital != 0 else 0
 
     # 計算年化報酬
     period_days = (
@@ -438,7 +438,7 @@ def calculate_report_metrics(sim: Simulation) -> dict:
     ).days + 1
     annualized_return_pct = (
         (1 + total_return / initial_capital) ** (365 / max(period_days, 1)) - 1
-    ) * 100
+    )
 
     # 計算最大回撤
     max_dd_pct = 0
@@ -449,16 +449,15 @@ def calculate_report_metrics(sim: Simulation) -> dict:
         dd = (peak - point.equity) / peak if peak != 0 else 0
         if dd > max_dd_pct:
             max_dd_pct = dd
-    max_dd_pct *= 100
 
     # 交易統計
     total_trades = len(state.closed_trades)
     winning_trades = sum(1 for t in state.closed_trades if t.pnl_jpy > 0)
     losing_trades = sum(1 for t in state.closed_trades if t.pnl_jpy < 0)
 
-    win_rate = (winning_trades / total_trades * 100) if total_trades > 0 else None
+    win_rate = (winning_trades / total_trades) if total_trades > 0 else None
     avg_pnl_pct = (
-        sum(t.pnl_pct for t in state.closed_trades) / total_trades * 100
+        sum(t.pnl_pct for t in state.closed_trades) / total_trades
     ) if total_trades > 0 else None
     avg_hold_days = (
         sum(t.hold_days for t in state.closed_trades) // total_trades
