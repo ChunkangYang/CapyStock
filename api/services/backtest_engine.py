@@ -167,9 +167,13 @@ def run_one_day(
     for cand in list(state.pending_entries):
         # 決定進場日期
         if cand.forced_entry_date is not None:
+            # 強制指定日期：精確那天
             entry_date = cand.forced_entry_date
+        elif cfg.kind == "backtest":
+            # 回測模式：每天都嘗試（指標進場掃每天；無指標則首個有價格的交易日進場）
+            entry_date = today
         else:
-            # 預設使用訊號當日
+            # 前進模擬：使用訊號觸發日
             entry_date = cand.entry_signal_date or today
 
         if entry_date is None or entry_date > today:
