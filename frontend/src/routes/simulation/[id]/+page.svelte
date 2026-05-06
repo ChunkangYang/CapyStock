@@ -10,6 +10,7 @@
   let report: SimulationReport | null = null;
   let loading = true;
   let error = '';
+  let rerunning = false;
 
   async function loadSimulation() {
     try {
@@ -36,6 +37,7 @@
 
   async function rerun() {
     if (!sim) return;
+    rerunning = true;
     try {
       sim = await api<Simulation>(`/simulation/${sim.id}/run`, { method: 'POST' });
       if (sim.status === 'completed') {
@@ -43,6 +45,8 @@
       }
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to rerun';
+    } finally {
+      rerunning = false;
     }
   }
 
@@ -155,7 +159,13 @@
           <button class="btn btn-primary" on:click={advanceToday}>推進今日</button>
         {/if}
         {#if sim.status === 'completed' || sim.status === 'failed'}
-          <button class="btn btn-secondary" on:click={rerun}>重新執行</button>
+          <button class="btn btn-secondary" on:click={rerun} disabled={rerunning}>
+            {#if rerunning}
+              <span class="spinner"></span> 執行中…
+            {:else}
+              重新執行
+            {/if}
+          </button>
         {/if}
         <button class="btn btn-danger" on:click={deleteSimulation}>刪除</button>
       </div>
@@ -197,7 +207,7 @@
           <div class="breakdown">
             <span class="breakdown-label">出場原因：</span>
             {#each Object.entries(report.exit_reason_breakdown) as [reason, cnt]}
-              <span class="breakdown-item">{reason} × {cnt}</span>
+              <span class="breakdown-item">{formatExitReason(reason)} × {cnt}</span>
             {/each}
           </div>
         {/if}
@@ -594,4 +604,13 @@
     background: #222; border: 1px solid #444; padding: 2px 8px;
     border-radius: 4px; font-size: 12px; color: #ccc;
   }
+  .spinner {
+    display: inline-block; width: 12px; height: 12px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
