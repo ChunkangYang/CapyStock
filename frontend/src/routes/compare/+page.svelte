@@ -23,6 +23,8 @@
 
   const COLORS = ['#4ade80', '#60a5fa', '#f97316', '#e879f9', '#facc15'];
 
+  const bundleCache = new Map<string, Bundle>();
+
   let inputCode = '';
   let codes: string[] = [];
   let days = 120;
@@ -48,11 +50,19 @@
 
   async function load() {
     if (!codes.length) return;
+    const cacheKey = `${codes.join(',')}:${days}`;
+    if (bundleCache.has(cacheKey)) {
+      bundle = bundleCache.get(cacheKey)!;
+      goto(`/compare?codes=${codes.join(',')}&days=${days}`, { replaceState: true });
+      return;
+    }
     loading = true;
     error = '';
     bundle = null;
     try {
-      bundle = await api<Bundle>(`/compare/signals?codes=${codes.join(',')}&days=${days}`);
+      const data = await api<Bundle>(`/compare/signals?codes=${codes.join(',')}&days=${days}`);
+      bundleCache.set(cacheKey, data);
+      bundle = data;
     } catch (e) {
       error = e instanceof Error ? e.message : '讀取失敗';
     } finally {
