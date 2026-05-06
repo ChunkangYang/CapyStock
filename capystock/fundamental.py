@@ -72,6 +72,36 @@ _DIV_COL_YIELD  = 5   # 配当利回り（不使用，僅備查）
 _VALID_KUBUN = {'実績', '修正'}
 
 _last_request_at = 0.0
+_sec_to_edinet: dict[str, str] | None = None
+
+
+def _get_edinet_code(sec_code: str) -> str | None:
+    """証券コード → EDINET code（E-code）。用於 IR Bank settlement URL。"""
+    global _sec_to_edinet
+    if _sec_to_edinet is None:
+        import csv as _csv, io as _io
+        map_path = config.EDINET_CACHE_DIR / "edinet_code_map.csv"
+        if not map_path.exists():
+            _sec_to_edinet = {}
+        else:
+            text = map_path.read_text(encoding="utf-8")
+            reader = _csv.reader(_io.StringIO(text))
+            header_found = False
+            _sec_to_edinet = {}
+            for row in reader:
+                if not row:
+                    continue
+                if not header_found:
+                    if any("ＥＤＩＮＥＴ" in c or "EDINET" in c for c in row):
+                        header_found = True
+                    continue
+                if len(row) < 12:
+                    continue
+                edinet = row[0].strip()
+                sec = row[11].strip()
+                if edinet and sec and sec.isdigit():
+                    _sec_to_edinet[sec[:4]] = edinet
+    return _sec_to_edinet.get(sec_code[:4])
 
 
 # ---------- HTTP ----------
@@ -103,19 +133,18 @@ def _get(url: str) -> Optional[str]:
 # ---------- 字串 → 數值 ----------
 
 def _parse_value(s: str) -> Optional[float]:
-    """IR Bank 數字格式：'1,234百万', '12.3%', '45円', '-' 等。
+    """IR Bank 數字格式：'1,234百万', '12.3%', '45円', '26.3兆', '-' 等。
 
-    百分比回傳小數（0.12）。金額直接回傳原始單位下的數字（不作億/百万轉換）。
+    百分比回傳小數（0.12）。金額直接回傳原始單位數字（只做趨勢分析，不作換算）。
     """
     if s is None:
         return None
     s = str(s).replace(",", "").replace(" ", "").replace("\xa0", "").strip()
-    if not s or s in {"-", "--", "―", "N/A", "n/a"}:
+    if not s or s in {"-", "--", "―", "N/A", "n/a", "赤字"}:
         return None
     pct = s.endswith("%")
     s = s.rstrip("%").rstrip("倍").rstrip("円").rstrip("株")
-    # 去掉尾部單位字（百万/億/万）— 僅保留純數字；IR Bank 大多已在欄頭標單位
-    for suf in ("百万", "十億", "億", "万"):
+    for suf in ("百万", "十億", "兆", "億", "万"):
         if s.endswith(suf):
             s = s[: -len(suf)]
             break
@@ -146,6 +175,46 @@ def _scrape_tables(html: str) -> list[dict[str, list[str]]]:
         if rows:
             results.append(rows)
     return results
+
+
+# IR Bank /results 頁欄位名 → metric 對照
+_RESULTS_COL_MAP: dict[str, str] = {
+    "売上":        "sales",
+    "売上高":      "sales",
+    "EPS":         "eps",
+    "営利率":      "op_margin",
+    "営業利益率":  "op_margin",
+    "株主資本比率": "equity_ratio",
+    "自己資本比率": "equity_ratio",
+    "営業CF":      "op_cf",
+    "現金等":      "cash",
+}
+
+# /results 表格中以百分比形式存放但不帶 % 符號的欄位（需 ÷100 轉為小數）
+_RESULTS_PCT_METRICS = {"op_margin", "equity_ratio"}
+
+
+def _parse_column_table(tbl: dict[str, list[str]]) -> dict[str, list[Optional[float]]]:
+    """解析 IR Bank /results 型別表格（指標為欄位標題，年度為 row）。"""
+    if "年度" not in tbl:
+        return {}
+    headers = tbl["年度"]
+    col_to_metric: dict[int, str] = {}
+    for col_i, h in enumerate(headers):
+        h = h.strip()
+        if h in _RESULTS_COL_MAP:
+            col_to_metric[col_i] = _RESULTS_COL_MAP[h]
+    if not col_to_metric:
+        return {}
+    result: dict[str, list[Optional[float]]] = {}
+    for key in sorted(tbl.keys()):
+        if key == "年度":
+            continue
+        vals = tbl[key]
+        for col_i, metric in col_to_metric.items():
+            v = _parse_value(vals[col_i]) if col_i < len(vals) else None
+            result.setdefault(metric, []).append(v)
+    return result
 
 
 def _find_row(tables: list[dict[str, list[str]]], keywords: tuple[str, ...]) -> Optional[list[str]]:
@@ -188,32 +257,59 @@ def _extract_transposed_dps(table: dict) -> dict[str, list[float | None]]:
 
 def _fetch_irbank(code: str) -> Optional[dict[str, list[float | None]]]:
     """回傳 {metric: [値...]}；全部指標都抓不到則回傳 None。"""
-    html_settlement = _get(f"{IRBANK_BASE}/{code}/settlement")
-    html_dividend = _get(f"{IRBANK_BASE}/{code}/dividend")
-    if not html_settlement and not html_dividend:
+    edinet_code = _get_edinet_code(code)
+    settlement_key = edinet_code if edinet_code else code
+
+    html_results   = _get(f"{IRBANK_BASE}/{settlement_key}/results")
+    html_settlement = _get(f"{IRBANK_BASE}/{settlement_key}/settlement")
+    html_dividend  = _get(f"{IRBANK_BASE}/{code}/dividend")
+
+    if not html_results and not html_settlement and not html_dividend:
         return None
 
-    tables: list[dict[str, list[str]]] = []
+    result: dict[str, list[float | None]] = {}
+
+    # 優先用 /results（column-based 年度×指標表格）
+    if html_results:
+        for tbl in _scrape_tables(html_results):
+            parsed = _parse_column_table(tbl)
+            for metric, vals in parsed.items():
+                if metric not in result or not result[metric]:
+                    # 百分比欄位需 ÷100（/results 存的是 8.64 代表 8.64%）
+                    if metric in _RESULTS_PCT_METRICS:
+                        vals = [v / 100.0 if v is not None else None for v in vals]
+                    result[metric] = vals
+
+    # /settlement 補充（row-based 指標×年度）
     if html_settlement:
-        tables.extend(_scrape_tables(html_settlement))
+        tables = _scrape_tables(html_settlement)
+        for metric, kws in METRIC_LABELS.items():
+            if result.get(metric):
+                continue
+            vals = _find_row(tables, kws)
+            if vals:
+                result[metric] = [_parse_value(v) for v in vals]
+
+    # /dividend 補充 DPS / payout
     if html_dividend:
         div_tables = _scrape_tables(html_dividend)
         standard_div = [t for t in div_tables if not _is_transposed_dividend(t)]
-        tables.extend(standard_div)
-
-    result: dict[str, list[float | None]] = {}
-    for metric, kws in METRIC_LABELS.items():
-        vals = _find_row(tables, kws)
-        result[metric] = [_parse_value(v) for v in vals] if vals else []
-
-    if html_dividend and not html_settlement:
-        for t in _scrape_tables(html_dividend):
-            if _is_transposed_dividend(t):
-                partial = _extract_transposed_dps(t)
-                for k, v in partial.items():
-                    if not result.get(k):
-                        result[k] = v
-                break
+        if standard_div:
+            for metric in ("dps", "payout"):
+                if result.get(metric):
+                    continue
+                vals = _find_row(standard_div, METRIC_LABELS[metric])
+                if vals:
+                    result[metric] = [_parse_value(v) for v in vals]
+        # 橫向 dividend 表格（transposed）
+        if not result.get("dps"):
+            for t in div_tables:
+                if _is_transposed_dividend(t):
+                    partial = _extract_transposed_dps(t)
+                    for k, v in partial.items():
+                        if not result.get(k):
+                            result[k] = v
+                    break
 
     valid = sum(
         1 for v in result.values()
