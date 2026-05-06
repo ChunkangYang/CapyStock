@@ -15,7 +15,7 @@ from api.schemas.simulation import (
     SimulationReport,
     SimulationState,
 )
-from api.services.backtest_engine import run_backtest, calculate_report_metrics
+from api.services.backtest_engine import run_backtest as _engine_run_backtest, calculate_report_metrics
 
 
 class SimulationService:
@@ -125,7 +125,7 @@ class SimulationService:
         self._save(sim)
 
         try:
-            run_backtest(sim, signal_service, price_cache, indicator_service=indicator_service)
+            _engine_run_backtest(sim, signal_service, price_cache, indicator_service=indicator_service)
             sim.status = "completed"
         except Exception as e:
             sim.status = "failed"
