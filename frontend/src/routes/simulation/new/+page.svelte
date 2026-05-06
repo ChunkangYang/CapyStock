@@ -15,6 +15,8 @@
 
   let step = 1;
   let error = '';
+  let showSuccess = false;
+  let successMessage = '';
 
   // Step 1: Basic settings
   let name = '';
@@ -187,11 +189,12 @@
       });
 
       if (kind === 'backtest') {
-        // Run backtest immediately
         await api(`/simulation/${sim.id}/run`, { method: 'POST' });
+        successMessage = `「${name}」回測完成，即將返回模擬交易列表。`;
+      } else {
+        successMessage = `「${name}」已建立，即將返回模擬交易列表。`;
       }
-
-      goto(`/simulation/${sim.id}`);
+      showSuccess = true;
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to create simulation';
     }
@@ -540,6 +543,15 @@
       </div>
     {/if}
 
+    {#if showSuccess}
+      <div class="modal-overlay">
+        <div class="modal-box">
+          <p>{successMessage}</p>
+          <button class="btn btn-primary" on:click={() => goto('/simulation')}>OK</button>
+        </div>
+      </div>
+    {/if}
+
     <div class="button-group">
       {#if step > 1}
         <button class="btn btn-secondary" on:click={previousStep}>← 上一步</button>
@@ -863,6 +875,31 @@
     text-align: center;
     color: #999;
     padding: 20px;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modal-box {
+    background: #1a1a1a;
+    border: 1px solid #4ade80;
+    border-radius: 8px;
+    padding: 32px 40px;
+    text-align: center;
+    min-width: 320px;
+  }
+
+  .modal-box p {
+    color: #e5e5e5;
+    font-size: 16px;
+    margin: 0 0 24px 0;
   }
 
   .ind-group {
