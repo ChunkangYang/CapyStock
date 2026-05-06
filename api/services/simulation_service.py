@@ -113,6 +113,19 @@ class SimulationService:
         self._save(sim)
         return sim
 
+    def prepare_rerun(self, sim_id: str) -> None:
+        """重置 state 並設為 running，供背景執行前呼叫。"""
+        sim = self.get(sim_id)
+        if sim is None:
+            raise ValueError(f"Simulation {sim_id} not found")
+        sim.state = SimulationState(
+            cash=sim.config.initial_capital,
+            cursor_date=sim.config.start_date,
+            pending_entries=sim.config.candidates.copy(),
+        )
+        sim.status = "running"
+        self._save(sim)
+
     def run_backtest(self, sim_id: str, signal_service, price_cache: dict) -> Simulation:
         """執行回測。"""
         sim = self.get(sim_id)
@@ -121,14 +134,9 @@ class SimulationService:
         if sim.config.kind != "backtest":
             raise ValueError(f"Simulation is not backtest type")
 
-        # 重置 state，讓重新執行從頭開始
-        sim.state = SimulationState(
-            cash=sim.config.initial_capital,
-            cursor_date=sim.config.start_date,
-            pending_entries=sim.config.candidates.copy(),
-        )
-        sim.status = "running"
-        self._save(sim)
+        if sim.status != "running":
+            self.prepare_rerun(sim_id)
+            sim = self.get(sim_id)
 
         try:
             _engine_run_backtest(sim, signal_service, price_cache)
@@ -320,6 +328,11 @@ def add_candidate(
 ) -> Simulation:
     """新增候選股票。"""
     return _get_service().add_candidate(sim_id, code, name, forced_entry_date)
+
+
+def prepare_rerun(sim_id: str) -> None:
+    """重置 state 並設為 running。"""
+    return _get_service().prepare_rerun(sim_id)
 
 
 def run_backtest(

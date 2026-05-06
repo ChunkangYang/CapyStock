@@ -15,12 +15,15 @@
   async function loadSimulation() {
     try {
       sim = await api<Simulation>(`/simulation/${$page.params.id}`);
-      // Load report if completed
       if (sim.status === 'completed') {
         report = await api<SimulationReport>(`/simulation/${$page.params.id}/report`);
+        rerunning = false;
+      } else if (sim.status === 'failed') {
+        rerunning = false;
       }
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to load simulation';
+      rerunning = false;
     } finally {
       loading = false;
     }
@@ -38,16 +41,15 @@
   async function rerun() {
     if (!sim) return;
     rerunning = true;
+    error = '';
     try {
+      // 後端立即回傳 running，背景跑回測，前端靠 setInterval 輪詢
       sim = await api<Simulation>(`/simulation/${sim.id}/run`, { method: 'POST' });
-      if (sim.status === 'completed') {
-        report = await api<SimulationReport>(`/simulation/${sim.id}/report`);
-      }
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to rerun';
-    } finally {
       rerunning = false;
     }
+    // rerunning 在輪詢到 completed/failed 後才關掉
   }
 
   async function deleteSimulation() {
@@ -123,7 +125,7 @@
 
   loadSimulation();
   setInterval(() => {
-    if (sim?.status === 'running' || sim?.status === 'draft') {
+    if (sim?.status === 'running' || sim?.status === 'draft' || rerunning) {
       loadSimulation();
     }
   }, 3000);

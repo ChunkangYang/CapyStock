@@ -2,7 +2,7 @@
 from datetime import date
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, BackgroundTasks, HTTPException
 
 from api.schemas.simulation import (
     CandidateEntry,
@@ -76,29 +76,42 @@ def add_candidate(
         raise HTTPException(status_code=400, detail=str(e))
 
 
+def _run_backtest_background(sim_id: str) -> None:
+    """背景執行回測（供 BackgroundTasks 呼叫）。"""
+    from datetime import date as _date
+    try:
+        sim = simulation_service.get(sim_id)
+        if sim is None:
+            return
+        days_needed = (_date.today() - sim.config.start_date).days + 30
+        price_cache = {}
+        for cand in sim.config.candidates:
+            try:
+                prices = signal_service.get_price_history(cand.code, days=days_needed)
+                price_cache[cand.code] = {
+                    p.date: {"open": p.open, "high": p.high, "low": p.low, "close": p.close, "volume": p.volume}
+                    for p in prices
+                }
+            except Exception:
+                pass
+        simulation_service.run_backtest(sim_id, signal_service, price_cache)
+    except Exception:
+        pass
+
+
 @router.post("/simulation/{sim_id}/run", response_model=Simulation)
-def run_simulation(sim_id: str):
-    """執行模擬（backtest 同步、paper 改狀態）。"""
+def run_simulation(sim_id: str, background_tasks: BackgroundTasks):
+    """執行模擬：backtest 立即回傳 running，背景執行；paper 改狀態。"""
     try:
         sim = simulation_service.get(sim_id)
         if sim is None:
             raise HTTPException(status_code=404, detail="Simulation not found")
 
         if sim.config.kind == "backtest":
-            from datetime import date as _date
-            days_needed = (_date.today() - sim.config.start_date).days + 30
-            price_cache = {}
-            for cand in sim.config.candidates:
-                try:
-                    prices = signal_service.get_price_history(cand.code, days=days_needed)
-                    price_cache[cand.code] = {
-                        p.date: {"open": p.open, "high": p.high, "low": p.low, "close": p.close, "volume": p.volume}
-                        for p in prices
-                    }
-                except Exception:
-                    pass
-
-            sim = simulation_service.run_backtest(sim_id, signal_service, price_cache)
+            # 先重置 state 並設 running，立即回傳給前端
+            simulation_service.prepare_rerun(sim_id)
+            sim = simulation_service.get(sim_id)
+            background_tasks.add_task(_run_backtest_background, sim_id)
             return sim
         elif sim.config.kind == "paper":
             sim.status = "running"
