@@ -179,15 +179,8 @@ def run_one_day(
         if entry_price is None:
             continue
 
-        # 檢查訊號要求
-        if cfg.entry_rule.require_signal:
-            try:
-                snap = signal_service.analyze_one(cand.code)
-                if not snap.accumulation_signal:
-                    state.pending_entries.remove(cand)
-                    continue
-            except Exception:
-                continue
+        # require_signal 在 backtest 下跳過（analyze_one 是 live 分析，無法回溯歷史）
+        # paper trading 的推進邏輯才做此檢查
 
         # 檢查技術指標進場條件
         if cfg.entry_rule.indicator_entry and indicator_service is not None:

@@ -105,7 +105,7 @@
                 {/if}
               </td>
               <td class="actions">
-                <a href="/simulation/{sim.id}" class="btn btn-sm">檢視</a>
+                <a href="/simulation/{sim.id}" class="btn btn-sm btn-view">檢視</a>
                 <button class="btn btn-sm btn-danger" on:click={() => deleteSimulation(sim.id)}>
                   刪除
                 </button>
@@ -169,6 +169,15 @@
 
   .btn-danger:hover {
     background-color: #ef4444;
+  }
+
+  .btn-view {
+    background-color: #3b82f6;
+    color: #fff;
+  }
+
+  .btn-view:hover {
+    background-color: #2563eb;
   }
 
   .error {
