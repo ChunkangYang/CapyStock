@@ -213,9 +213,13 @@ cd frontend && npm install && npm run dev
 - 勾選 RSI / MACD 顯示對應子圖
 - 右上角有「對比模式」按鈕與星號 ★ 收藏切換
 
+**結果**：✅ Pass（2026-05-06）
+
 #### TC-SIG-03 收藏切換
 **步驟**：在投機訊號個股頁點 ★
 **預期**：立即變色，重新整理仍保留（store 為 Record-based，不噴 `r.filter is not a function`）
+
+**結果**：✅ Pass（2026-05-06）
 
 ---
 
