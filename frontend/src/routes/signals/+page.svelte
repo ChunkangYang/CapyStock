@@ -190,6 +190,10 @@
     <div class="empty-state">
       <p>尚無投機訊號掃描快照。請至 <a href="/data">資料管理</a> 或執行掃描排程後再回來。</p>
     </div>
+  {:else if data.length === 0}
+    <div class="empty-state">
+      <p>暫無資料。</p>
+    </div>
   {:else}
     <DataTable
       {data}
