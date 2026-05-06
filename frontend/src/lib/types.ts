@@ -63,16 +63,12 @@ export interface FundamentalReport {
   code: string;
   name: string;
   overall: 'STRONG' | 'HEALTHY' | 'CAUTION' | 'RISKY';
-  pass_count: number;
-  warn_count: number;
-  fail_count: number;
   metrics: FundamentalMetric[];
 }
 
 export interface FundamentalMetric {
-  name: string;
+  metric: string;
   score: 'PASS' | 'WARN' | 'FAIL' | 'N/A';
-  value: number | null;
   note: string;
 }
 

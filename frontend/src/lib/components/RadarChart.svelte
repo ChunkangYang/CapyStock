@@ -29,7 +29,7 @@
     chart = echarts.init(container, null, { useDirtyRect: true });
 
     const metricsData = report.metrics.map((m) => scoreToValue(m.score));
-    const metricsNames = report.metrics.map((m) => m.name);
+    const metricsNames = report.metrics.map((m) => m.metric);
 
     const option = {
       backgroundColor: '#1a1a1a',

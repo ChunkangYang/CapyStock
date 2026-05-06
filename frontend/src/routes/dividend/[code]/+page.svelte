@@ -13,16 +13,32 @@
   let error = '';
   let report: FundamentalReport | null = null;
   let dpsHistory: DpsRow[] = [];
+  let passCount = 0;
+  let warnCount = 0;
+  let failCount = 0;
 
   onMount(async () => {
     code = $page.params.code;
     try {
-      const [fundReport, dpsSeries] = await Promise.all([
+      const [fundReport, seriesData] = await Promise.all([
         api<FundamentalReport>(`/dividend/${code}`),
-        api<DpsRow[]>(`/dividend/${code}/series`),
+        api<{ dps_series: number[]; eps_series: number[] }>(`/dividend/${code}/series`),
       ]);
       report = fundReport;
-      dpsHistory = dpsSeries;
+
+      passCount = fundReport.metrics.filter((m) => m.score === 'PASS').length;
+      warnCount = fundReport.metrics.filter((m) => m.score === 'WARN').length;
+      failCount = fundReport.metrics.filter((m) => m.score === 'FAIL').length;
+
+      const dps = seriesData.dps_series ?? [];
+      const eps = seriesData.eps_series ?? [];
+      const len = Math.max(dps.length, eps.length);
+      const baseYear = new Date().getFullYear() - len;
+      dpsHistory = Array.from({ length: len }, (_, i) => ({
+        fiscal_year: baseYear + i + 1,
+        dps: dps[i] ?? 0,
+        eps: eps[i] ?? 0,
+      }));
     } catch (e) {
       error = String(e);
     } finally {
@@ -105,9 +121,9 @@
               </tr>
             </thead>
             <tbody>
-              {#each report.metrics as metric (metric.name)}
+              {#each report.metrics as metric (metric.metric)}
                 <tr>
-                  <td class="metric-name">{metric.name}</td>
+                  <td class="metric-name">{metric.metric}</td>
                   <td class="metric-score" style="color: {getScoreColor(metric.score)}">
                     {metric.score}
                   </td>
@@ -122,19 +138,21 @@
           <h3>統計摘要</h3>
           <div class="stat-row">
             <span class="stat-label">PASS</span>
-            <span class="stat-value" style="color: #4ade80">{report.pass_count} / 8</span>
+            <span class="stat-value" style="color: #4ade80">{passCount} / 8</span>
           </div>
           <div class="stat-row">
             <span class="stat-label">WARN</span>
-            <span class="stat-value" style="color: #f59e0b">{report.warn_count} / 8</span>
+            <span class="stat-value" style="color: #f59e0b">{warnCount} / 8</span>
           </div>
           <div class="stat-row">
             <span class="stat-label">FAIL</span>
-            <span class="stat-value" style="color: #ef4444">{report.fail_count} / 8</span>
+            <span class="stat-value" style="color: #ef4444">{failCount} / 8</span>
           </div>
         </div>
       </div>
     </div>
+  {:else}
+    <div class="empty-state">此股票無基本面資料，請先至資料管理執行 ingest。</div>
   {/if}
 </div>
 
@@ -142,6 +160,16 @@
   .page {
     padding: 20px;
     color: #e0e0e0;
+  }
+
+  .empty-state {
+    text-align: center;
+    color: #aaa;
+    padding: 60px 20px;
+    background: #1d1d1d;
+    border: 1px dashed #333;
+    border-radius: 8px;
+    margin-top: 20px;
   }
 
   .loading,
