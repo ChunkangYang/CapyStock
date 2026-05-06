@@ -317,10 +317,10 @@ def add_candidate(
 
 
 def run_backtest(
-    sim_id: str, signal_service, price_cache: dict
+    sim_id: str, signal_service, price_cache: dict, indicator_service=None
 ) -> Simulation:
     """執行回測。"""
-    return _get_service().run_backtest(sim_id, signal_service, price_cache)
+    return _get_service().run_backtest(sim_id, signal_service, price_cache, indicator_service=indicator_service)
 
 
 def advance_paper(
