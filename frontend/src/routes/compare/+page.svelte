@@ -27,7 +27,7 @@
 
   let inputCode = '';
   let codes: string[] = [];
-  let days = 120;
+  let days = 60;
   let bundle: Bundle | null = null;
   let loading = false;
   let error = '';
@@ -148,9 +148,9 @@
     <div class="day-select">
       <label>期間
         <select bind:value={days} on:change={load}>
+          <option value={30}>30 日</option>
           <option value={60}>60 日</option>
           <option value={120}>120 日</option>
-          <option value={250}>250 日</option>
         </select>
       </label>
     </div>
