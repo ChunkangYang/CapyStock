@@ -28,8 +28,28 @@ def _fmt_num(v: float | None) -> str:
 def cmd_add(args: argparse.Namespace) -> int:
     code = args.code
     name = scraper.fetch_name(code) or ""
-    storage.add_watch(code, args.start_price, name)
-    print(f"✓ 加入追蹤：{code}（{name or '未知'}）起始價 {args.start_price:,.0f}")
+    storage.add_watch(
+        code, args.start_price, name,
+        master_cost=args.master_cost,
+        target_price=args.target,
+        stop_price=args.stop,
+        last_step_price=args.last_step,
+    )
+    extras = []
+    if args.master_cost is not None:
+        extras.append(f"主力成本 {args.master_cost:,.0f}")
+    if args.target is not None:
+        extras.append(f"目標 {args.target:,.0f}")
+    if args.stop is not None:
+        extras.append(f"停損 {args.stop:,.0f}")
+    if args.last_step is not None:
+        extras.append(f"最後一階 {args.last_step:,.0f}")
+    if args.target is not None and args.stop is not None and args.start_price > args.stop:
+        rr = (args.target - args.start_price) / (args.start_price - args.stop)
+        flag = "✓" if rr >= config.RISK_REWARD_MIN_RATIO else "⚠️ <1:3"
+        extras.append(f"RR 1:{rr:.2f} {flag}")
+    extra_str = f"  [{' / '.join(extras)}]" if extras else ""
+    print(f"✓ 加入追蹤：{code}（{name or '未知'}）起始價 {args.start_price:,.0f}{extra_str}")
     return 0
 
 
@@ -86,6 +106,11 @@ def cmd_check(args: argparse.Namespace) -> int:
 
         snap, alerts = analyzer.analyze(
             code, name, entry["start_price"], price_df, margin_df, flow_df,
+            master_cost=entry.get("master_cost"),
+            target_price=entry.get("target_price"),
+            stop_price=entry.get("stop_price"),
+            last_step_price=entry.get("last_step_price"),
+            added_date=entry.get("added_date"),
         )
 
         # 輸出詳盡區塊
@@ -96,6 +121,20 @@ def cmd_check(args: argparse.Namespace) -> int:
                   f"  / 起始價：{snap.start_price:,.0f}"
                   f"  / 相對起始：{_fmt_pct(snap.price_vs_start_pct)}"
                   f"  / 離近期低點：{_fmt_pct(snap.price_vs_recent_low_pct)}")
+            anchors = []
+            if snap.master_cost:
+                anchors.append(f"主力成本 {snap.master_cost:,.0f}"
+                               f"（vs現價 {_fmt_pct(snap.price_vs_master_cost_pct)}）")
+            if snap.last_step_price:
+                anchors.append(f"最後一階 {snap.last_step_price:,.0f}")
+            if snap.target_price:
+                anchors.append(f"目標 {snap.target_price:,.0f}")
+            if snap.stop_price:
+                anchors.append(f"停損 {snap.stop_price:,.0f}")
+            if snap.risk_reward_ratio is not None:
+                anchors.append(f"RR 1:{snap.risk_reward_ratio:.2f}")
+            if anchors:
+                print(f"  心法錨點：{' / '.join(anchors)}")
         if snap.flow_recent:
             flow_str = " / ".join(f"{v:+,.0f}" for v in snap.flow_recent)
             print(f"  法人買賣超（近{len(snap.flow_recent)}日，千株）：{flow_str}")
@@ -285,7 +324,17 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_add = sub.add_parser("add", help="加入追蹤股票")
     p_add.add_argument("code")
-    p_add.add_argument("start_price", type=float)
+    p_add.add_argument("start_price", type=float, help="進場價（你買進的價格）")
+    p_add.add_argument("--master-cost", type=float, default=None,
+                       dest="master_cost",
+                       help="主力成本（停損錨點，心法第七篇）")
+    p_add.add_argument("--target", type=float, default=None,
+                       help="目標價（用於風報比與出場條件 3）")
+    p_add.add_argument("--stop", type=float, default=None,
+                       help="使用者指定停損價（覆寫主力成本錨點）")
+    p_add.add_argument("--last-step", type=float, default=None,
+                       dest="last_step",
+                       help="主力最後一階均價（跌破 3%% 連 2 日警告）")
     p_add.set_defaults(func=cmd_add)
 
     p_rm = sub.add_parser("remove", help="移除追蹤股票")

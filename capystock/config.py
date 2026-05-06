@@ -45,8 +45,27 @@ PRICE_RISE_FROM_RECENT_LOW = 0.30
 PRICE_RECENT_LOW_WINDOW_DAYS = 30
 
 # --- 停損 ---
+# 心法 v2 第七篇/第九篇：停損錨點優先順序為
+#   1) 使用者指定 stop_price → 直接用
+#   2) last_step_price（主力最後一階） → 跌破 LAST_STEP_BREAK_PCT 連 N 日
+#   3) master_cost（主力成本）→ 跌破 STOP_LOSS_DROP_PCT 連 N 日
+#   4) 都沒有 → fallback 用 start_price（舊行為）
 STOP_LOSS_DROP_PCT = 0.05
 STOP_LOSS_CONSECUTIVE_DAYS = 2
+LAST_STEP_BREAK_PCT = 0.03  # 第七篇：跌破最後一階 3% 視為失守
+
+# --- 時間停損（第九篇）---
+# 進場後 N 日股價仍在成本帶內盤整、未突破 → 警告減碼
+TIME_STOP_DAYS = 7
+TIME_STOP_RANGE_PCT = 0.03  # 相對成本帶 ±3% 內視為盤整
+
+# --- 量能停損（第九篇）---
+# 爆量但股價不漲 → 主力可能在出貨
+VOLUME_SPIKE_MULTIPLE = 3.0  # vs 近 5 日均量
+VOLUME_SPIKE_PRICE_FLAT_PCT = 0.01  # 漲幅 < +1% 視為不漲
+
+# --- 風報比（第十一篇）---
+RISK_REWARD_MIN_RATIO = 3.0  # < 1:3 進場前提示
 
 # --- 吃貨訊號 ---
 ACCUMULATION_INSTITUTIONAL_BUY_DAYS = 5

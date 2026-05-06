@@ -30,14 +30,31 @@ def save_watchlist(data: dict[str, dict]) -> None:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
-def add_watch(code: str, start_price: float, name: str = "") -> None:
+def add_watch(
+    code: str,
+    start_price: float,
+    name: str = "",
+    master_cost: float | None = None,
+    target_price: float | None = None,
+    stop_price: float | None = None,
+    last_step_price: float | None = None,
+) -> None:
     wl = load_watchlist()
-    wl[code] = {
+    entry = {
         "code": code,
         "name": name,
         "start_price": float(start_price),
         "added_date": datetime.now().strftime("%Y-%m-%d"),
     }
+    if master_cost is not None:
+        entry["master_cost"] = float(master_cost)
+    if target_price is not None:
+        entry["target_price"] = float(target_price)
+    if stop_price is not None:
+        entry["stop_price"] = float(stop_price)
+    if last_step_price is not None:
+        entry["last_step_price"] = float(last_step_price)
+    wl[code] = entry
     save_watchlist(wl)
 
 
