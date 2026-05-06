@@ -78,9 +78,31 @@
     });
 
     result.sort((a, b) => {
-      let aVal = (a[sort.column as keyof DividendScanRow] as number) ?? 0;
-      let bVal = (b[sort.column as keyof DividendScanRow] as number) ?? 0;
-      return sort.desc ? bVal - aVal : aVal - bVal;
+      let aVal: string | number;
+      let bVal: string | number;
+
+      if (sort.column === 'overall') {
+        aVal = OVERALL_RANK[a.overall] ?? 0;
+        bVal = OVERALL_RANK[b.overall] ?? 0;
+      } else if (sort.column === 'favorite') {
+        aVal = favoriteSet.has(a.code) ? 1 : 0;
+        bVal = favoriteSet.has(b.code) ? 1 : 0;
+      } else if (sort.column === 'metrics') {
+        aVal = a.pass_count;
+        bVal = b.pass_count;
+      } else if (sort.column === 'name' || sort.column === 'code') {
+        aVal = (a[sort.column as keyof DividendScanRow] as string) ?? '';
+        bVal = (b[sort.column as keyof DividendScanRow] as string) ?? '';
+        const cmp = aVal.localeCompare(bVal, 'ja');
+        return sort.desc ? -cmp : cmp;
+      } else {
+        aVal = (a[sort.column as keyof DividendScanRow] as number) ?? -Infinity;
+        bVal = (b[sort.column as keyof DividendScanRow] as number) ?? -Infinity;
+      }
+
+      return sort.desc
+        ? (bVal as number) - (aVal as number)
+        : (aVal as number) - (bVal as number);
     });
 
     filtered = result;
@@ -96,12 +118,14 @@
     applyFiltersAndSort();
   }
 
+  const OVERALL_RANK: Record<string, number> = { STRONG: 4, HEALTHY: 3, CAUTION: 2, RISKY: 1 };
+
   function updateSort(column: string) {
     if (sort.column === column) {
       sort.desc = !sort.desc;
     } else {
       sort.column = column;
-      sort.desc = column === 'est_yield';
+      sort.desc = true;
     }
     applyFiltersAndSort();
   }
@@ -218,7 +242,7 @@
     <table>
       <thead>
         <tr>
-          <th>★</th>
+          <th on:click={() => updateSort('favorite')}>★</th>
           <th on:click={() => updateSort('code')}>Code</th>
           <th on:click={() => updateSort('name')}>Name</th>
           <th on:click={() => updateSort('overall')}>Overall</th>
@@ -228,7 +252,7 @@
           <th on:click={() => updateSort('payout_avg')}>Payout Avg</th>
           <th on:click={() => updateSort('equity_ratio_latest')}>自己資本比</th>
           <th on:click={() => updateSort('eps_growth')}>EPS Growth</th>
-          <th>指標</th>
+          <th on:click={() => updateSort('metrics')}>指標</th>
         </tr>
       </thead>
       <tbody>
