@@ -248,15 +248,24 @@
         </div>
 
         <div class="form-group">
-          <label>類型</label>
+          <label class="label-with-info">
+            類型
+            <span class="info-icon" aria-label="類型說明">
+              ℹ
+              <span class="tooltip">
+                <strong>回測</strong>：以過去歷史價格驗證策略，立即得出損益報告。<br><br>
+                <strong>模擬交易</strong>：以今後實際市場價格進行假設交易，逐日推進，不動用真實資金。
+              </span>
+            </span>
+          </label>
           <div class="radio-group">
             <label>
               <input type="radio" bind:group={kind} value="backtest" />
-              バックテスト
+              回測
             </label>
             <label>
               <input type="radio" bind:group={kind} value="paper" />
-              ペーパー
+              模擬交易
             </label>
           </div>
         </div>
@@ -887,6 +896,56 @@
     margin-top: 30px;
     border-top: 1px solid #333;
     padding-top: 20px;
+  }
+
+  .label-with-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .info-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    background: #555;
+    color: #ccc;
+    border-radius: 50%;
+    font-size: 11px;
+    font-style: normal;
+    cursor: default;
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
+  .info-icon:hover .tooltip {
+    display: block;
+  }
+
+  .tooltip {
+    display: none;
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #2a2a2a;
+    border: 1px solid #555;
+    border-radius: 6px;
+    padding: 10px 14px;
+    width: 260px;
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.6;
+    z-index: 100;
+    white-space: normal;
+    pointer-events: none;
+  }
+
+  .tooltip strong {
+    color: #4ade80;
   }
 
   .loading {
