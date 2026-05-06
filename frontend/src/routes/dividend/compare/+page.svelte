@@ -291,8 +291,8 @@
             {@const checked = pickerSelected.has(row.code)}
             {@const disabled = !checked && pickerSelected.size >= 5}
             {@const overallColor =
-              row.overall === 'STRONG'  ? '#4ade80' :
-              row.overall === 'HEALTHY' ? '#86efac' :
+              row.overall === 'STRONG'  ? '#60a5fa' :
+              row.overall === 'HEALTHY' ? '#4ade80' :
               row.overall === 'CAUTION' ? '#facc15' :
               row.overall === 'RISKY'   ? '#f87171' : '#666'}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
