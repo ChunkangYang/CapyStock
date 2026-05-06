@@ -23,6 +23,21 @@
 
   const COLORS = ['#4ade80', '#60a5fa', '#f97316', '#e879f9', '#facc15'];
 
+  const SIG_LABEL: Record<string, { text: string; bullish: boolean }> = {
+    rsi_oversold:          { text: 'RSI 超賣（可能反彈）', bullish: true },
+    rsi_overbought:        { text: 'RSI 超買（注意回調）', bullish: false },
+    macd_golden_cross:     { text: 'MACD 金叉（動能向上）', bullish: true },
+    macd_dead_cross:       { text: 'MACD 死叉（動能向下）', bullish: false },
+    bb_breakout_up:        { text: '布林上突破（強勢突破）', bullish: true },
+    bb_breakout_down:      { text: '布林下突破（跌破支撐）', bullish: false },
+    sma_golden_cross_5_20: { text: '均線金叉 5/20（短線翻多）', bullish: true },
+    sma_dead_cross_5_20:   { text: '均線死叉 5/20（短線翻空）', bullish: false },
+  };
+
+  function sigLabel(name: string) {
+    return SIG_LABEL[name] ?? { text: name, bullish: true };
+  }
+
   const bundleCache = new Map<string, Bundle>();
 
   let inputCode = '';
@@ -197,15 +212,27 @@
 
     <!-- 訊號清單 -->
     <div class="card">
-      <h3>最近指標訊號</h3>
+      <h3>最近 14 日指標訊號</h3>
       {#each bundle.codes as code, ci}
         {@const sigs = bundle.signals_by_code[code] ?? []}
         {#if sigs.length}
           <div class="sig-group">
             <span class="sig-code" style="color:{COLORS[ci % COLORS.length]}">{code}</span>
-            {#each sigs.slice(0, 5) as s}
-              <span class="sig-item">{s.date} {s.name}</span>
-            {/each}
+            <div class="sig-pills">
+              {#each sigs.slice(0, 6) as s}
+                {@const lbl = sigLabel(s.name)}
+                <span class="sig-pill" class:bullish={lbl.bullish} class:bearish={!lbl.bullish}>
+                  <span class="sig-arrow">{lbl.bullish ? '▲' : '▼'}</span>
+                  {lbl.text}
+                  <span class="sig-date">{s.date.slice(5)}</span>
+                </span>
+              {/each}
+            </div>
+          </div>
+        {:else}
+          <div class="sig-group">
+            <span class="sig-code" style="color:{COLORS[ci % COLORS.length]}">{code}</span>
+            <span class="sig-none">近 14 日無訊號</span>
           </div>
         {/if}
       {/each}
@@ -295,9 +322,19 @@
   .legend { display: flex; gap: 12px; margin-top: 8px; font-size: 12px; }
   .legend-item { }
 
-  .sig-group { margin-bottom: 8px; }
-  .sig-code { font-weight: bold; font-size: 13px; margin-right: 8px; }
-  .sig-item { font-size: 12px; color: #a1a1a1; margin-right: 8px; }
+  .sig-group { margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+  .sig-code { font-weight: bold; font-size: 13px; flex-shrink: 0; padding-top: 3px; min-width: 44px; }
+  .sig-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sig-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; padding: 3px 8px; border-radius: 12px;
+    border: 1px solid;
+  }
+  .sig-pill.bullish { color: #4ade80; border-color: #4ade8055; background: #4ade8011; }
+  .sig-pill.bearish { color: #f87171; border-color: #f8717155; background: #f8717111; }
+  .sig-arrow { font-size: 10px; }
+  .sig-date { color: #666; font-size: 11px; margin-left: 2px; }
+  .sig-none { font-size: 12px; color: #555; padding-top: 4px; }
 
   .status { color: #666; }
   .err { color: #f87171; }
