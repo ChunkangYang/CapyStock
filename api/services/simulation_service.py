@@ -66,7 +66,7 @@ class SimulationService:
         if not path.exists():
             return None
 
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             data = json.load(f)
         return Simulation(**data)
 
@@ -75,7 +75,7 @@ class SimulationService:
         sims = []
         for path in self.sim_dir.glob("*.json"):
             if "_trades" not in path.stem:
-                with open(path) as f:
+                with open(path, encoding="utf-8") as f:
                     data = json.load(f)
                     sims.append(Simulation(**data))
         return sims
@@ -251,9 +251,9 @@ class SimulationService:
         data = sim.model_dump()
 
         with tempfile.NamedTemporaryFile(
-            mode="w", dir=path.parent, delete=False, suffix=".json"
+            mode="w", encoding="utf-8", dir=path.parent, delete=False, suffix=".json"
         ) as f:
-            json.dump(data, f, indent=2, default=str)
+            json.dump(data, f, indent=2, default=str, ensure_ascii=False)
             tmp_path = f.name
 
         Path(tmp_path).replace(path)
@@ -266,7 +266,7 @@ class SimulationService:
         if path.exists():
             path.unlink()
 
-        with open(path, "w") as f:
+        with open(path, "w", encoding="utf-8") as f:
             f.write("code,name,entry_date,entry_price,exit_date,exit_price,shares,pnl_jpy,pnl_pct,hold_days,exit_reason\n")
             for trade in sim.state.closed_trades:
                 f.write(
