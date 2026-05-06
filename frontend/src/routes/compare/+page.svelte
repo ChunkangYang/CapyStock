@@ -258,10 +258,20 @@
       {:else if pickerRows.length === 0}
         <p class="picker-empty">尚無投機訊號快照</p>
       {:else}
+        <div class="picker-col-header">
+          <span class="picker-col-check"></span>
+          <span class="picker-col-code">代碼</span>
+          <span class="picker-col-name">名稱</span>
+          <span class="picker-col-score">訊號分數</span>
+        </div>
         <div class="picker-list">
           {#each pickerRows as row}
             {@const checked = pickerSelected.has(row.code)}
             {@const disabled = !checked && pickerSelected.size >= 5}
+            {@const scoreColor =
+              row.score >= 7 ? '#60a5fa' :
+              row.score >= 4 ? '#4ade80' :
+              row.score >= 1 ? '#facc15' : '#f87171'}
             <!-- svelte-ignore a11y-click-events-have-key-events -->
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <div
@@ -279,7 +289,7 @@
               />
               <span class="picker-code">{row.code}</span>
               <span class="picker-name">{row.name}</span>
-              <span class="picker-score">score {row.score}</span>
+              <span class="picker-score" style="color:{scoreColor}">{row.score}</span>
             </div>
           {/each}
         </div>
@@ -371,7 +381,17 @@
   .picker-row.disabled { opacity: 0.4; cursor: default; }
   .picker-code { font-size: 13px; font-weight: bold; color: #fff; width: 56px; flex-shrink: 0; }
   .picker-name { font-size: 13px; color: #a1a1a1; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .picker-score { font-size: 12px; color: #4ade80; flex-shrink: 0; }
+  .picker-score { font-size: 12px; font-weight: bold; flex-shrink: 0; min-width: 52px; text-align: right; }
+
+  .picker-col-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 16px; background: #111; border-bottom: 1px solid #333;
+    font-size: 11px; color: #555;
+  }
+  .picker-col-check { width: 16px; flex-shrink: 0; }
+  .picker-col-code { width: 56px; flex-shrink: 0; }
+  .picker-col-name { flex: 1; }
+  .picker-col-score { min-width: 52px; text-align: right; flex-shrink: 0; }
   .picker-footer {
     display: flex; justify-content: space-between; align-items: center;
     padding: 12px 16px; border-top: 1px solid #333;
