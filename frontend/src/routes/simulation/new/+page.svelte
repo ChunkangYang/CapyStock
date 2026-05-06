@@ -191,14 +191,10 @@
       });
 
       if (kind === 'backtest') {
-        isRunning = true;
-        runningMessage = `「${name}」建立完成，回測執行中…`;
-        try {
-          await api(`/simulation/${sim.id}/run`, { method: 'POST' });
-          successMessage = `「${name}」回測完成！`;
-        } finally {
-          isRunning = false;
-        }
+        // 觸發背景執行後直接跳轉詳情頁，詳情頁會輪詢直到完成
+        await api(`/simulation/${sim.id}/run`, { method: 'POST' });
+        goto(`/simulation/${sim.id}`);
+        return;
       } else {
         successMessage = `「${name}」已建立。`;
       }
