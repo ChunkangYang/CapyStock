@@ -13,7 +13,7 @@ from api.schemas.common import (
 
 def get_price_history(code: str, days: int = 90) -> list[PriceBar]:
     """取得股價 K 線歷史。"""
-    df, _ = scraper.fetch_price(code)
+    df, _ = scraper.fetch_price(code, days=days)
     if df is None or df.empty:
         return []
 

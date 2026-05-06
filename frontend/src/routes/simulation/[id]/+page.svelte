@@ -127,7 +127,7 @@
         <h1>{sim.name}</h1>
         <div class="header-meta">
           <span class={`status-badge status-${sim.status}`}>{sim.status}</span>
-          <span class="kind-badge">{sim.config.kind === 'backtest' ? 'バックテスト' : 'ペーパー'}</span>
+          <span class="kind-badge">{sim.config.kind === 'backtest' ? '回測' : '模擬交易'}</span>
           <span class="period">
             {formatDate(sim.config.start_date)}
             {#if sim.config.end_date}

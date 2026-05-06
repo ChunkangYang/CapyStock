@@ -108,14 +108,19 @@ def _fetch_price_kabutan(code: str, pages: int = 3) -> Optional[pd.DataFrame]:
     return df.reset_index(drop=True)
 
 
-def _fetch_price_yfinance(code: str) -> Optional[pd.DataFrame]:
+def _fetch_price_yfinance(code: str, days: int = 90) -> Optional[pd.DataFrame]:
     try:
         import yfinance as yf
     except ImportError:
         return None
     try:
+        from datetime import datetime, timedelta
         t = yf.Ticker(f"{code}.T")
-        hist = t.history(period="3mo", auto_adjust=False)
+        if days > 90:
+            start = (datetime.now() - timedelta(days=days + 10)).strftime("%Y-%m-%d")
+            hist = t.history(start=start, auto_adjust=False)
+        else:
+            hist = t.history(period="3mo", auto_adjust=False)
     except Exception:
         return None
     if hist is None or hist.empty:
@@ -129,11 +134,11 @@ def _fetch_price_yfinance(code: str) -> Optional[pd.DataFrame]:
     return df[["date", "open", "high", "low", "close", "volume"]].sort_values("date").reset_index(drop=True)
 
 
-def fetch_price(code: str) -> tuple[Optional[pd.DataFrame], str]:
+def fetch_price(code: str, days: int = 90) -> tuple[Optional[pd.DataFrame], str]:
     df = _fetch_price_kabutan(code)
     if df is not None and len(df) >= 5:
         return df, "kabutan"
-    df = _fetch_price_yfinance(code)
+    df = _fetch_price_yfinance(code, days=days)
     if df is not None:
         return df, "yfinance"
     return None, "none"

@@ -41,7 +41,7 @@
   }
 
   function getKindLabel(kind: string): string {
-    return kind === 'backtest' ? 'バックテスト' : 'ペーパー';
+    return kind === 'backtest' ? '回測' : '模擬交易';
   }
 </script>
 

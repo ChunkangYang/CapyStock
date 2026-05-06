@@ -85,11 +85,12 @@ def run_simulation(sim_id: str):
             raise HTTPException(status_code=404, detail="Simulation not found")
 
         if sim.config.kind == "backtest":
-            # 收集所有需要的價格資料到 price_cache
+            from datetime import date as _date
+            days_needed = (_date.today() - sim.config.start_date).days + 30
             price_cache = {}
             for cand in sim.config.candidates:
                 try:
-                    prices = signal_service.get_price_history(cand.code, days=365)
+                    prices = signal_service.get_price_history(cand.code, days=days_needed)
                     price_cache[cand.code] = {
                         p.date: {"open": p.open, "close": p.close} for p in prices
                     }
