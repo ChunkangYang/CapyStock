@@ -4,6 +4,7 @@
   import { api, ApiError } from '$lib/api';
   import DataTable from '$lib/components/DataTable.svelte';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
+  import { cacheGet, cacheSet, cacheClear, cacheTimestamp, clearAllSignalsCache, formatCacheAge } from '$lib/utils/signalsCache';
   import type { SignalScanRow, SignalResult } from '$lib/types';
 
   const TABS = ['market', 'watchlist', 'favorites'] as const;
@@ -12,21 +13,42 @@
   let activeTab: Tab = 'market';
   let data: SignalScanRow[] = [];
   let loading = true;
+  let refreshingAll = false;
+  let refreshingCodes = new Set<string>();
   let error = '';
   let noSnapshot = false;
+  let cacheTs: number | null = null;
 
-  // race condition guard：每次 loadData 產生新 id，async 完成後只有最新 id 才更新 state
   let _loadSeq = 0;
+
+  function listCacheKey(tab: Tab) {
+    return `signals_list:${tab}`;
+  }
 
   onMount(async () => {
     await loadData();
   });
 
-  async function loadData() {
+  async function loadData(forceRefresh = false) {
     const seq = ++_loadSeq;
     loading = true;
     error = '';
     noSnapshot = false;
+
+    const key = listCacheKey(activeTab);
+
+    if (!forceRefresh) {
+      const cached = cacheGet<SignalScanRow[]>(key);
+      if (cached) {
+        if (seq !== _loadSeq) return;
+        data = cached;
+        cacheTs = cacheTimestamp(key);
+        loading = false;
+        return;
+      }
+    } else {
+      cacheClear(key);
+    }
 
     try {
       let result: SignalScanRow[] = [];
@@ -34,7 +56,6 @@
       if (activeTab === 'market') {
         result = await api('/scan/signals');
       } else if (activeTab === 'watchlist') {
-        // 批次呼叫 /signals（analyze_watchlist），避免 N+1
         const watchlistSignals: SignalResult[] = await api('/signals');
         result = watchlistSignals.map(r => toScanRow(r));
       } else if (activeTab === 'favorites') {
@@ -45,7 +66,9 @@
         result = results.map(r => toScanRow(r));
       }
 
-      if (seq !== _loadSeq) return; // stale — discard
+      if (seq !== _loadSeq) return;
+      cacheSet(key, result);
+      cacheTs = cacheTimestamp(key);
       data = result;
     } catch (e) {
       if (seq !== _loadSeq) return;
@@ -57,6 +80,28 @@
     } finally {
       if (seq === _loadSeq) loading = false;
     }
+  }
+
+  async function refreshAll() {
+    refreshingAll = true;
+    clearAllSignalsCache();
+    await loadData(true);
+    refreshingAll = false;
+  }
+
+  async function refreshRow(code: string) {
+    refreshingCodes = new Set([...refreshingCodes, code]);
+    // 清除個股快取（detail 頁面會重新抓）
+    cacheClear(`signals_detail:${code}`);
+    try {
+      const result: SignalResult = await api(`/signals/${code}`);
+      const updated = toScanRow(result);
+      data = data.map(row => row.code === code ? updated : row);
+      // 更新 list 快取
+      cacheSet(listCacheKey(activeTab), data);
+      cacheTs = cacheTimestamp(listCacheKey(activeTab));
+    } catch {}
+    refreshingCodes = new Set([...refreshingCodes].filter(c => c !== code));
   }
 
   function toScanRow(r: SignalResult): SignalScanRow {
@@ -86,7 +131,6 @@
     else return;
     e.preventDefault();
     handleTabChange(TABS[next]);
-    // move focus to newly-active tab
     const tabEls = document.querySelectorAll<HTMLButtonElement>('[role="tab"]');
     tabEls[next]?.focus();
   }
@@ -104,7 +148,23 @@
 
 <div class="signals-page">
   <div class="header">
-    <h1>投機訊號</h1>
+    <div class="title-row">
+      <h1>投機訊號</h1>
+      <div class="header-actions">
+        {#if cacheTs !== null}
+          <span class="cache-age">上次更新：{formatCacheAge(cacheTs)}</span>
+        {/if}
+        <button
+          class="btn-refresh"
+          class:spinning={refreshingAll}
+          disabled={refreshingAll || loading}
+          title="清除快取，重新抓取全部資料"
+          on:click={refreshAll}
+        >
+          ↻ 全部更新
+        </button>
+      </div>
+    </div>
     <div class="tabs" role="tablist" aria-label="訊號分類">
       {#each TABS as tab, i}
         <button
@@ -131,7 +191,12 @@
       <p>尚無投機訊號掃描快照。請至 <a href="/data">資料管理</a> 或執行掃描排程後再回來。</p>
     </div>
   {:else}
-    <DataTable {data} onRowClick={handleRowClick} />
+    <DataTable
+      {data}
+      onRowClick={handleRowClick}
+      onRefreshRow={refreshRow}
+      {refreshingCodes}
+    />
   {/if}
 </div>
 
@@ -144,9 +209,59 @@
     margin-bottom: 24px;
   }
 
+  .title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
   .signals-page h1 {
     color: #4ade80;
-    margin: 0 0 16px 0;
+    margin: 0;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cache-age {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .btn-refresh {
+    background: #1a1a1a;
+    border: 1px solid #444;
+    color: #ccc;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: color 0.2s, border-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-refresh:hover:not(:disabled) {
+    color: #4ade80;
+    border-color: #4ade80;
+  }
+
+  .btn-refresh:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .btn-refresh.spinning {
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 
   .tabs {
@@ -181,15 +296,10 @@
     border-bottom-color: #4ade80;
   }
 
-  .loading,
-  .error {
-    color: #a1a1a1;
-    text-align: center;
-    padding: 24px;
-  }
-
   .error {
     color: #f87171;
+    text-align: center;
+    padding: 24px;
   }
 
   .empty-state {

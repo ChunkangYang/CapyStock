@@ -12,6 +12,7 @@
   import ConditionGauge from '$lib/components/ConditionGauge.svelte';
   import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
+  import { cacheGet, cacheSet, cacheClear, cacheTimestamp, formatCacheAge } from '$lib/utils/signalsCache';
   import type { SignalResult, PriceBar, FlowRow, MarginRow, EdinetEvent } from '$lib/types';
 
   const code = $page.params.code;
@@ -21,7 +22,11 @@
   let margins: MarginRow[] = [];
   let edinet: EdinetEvent[] = [];
   let loading = true;
+  let refreshing = false;
   let error = '';
+  let cacheTs: number | null = null;
+
+  const DETAIL_KEY = `signals_detail:${code}`;
 
   // indicator data
   type IndicatorSeries = { name: string; dates: string[]; values: (number | null)[] };
@@ -64,22 +69,69 @@
   $: macdSignalData = seriesAsDateValue(indBundle?.series['macd_signal']);
   $: macdHistData = seriesAsDateValue(indBundle?.series['macd_hist']);
 
+  type DetailBundle = {
+    signal: SignalResult;
+    prices: PriceBar[];
+    flows: FlowRow[];
+    margins: MarginRow[];
+    edinet: EdinetEvent[];
+    indBundle: IndicatorBundle;
+  };
+
+  async function fetchAll(): Promise<DetailBundle> {
+    const [s, p, f, m, e, ind] = await Promise.all([
+      api<SignalResult>(`/signals/${code}`),
+      api<PriceBar[]>(`/signals/${code}/price?days=120`),
+      api<FlowRow[]>(`/signals/${code}/flow?days=60`),
+      api<MarginRow[]>(`/signals/${code}/margin?weeks=20`),
+      api<EdinetEvent[]>(`/signals/${code}/edinet?days=30`),
+      api<IndicatorBundle>(`/indicators/${code}?days=120&include=sma_5,sma_20,sma_60,sma_120,ema_12,ema_26,rsi_14,macd,macd_signal,macd_hist,bb_upper,bb_mid,bb_lower`),
+    ]);
+    return { signal: s, prices: p, flows: f, margins: m, edinet: e, indBundle: ind };
+  }
+
+  function applyBundle(b: DetailBundle) {
+    signal = b.signal;
+    prices = b.prices;
+    flows = b.flows;
+    margins = b.margins;
+    edinet = b.edinet;
+    indBundle = b.indBundle;
+  }
+
   onMount(async () => {
     try {
-      [signal, prices, flows, margins, edinet, indBundle] = await Promise.all([
-        api<SignalResult>(`/signals/${code}`),
-        api<PriceBar[]>(`/signals/${code}/price?days=120`),
-        api<FlowRow[]>(`/signals/${code}/flow?days=60`),
-        api<MarginRow[]>(`/signals/${code}/margin?weeks=20`),
-        api<EdinetEvent[]>(`/signals/${code}/edinet?days=30`),
-        api<IndicatorBundle>(`/indicators/${code}?days=120&include=sma_5,sma_20,sma_60,sma_120,ema_12,ema_26,rsi_14,macd,macd_signal,macd_hist,bb_upper,bb_mid,bb_lower`),
-      ]);
+      const cached = cacheGet<DetailBundle>(DETAIL_KEY);
+      if (cached) {
+        applyBundle(cached);
+        cacheTs = cacheTimestamp(DETAIL_KEY);
+      } else {
+        const bundle = await fetchAll();
+        cacheSet(DETAIL_KEY, bundle);
+        cacheTs = cacheTimestamp(DETAIL_KEY);
+        applyBundle(bundle);
+      }
     } catch (e) {
       error = e instanceof Error ? e.message : '讀取資料失敗';
     } finally {
       loading = false;
     }
   });
+
+  async function refreshData() {
+    refreshing = true;
+    cacheClear(DETAIL_KEY);
+    try {
+      const bundle = await fetchAll();
+      cacheSet(DETAIL_KEY, bundle);
+      cacheTs = cacheTimestamp(DETAIL_KEY);
+      applyBundle(bundle);
+    } catch (e) {
+      error = e instanceof Error ? e.message : '更新失敗';
+    } finally {
+      refreshing = false;
+    }
+  }
 
   $: indSignals = (indBundle?.signals ?? []).slice(0, 15);
 
@@ -103,6 +155,16 @@
         <span class="price">{signal.latest_price?.toFixed(0) ?? 'N/A'}</span>
       </div>
       <div class="actions">
+        {#if cacheTs !== null}
+          <span class="cache-age">上次更新：{formatCacheAge(cacheTs)}</span>
+        {/if}
+        <button
+          class="btn btn-refresh"
+          class:spinning={refreshing}
+          disabled={refreshing}
+          title="清除快取，重新抓取最新資料"
+          on:click={refreshData}
+        >↻ 更新</button>
         <FavoriteToggle {code} name={signal.name} tag="speculative" />
         <a href="/compare?codes={code}" class="btn btn-secondary">對比模式</a>
       </div>
@@ -247,9 +309,15 @@
   .code { font-size: 18px; font-weight: bold; color: #fff; }
   .name { color: #a1a1a1; }
   .price { font-size: 20px; color: #4ade80; font-weight: bold; }
-  .actions { display: flex; gap: 8px; align-items: center; }
-  .btn { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; text-decoration: none; }
+  .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .cache-age { font-size: 12px; color: #666; }
+  .btn { padding: 6px 14px; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
   .btn-secondary { background: #333; color: #fff; border: 1px solid #555; }
+  .btn-refresh { background: #1a1a1a; color: #ccc; border: 1px solid #444; transition: color 0.2s, border-color 0.2s; }
+  .btn-refresh:hover:not(:disabled) { color: #4ade80; border-color: #4ade80; }
+  .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-refresh.spinning { animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   .toolbar {
     display: flex; gap: 10px; align-items: center; flex-wrap: wrap;

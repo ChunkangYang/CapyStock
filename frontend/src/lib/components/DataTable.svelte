@@ -4,6 +4,8 @@
 
   export let data: SignalScanRow[] = [];
   export let onRowClick: (code: string) => void = () => {};
+  export let onRefreshRow: ((code: string) => void) | null = null;
+  export let refreshingCodes: Set<string> = new Set();
 
   type SortKey = 'score' | 'latest_price' | 'edinet_recent_count';
   type SortOrder = 'asc' | 'desc';
@@ -111,6 +113,9 @@
             {/if}
           </button>
         </th>
+        {#if onRefreshRow}
+          <th></th>
+        {/if}
       </tr>
     </thead>
     <tbody>
@@ -138,6 +143,17 @@
           <td class="score" class:positive={row.score > 0} class:negative={row.score < 0}>
             {row.score.toFixed(1)}
           </td>
+          {#if onRefreshRow}
+            <td class="refresh-cell" on:click|stopPropagation>
+              <button
+                class="refresh-btn"
+                class:spinning={refreshingCodes.has(row.code)}
+                title="更新此股資料"
+                disabled={refreshingCodes.has(row.code)}
+                on:click={() => onRefreshRow && onRefreshRow(row.code)}
+              >↻</button>
+            </td>
+          {/if}
         </tr>
       {/each}
     </tbody>
@@ -269,5 +285,45 @@
 
   .sort-btn:hover {
     color: #4ade80;
+  }
+
+  .refresh-cell {
+    text-align: center;
+    width: 36px;
+    padding: 4px;
+  }
+
+  .refresh-btn {
+    background: none;
+    border: 1px solid #444;
+    color: #888;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+    line-height: 1;
+    transition: color 0.2s, border-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .refresh-btn:hover:not(:disabled) {
+    color: #4ade80;
+    border-color: #4ade80;
+  }
+
+  .refresh-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .refresh-btn.spinning {
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
 </style>
