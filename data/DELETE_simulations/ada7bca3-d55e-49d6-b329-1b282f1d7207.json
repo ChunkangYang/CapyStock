@@ -1,0 +1,80 @@
+{
+  "id": "ada7bca3-d55e-49d6-b329-1b282f1d7207",
+  "name": "toyota",
+  "kind": "backtest",
+  "created_at": "2026-05-06T11:18:51.129554",
+  "config": {
+    "kind": "backtest",
+    "initial_capital": 1000000.0,
+    "start_date": "2026-05-06",
+    "end_date": "2026-05-29",
+    "candidates": [
+      {
+        "code": "7203",
+        "name": "\u30c8\u30e8\u30bf\u81ea\u52d5\u8eca",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      },
+      {
+        "code": "8306",
+        "name": "\u4e09\u83f1UFJ\u30d5\u30a3\u30ca\u30f3\u30b7\u30e3\u30eb",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      }
+    ],
+    "entry_rule": {
+      "price_basis": "next_open",
+      "user_price": null,
+      "require_signal": true,
+      "indicator_entry": [
+        {
+          "type": "macd_golden_cross",
+          "params": {}
+        }
+      ],
+      "indicator_entry_logic": "or"
+    },
+    "exit_rule": {
+      "use_exit_signal": true,
+      "use_stop_loss": true,
+      "take_profit_pct": 0.1,
+      "max_hold_days": 30,
+      "exit_price_basis": "next_open",
+      "indicator_exit": [],
+      "indicator_exit_logic": "or"
+    },
+    "position_sizing": {
+      "mode": "equal_weight",
+      "fixed_jpy": null,
+      "fixed_shares": null,
+      "max_concurrent_positions": 10
+    },
+    "cost_model": {
+      "commission_pct": 0.001,
+      "slippage_pct": 0.001,
+      "tax_pct": 0.20315
+    }
+  },
+  "state": {
+    "cash": 1000000.0,
+    "positions": [],
+    "closed_trades": [],
+    "equity_curve": [],
+    "cursor_date": "2026-05-06",
+    "pending_entries": [
+      {
+        "code": "7203",
+        "name": "\u30c8\u30e8\u30bf\u81ea\u52d5\u8eca",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      },
+      {
+        "code": "8306",
+        "name": "\u4e09\u83f1UFJ\u30d5\u30a3\u30ca\u30f3\u30b7\u30e3\u30eb",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      }
+    ]
+  },
+  "status": "draft"
+}

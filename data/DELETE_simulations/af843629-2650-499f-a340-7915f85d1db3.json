@@ -1,0 +1,85 @@
+{
+  "id": "af843629-2650-499f-a340-7915f85d1db3",
+  "name": "\u554a\u554a\u554a\u554a\u554a\u02d9",
+  "kind": "backtest",
+  "created_at": "2026-05-06T11:23:33.486303",
+  "config": {
+    "kind": "backtest",
+    "initial_capital": 1000000.0,
+    "start_date": "2026-05-06",
+    "end_date": "2026-05-06",
+    "candidates": [
+      {
+        "code": "7203",
+        "name": "\u30c8\u30e8\u30bf\u81ea\u52d5\u8eca",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      },
+      {
+        "code": "6758",
+        "name": "\u30bd\u30cb\u30fc\u30b0\u30eb\u30fc\u30d7",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      }
+    ],
+    "entry_rule": {
+      "price_basis": "next_open",
+      "user_price": null,
+      "require_signal": true,
+      "indicator_entry": [
+        {
+          "type": "bb_breakout_up",
+          "params": {}
+        }
+      ],
+      "indicator_entry_logic": "or"
+    },
+    "exit_rule": {
+      "use_exit_signal": true,
+      "use_stop_loss": true,
+      "take_profit_pct": 0.1,
+      "max_hold_days": 30,
+      "exit_price_basis": "next_open",
+      "indicator_exit": [
+        {
+          "type": "rsi_oversold",
+          "params": {}
+        }
+      ],
+      "indicator_exit_logic": "or"
+    },
+    "position_sizing": {
+      "mode": "equal_weight",
+      "fixed_jpy": null,
+      "fixed_shares": null,
+      "max_concurrent_positions": 10
+    },
+    "cost_model": {
+      "commission_pct": 0.001,
+      "slippage_pct": 0.001,
+      "tax_pct": 0.20315
+    }
+  },
+  "state": {
+    "cash": 1000000.0,
+    "positions": [],
+    "closed_trades": [],
+    "equity_curve": [],
+    "cursor_date": "2026-05-06",
+    "pending_entries": [
+      {
+        "code": "7203",
+        "name": "\u30c8\u30e8\u30bf\u81ea\u52d5\u8eca",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      },
+      {
+        "code": "6758",
+        "name": "\u30bd\u30cb\u30fc\u30b0\u30eb\u30fc\u30d7",
+        "entry_signal_date": "2026-05-06",
+        "forced_entry_date": null
+      }
+    ]
+  },
+  "status": "failed"
+}
