@@ -188,10 +188,12 @@ _RESULTS_COL_MAP: dict[str, str] = {
     "自己資本比率": "equity_ratio",
     "営業CF":      "op_cf",
     "現金等":      "cash",
+    "一株配当":    "dps",
+    "配当性向":    "payout",
 }
 
 # /results 表格中以百分比形式存放但不帶 % 符號的欄位（需 ÷100 轉為小數）
-_RESULTS_PCT_METRICS = {"op_margin", "equity_ratio"}
+_RESULTS_PCT_METRICS = {"op_margin", "equity_ratio", "payout"}
 
 
 def _parse_column_table(tbl: dict[str, list[str]]) -> dict[str, list[Optional[float]]]:
