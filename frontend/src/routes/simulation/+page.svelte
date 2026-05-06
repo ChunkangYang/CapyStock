@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { api } from '$lib/api';
   import type { Simulation } from '$lib/types';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
   let simulations: Simulation[] = [];
   let loading = true;
@@ -55,7 +56,7 @@
   {/if}
 
   {#if loading}
-    <div class="loading">讀取中...</div>
+    <LoadingSpinner />
   {:else if simulations.length === 0}
     <div class="empty">
       <p>模擬交易模型未找到</p>

@@ -5,6 +5,7 @@
   // @ts-ignore
   import { goto } from '$app/navigation';
   import { api } from '$lib/api';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
   type FundamentalMetric = { metric: string; score: string; note: string };
   type FundamentalReport = { code: string; name: string; overall: string; metrics: FundamentalMetric[] };
@@ -113,7 +114,7 @@
   </div>
 
   {#if loading}
-    <p class="status">讀取中...</p>
+    <LoadingSpinner />
   {:else if error}
     <p class="err">{error}</p>
   {:else if bundle}

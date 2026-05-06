@@ -6,6 +6,7 @@
   import { goto } from '$app/navigation';
   import { api } from '$lib/api';
   import ComparePanel from '$lib/components/ComparePanel.svelte';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
   type IndicatorSeries = { name: string; dates: string[]; values: (number | null)[] };
   type IndicatorSignal = { date: string; name: string; type: string; strength: string };
@@ -105,7 +106,7 @@
   </div>
 
   {#if loading}
-    <p class="status">讀取中...</p>
+    <LoadingSpinner />
   {:else if error}
     <p class="err">{error}</p>
   {:else if bundle}

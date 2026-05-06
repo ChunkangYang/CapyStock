@@ -6,6 +6,7 @@
   import RadarChart from '$lib/components/RadarChart.svelte';
   import DividendBarChart from '$lib/components/DividendBarChart.svelte';
   import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
   let code = '';
   let loading = true;
@@ -60,7 +61,7 @@
 
 <div class="page">
   {#if loading}
-    <div class="loading">載入中...</div>
+    <LoadingSpinner size="lg" label="載入個股資料中…" />
   {:else if error}
     <div class="error">{error}</div>
   {:else if report}

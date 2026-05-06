@@ -3,6 +3,7 @@
   import { goto } from '$app/navigation';
   import { api, ApiError } from '$lib/api';
   import DataTable from '$lib/components/DataTable.svelte';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
   import type { SignalScanRow, SignalResult } from '$lib/types';
 
   const TABS = ['market', 'watchlist', 'favorites'] as const;
@@ -122,7 +123,7 @@
   </div>
 
   {#if loading}
-    <p class="loading">加載中...</p>
+    <LoadingSpinner />
   {:else if error}
     <p class="error">{error}</p>
   {:else if noSnapshot}

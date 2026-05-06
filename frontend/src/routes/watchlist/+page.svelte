@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { api } from '$lib/api';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
   interface WatchlistEntry {
     code: string;
@@ -96,7 +97,7 @@
     <h2>追蹤中（{watchlist.length} 檔）</h2>
 
     {#if loading}
-      <p class="empty">載入中…</p>
+      <LoadingSpinner />
     {:else if error}
       <p class="empty error-msg">{error}</p>
     {:else if watchlist.length === 0}

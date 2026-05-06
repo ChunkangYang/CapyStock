@@ -11,6 +11,7 @@
   import SignalTimeline from '$lib/components/SignalTimeline.svelte';
   import ConditionGauge from '$lib/components/ConditionGauge.svelte';
   import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
   import type { SignalResult, PriceBar, FlowRow, MarginRow, EdinetEvent } from '$lib/types';
 
   const code = $page.params.code;
@@ -91,7 +92,7 @@
 
 <div class="detail-page">
   {#if loading}
-    <p>加載中...</p>
+    <LoadingSpinner size="lg" label="載入個股資料中…" />
   {:else if error}
     <p class="error">{error}</p>
   {:else if signal}

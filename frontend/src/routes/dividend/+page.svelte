@@ -3,6 +3,7 @@
   import { api, ApiError } from '$lib/api';
   import type { DividendScanRow } from '$lib/types';
   import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
   import { favorites } from '$lib/stores/favorites';
 
   interface FilterState {
@@ -284,7 +285,7 @@
   {/if}
 
   {#if loading}
-    <div class="loading">載入中...</div>
+    <LoadingSpinner />
   {/if}
 </div>
 

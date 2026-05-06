@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
   const API = '/api/v1';
 
@@ -51,7 +52,7 @@
   </div>
 
   {#if loading}
-    <p class="text-gray-500">載入中...</p>
+    <LoadingSpinner />
   {:else if error}
     <div class="p-3 bg-red-50 text-red-700 rounded border border-red-200">{error}</div>
   {:else}

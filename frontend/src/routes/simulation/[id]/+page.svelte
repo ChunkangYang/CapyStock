@@ -4,6 +4,7 @@
   import { api } from '$lib/api';
   import type { Simulation, SimulationReport } from '$lib/types';
   import EquityCurveChart from '$lib/components/EquityCurveChart.svelte';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
   let sim: Simulation | null = null;
   let report: SimulationReport | null = null;
@@ -117,7 +118,7 @@
   {/if}
 
   {#if loading}
-    <div class="loading-container">讀取中...</div>
+    <LoadingSpinner size="lg" />
   {:else if !sim}
     <div class="error-container">找不到模擬</div>
   {:else}

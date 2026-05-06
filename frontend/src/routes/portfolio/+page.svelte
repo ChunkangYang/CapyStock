@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { api } from '$lib/api';
   import type { PortfolioEntry, PortfolioLot } from '$lib/types';
+  import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
   let portfolio: PortfolioEntry[] = [];
   let loading = true;
@@ -98,7 +99,7 @@
     <h2>持倉清單（未平倉）</h2>
 
     {#if loading}
-      <p class="empty">載入中…</p>
+      <LoadingSpinner />
     {:else if error}
       <p class="empty error-msg">{error}</p>
     {:else if portfolio.length === 0}
