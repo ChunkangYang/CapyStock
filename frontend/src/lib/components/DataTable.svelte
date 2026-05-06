@@ -176,14 +176,14 @@
           <td class="price">{row.latest_price.toFixed(0)}</td>
           <td class="indicator" class:active={row.has_accumulation}>🔵</td>
           <td class="indicator" class:active={row.has_exit}>🟠</td>
-          <td class="indicator" class:active={row.has_stop_loss}>🔺</td>
+          <td class="indicator" class:active={row.has_stop_loss}>🔴</td>
           <td>
             {#if row.has_accumulation}
-              📈
+              💹
             {:else if row.has_exit}
-              ⬇
+              🔔
             {:else if row.has_stop_loss}
-              ⚠
+              🛑
             {/if}
           </td>
           <td class="center">{row.edinet_recent_count}</td>
