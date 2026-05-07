@@ -122,10 +122,13 @@
 
 <div class="sweep-page">
   <div class="header">
-    <div class="header-left">
-      <a href="/simulation" class="back-link">← 模擬交易</a>
-      <h1>策略參數 Sweep（網格回測）</h1>
+    <div class="header-top">
+      <a href="/simulation" class="back-btn">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        模擬交易
+      </a>
     </div>
+    <h1>策略參數 Sweep（網格回測）</h1>
   </div>
 
   <div class="grid-2col">
@@ -291,17 +294,29 @@
     margin-bottom: 28px;
   }
 
-  .back-link {
-    display: inline-block;
-    color: #6b7280;
-    text-decoration: none;
-    font-size: 13px;
-    margin-bottom: 8px;
-    transition: color 0.2s;
+  .header-top {
+    margin-bottom: 12px;
   }
 
-  .back-link:hover {
-    color: #a3e635;
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px 6px 10px;
+    background: #1e1e2e;
+    border: 1px solid #4b5563;
+    border-radius: 6px;
+    color: #c4b5fd;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  .back-btn:hover {
+    background: #2d2b45;
+    border-color: #8b5cf6;
+    color: #a78bfa;
   }
 
   h1 {
