@@ -295,11 +295,12 @@ cd frontend && npm install && npm run dev
 ### 群組 H：策略參數 Sweep（S22）
 
 #### TC-SWP-01 啟動 sweep
-**步驟**：前往「模擬交易」→「策略參數 Sweep（網格回測）」（`/simulation/sweep`）→ 設定參數網格（如停損 5/8/10 × 獲利了結 15/20/25）→ 點「執行 Sweep」
+**步驟**：前往「模擬交易」→ 點「⚡ 網格回測 Sweep」→ 預設值（停損 5/8/10%、獲利了結 15/20/25%、股票 7203、2026-02-01 ~ 2026-04-30）→ 點「執行 Sweep」
 **預期**：
-- SSE 即時更新進度
 - 完成後顯示熱圖（stop_loss × take_profit → 總報酬%）
-- 排行榜 Top N
+- 排行榜 Top N，各組合有交易數與報酬
+
+**結果**：✅ Pass（2026-05-07）｜9 組合跑出，熱圖有色，交易數 1，stop_loss=8% 組合損失最小（-0.01%）｜修復：price cache 2024 資料不足、stop_loss_pct 未套入引擎、require_signal 阻止進場
 
 #### TC-SWP-02 取消 sweep
 **步驟**：執行中按取消
