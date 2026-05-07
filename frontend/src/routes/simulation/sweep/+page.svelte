@@ -1,22 +1,17 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
   const API = '/api/v1';
 
-  // grid params
   let stopLossInput = '0.03,0.05,0.08';
   let takeProfitInput = '0.10,0.15,0.20';
   let maxHoldInput = '';
   let metric = 'total_return';
   let topN = 20;
 
-  // base config（簡化版，使用現有模擬清單選）
   let simCode = '';
   let startDate = '2024-01-01';
   let endDate = '2024-12-31';
   let initialCapital = 1000000;
 
-  // runtime
   let estimatedCombos = 0;
   let running = false;
   let error = '';
@@ -78,7 +73,6 @@
       const info = await res.json();
       jobId = info.job_id;
 
-      // 取得完整結果
       const resultRes = await fetch(`${API}/sweep/${jobId}`);
       if (resultRes.ok) {
         result = await resultRes.json();
@@ -91,11 +85,9 @@
   }
 
   function goToSim(row: any) {
-    // 在新視窗開啟模擬頁（未來可實作自動建立一筆模擬）
     alert(`最佳參數：${JSON.stringify(row.params)}\n總報酬：${row.total_return?.toFixed(2)}%\n勝率：${row.win_rate?.toFixed(1)}%`);
   }
 
-  // 計算熱圖資料（stop_loss × take_profit）
   $: heatmap = buildHeatmap(result);
 
   function buildHeatmap(result: any) {
@@ -120,66 +112,71 @@
   }
 
   function heatColor(val: number, min: number, max: number) {
-    if (max === min) return '#64748b';
+    if (max === min) return '#374151';
     const t = (val - min) / (max - min);
-    const r = Math.round(255 * (1 - t));
-    const g = Math.round(200 * t);
+    const r = Math.round(180 * (1 - t));
+    const g = Math.round(220 * t);
     return `rgb(${r},${g},80)`;
   }
 </script>
 
-<div class="p-6 max-w-6xl mx-auto">
-  <h1 class="text-2xl font-bold mb-6">策略參數 Sweep（網格回測）</h1>
+<div class="sweep-page">
+  <div class="header">
+    <div class="header-left">
+      <a href="/simulation" class="back-link">← 模擬交易</a>
+      <h1>策略參數 Sweep（網格回測）</h1>
+    </div>
+  </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-    <!-- 參數設定 -->
-    <div class="bg-white border rounded-xl p-5 shadow-sm">
-      <h2 class="font-semibold text-lg mb-4">參數網格</h2>
+  <div class="grid-2col">
+    <!-- 參數網格 -->
+    <div class="card">
+      <h2>參數網格</h2>
 
-      <div class="mb-3">
-        <label class="block text-sm text-gray-600 mb-1">停損 % (逗號分隔)</label>
-        <input bind:value={stopLossInput} class="w-full border rounded px-3 py-1.5 text-sm" placeholder="0.03,0.05,0.08" />
+      <div class="form-group">
+        <label>停損 % (逗號分隔)</label>
+        <input bind:value={stopLossInput} placeholder="0.03,0.05,0.08" />
       </div>
-      <div class="mb-3">
-        <label class="block text-sm text-gray-600 mb-1">獲利了結 % (逗號分隔)</label>
-        <input bind:value={takeProfitInput} class="w-full border rounded px-3 py-1.5 text-sm" placeholder="0.10,0.15,0.20" />
+      <div class="form-group">
+        <label>獲利了結 % (逗號分隔)</label>
+        <input bind:value={takeProfitInput} placeholder="0.10,0.15,0.20" />
       </div>
-      <div class="mb-3">
-        <label class="block text-sm text-gray-600 mb-1">最大持倉天數 (可空)</label>
-        <input bind:value={maxHoldInput} class="w-full border rounded px-3 py-1.5 text-sm" placeholder="20,30,60" />
+      <div class="form-group">
+        <label>最大持倉天數 (可空)</label>
+        <input bind:value={maxHoldInput} placeholder="20,30,60" />
       </div>
 
-      <div class="text-sm text-blue-700 font-medium">
-        估算組合數：<span class:text-red-600={estimatedCombos > 200}>{estimatedCombos}</span>
-        {#if estimatedCombos > 200}<span class="text-red-500">（超過上限 200）</span>{/if}
+      <div class="combo-count" class:over-limit={estimatedCombos > 200}>
+        估算組合數：<strong>{estimatedCombos}</strong>
+        {#if estimatedCombos > 200}<span class="warn">（超過上限 200）</span>{/if}
       </div>
     </div>
 
-    <!-- 基本設定 -->
-    <div class="bg-white border rounded-xl p-5 shadow-sm">
-      <h2 class="font-semibold text-lg mb-4">回測設定</h2>
+    <!-- 回測設定 -->
+    <div class="card">
+      <h2>回測設定</h2>
 
-      <div class="mb-3">
-        <label class="block text-sm text-gray-600 mb-1">股票代碼</label>
-        <input bind:value={simCode} class="w-full border rounded px-3 py-1.5 text-sm" placeholder="7203" />
+      <div class="form-group">
+        <label>股票代碼</label>
+        <input bind:value={simCode} placeholder="7203" />
       </div>
-      <div class="mb-3 grid grid-cols-2 gap-2">
-        <div>
-          <label class="block text-sm text-gray-600 mb-1">開始日期</label>
-          <input type="date" bind:value={startDate} class="w-full border rounded px-3 py-1.5 text-sm" />
+      <div class="grid-2col-inner">
+        <div class="form-group">
+          <label>開始日期</label>
+          <input type="date" bind:value={startDate} />
         </div>
-        <div>
-          <label class="block text-sm text-gray-600 mb-1">結束日期</label>
-          <input type="date" bind:value={endDate} class="w-full border rounded px-3 py-1.5 text-sm" />
+        <div class="form-group">
+          <label>結束日期</label>
+          <input type="date" bind:value={endDate} />
         </div>
       </div>
-      <div class="mb-3">
-        <label class="block text-sm text-gray-600 mb-1">初始資金（JPY）</label>
-        <input type="number" bind:value={initialCapital} class="w-full border rounded px-3 py-1.5 text-sm" />
+      <div class="form-group">
+        <label>初始資金（JPY）</label>
+        <input type="number" bind:value={initialCapital} />
       </div>
-      <div class="mb-3">
-        <label class="block text-sm text-gray-600 mb-1">排序指標</label>
-        <select bind:value={metric} class="w-full border rounded px-3 py-1.5 text-sm">
+      <div class="form-group">
+        <label>排序指標</label>
+        <select bind:value={metric}>
           <option value="total_return">總報酬</option>
           <option value="win_rate">勝率</option>
           <option value="profit_factor">Profit Factor</option>
@@ -192,94 +189,87 @@
   <button
     on:click={runSweep}
     disabled={running || estimatedCombos > 200}
-    class="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold disabled:opacity-50 hover:bg-blue-700 transition"
+    class="btn-run"
   >
     {running ? '執行中...' : '執行 Sweep'}
   </button>
 
   {#if error}
-    <div class="mt-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded">{error}</div>
+    <div class="error">{error}</div>
   {/if}
 
   {#if result}
-    <div class="mt-8">
-      <h2 class="text-xl font-bold mb-4">
-        Sweep 結果（{result.n_combinations} 組合，顯示 top {result.rows?.length}）
-      </h2>
+    <div class="results">
+      <h2>Sweep 結果（{result.n_combinations} 組合，顯示 top {result.rows?.length}）</h2>
 
-      <!-- 熱圖 -->
       {#if heatmap}
-        <div class="bg-white border rounded-xl p-4 shadow-sm mb-6 overflow-auto">
-          <h3 class="font-semibold mb-3">熱圖（stop_loss × take_profit → 總報酬%）</h3>
-          <table class="text-xs border-collapse">
-            <thead>
-              <tr>
-                <th class="p-2 bg-gray-100">TP \ SL</th>
-                {#each heatmap.slValues as sl}
-                  <th class="p-2 bg-gray-100">{(sl*100).toFixed(0)}%</th>
-                {/each}
-              </tr>
-            </thead>
-            <tbody>
-              {#each heatmap.tpValues as tp, ti}
+        <div class="card">
+          <h3>熱圖（stop_loss × take_profit → 總報酬%）</h3>
+          <div class="heatmap-wrapper">
+            <table class="heatmap">
+              <thead>
                 <tr>
-                  <td class="p-2 bg-gray-50 font-medium">{(tp*100).toFixed(0)}%</td>
-                  {#each heatmap.matrix[ti] as val, si}
-                    <td
-                      class="p-2 text-center font-semibold cursor-pointer hover:opacity-80"
-                      style="background:{heatColor(val, heatmap.minV, heatmap.maxV)}; color: #1e293b; min-width:56px"
-                      title="SL={heatmap.slValues[si]*100}% TP={tp*100}%"
-                    >
-                      {val.toFixed(1)}%
-                    </td>
+                  <th>TP \ SL</th>
+                  {#each heatmap.slValues as sl}
+                    <th>{(sl*100).toFixed(0)}%</th>
                   {/each}
                 </tr>
-              {/each}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {#each heatmap.tpValues as tp, ti}
+                  <tr>
+                    <td class="row-label">{(tp*100).toFixed(0)}%</td>
+                    {#each heatmap.matrix[ti] as val, si}
+                      <td
+                        class="heat-cell"
+                        style="background:{heatColor(val, heatmap.minV, heatmap.maxV)}"
+                        title="SL={heatmap.slValues[si]*100}% TP={tp*100}%"
+                      >
+                        {val.toFixed(1)}%
+                      </td>
+                    {/each}
+                  </tr>
+                {/each}
+              </tbody>
+            </table>
+          </div>
         </div>
       {/if}
 
-      <!-- 排行榜 -->
-      <div class="bg-white border rounded-xl shadow-sm overflow-auto">
-        <table class="w-full text-sm">
-          <thead class="bg-gray-50">
+      <div class="card table-card">
+        <table>
+          <thead>
             <tr>
-              <th class="px-3 py-2 text-left">#</th>
-              <th class="px-3 py-2 text-left">參數</th>
-              <th class="px-3 py-2 text-right">總報酬%</th>
-              <th class="px-3 py-2 text-right">年化%</th>
-              <th class="px-3 py-2 text-right">最大回撤%</th>
-              <th class="px-3 py-2 text-right">勝率%</th>
-              <th class="px-3 py-2 text-right">PF</th>
-              <th class="px-3 py-2 text-right">交易數</th>
-              <th class="px-3 py-2"></th>
+              <th>#</th>
+              <th>參數</th>
+              <th class="num">總報酬%</th>
+              <th class="num">年化%</th>
+              <th class="num">最大回撤%</th>
+              <th class="num">勝率%</th>
+              <th class="num">PF</th>
+              <th class="num">交易數</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {#each result.rows as row, i}
-              <tr class="border-t hover:bg-gray-50">
-                <td class="px-3 py-2 text-gray-500">{i + 1}</td>
-                <td class="px-3 py-2 font-mono text-xs">
+              <tr>
+                <td class="rank">{i + 1}</td>
+                <td class="params">
                   {#each Object.entries(row.params) as [k, v]}
-                    <span class="mr-2">{k}={typeof v === 'number' ? (v * 100).toFixed(0) + '%' : v}</span>
+                    <span>{k}={typeof v === 'number' ? (v * 100).toFixed(0) + '%' : v}</span>
                   {/each}
                 </td>
-                <td class="px-3 py-2 text-right font-semibold {row.total_return >= 0 ? 'text-green-600' : 'text-red-600'}">
+                <td class="num {row.total_return >= 0 ? 'positive' : 'negative'}">
                   {row.total_return?.toFixed(2)}
                 </td>
-                <td class="px-3 py-2 text-right">{row.annualized?.toFixed(2)}</td>
-                <td class="px-3 py-2 text-right text-red-500">{row.max_drawdown?.toFixed(2)}</td>
-                <td class="px-3 py-2 text-right">{row.win_rate?.toFixed(1)}</td>
-                <td class="px-3 py-2 text-right">{row.profit_factor?.toFixed(2)}</td>
-                <td class="px-3 py-2 text-right">{row.n_trades}</td>
-                <td class="px-3 py-2">
-                  <button
-                    on:click={() => goToSim(row)}
-                    class="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200"
-                  >
-                    詳情
-                  </button>
+                <td class="num">{row.annualized?.toFixed(2)}</td>
+                <td class="num negative">{row.max_drawdown?.toFixed(2)}</td>
+                <td class="num">{row.win_rate?.toFixed(1)}</td>
+                <td class="num">{row.profit_factor?.toFixed(2)}</td>
+                <td class="num">{row.n_trades}</td>
+                <td>
+                  <button class="btn-detail" on:click={() => goToSim(row)}>詳情</button>
                 </td>
               </tr>
             {/each}
@@ -289,3 +279,269 @@
     </div>
   {/if}
 </div>
+
+<style>
+  .sweep-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .header {
+    margin-bottom: 28px;
+  }
+
+  .back-link {
+    display: inline-block;
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 13px;
+    margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: #a3e635;
+  }
+
+  h1 {
+    color: #4ade80;
+    margin: 0;
+    font-size: 24px;
+  }
+
+  h2 {
+    color: #4ade80;
+    font-size: 16px;
+    margin: 0 0 16px;
+  }
+
+  h3 {
+    color: #a1a1a1;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 12px;
+  }
+
+  .grid-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .grid-2col-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .card {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 5px;
+  }
+
+  input, select {
+    width: 100%;
+    background-color: #111;
+    border: 1px solid #374151;
+    border-radius: 4px;
+    padding: 7px 10px;
+    color: #e5e7eb;
+    font-size: 13px;
+    box-sizing: border-box;
+  }
+
+  input:focus, select:focus {
+    outline: none;
+    border-color: #4ade80;
+  }
+
+  .combo-count {
+    font-size: 13px;
+    color: #9ca3af;
+    padding: 8px 10px;
+    background: #111;
+    border-radius: 4px;
+    border: 1px solid #2a2a2a;
+  }
+
+  .combo-count strong {
+    color: #e5e7eb;
+  }
+
+  .warn {
+    color: #f87171;
+  }
+
+  .btn-run {
+    padding: 10px 28px;
+    background-color: #4ade80;
+    color: #111;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 24px;
+  }
+
+  .btn-run:hover:not(:disabled) {
+    background-color: #3dd66f;
+  }
+
+  .btn-run:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .error {
+    background-color: #7f1d1d;
+    color: #fca5a5;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+
+  .results h2 {
+    margin-bottom: 16px;
+  }
+
+  .heatmap-wrapper {
+    overflow-x: auto;
+  }
+
+  .heatmap {
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .heatmap th {
+    padding: 7px 12px;
+    background: #2a2a2a;
+    color: #9ca3af;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .row-label {
+    padding: 7px 12px;
+    background: #222;
+    color: #9ca3af;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .heat-cell {
+    padding: 7px 14px;
+    text-align: center;
+    font-weight: 600;
+    color: #1a1a1a;
+    cursor: pointer;
+    min-width: 56px;
+    transition: opacity 0.15s;
+  }
+
+  .heat-cell:hover {
+    opacity: 0.8;
+  }
+
+  .table-card {
+    padding: 0;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background-color: #2a2a2a;
+  }
+
+  th {
+    padding: 11px 12px;
+    color: #4ade80;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+
+  td {
+    padding: 11px 12px;
+    color: #e5e5e5;
+    font-size: 13px;
+    border-bottom: 1px solid #2a2a2a;
+  }
+
+  tbody tr:hover {
+    background-color: #222;
+  }
+
+  .rank {
+    color: #6b7280;
+    font-size: 12px;
+  }
+
+  .params {
+    font-family: monospace;
+    font-size: 11px;
+    color: #9ca3af;
+  }
+
+  .params span {
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .num {
+    text-align: right;
+  }
+
+  .positive {
+    color: #4ade80;
+    font-weight: 500;
+  }
+
+  .negative {
+    color: #f87171;
+  }
+
+  .btn-detail {
+    padding: 4px 10px;
+    font-size: 11px;
+    background: #374151;
+    color: #a3e635;
+    border: 1px solid #4b5563;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-detail:hover {
+    background: #4b5563;
+  }
+
+  @media (max-width: 768px) {
+    .grid-2col {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

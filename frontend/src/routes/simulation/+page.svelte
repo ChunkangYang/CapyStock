@@ -48,7 +48,10 @@
 <div class="simulation-page">
   <div class="header">
     <h1>模擬交易</h1>
-    <a href="/simulation/new" class="btn btn-primary">+ 新建模擬</a>
+    <div class="header-actions">
+      <a href="/simulation/sweep" class="btn btn-sweep">網格回測 Sweep</a>
+      <a href="/simulation/new" class="btn btn-primary">+ 新建模擬</a>
+    </div>
   </div>
 
   {#if error}
@@ -128,6 +131,23 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-sweep {
+    background-color: #374151;
+    color: #a3e635;
+    border: 1px solid #4b5563;
+    font-weight: 500;
+  }
+
+  .btn-sweep:hover {
+    background-color: #4b5563;
+    color: #bef264;
   }
 
   h1 {
