@@ -49,7 +49,9 @@
   <div class="header">
     <h1>模擬交易</h1>
     <div class="header-actions">
-      <a href="/simulation/sweep" class="btn btn-sweep">網格回測 Sweep</a>
+      <a href="/simulation/sweep" class="btn btn-sweep">
+        <span class="sweep-icon">⚡</span>網格回測 Sweep
+      </a>
       <a href="/simulation/new" class="btn btn-primary">+ 新建模擬</a>
     </div>
   </div>
@@ -139,15 +141,26 @@
   }
 
   .btn-sweep {
-    background-color: #374151;
-    color: #a3e635;
-    border: 1px solid #4b5563;
-    font-weight: 500;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.45);
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 
   .btn-sweep:hover {
-    background-color: #4b5563;
-    color: #bef264;
+    background: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.7);
+    color: #fff;
+  }
+
+  .sweep-icon {
+    font-size: 15px;
+    line-height: 1;
   }
 
   h1 {
