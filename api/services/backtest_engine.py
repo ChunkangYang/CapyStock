@@ -260,18 +260,18 @@ def run_one_day(
 
         latest_price = today_price.get("close")
 
-        # 檢查停損條件（最近 2 日跌破 -5%）
+        # 檢查停損條件（最近 2 日跌破門檻，門檻從 config 讀取，預設 -5%）
         has_stop_loss = False
         if cfg.exit_rule.use_stop_loss:
-            stop_loss_pct = 0.95
+            raw_sl = cfg.exit_rule.stop_loss_pct if cfg.exit_rule.stop_loss_pct is not None else 0.05
+            sl_threshold = 1.0 - raw_sl
             if latest_price is not None:
-                if latest_price <= pos.entry_price * stop_loss_pct:
-                    # 檢查前一天
+                if latest_price <= pos.entry_price * sl_threshold:
                     prev_date = today - timedelta(days=1)
                     prev_price = price_cache.get(pos.code, {}).get(prev_date)
                     if prev_price:
                         prev_close = prev_price.get("close")
-                        if prev_close and prev_close <= pos.entry_price * stop_loss_pct:
+                        if prev_close and prev_close <= pos.entry_price * sl_threshold:
                             has_stop_loss = True
 
         # 檢查訊號條件

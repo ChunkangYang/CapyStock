@@ -45,6 +45,7 @@ class ExitRule(_BaseModelWithDateSerialization):
     """出場規則。"""
     use_exit_signal: bool = True
     use_stop_loss: bool = True
+    stop_loss_pct: Optional[float] = None
     take_profit_pct: Optional[float] = None
     max_hold_days: Optional[int] = None
     exit_price_basis: Literal["signal_close", "next_open"] = "next_open"

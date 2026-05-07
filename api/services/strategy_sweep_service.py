@@ -47,6 +47,7 @@ def _apply_params(base_config: SimulationConfig, params: dict) -> SimulationConf
     cfg = copy.deepcopy(base_config)
     if "stop_loss_pct" in params:
         cfg.exit_rule.use_stop_loss = True
+        cfg.exit_rule.stop_loss_pct = params["stop_loss_pct"]
     if "take_profit_pct" in params:
         cfg.exit_rule.take_profit_pct = params["take_profit_pct"]
     if "max_hold_days" in params:

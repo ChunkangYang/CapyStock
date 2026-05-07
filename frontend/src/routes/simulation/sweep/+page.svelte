@@ -1,13 +1,13 @@
 <script lang="ts">
   const API = '/api/v1';
 
-  let stopLossInput = '0.03,0.05,0.08';
-  let takeProfitInput = '0.10,0.15,0.20';
+  let stopLossInput = '0.05,0.08,0.10';
+  let takeProfitInput = '0.15,0.20,0.25';
   let maxHoldInput = '';
   let metric = 'total_return';
   let topN = 20;
 
-  let simCode = '';
+  let simCode = '7203';
   let startDate = '2024-01-01';
   let endDate = '2024-12-31';
   let initialCapital = 1000000;
@@ -49,7 +49,7 @@
           start_date: startDate,
           end_date: endDate,
           candidates: simCode ? [{ code: simCode, name: simCode }] : [],
-          entry_rule: { price_basis: 'next_open', require_signal: true, indicator_entry: [], indicator_entry_logic: 'or' },
+          entry_rule: { price_basis: 'next_open', require_signal: false, indicator_entry: [], indicator_entry_logic: 'or' },
           exit_rule: { use_exit_signal: true, use_stop_loss: true, exit_price_basis: 'next_open', indicator_exit: [], indicator_exit_logic: 'or' },
           position_sizing: { mode: 'equal_weight', max_concurrent_positions: 5 },
           cost_model: { commission_pct: 0.001, slippage_pct: 0.001, tax_pct: 0.20315 },
