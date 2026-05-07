@@ -7,16 +7,33 @@
   let metric = 'total_return';
   let topN = 20;
 
-  let simCode = '7203';
-  let startDate = '2026-02-01';
-  let endDate = '2026-04-30';
+  let simCode = '6758';
+  let startDate = '2025-01-06';
+  let endDate = '2025-12-26';
   let initialCapital = 1000000;
 
   let estimatedCombos = 0;
   let running = false;
+  let progressStep = 0;
+  let progressTotal = 0;
   let error = '';
   let result: any = null;
   let jobId = '';
+
+  const PARAM_LABELS: Record<string, string> = {
+    stop_loss_pct: '停損',
+    take_profit_pct: '獲利了結',
+    max_hold_days: '最長持倉（天）',
+  };
+
+  function formatParamLabel(key: string, val: unknown): string {
+    const label = PARAM_LABELS[key] || key;
+    if (typeof val === 'number') {
+      if (key === 'max_hold_days') return `${label} ${val} 天`;
+      return `${label} ${(val * 100).toFixed(0)}%`;
+    }
+    return `${label} ${val}`;
+  }
 
   function parseList<T>(input: string, parser: (s: string) => T): T[] {
     return input.split(',').map(s => s.trim()).filter(Boolean).map(parser);
@@ -33,6 +50,9 @@
     error = '';
     result = null;
     running = true;
+    progressStep = 0;
+    progressTotal = estimatedCombos;
+
     try {
       const grid: any = {};
       const sl = parseList(stopLossInput, Number);
@@ -42,15 +62,19 @@
       if (tp.length) grid.take_profit_pct = tp;
       if (mh) grid.max_hold_days = mh;
 
+      // build candidates from comma-separated codes
+      const codes = simCode.split(',').map(s => s.trim()).filter(Boolean);
+      const candidates = codes.map(c => ({ code: c, name: c }));
+
       const body = {
         base_config: {
           kind: 'backtest',
           initial_capital: initialCapital,
           start_date: startDate,
           end_date: endDate,
-          candidates: simCode ? [{ code: simCode, name: simCode }] : [],
+          candidates,
           entry_rule: { price_basis: 'next_open', require_signal: false, indicator_entry: [], indicator_entry_logic: 'or' },
-          exit_rule: { use_exit_signal: true, use_stop_loss: true, exit_price_basis: 'next_open', indicator_exit: [], indicator_exit_logic: 'or' },
+          exit_rule: { use_exit_signal: false, use_stop_loss: true, exit_price_basis: 'next_open', indicator_exit: [], indicator_exit_logic: 'or' },
           position_sizing: { mode: 'equal_weight', max_concurrent_positions: 5 },
           cost_model: { commission_pct: 0.001, slippage_pct: 0.001, tax_pct: 0.20315 },
         },
@@ -59,11 +83,19 @@
         top_n: topN,
       };
 
+      // 模擬進度動畫（後端同步，用 interval 展示）
+      const tickInterval = setInterval(() => {
+        if (progressStep < progressTotal - 1) progressStep += 1;
+      }, Math.max(200, 2000 / progressTotal));
+
       const res = await fetch(`${API}/sweep/run`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
+
+      clearInterval(tickInterval);
+      progressStep = progressTotal;
 
       if (!res.ok) {
         const err = await res.json();
@@ -85,7 +117,10 @@
   }
 
   function goToSim(row: any) {
-    alert(`最佳參數：${JSON.stringify(row.params)}\n總報酬：${row.total_return?.toFixed(2)}%\n勝率：${row.win_rate?.toFixed(1)}%`);
+    const desc = Object.entries(row.params)
+      .map(([k, v]) => formatParamLabel(k, v))
+      .join('、');
+    alert(`參數：${desc}\n總報酬：${row.total_return?.toFixed(2)}%\n勝率：${row.win_rate?.toFixed(1)}%\n交易數：${row.n_trades}`);
   }
 
   $: heatmap = buildHeatmap(result);
@@ -120,6 +155,30 @@
   }
 </script>
 
+<!-- Progress Popup -->
+{#if running}
+  <div class="overlay">
+    <div class="progress-modal">
+      <div class="modal-icon">⚡</div>
+      <h3>正在執行 Sweep 回測</h3>
+      <p class="modal-sub">共 {progressTotal} 組參數組合，請稍候…</p>
+
+      <div class="progress-bar-wrap">
+        <div
+          class="progress-bar-fill"
+          style="width: {progressTotal > 0 ? (progressStep / progressTotal * 100) : 0}%"
+        ></div>
+      </div>
+      <div class="progress-label">{progressStep} / {progressTotal} 組完成</div>
+
+      <div class="spinner-row">
+        <span class="spinner"></span>
+        <span class="spinner-text">運算中</span>
+      </div>
+    </div>
+  </div>
+{/if}
+
 <div class="sweep-page">
   <div class="header">
     <div class="header-top">
@@ -138,11 +197,11 @@
 
       <div class="form-group">
         <label>停損 % (逗號分隔)</label>
-        <input bind:value={stopLossInput} placeholder="0.03,0.05,0.08" />
+        <input bind:value={stopLossInput} placeholder="0.05,0.08,0.10" />
       </div>
       <div class="form-group">
         <label>獲利了結 % (逗號分隔)</label>
-        <input bind:value={takeProfitInput} placeholder="0.10,0.15,0.20" />
+        <input bind:value={takeProfitInput} placeholder="0.15,0.20,0.25" />
       </div>
       <div class="form-group">
         <label>最大持倉天數 (可空)</label>
@@ -160,8 +219,8 @@
       <h2>回測設定</h2>
 
       <div class="form-group">
-        <label>股票代碼</label>
-        <input bind:value={simCode} placeholder="7203" />
+        <label>股票代碼（可多檔，逗號分隔）</label>
+        <input bind:value={simCode} placeholder="6758,7203" />
       </div>
       <div class="grid-2col-inner">
         <div class="form-group">
@@ -207,28 +266,28 @@
 
       {#if heatmap}
         <div class="card">
-          <h3>熱圖（stop_loss × take_profit → 總報酬%）</h3>
+          <h3>熱圖（停損 × 獲利了結 → 總報酬%）</h3>
           <div class="heatmap-wrapper">
             <table class="heatmap">
               <thead>
                 <tr>
-                  <th>TP \ SL</th>
+                  <th>獲利了結 \ 停損</th>
                   {#each heatmap.slValues as sl}
-                    <th>{(sl*100).toFixed(0)}%</th>
+                    <th>停損 {(sl*100).toFixed(0)}%</th>
                   {/each}
                 </tr>
               </thead>
               <tbody>
                 {#each heatmap.tpValues as tp, ti}
                   <tr>
-                    <td class="row-label">{(tp*100).toFixed(0)}%</td>
+                    <td class="row-label">獲利 {(tp*100).toFixed(0)}%</td>
                     {#each heatmap.matrix[ti] as val, si}
                       <td
                         class="heat-cell"
                         style="background:{heatColor(val, heatmap.minV, heatmap.maxV)}"
-                        title="SL={heatmap.slValues[si]*100}% TP={tp*100}%"
+                        title="停損={heatmap.slValues[si]*100}% 獲利了結={tp*100}%"
                       >
-                        {val.toFixed(1)}%
+                        {val.toFixed(2)}%
                       </td>
                     {/each}
                   </tr>
@@ -244,7 +303,7 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>參數</th>
+              <th>參數組合</th>
               <th class="num">總報酬%</th>
               <th class="num">年化%</th>
               <th class="num">最大回撤%</th>
@@ -260,7 +319,7 @@
                 <td class="rank">{i + 1}</td>
                 <td class="params">
                   {#each Object.entries(row.params) as [k, v]}
-                    <span>{k}={typeof v === 'number' ? (v * 100).toFixed(0) + '%' : v}</span>
+                    <span class="param-chip">{formatParamLabel(k, v)}</span>
                   {/each}
                 </td>
                 <td class="num {row.total_return >= 0 ? 'positive' : 'negative'}">
@@ -268,8 +327,8 @@
                 </td>
                 <td class="num">{row.annualized?.toFixed(2)}</td>
                 <td class="num negative">{row.max_drawdown?.toFixed(2)}</td>
-                <td class="num">{row.win_rate?.toFixed(1)}</td>
-                <td class="num">{row.profit_factor?.toFixed(2)}</td>
+                <td class="num">{row.win_rate != null ? row.win_rate.toFixed(1) : '—'}</td>
+                <td class="num">{row.profit_factor != null ? row.profit_factor.toFixed(2) : '—'}</td>
                 <td class="num">{row.n_trades}</td>
                 <td>
                   <button class="btn-detail" on:click={() => goToSim(row)}>詳情</button>
@@ -284,6 +343,92 @@
 </div>
 
 <style>
+  /* ── Overlay / Progress Modal ── */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .progress-modal {
+    background: #1a1a2e;
+    border: 1px solid #4b5563;
+    border-radius: 14px;
+    padding: 36px 44px;
+    min-width: 340px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+  }
+
+  .modal-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+
+  .progress-modal h3 {
+    color: #a78bfa;
+    font-size: 18px;
+    margin: 0 0 6px;
+  }
+
+  .modal-sub {
+    color: #6b7280;
+    font-size: 13px;
+    margin: 0 0 20px;
+  }
+
+  .progress-bar-wrap {
+    background: #2a2a3e;
+    border-radius: 99px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #a78bfa);
+    border-radius: 99px;
+    transition: width 0.2s ease;
+  }
+
+  .progress-label {
+    color: #9ca3af;
+    font-size: 12px;
+    margin-bottom: 18px;
+  }
+
+  .spinner-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #4b5563;
+    border-top-color: #8b5cf6;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  .spinner-text {
+    color: #6b7280;
+    font-size: 13px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* ── Page ── */
   .sweep-page {
     padding: 20px;
     max-width: 1200px;
@@ -468,7 +613,7 @@
     font-weight: 600;
     color: #1a1a1a;
     cursor: pointer;
-    min-width: 56px;
+    min-width: 72px;
     transition: opacity 0.15s;
   }
 
@@ -516,14 +661,20 @@
   }
 
   .params {
-    font-family: monospace;
-    font-size: 11px;
-    color: #9ca3af;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
   }
 
-  .params span {
+  .param-chip {
     display: inline-block;
-    margin-right: 8px;
+    padding: 2px 8px;
+    background: #2a2a3e;
+    border: 1px solid #4b5563;
+    border-radius: 99px;
+    font-size: 11px;
+    color: #c4b5fd;
+    white-space: nowrap;
   }
 
   .num {
