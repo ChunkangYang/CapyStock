@@ -8,8 +8,8 @@
   let topN = 20;
 
   let simCode = '7203';
-  let startDate = '2024-01-01';
-  let endDate = '2024-12-31';
+  let startDate = '2026-02-01';
+  let endDate = '2026-04-30';
   let initialCapital = 1000000;
 
   let estimatedCombos = 0;

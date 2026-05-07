@@ -83,14 +83,33 @@ def _run_single_backtest(args: tuple) -> tuple[dict, dict]:
             ),
         )
 
-        # 建立 price cache
+        # 建立 price cache：先讀本地 CSV，再 merge 即時爬蟲資料
+        import os
         codes = [c.code for c in cfg.candidates]
         price_cache: dict = {}
+
+        def _load_csv_prices(code: str) -> dict:
+            csv_path = os.path.join("data", "cache", f"{code}_price.csv")
+            result: dict = {}
+            if not os.path.exists(csv_path):
+                return result
+            try:
+                df_csv = pd.read_csv(csv_path, parse_dates=["date"])
+                for _, row in df_csv.iterrows():
+                    d = pd.Timestamp(row["date"]).date()
+                    result[d] = {
+                        "close": float(row["close"]),
+                        "open": float(row.get("open", row["close"])),
+                    }
+            except Exception:
+                pass
+            return result
+
         for code in codes:
+            price_cache[code] = _load_csv_prices(code)
             try:
                 df, _ = scraper.fetch_price(code)
                 if df is not None and not df.empty:
-                    price_cache[code] = {}
                     for _, row in df.iterrows():
                         d = pd.Timestamp(row["date"]).date()
                         price_cache[code][d] = {
