@@ -306,6 +306,8 @@ cd frontend && npm install && npm run dev
 **步驟**：執行中按取消
 **預期**：後端（`DELETE /api/v1/sweep/{job_id}`）成功，UI 回到 idle
 
+**結果**：✅ Pass（2026-05-08）
+
 ---
 
 ### 群組 I：通知與排程（S9–S12）
