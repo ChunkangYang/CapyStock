@@ -257,7 +257,7 @@
   .job-id { font-size: 11px; color: #6b7280; font-family: monospace; }
   .badge { padding: 2px 8px; border-radius: 4px; color: #052e16; font-size: 11px; font-weight: 600; }
   button { background: #1f2937; color: #e5e7eb; border: 1px solid #333; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
-  button.expand { background: transparent; border: none; color: #9ca3af; padding: 0 6px; }
+  button.expand { background: transparent; border: none; color: #e5e7eb; padding: 0 6px; font-size: 18px; line-height: 1; }
   .runs-row td { background: #0d0d0d; }
   .runs-detail { padding: 8px; }
   .timeline { display: flex; gap: 4px; align-items: center; }
