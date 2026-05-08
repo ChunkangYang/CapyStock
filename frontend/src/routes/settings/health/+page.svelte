@@ -129,25 +129,25 @@
             class:warn={data.heartbeat.status === 'stale'}
             class:off={data.heartbeat.status === 'unknown'}
           ></span>
-          {data.heartbeat.status}
+          {{ ok: '正常', stale: '過時', unknown: '未知' }[data.heartbeat.status] ?? data.heartbeat.status}
         </div>
-        <div class="meta">last success: {fmtSeconds(data.heartbeat.seconds_since)}</div>
+        <div class="meta">上次成功：{fmtSeconds(data.heartbeat.seconds_since)}</div>
       </div>
 
       <div class="card" data-testid="card-freshness">
         <h3>資料新鮮度</h3>
-        <div class="row"><span>signals 最新</span><strong>{daysAgo(data.freshness.signals_latest_date)}</strong></div>
-        <div class="row"><span>dividend 最新</span><strong>{daysAgo(data.freshness.dividend_latest_date)}</strong></div>
-        <div class="row"><span>paper cursor 最舊</span><strong>{daysAgo(data.freshness.paper_oldest_cursor)}</strong></div>
+        <div class="row"><span>訊號資料最新</span><strong>{daysAgo(data.freshness.signals_latest_date)}</strong></div>
+        <div class="row"><span>股息資料最新</span><strong>{daysAgo(data.freshness.dividend_latest_date)}</strong></div>
+        <div class="row"><span>模擬交易最舊</span><strong>{daysAgo(data.freshness.paper_oldest_cursor)}</strong></div>
       </div>
 
       <div class="card chart-card" data-testid="card-deliverability">
-        <h3>Notification Deliverability（過去 7 日）</h3>
+        <h3>通知發送成功率（過去 7 日）</h3>
         <div bind:this={chartEl} class="chart" data-testid="deliverability-chart"></div>
       </div>
 
       <div class="card" data-testid="card-disk">
-        <h3>Disk Usage</h3>
+        <h3>磁碟使用量</h3>
         <div class="value">{fmtBytes(data.disk.total_bytes)}</div>
         <table class="disk-table">
           <tbody>

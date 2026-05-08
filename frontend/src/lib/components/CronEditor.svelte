@@ -16,8 +16,9 @@
     const inRange = (s: string, lo: number, hi: number) =>
       isInt(s) && Number(s) >= lo && Number(s) <= hi;
 
-    if (!(m === '*' || inRange(m, 0, 59))) return { ok: false, text: '分無效' };
-    if (!(h === '*' || inRange(h, 0, 23))) return { ok: false, text: '時無效' };
+    const isStep = (s: string) => /^\*\/\d+$/.test(s);
+    if (!(m === '*' || inRange(m, 0, 59) || isStep(m))) return { ok: false, text: '分無效' };
+    if (!(h === '*' || inRange(h, 0, 23) || isStep(h))) return { ok: false, text: '時無效' };
 
     const pad = (n: string) => n.padStart(2, '0');
     const time = isInt(h) && isInt(m) ? `${pad(h)}:${pad(m)}` : null;
