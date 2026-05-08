@@ -30,10 +30,10 @@
   });
 
   function ageCellClass(days: number | null): string {
-    if (days === null) return 'text-gray-400';
-    if (days > 30) return 'bg-red-100 text-red-700 font-semibold';
-    if (days > 7) return 'bg-yellow-100 text-yellow-700';
-    return 'text-green-700';
+    if (days === null) return 'age-none';
+    if (days > 30) return 'age-old';
+    if (days > 7) return 'age-mid';
+    return 'age-new';
   }
 
   function ageLabel(days: number | null): string {
@@ -42,59 +42,221 @@
   }
 </script>
 
-<div class="p-6 max-w-5xl mx-auto">
-  <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold">資料管理</h1>
-    <div class="flex gap-3">
-      <a href="/data/ingest" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700">批量抓取</a>
-      <a href="/data/upload" class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700">上傳資料</a>
+<div class="data-page">
+  <div class="page-header">
+    <h1>資料管理</h1>
+    <div class="actions">
+      <a href="/data/ingest" class="btn-primary">批量抓取</a>
+      <a href="/data/upload" class="btn-secondary">上傳資料</a>
     </div>
   </div>
 
   {#if loading}
     <LoadingSpinner />
   {:else if error}
-    <div class="p-3 bg-red-50 text-red-700 rounded border border-red-200">{error}</div>
+    <div class="error-banner">{error}</div>
   {:else}
-    <div class="mb-4 flex gap-4 text-sm">
-      <span class="flex items-center gap-1"><span class="w-3 h-3 bg-green-200 rounded-sm inline-block"></span> 最新（≤7日）</span>
-      <span class="flex items-center gap-1"><span class="w-3 h-3 bg-yellow-200 rounded-sm inline-block"></span> 偏舊（7-30日）</span>
-      <span class="flex items-center gap-1"><span class="w-3 h-3 bg-red-200 rounded-sm inline-block"></span> 過舊（>30日）</span>
+    <div class="legend">
+      <span class="legend-item"><span class="dot dot-new"></span>最新（≤7日）</span>
+      <span class="legend-item"><span class="dot dot-mid"></span>偏舊（7-30日）</span>
+      <span class="legend-item"><span class="dot dot-old"></span>過舊（>30日）</span>
     </div>
 
-    <div class="bg-white border rounded-xl shadow-sm overflow-auto">
-      <table class="w-full text-sm">
-        <thead class="bg-gray-50">
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
           <tr>
-            <th class="px-4 py-3 text-left">代碼</th>
-            <th class="px-4 py-3 text-left">名稱</th>
-            <th class="px-4 py-3 text-center">股價</th>
-            <th class="px-4 py-3 text-center">信用残</th>
-            <th class="px-4 py-3 text-center">投資部門別</th>
-            <th class="px-4 py-3 text-center">基本面</th>
-            <th class="px-4 py-3 text-center">操作</th>
+            <th>代碼</th>
+            <th>名稱</th>
+            <th class="center">股價</th>
+            <th class="center">信用残</th>
+            <th class="center">投資部門別</th>
+            <th class="center">基本面</th>
+            <th class="center">操作</th>
           </tr>
         </thead>
         <tbody>
           {#each rows as row}
-            <tr class="border-t hover:bg-gray-50">
-              <td class="px-4 py-3 font-mono font-semibold">{row.code}</td>
-              <td class="px-4 py-3 text-gray-700">{row.name}</td>
-              <td class="px-4 py-3 text-center rounded {ageCellClass(row.price_age_days)}">{ageLabel(row.price_age_days)}</td>
-              <td class="px-4 py-3 text-center {ageCellClass(row.margin_age_days)}">{ageLabel(row.margin_age_days)}</td>
-              <td class="px-4 py-3 text-center {ageCellClass(row.flow_age_days)}">{ageLabel(row.flow_age_days)}</td>
-              <td class="px-4 py-3 text-center {ageCellClass(row.fundamental_age_days)}">{ageLabel(row.fundamental_age_days)}</td>
-              <td class="px-4 py-3 text-center">
-                <a href="/data/ingest?code={row.code}" class="text-blue-600 hover:underline text-xs mr-2">重抓</a>
-                <a href="/data/upload?code={row.code}" class="text-green-600 hover:underline text-xs">上傳</a>
+            <tr>
+              <td class="code">{row.code}</td>
+              <td class="name">{row.name}</td>
+              <td class="center {ageCellClass(row.price_age_days)}">{ageLabel(row.price_age_days)}</td>
+              <td class="center {ageCellClass(row.margin_age_days)}">{ageLabel(row.margin_age_days)}</td>
+              <td class="center {ageCellClass(row.flow_age_days)}">{ageLabel(row.flow_age_days)}</td>
+              <td class="center {ageCellClass(row.fundamental_age_days)}">{ageLabel(row.fundamental_age_days)}</td>
+              <td class="center ops">
+                <a href="/data/ingest?code={row.code}" class="op-link blue">重抓</a>
+                <a href="/data/upload?code={row.code}" class="op-link green">上傳</a>
               </td>
             </tr>
           {/each}
           {#if rows.length === 0}
-            <tr><td colspan="7" class="px-4 py-8 text-center text-gray-400">追蹤清單為空</td></tr>
+            <tr><td colspan="7" class="empty">追蹤清單為空</td></tr>
           {/if}
         </tbody>
       </table>
     </div>
   {/if}
 </div>
+
+<style>
+  .data-page {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: 28px;
+    color: #4ade80;
+    margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn-primary {
+    background: #4ade80;
+    color: #0f0f0f;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: #22c55e;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: #4ade80;
+    border: 1px solid #4ade80;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover {
+    background: #052e16;
+  }
+
+  .error-banner {
+    background: #1f1a1a;
+    border: 1px solid #7f1d1d;
+    color: #f87171;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .legend {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #a1a1a1;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  .dot-new  { background: #166534; }
+  .dot-mid  { background: #854d0e; }
+  .dot-old  { background: #7f1d1d; }
+
+  .table-wrap {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: auto;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .data-table th {
+    text-align: left;
+    padding: 10px 14px;
+    color: #6b7280;
+    border-bottom: 1px solid #333;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #222;
+    color: #e5e7eb;
+  }
+
+  .data-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .data-table tbody tr:hover td {
+    background: #222;
+  }
+
+  .center { text-align: center; }
+
+  .code {
+    font-family: monospace;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .name { color: #a1a1a1; }
+
+  .empty {
+    text-align: center;
+    padding: 40px;
+    color: #6b7280;
+  }
+
+  /* age badge colours */
+  .age-new  { color: #4ade80; }
+  .age-mid  { color: #facc15; }
+  .age-old  { color: #f87171; font-weight: 600; }
+  .age-none { color: #4b5563; }
+
+  .ops { white-space: nowrap; }
+
+  .op-link {
+    font-size: 12px;
+    text-decoration: none;
+    margin: 0 4px;
+  }
+
+  .op-link.blue  { color: #60a5fa; }
+  .op-link.blue:hover  { color: #93c5fd; }
+  .op-link.green { color: #4ade80; }
+  .op-link.green:hover { color: #86efac; }
+</style>
