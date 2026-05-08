@@ -5,6 +5,7 @@ import copy
 import itertools
 import logging
 import os
+import threading
 import uuid
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime
@@ -18,8 +19,10 @@ logger = logging.getLogger(__name__)
 _MAX_COMBINATIONS = 200
 _MAX_WORKERS = min(8, os.cpu_count() or 2)
 
-# 進行中的 job 狀態儲存（in-memory，重啟會清空）
+# in-memory job store
 _jobs: dict[str, SweepResult] = {}
+_cancel_flags: dict[str, bool] = {}   # job_id → True 表示已請求取消
+_progress: dict[str, tuple[int, int]] = {}  # job_id → (done, total)
 
 
 def _expand_grid(grid: ParamGrid) -> list[dict]:
@@ -133,75 +136,94 @@ def _run_single_backtest(args: tuple) -> tuple[dict, dict]:
 
 
 class StrategySweepService:
-    def run(
-        self,
-        req: SweepRequest,
-        on_progress: Optional[Callable[[int, int], None]] = None,
-    ) -> SweepResult:
+    def start_async(self, req: SweepRequest) -> str:
+        """啟動背景執行緒，立即回傳 job_id。"""
         combos = _expand_grid(req.grid)
         n = len(combos)
-
         if n > _MAX_COMBINATIONS:
             raise ValueError(f"組合數 {n} 超過上限 {_MAX_COMBINATIONS}")
 
         job_id = str(uuid.uuid4())
         started_at = datetime.utcnow()
 
-        base_dict = req.base_config.model_dump(mode="json")
-        args = [(params, base_dict, base_dict) for params in combos]
-
-        rows: list[SweepRow] = []
-        done = 0
-
-        with ProcessPoolExecutor(max_workers=min(_MAX_WORKERS, n or 1)) as executor:
-            futures = {executor.submit(_run_single_backtest, a): a[0] for a in args}
-            for fut in as_completed(futures):
-                done += 1
-                if on_progress:
-                    on_progress(done, n)
-                try:
-                    params, metrics = fut.result()
-                    if "error" in metrics:
-                        logger.warning(f"sweep row error: {metrics['error']}")
-                        continue
-                    total_trades = metrics.get("winning_trades", 0) + metrics.get("losing_trades", 0)
-                    pf = metrics.get("profit_factor") or 0.0
-                    rows.append(SweepRow(
-                        params=params,
-                        total_return=round(float(metrics.get("total_return_pct", 0)), 4),
-                        annualized=round(float(metrics.get("annualized_return_pct", 0)), 4),
-                        max_drawdown=round(float(metrics.get("max_drawdown_pct", 0)), 4),
-                        win_rate=round(float(metrics.get("win_rate") or 0), 4),
-                        profit_factor=round(float(pf), 4),
-                        n_trades=total_trades,
-                    ))
-                except Exception as e:
-                    logger.warning(f"sweep future error: {e}")
-
-        # 排序
-        reverse = req.metric != "max_drawdown"
-        metric_key = req.metric
-        rows.sort(key=lambda r: getattr(r, metric_key, 0) or 0, reverse=reverse)
-        rows = rows[: req.top_n]
-
-        result = SweepResult(
+        # 建立佔位 result（status=running）
+        placeholder = SweepResult(
             job_id=job_id,
             request=req,
-            rows=rows,
+            rows=[],
             started_at=started_at,
-            finished_at=datetime.utcnow(),
+            finished_at=None,
             n_combinations=n,
-            status="completed",
+            status="running",
         )
-        _jobs[job_id] = result
-        return result
+        _jobs[job_id] = placeholder
+        _cancel_flags[job_id] = False
+        _progress[job_id] = (0, n)
+
+        thread = threading.Thread(target=self._run_worker, args=(job_id, req, combos), daemon=True)
+        thread.start()
+        return job_id
+
+    def _run_worker(self, job_id: str, req: SweepRequest, combos: list[dict]) -> None:
+        """背景執行緒：逐組跑 backtest，支援取消。"""
+        n = len(combos)
+        rows: list[SweepRow] = []
+        done = 0
+        base_dict = req.base_config.model_dump(mode="json")
+
+        try:
+            with ProcessPoolExecutor(max_workers=min(_MAX_WORKERS, n or 1)) as executor:
+                futures = {executor.submit(_run_single_backtest, (params, base_dict, base_dict)): params
+                           for params in combos}
+                for fut in as_completed(futures):
+                    if _cancel_flags.get(job_id):
+                        executor.shutdown(wait=False, cancel_futures=True)
+                        _jobs[job_id].status = "cancelled"
+                        _jobs[job_id].finished_at = datetime.utcnow()
+                        return
+                    done += 1
+                    _progress[job_id] = (done, n)
+                    try:
+                        params, metrics = fut.result()
+                        if "error" in metrics:
+                            logger.warning(f"sweep row error: {metrics['error']}")
+                            continue
+                        total_trades = metrics.get("winning_trades", 0) + metrics.get("losing_trades", 0)
+                        pf = metrics.get("profit_factor") or 0.0
+                        rows.append(SweepRow(
+                            params=params,
+                            total_return=round(float(metrics.get("total_return_pct", 0)), 4),
+                            annualized=round(float(metrics.get("annualized_return_pct", 0)), 4),
+                            max_drawdown=round(float(metrics.get("max_drawdown_pct", 0)), 4),
+                            win_rate=round(float(metrics.get("win_rate") or 0), 4),
+                            profit_factor=round(float(pf), 4),
+                            n_trades=total_trades,
+                        ))
+                    except Exception as e:
+                        logger.warning(f"sweep future error: {e}")
+
+            reverse = req.metric != "max_drawdown"
+            rows.sort(key=lambda r: getattr(r, req.metric, 0) or 0, reverse=reverse)
+            rows = rows[: req.top_n]
+
+            _jobs[job_id].rows = rows
+            _jobs[job_id].status = "completed"
+            _jobs[job_id].finished_at = datetime.utcnow()
+            _progress[job_id] = (n, n)
+
+        except Exception as e:
+            logger.error(f"sweep worker error: {e}")
+            _jobs[job_id].status = "failed"
+            _jobs[job_id].finished_at = datetime.utcnow()
 
     def get_job(self, job_id: str) -> Optional[SweepResult]:
         return _jobs.get(job_id)
 
+    def get_progress(self, job_id: str) -> Optional[tuple[int, int]]:
+        return _progress.get(job_id)
+
     def cancel_job(self, job_id: str) -> bool:
-        if job_id in _jobs:
-            job = _jobs[job_id]
-            job.status = "cancelled"
-            return True
-        return False
+        if job_id not in _jobs:
+            return False
+        _cancel_flags[job_id] = True
+        return True

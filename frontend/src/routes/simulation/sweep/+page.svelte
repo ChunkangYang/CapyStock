@@ -16,9 +16,11 @@
   let running = false;
   let progressStep = 0;
   let progressTotal = 0;
+  let progressStatus = '';
   let error = '';
   let result: any = null;
   let jobId = '';
+  let pollTimer: ReturnType<typeof setInterval> | null = null;
 
   const PARAM_LABELS: Record<string, string> = {
     stop_loss_pct: '停損',
@@ -46,12 +48,29 @@
     estimatedCombos = sl * tp * mh;
   }
 
+  function stopPolling() {
+    if (pollTimer !== null) {
+      clearInterval(pollTimer);
+      pollTimer = null;
+    }
+  }
+
+  async function cancelSweep() {
+    if (!jobId) return;
+    stopPolling();
+    await fetch(`${API}/sweep/${jobId}`, { method: 'DELETE' });
+    running = false;
+    progressStatus = 'cancelled';
+  }
+
   async function runSweep() {
     error = '';
     result = null;
     running = true;
     progressStep = 0;
     progressTotal = estimatedCombos;
+    progressStatus = 'running';
+    jobId = '';
 
     try {
       const grid: any = {};
@@ -62,7 +81,6 @@
       if (tp.length) grid.take_profit_pct = tp;
       if (mh) grid.max_hold_days = mh;
 
-      // build candidates from comma-separated codes
       const codes = simCode.split(',').map(s => s.trim()).filter(Boolean);
       const candidates = codes.map(c => ({ code: c, name: c }));
 
@@ -83,19 +101,12 @@
         top_n: topN,
       };
 
-      // 模擬進度動畫（後端同步，用 interval 展示）
-      const tickInterval = setInterval(() => {
-        if (progressStep < progressTotal - 1) progressStep += 1;
-      }, Math.max(200, 2000 / progressTotal));
-
+      // 非同步啟動：立即取得 job_id
       const res = await fetch(`${API}/sweep/run`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
-
-      clearInterval(tickInterval);
-      progressStep = progressTotal;
 
       if (!res.ok) {
         const err = await res.json();
@@ -105,12 +116,34 @@
       const info = await res.json();
       jobId = info.job_id;
 
-      const resultRes = await fetch(`${API}/sweep/${jobId}`);
-      if (resultRes.ok) {
-        result = await resultRes.json();
+      // 輪詢進度，直到完成或取消
+      await new Promise<void>((resolve, reject) => {
+        pollTimer = setInterval(async () => {
+          try {
+            const progRes = await fetch(`${API}/sweep/${jobId}/progress`);
+            if (!progRes.ok) { stopPolling(); reject(new Error('progress fetch failed')); return; }
+            const prog = await progRes.json();
+            progressStep = prog.done;
+            progressTotal = prog.total;
+            progressStatus = prog.status;
+
+            if (prog.status === 'completed' || prog.status === 'cancelled' || prog.status === 'failed') {
+              stopPolling();
+              resolve();
+            }
+          } catch (e) {
+            stopPolling();
+            reject(e);
+          }
+        }, 800);
+      });
+
+      if (progressStatus === 'completed') {
+        const resultRes = await fetch(`${API}/sweep/${jobId}`);
+        if (resultRes.ok) result = await resultRes.json();
       }
     } catch (e: any) {
-      error = e.message;
+      if (e.message !== 'cancelled') error = e.message;
     } finally {
       running = false;
     }
@@ -175,6 +208,8 @@
         <span class="spinner"></span>
         <span class="spinner-text">運算中</span>
       </div>
+
+      <button class="btn-cancel" on:click={cancelSweep}>取消</button>
     </div>
   </div>
 {/if}
@@ -422,6 +457,23 @@
   .spinner-text {
     color: #6b7280;
     font-size: 13px;
+  }
+
+  .btn-cancel {
+    margin-top: 20px;
+    padding: 7px 24px;
+    background: transparent;
+    border: 1px solid #4b5563;
+    border-radius: 6px;
+    color: #9ca3af;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-cancel:hover {
+    border-color: #f87171;
+    color: #f87171;
   }
 
   @keyframes spin {
