@@ -90,8 +90,12 @@
         body: JSON.stringify({ channel: name }),
       });
       const body = await res.json();
-      if (res.ok) showToast('ok', `${name} 測試送出`);
-      else showToast('err', `${name} 失敗（${res.status}）`);
+      if (res.ok) {
+        showToast('ok', `${name} 測試送出`);
+        await refreshLogs();
+      } else {
+        showToast('err', `${name} 失敗（${res.status}）`);
+      }
       return body;
     } catch (e) {
       showToast('err', `${name} 失敗：${e}`);
