@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import os
 import smtplib
+
+import capystock.config  # noqa: F401  ensure _load_env() has run
 import ssl
 from datetime import datetime
 from email.message import EmailMessage

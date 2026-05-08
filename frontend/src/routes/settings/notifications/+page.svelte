@@ -43,6 +43,7 @@
 
   let loading = true;
   let errorMsg = '';
+  let testingChannel: string | null = null;
 
   async function loadAll() {
     loading = true;
@@ -81,6 +82,7 @@
   }
 
   async function testChannel(name: string) {
+    testingChannel = name;
     try {
       const res = await fetch(`${import.meta.env.VITE_API_BASE || '/api/v1'}/notify/test`, {
         method: 'POST',
@@ -93,6 +95,8 @@
       return body;
     } catch (e) {
       showToast('err', `${name} 失敗：${e}`);
+    } finally {
+      testingChannel = null;
     }
   }
 
@@ -225,8 +229,12 @@
           <div class="meta">
             configured: {ch.configured ? '✔' : '✘'} · healthy: {ch.healthy ? '✔' : '✘'}
           </div>
-          <button on:click={() => testChannel(ch.name)} data-testid={`test-${ch.name}`}>
-            測試發送
+          <button
+            on:click={() => testChannel(ch.name)}
+            disabled={testingChannel === ch.name}
+            data-testid={`test-${ch.name}`}
+          >
+            {testingChannel === ch.name ? '發送中…' : '測試發送'}
           </button>
         </div>
       {/each}
@@ -331,6 +339,15 @@
   </section>
 </div>
 
+{#if testingChannel}
+  <div class="modal-backdrop">
+    <div class="sending-popup" data-testid="sending-popup">
+      <div class="spinner"></div>
+      <p>正在發送 <strong>{testingChannel}</strong> 測試通知…</p>
+    </div>
+  </div>
+{/if}
+
 {#if creatingNew || editing}
   <div class="modal-backdrop" on:click|self={() => { creatingNew = false; editing = null; }}>
     <div class="modal" data-testid="rule-modal">
@@ -393,4 +410,9 @@
   .toast.ok { background: #064e3b; color: #d1fae5; border: 1px solid #4ade80; }
   .toast.err { background: #7f1d1d; color: #fee2e2; border: 1px solid #ef4444; }
   .error { background: #7f1d1d; color: #fee2e2; padding: 8px 12px; border-radius: 4px; }
+  .sending-popup { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 32px 40px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .sending-popup p { margin: 0; color: #e5e7eb; font-size: 14px; }
+  .spinner { width: 36px; height: 36px; border: 3px solid #333; border-top-color: #4ade80; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
 </style>
