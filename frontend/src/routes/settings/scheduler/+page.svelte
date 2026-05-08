@@ -102,6 +102,14 @@
     if (expanded[jobId] && !runsByJob[jobId]) loadRunsFor(jobId);
   }
 
+  const STATUS_LABELS: Record<string, string> = {
+    success: '成功',
+    running: '執行中',
+    failed: '失敗',
+    timeout: '逾時',
+    skipped: '略過',
+  };
+
   function statusColor(s: Run['status']) {
     switch (s) {
       case 'success': return '#4ade80';
@@ -137,12 +145,12 @@
     <thead>
       <tr>
         <th></th>
-        <th>Name</th>
-        <th>cron</th>
+        <th>名稱</th>
+        <th>排程</th>
         <th>啟用</th>
-        <th>Last run</th>
-        <th>Next run</th>
-        <th>Status</th>
+        <th>上次執行</th>
+        <th>下次執行</th>
+        <th>狀態</th>
         <th>操作</th>
       </tr>
     </thead>
@@ -176,14 +184,14 @@
           <td>{fmtTime(job.next_run_time)}</td>
           <td>
             {#if last}
-              <span class="badge" style="background: {statusColor(last.status)};">{last.status}</span>
+              <span class="badge" style="background: {statusColor(last.status)};">{STATUS_LABELS[last.status] ?? last.status}</span>
             {:else}
               <span class="badge" style="background: #555;">–</span>
             {/if}
           </td>
           <td>
-            <button on:click={() => runNow(job)} data-testid={`run-now-${job.id}`}>Run Now</button>
-            <button on:click={() => toggleExpanded(job.id)}>看 Runs</button>
+            <button on:click={() => runNow(job)} data-testid={`run-now-${job.id}`}>立即執行</button>
+            <button on:click={() => toggleExpanded(job.id)}>執行紀錄</button>
           </td>
         </tr>
         {#if expanded[job.id]}
@@ -210,7 +218,7 @@
         {/if}
       {/each}
       {#if !loading && jobs.length === 0}
-        <tr><td colspan="8" class="muted">尚無 job</td></tr>
+        <tr><td colspan="8" class="muted">尚無排程</td></tr>
       {/if}
     </tbody>
   </table>
@@ -221,14 +229,14 @@
     <div class="modal" data-testid="run-detail-modal">
       <h3>Run {detailRun.run_id.slice(0, 8)}</h3>
       <dl>
-        <dt>Job</dt><dd>{detailRun.job_id}</dd>
-        <dt>Status</dt><dd>{detailRun.status}</dd>
-        <dt>Started</dt><dd>{fmtTime(detailRun.started_at)}</dd>
-        <dt>Finished</dt><dd>{fmtTime(detailRun.finished_at)}</dd>
-        <dt>Duration</dt><dd>{detailRun.duration_seconds?.toFixed(2) ?? '–'} s</dd>
-        <dt>Output</dt>
+        <dt>排程</dt><dd>{detailRun.job_id}</dd>
+        <dt>狀態</dt><dd>{STATUS_LABELS[detailRun.status] ?? detailRun.status}</dd>
+        <dt>開始</dt><dd>{fmtTime(detailRun.started_at)}</dd>
+        <dt>結束</dt><dd>{fmtTime(detailRun.finished_at)}</dd>
+        <dt>耗時</dt><dd>{detailRun.duration_seconds?.toFixed(2) ?? '–'} 秒</dd>
+        <dt>輸出</dt>
         <dd><pre>{detailRun.output_summary ?? '–'}</pre></dd>
-        <dt>Error</dt>
+        <dt>錯誤</dt>
         <dd><pre class="err">{detailRun.error ?? '–'}</pre></dd>
       </dl>
       <div class="actions"><button on:click={() => (detailRun = null)}>關閉</button></div>
