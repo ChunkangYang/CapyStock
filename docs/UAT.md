@@ -320,6 +320,8 @@ cd frontend && npm install && npm run dev
 - 區塊標題依序：「Channels」、「Rules」、「最近 7 日推送 log」
 - 每張 Channel 卡片下方按鈕：「測試發送」；點擊後顯示 toast「{name} 測試送出」（成功）或「{name} 失敗（{status}）」（失敗）
 
+**結果**：✅ Pass（2026-05-08）
+
 #### TC-NTF-02 規則
 **步驟**：在「通知設定」頁「Rules」區塊，點「+ 新規則」按鈕，建立「投機 score≥80 即時 push」、「每日 18:00 digest」
 **預期**：
@@ -327,15 +329,21 @@ cd frontend && npm install && npm run dev
 - 列操作按鈕依序：編輯 / 立即執行 / Preview / 刪除
 - 保存後在 Rules 清單可見；勾選 checkbox 啟停顯示 toast「{name} 啟用」/「{name} 停用」
 
+**結果**：✅ Pass（2026-05-08）
+
 #### TC-NTF-03 排程
 **步驟**：前往「設定」→「排程」（`/settings/scheduler`）啟用 daily_pipeline，設 09:30 / 18:00
 **預期**：APScheduler 註冊；下次執行時間正確顯示
+
+**結果**：✅ Pass（2026-05-08）
 
 #### TC-NTF-04 健康監控
 **步驟**：點側欄「設定」→ 子導航「健康」（`/settings/health`）
 **預期**：
 - 頁面標題：「系統健康」
 - 顯示 heartbeat、freshness、deliverability 折線圖、disk 使用量分區
+
+**結果**：✅ Pass（2026-05-08）
 
 ---
 
