@@ -9,6 +9,12 @@
   type Scope = 'watchlist' | 'favorites' | 'all';
 
   const ALERT_TYPES = ['exit', 'stop_loss', 'accumulation', 'info'] as const;
+  const ALERT_TYPE_LABELS: Record<string, string> = {
+    exit: '出場警告',
+    stop_loss: '停損觸發',
+    accumulation: '吃貨訊號',
+    info: '一般資訊',
+  };
   const CHANNELS = ['email', 'line'] as const;
 
   let name: string = initial?.name ?? '';
@@ -110,12 +116,12 @@
 
   {#if mode === 'digest'}
     <div class="row" data-testid="digest-fields">
-      <span>cron</span>
+      <span>排程</span>
       <CronEditor bind:value={cron} inline />
     </div>
   {:else}
     <fieldset class="row" data-testid="realtime-fields">
-      <legend>Alert types</legend>
+      <legend>警報類型</legend>
       {#each ALERT_TYPES as t}
         <label>
           <input
@@ -123,27 +129,27 @@
             checked={alertTypes.includes(t)}
             on:change={() => (alertTypes = toggle(alertTypes, t))}
           />
-          {t}
+          {ALERT_TYPE_LABELS[t] ?? t}
         </label>
       {/each}
     </fieldset>
     <fieldset class="row">
-      <legend>最低 severity</legend>
-      <label><input type="radio" bind:group={minSeverity} value="info" /> info</label>
-      <label><input type="radio" bind:group={minSeverity} value="warn" /> warn</label>
-      <label><input type="radio" bind:group={minSeverity} value="critical" /> critical</label>
+      <legend>最低嚴重度</legend>
+      <label><input type="radio" bind:group={minSeverity} value="info" /> 一般</label>
+      <label><input type="radio" bind:group={minSeverity} value="warn" /> 警告</label>
+      <label><input type="radio" bind:group={minSeverity} value="critical" /> 嚴重</label>
     </fieldset>
   {/if}
 
   <fieldset class="row">
-    <legend>Scope</legend>
-    <label><input type="radio" bind:group={scope} value="watchlist" /> watchlist</label>
-    <label><input type="radio" bind:group={scope} value="favorites" /> favorites</label>
-    <label><input type="radio" bind:group={scope} value="all" /> all</label>
+    <legend>適用範圍</legend>
+    <label><input type="radio" bind:group={scope} value="watchlist" /> 追蹤清單</label>
+    <label><input type="radio" bind:group={scope} value="favorites" /> 自選股</label>
+    <label><input type="radio" bind:group={scope} value="all" /> 全部</label>
   </fieldset>
 
   <fieldset class="row">
-    <legend>Channels</legend>
+    <legend>通知管道</legend>
     {#each CHANNELS as ch}
       <div class="channel-line">
         <label>
@@ -157,7 +163,7 @@
         {#if channels.includes(ch)}
           <input
             type="text"
-            placeholder="recipients (comma separated)"
+            placeholder="收件人（逗號分隔，留空用預設）"
             bind:value={recipientsByChannel[ch]}
           />
         {/if}

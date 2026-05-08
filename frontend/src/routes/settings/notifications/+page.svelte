@@ -259,10 +259,10 @@
       <thead>
         <tr>
           <th>啟用</th>
-          <th>Name</th>
-          <th>Mode</th>
-          <th>Summary</th>
-          <th>Channels</th>
+          <th>名稱</th>
+          <th>模式</th>
+          <th>摘要</th>
+          <th>通知管道</th>
           <th>操作</th>
         </tr>
       </thead>
@@ -301,27 +301,27 @@
       <h3>最近 7 日推送 log</h3>
       <div class="filters">
         <select bind:value={logFilterChannel} on:change={refreshLogs}>
-          <option value="">all channels</option>
+          <option value="">所有管道</option>
           <option value="email">email</option>
           <option value="line">line</option>
         </select>
         <select bind:value={logFilterSeverity} on:change={refreshLogs}>
-          <option value="">all severities</option>
-          <option value="info">info</option>
-          <option value="warn">warn</option>
-          <option value="critical">critical</option>
+          <option value="">所有嚴重度</option>
+          <option value="info">一般</option>
+          <option value="warn">警告</option>
+          <option value="critical">嚴重</option>
         </select>
       </div>
     </div>
     <table class="log-table" data-testid="log-table">
       <thead>
         <tr>
-          <th>Time</th>
-          <th>Channel</th>
-          <th>Recipient</th>
-          <th>Severity</th>
-          <th>Title</th>
-          <th>OK</th>
+          <th>時間</th>
+          <th>管道</th>
+          <th>收件人</th>
+          <th>嚴重度</th>
+          <th>主旨</th>
+          <th>結果</th>
         </tr>
       </thead>
       <tbody>
