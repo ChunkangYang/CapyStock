@@ -15,7 +15,6 @@
   let error: string | null = null;
 
   let addCode = '';
-  let addPrice = '';
   let addLoading = false;
   let addMsg = '';
 
@@ -30,26 +29,27 @@
   }
 
   async function handleAdd() {
-    if (!addCode || !addPrice) return;
+    if (!addCode) return;
     addLoading = true;
     addMsg = '';
     try {
+      // 不帶 start_price，由後端自動從 price cache 取當下市場價
       await api('/watchlist', {
         method: 'POST',
-        body: JSON.stringify({
-          code: addCode.trim(),
-          start_price: parseFloat(addPrice),
-        }),
+        body: JSON.stringify({ code: addCode.trim() }),
       });
       addMsg = `✓ 已加入追蹤：${addCode.trim()}`;
       addCode = '';
-      addPrice = '';
       await loadWatchlist();
     } catch (e) {
       addMsg = `✗ ${e instanceof Error ? e.message : '新增失敗'}`;
     } finally {
       addLoading = false;
     }
+  }
+
+  function onKeydown(e: KeyboardEvent) {
+    if (e.key === 'Enter') handleAdd();
   }
 
   async function handleRemove(code: string) {
@@ -76,17 +76,13 @@
         class="inp"
         bind:value={addCode}
         placeholder="股票代號（e.g. 7203）"
-      />
-      <input
-        class="inp"
-        bind:value={addPrice}
-        placeholder="起始價（円）"
-        type="number"
+        on:keydown={onKeydown}
       />
       <button class="btn-add" on:click={handleAdd} disabled={addLoading}>
         {addLoading ? '新增中…' : '＋ 加入追蹤'}
       </button>
     </div>
+    <p class="hint">起始價自動以加入當下市場收盤價為基準</p>
     {#if addMsg}
       <p class="msg" class:error-msg={addMsg.startsWith('✗')}>{addMsg}</p>
     {/if}
@@ -199,6 +195,12 @@
   .btn-add:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  .hint {
+    color: #4b5563;
+    font-size: 12px;
+    margin: 6px 0 0 0;
   }
 
   .msg {
