@@ -5,9 +5,11 @@
   const API = '/api/v1';
 
   interface WatchlistEntry { code: string; name: string; }
+  interface PriceEntry { code: string; close: number | null; }
 
   // 追蹤清單
   let watchlist: WatchlistEntry[] = [];
+  let prices: Record<string, number | null> = {};
   let checkedCodes = new Set<string>();
 
   // 額外手填代碼
@@ -42,12 +44,20 @@
       const r = await fetch(`${API}/watchlist`);
       if (r.ok) {
         watchlist = await r.json();
-        // 若有 query param，只預選那個代碼；否則預選全部
         if (code) {
           checkedCodes = new Set([code.toUpperCase()]);
         } else {
           checkedCodes = new Set(watchlist.map(w => w.code));
         }
+        // 並行載入各股最新價格（靜默失敗）
+        const priceResults = await Promise.allSettled(
+          watchlist.map(w => fetch(`${API}/data/latest-price/${w.code}`).then(r => r.ok ? r.json() : null))
+        );
+        for (let i = 0; i < watchlist.length; i++) {
+          const res = priceResults[i];
+          prices[watchlist[i].code] = res.status === 'fulfilled' && res.value ? res.value.close : null;
+        }
+        prices = { ...prices };
       }
     } catch { /* ignore */ }
     if (code && !watchlist.find(w => w.code === code.toUpperCase())) {
@@ -69,6 +79,9 @@
       ? selectedKinds.filter(k => k !== kind)
       : [...selectedKinds, kind];
   }
+
+  $: allChecked = watchlist.length > 0 && checkedCodes.size === watchlist.length;
+  $: someChecked = checkedCodes.size > 0 && checkedCodes.size < watchlist.length;
 
   $: allCodes = [
     ...checkedCodes,
@@ -182,30 +195,46 @@
   <div class="card">
     <!-- 追蹤清單股票選擇 -->
     <div class="field">
-      <div class="section-head">
-        <label>追蹤清單（{checkedCodes.size} / {watchlist.length} 已選）</label>
-        <div class="select-btns">
-          <button class="btn-text" on:click={selectAll}>全選</button>
-          <span class="divider">｜</span>
-          <button class="btn-text" on:click={selectNone}>全不選</button>
-        </div>
-      </div>
+      <label>追蹤清單（{checkedCodes.size} / {watchlist.length} 已選）</label>
       {#if watchlist.length === 0}
         <p class="empty-hint">追蹤清單為空，請先至「追蹤清單」新增股票</p>
       {:else}
-        <div class="stock-grid">
-          {#each watchlist as w}
-            <label class="stock-chip" class:checked={checkedCodes.has(w.code)}>
-              <input
-                type="checkbox"
-                checked={checkedCodes.has(w.code)}
-                on:change={() => toggleCode(w.code)}
-              />
-              <span class="chip-code">{w.code}</span>
-              <span class="chip-name">{w.name || ''}</span>
-            </label>
-          {/each}
-        </div>
+        <table class="wl-table">
+          <thead>
+            <tr>
+              <th class="col-check">
+                <input type="checkbox"
+                  checked={allChecked}
+                  on:change={() => allChecked ? selectNone() : selectAll()}
+                />
+              </th>
+              <th>代號</th>
+              <th>名稱</th>
+              <th class="col-price">現在價格</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each watchlist as w}
+              <tr class:row-checked={checkedCodes.has(w.code)} on:click={() => toggleCode(w.code)}>
+                <td class="col-check" on:click|stopPropagation>
+                  <input type="checkbox"
+                    checked={checkedCodes.has(w.code)}
+                    on:change={() => toggleCode(w.code)}
+                  />
+                </td>
+                <td class="col-code">{w.code}</td>
+                <td class="col-name">{w.name || '—'}</td>
+                <td class="col-price">
+                  {#if prices[w.code] != null}
+                    ¥{Number(prices[w.code]).toLocaleString()}
+                  {:else}
+                    <span class="no-price">—</span>
+                  {/if}
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
       {/if}
     </div>
 
@@ -311,28 +340,25 @@
   .card { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
   .field { display: flex; flex-direction: column; gap: 8px; }
 
-  .section-head { display: flex; justify-content: space-between; align-items: center; }
   label { color: #a1a1a1; font-size: 13px; }
-
-  .select-btns { display: flex; align-items: center; gap: 4px; }
-  .btn-text { background: none; border: none; color: #4ade80; font-size: 12px; cursor: pointer; padding: 0; }
-  .btn-text:hover { text-decoration: underline; }
-  .divider { color: #444; font-size: 12px; }
 
   .empty-hint { color: #4b5563; font-size: 13px; margin: 0; }
 
-  .stock-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .stock-chip {
-    display: flex; align-items: center; gap: 6px;
-    padding: 6px 12px; border-radius: 6px;
-    background: #0f0f0f; border: 1px solid #333;
-    cursor: pointer; transition: all 0.15s;
-  }
-  .stock-chip:hover { border-color: #555; }
-  .stock-chip.checked { background: #0a2a1a; border-color: #4ade80; }
-  .stock-chip input { accent-color: #4ade80; }
-  .chip-code { font-weight: 700; color: #4ade80; font-size: 13px; }
-  .chip-name { color: #a1a1a1; font-size: 12px; max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .wl-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .wl-table thead tr { border-bottom: 1px solid #333; }
+  .wl-table th { padding: 7px 12px; color: #6b7280; font-weight: 500; text-align: left; }
+  .wl-table td { padding: 8px 12px; border-bottom: 1px solid #1e1e1e; color: #e5e7eb; }
+  .wl-table tbody tr { cursor: pointer; transition: background 0.1s; }
+  .wl-table tbody tr:hover { background: #222; }
+  .wl-table tbody tr.row-checked { background: #0a2216; }
+  .wl-table tbody tr.row-checked:hover { background: #0d2e1c; }
+  .wl-table tr:last-child td { border-bottom: none; }
+  .col-check { width: 36px; text-align: center; }
+  .col-check input { accent-color: #4ade80; cursor: pointer; }
+  .col-code { font-family: monospace; font-weight: 700; color: #4ade80; width: 70px; }
+  .col-name { color: #a1a1a1; }
+  .col-price { text-align: right; width: 110px; font-variant-numeric: tabular-nums; }
+  .no-price { color: #4b5563; }
 
   .inp { background: #0f0f0f; border: 1px solid #333; border-radius: 4px; color: #e5e7eb; padding: 8px 12px; font-size: 14px; }
   .inp:focus { outline: none; border-color: #4ade80; }
