@@ -170,7 +170,7 @@
   }
 
   h1 {
-    font-size: 32px;
+    font-size: 28px;
     margin: 0 0 30px 0;
     color: #4ade80;
   }
@@ -293,6 +293,16 @@
     text-align: center;
     padding: 20px;
     margin: 0;
+  }
+
+  .empty a {
+    color: #4ade80;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .empty a:hover {
+    color: #86efac;
   }
 
   .count-badge {
