@@ -136,3 +136,20 @@ async def get_batch_job(job_id: str):
     if not job:
         raise HTTPException(status_code=404, detail="job not found")
     return job
+
+
+@router.get("/latest-price/{code}")
+async def get_latest_price(code: str):
+    """只讀 cache，回傳最新收盤價。不發網路請求。"""
+    import pandas as pd
+    cache = _cache_path(code, "price")
+    if not cache.exists():
+        raise HTTPException(status_code=404, detail="no price cache")
+    try:
+        df = pd.read_csv(cache)
+        if df.empty or "close" not in df.columns:
+            raise HTTPException(status_code=404, detail="no close data")
+        latest = float(df.iloc[-1]["close"])
+        return {"code": code, "close": latest, "date": str(df.iloc[-1].get("date", ""))}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

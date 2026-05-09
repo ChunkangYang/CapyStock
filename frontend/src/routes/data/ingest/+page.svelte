@@ -119,15 +119,26 @@
     watchlistMsg = '';
   }
 
+  async function getLatestPrice(code: string): Promise<number> {
+    try {
+      const r = await fetch(`${API}/data/latest-price/${code}`);
+      if (!r.ok) return 0;
+      const body: { close: number } = await r.json();
+      return body.close ?? 0;
+    } catch { /* fallback */ }
+    return 0;
+  }
+
   async function addToWatchlist() {
     watchlistAdding = true;
     let added = 0;
     for (const code of watchlistPrompt) {
       try {
+        const start_price = await getLatestPrice(code);
         const r = await fetch(`${API}/watchlist`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code, start_price: 0 }),
+          body: JSON.stringify({ code, start_price }),
         });
         if (r.ok) added++;
       } catch { /* skip */ }
