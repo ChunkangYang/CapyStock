@@ -31,8 +31,22 @@
     if (f) loadFile(f);
   }
 
+  const FLOW_KEYWORDS = ['foreign_net', 'institution_net', 'individual_net', '外資', '外国人', '機関', '個人', 'Foreign', 'Institution', 'Individual'];
+  const MARGIN_KEYWORDS = ['margin_long', 'margin_short', 'ratio', '買残', '売残', '融資', '融券', '信用倍率', '倍率'];
+
+  function detectKind(headers: string[]): 'margin' | 'flow' | null {
+    const joined = headers.join(',');
+    const flowScore = FLOW_KEYWORDS.filter(k => joined.includes(k)).length;
+    const marginScore = MARGIN_KEYWORDS.filter(k => joined.includes(k)).length;
+    if (flowScore > marginScore) return 'flow';
+    if (marginScore > flowScore) return 'margin';
+    return null;
+  }
+
   function loadFile(f: File) {
     file = f;
+    result = null;
+    error = '';
     const m = f.name.match(/^(\d{4,6})/);
     if (m && !code) code = m[1];
 
@@ -48,6 +62,10 @@
         previewHeaders.forEach((h, i) => row[h] = vals[i] || '');
         return row;
       });
+
+      // 自動偵測種類
+      const detected = detectKind(previewHeaders);
+      if (detected) kind = detected;
     };
     reader.readAsText(f);
   }
