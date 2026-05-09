@@ -357,12 +357,12 @@ cd frontend && npm install && npm run dev
 - 成功後 UI 顯示來源與筆數；資料寫入 `data/cache/7203_margin.csv`
 
 #### TC-ING-02 投資部門別（個股估算）
-**步驟**：同頁，選 flow → Run
-**預期**：寫入 `{code}_flow.csv`
+**步驟**：在「批量抓取」頁勾選「投資部門別」→ 輸入代碼 → 執行
+**預期**：狀態顯示 ✓；來源欄顯示 `jpx_flow`；寫入 `data/cache/{code}_flow.csv`
 
-#### TC-ING-03 JPX 週報
-**步驟**：在「資料管理」觸發 JPX 週報（API: `POST /api/v1/ingest/jpx-weekly`）
-**預期**：下載解析 Excel；API `GET /api/v1/ingest/market-flow` 可讀取
+#### TC-ING-03 JPX 週報（市場整體）
+**步驟**：在「資料管理」頁面（`/data`）點右上角「↻ 市場 Flow」按鈕
+**預期**：按鈕變灰並顯示「更新中…」；完成後顯示「✓ 已更新市場 Flow（N 週）」；`data/cache/_market_flow.csv` 寫入最新週資料
 
 #### TC-ING-04 手動上傳
 **步驟**：在「資料管理」點「上傳資料」（`/data`）→ 拖入 CSV（含 alias 欄名如 `週,信用買残,信用売残`）

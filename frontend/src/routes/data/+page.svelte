@@ -16,6 +16,8 @@
   let rows: OverviewRow[] = [];
   let loading = true;
   let error = '';
+  let jpxLoading = false;
+  let jpxMsg = '';
 
   onMount(async () => {
     try {
@@ -40,16 +42,42 @@
     if (days === null) return '—';
     return `${days}d`;
   }
+
+  async function updateJpxFlow() {
+    jpxLoading = true;
+    jpxMsg = '';
+    try {
+      const res = await fetch(`${API}/ingest/jpx-weekly`, { method: 'POST' });
+      const body = await res.json();
+      if (body.ok) {
+        jpxMsg = `✓ 已更新市場 Flow（${body.rows_fetched} 週）`;
+      } else {
+        jpxMsg = `✗ ${body.error || '失敗'}`;
+      }
+    } catch (e: any) {
+      jpxMsg = `✗ ${e.message}`;
+    } finally {
+      jpxLoading = false;
+    }
+  }
 </script>
 
 <div class="data-page">
   <div class="page-header">
     <h1>資料管理</h1>
     <div class="actions">
+      <button class="btn-ghost" on:click={updateJpxFlow} disabled={jpxLoading}>
+        {jpxLoading ? '更新中…' : '↻ 市場 Flow'}
+      </button>
       <a href="/data/ingest" class="btn-primary">批量抓取</a>
       <a href="/data/upload" class="btn-secondary">上傳資料</a>
     </div>
   </div>
+  {#if jpxMsg}
+    <div class="jpx-msg" class:ok={jpxMsg.startsWith('✓')} class:err={jpxMsg.startsWith('✗')}>
+      {jpxMsg}
+    </div>
+  {/if}
 
   {#if loading}
     <LoadingSpinner />
@@ -154,6 +182,27 @@
   .btn-secondary:hover {
     background: #052e16;
   }
+
+  .btn-ghost {
+    background: transparent;
+    color: #a1a1a1;
+    border: 1px solid #3a3a3a;
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .btn-ghost:hover:not(:disabled) { color: #e5e7eb; border-color: #555; }
+  .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .jpx-msg {
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  .jpx-msg.ok { background: #064e3b; color: #d1fae5; border: 1px solid #4ade80; }
+  .jpx-msg.err { background: #7f1d1d; color: #fca5a5; border: 1px solid #ef4444; }
 
   .error-banner {
     background: #1f1a1a;
