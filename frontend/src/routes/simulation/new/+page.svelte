@@ -576,17 +576,21 @@
     {/if}
 
     <div class="button-group">
-      {#if step > 1}
-        <button class="btn btn-secondary" on:click={previousStep}>← 上一步</button>
-      {/if}
+      <button class="btn btn-cancel" on:click={() => goto('/simulation')}>✕ 放棄</button>
 
-      {#if step < 3}
-        <button class="btn btn-primary" on:click={nextStep}>下一步 →</button>
-      {:else}
-        <button class="btn btn-primary" on:click={submit}>
-          {kind === 'backtest' ? '建立並回測' : '建立模擬'}
-        </button>
-      {/if}
+      <div class="btn-right">
+        {#if step > 1}
+          <button class="btn btn-secondary" on:click={previousStep}>← 上一步</button>
+        {/if}
+
+        {#if step < 3}
+          <button class="btn btn-primary" on:click={nextStep}>下一步 →</button>
+        {:else}
+          <button class="btn btn-primary" on:click={submit}>
+            {kind === 'backtest' ? '建立並回測' : '建立模擬'}
+          </button>
+        {/if}
+      </div>
     </div>
   </div>
 </div>
@@ -887,11 +891,30 @@
 
   .button-group {
     display: flex;
-    gap: 12px;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 30px;
     border-top: 1px solid #333;
     padding-top: 20px;
+  }
+
+  .btn-right {
+    display: flex;
+    gap: 12px;
+  }
+
+  .btn-cancel {
+    background: transparent;
+    color: #6b7280;
+    border: 1px solid #3a3a3a;
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  .btn-cancel:hover {
+    color: #f87171;
+    border-color: #f87171;
+    background: transparent;
   }
 
   .label-with-info {
