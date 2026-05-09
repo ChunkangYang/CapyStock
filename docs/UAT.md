@@ -365,8 +365,17 @@ cd frontend && npm install && npm run dev
 **預期**：按鈕變灰並顯示「更新中…」；完成後顯示「✓ 已更新市場 Flow（N 週）」；`data/cache/_market_flow.csv` 寫入最新週資料
 
 #### TC-ING-04 手動上傳
-**步驟**：在「資料管理」點「上傳資料」（`/data`）→ 拖入 CSV（含 alias 欄名如 `週,信用買残,信用売残`）
-**預期**：預覽欄位 normalize 後正確；確認後寫入 cache
+**步驟**：
+1. 在「資料管理」（`/data`）點「上傳資料」
+2. 拖入 `docs/test_data/7203_margin_sample.csv`
+3. 股票代碼填 `7203`，資料種類選「信用残 (margin)」
+4. 確認預覽後點「確認上傳」
+**預期**：
+- 預覽表格顯示欄位 `週 / 買残 / 売残 / 信用倍率`（10 列）
+- 確認後顯示「✓ 上傳成功，來源：manual_csv，寫入 10 筆」
+- `data/cache/7203_margin.csv` 存在
+
+> 另有 `docs/test_data/7203_flow_sample.csv` 可用同樣步驟測試 flow（種類選「投資部門別 (flow)」）
 
 #### TC-ING-05 資料總覽
 **步驟**：點側欄「資料管理」進入 `/data`
