@@ -222,6 +222,7 @@
 
   .signals-page h1 {
     color: #4ade80;
+    font-size: 28px;
     margin: 0;
   }
 

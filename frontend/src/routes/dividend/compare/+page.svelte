@@ -146,7 +146,7 @@
 </script>
 
 <div class="page">
-  <h2>金雞高股息對比</h2>
+  <h1>金雞對比</h1>
 
   <div class="controls">
     <div class="chip-bar">
@@ -338,8 +338,8 @@
 
 <style>
   .page { padding: 24px; }
-  h2 { color: #fff; margin: 0 0 20px 0; }
-  h3 { color: #fff; margin: 0 0 12px 0; font-size: 14px; }
+  h1 { color: #4ade80; font-size: 28px; margin: 0 0 20px 0; }
+  h3 { color: #e5e7eb; margin: 0 0 12px 0; font-size: 14px; }
 
   .controls { display: flex; gap: 16px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
   .chip-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
