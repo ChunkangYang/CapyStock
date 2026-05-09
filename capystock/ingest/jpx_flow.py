@@ -49,47 +49,56 @@ def _fetch_jpx_excel(week: Optional[str] = None) -> bytes:
 
 
 def parse_jpx_excel(content: bytes, week_label: Optional[str] = None) -> pd.DataFrame:
-    """解析 JPX Excel → 億日圓單位 DataFrame。
-    回傳欄位：week, foreign_net, institution_net, individual_net
+    """解析 JPX 投資部門別 Excel（stock_val_1_*.xls）。
+    欄位布局：[類別JP, 売買JP, 売買EN, 金額_w1, 比率_w1, 差引き_w1, 金額_w2, ...]
+    差引き Balance（淨買賣）固定在 column index 5。
+    回傳欄位：week, foreign_net, institution_net, individual_net（千円）
     """
     df_raw = pd.read_excel(io.BytesIO(content), sheet_name=0, header=None)
 
-    # 找外資 / 個人 / 投信 行
-    foreign_net = institution_net = individual_net = None
+    # 欄位布局（0-indexed）：
+    #   col0=類別JP, col1=売買JP, col2=売買EN, col3=空, col4=金額_w1,
+    #   col5=比率_w1, col6=差引き_w1（淨買賣），col7=空, col8=金額_w2...
+    # 數值皆為逗號格式字串，需去除逗號後轉 float
+    BALANCE_IDX = 6
 
-    for i, row in df_raw.iterrows():
-        row_text = " ".join(str(v) for v in row.values)
-        if "外国人" in row_text or "外資" in row_text:
-            # 取數值欄（非空值）
-            nums = [v for v in row.values if isinstance(v, (int, float)) and pd.notna(v)]
-            if nums:
-                foreign_net = float(nums[-1])  # 週淨買賣（最後一個數）
-        if "投資信託" in row_text or "投信" in row_text:
-            nums = [v for v in row.values if isinstance(v, (int, float)) and pd.notna(v)]
-            if nums:
-                institution_net = float(nums[-1])
-        if "個人" in row_text:
-            nums = [v for v in row.values if isinstance(v, (int, float)) and pd.notna(v)]
-            if nums:
-                individual_net = float(nums[-1])
-
-    if foreign_net is None:
-        # fallback: 嘗試 sheet "総合"
+    def _parse_num(v) -> Optional[float]:
+        if v is None or (isinstance(v, float) and pd.isna(v)):
+            return None
+        s = str(v).replace(",", "").strip()
         try:
-            df2 = pd.read_excel(io.BytesIO(content), sheet_name="総合", header=None)
-            for i, row in df2.iterrows():
-                row_text = " ".join(str(v) for v in row.values)
-                if "外国人" in row_text or "外資" in row_text:
-                    nums = [v for v in row.values if isinstance(v, (int, float)) and pd.notna(v)]
-                    if nums:
-                        foreign_net = float(nums[-1])
-        except Exception:
-            pass
+            return float(s)
+        except ValueError:
+            return None
+
+    def _find_balance(keywords: list) -> Optional[float]:
+        """在前 3 欄比對關鍵字，回傳第一個有效的差引き Balance 值。"""
+        for _, row in df_raw.iterrows():
+            vals = list(row.values)
+            prefix = " ".join(str(v) for v in vals[:3])
+            if not any(kw in prefix for kw in keywords):
+                continue
+            if len(vals) > BALANCE_IDX:
+                result = _parse_num(vals[BALANCE_IDX])
+                if result is not None:
+                    return result
+        return None
+
+    # 海外投資家（外資）
+    foreign_net = _find_balance(["海外投資家", "Foreigners"])
+    # 法人（機構）
+    institution_net = _find_balance(["法　人", "Institutions"])
+    # 個人
+    individual_net = _find_balance(["個　人", "Individuals"])
 
     if foreign_net is None:
-        raise RuntimeError("JPX Excel: 無法找到外資淨買賣數值")
+        raise RuntimeError("JPX Excel: 無法找到外資淨買賣數值（海外投資家欄）")
 
-    week = week_label or str(date.today().isocalendar()[0]) + "-W" + str(date.today().isocalendar()[1]).zfill(2)
+    week = week_label or (
+        str(date.today().isocalendar()[0])
+        + "-W"
+        + str(date.today().isocalendar()[1]).zfill(2)
+    )
     return pd.DataFrame([{
         "week": week,
         "foreign_net": foreign_net,
