@@ -33,11 +33,9 @@
 
   function loadFile(f: File) {
     file = f;
-    // 從檔名自動猜測 code
     const m = f.name.match(/^(\d{4,6})/);
     if (m && !code) code = m[1];
 
-    // 讀取前 10 行預覽
     const reader = new FileReader();
     reader.onload = (ev) => {
       const text = ev.target?.result as string;
@@ -82,40 +80,41 @@
   }
 </script>
 
-<div class="p-6 max-w-3xl mx-auto">
-  <div class="flex items-center gap-3 mb-6">
-    <a href="/data" class="text-blue-600 hover:underline text-sm">← 資料管理</a>
-    <h1 class="text-xl font-bold">上傳資料</h1>
+<div class="page">
+  <div class="page-header">
+    <a href="/data" class="back-link">← 資料管理</a>
+    <h1>上傳資料</h1>
   </div>
 
   <!-- 拖拉上傳區 -->
   <div
-    class="border-2 border-dashed rounded-xl p-8 text-center mb-6 transition-colors {dragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'}"
+    class="drop-zone"
+    class:drag-over={dragOver}
     on:dragover|preventDefault={() => (dragOver = true)}
     on:dragleave={() => (dragOver = false)}
     on:drop={handleDrop}
     role="region"
     aria-label="拖拉上傳"
   >
-    <p class="text-gray-500 mb-3">拖拉 CSV / XLSX 到此，或</p>
-    <label class="cursor-pointer px-4 py-2 bg-white border rounded-lg text-sm hover:bg-gray-50">
+    <p class="drop-hint">拖拉 CSV / XLSX 到此，或</p>
+    <label class="file-btn">
       選擇檔案
-      <input type="file" accept=".csv,.xlsx,.xls" class="hidden" on:change={handleFileChange} />
+      <input type="file" accept=".csv,.xlsx,.xls" class="hidden-input" on:change={handleFileChange} />
     </label>
     {#if file}
-      <p class="mt-3 text-green-700 font-medium text-sm">{file.name}</p>
+      <p class="file-name">✓ {file.name}</p>
     {/if}
   </div>
 
-  <div class="bg-white border rounded-xl p-5 shadow-sm mb-6">
-    <div class="grid grid-cols-2 gap-4 mb-4">
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">股票代碼</label>
-        <input bind:value={code} class="w-full border rounded px-3 py-2 text-sm" placeholder="7203" />
+  <div class="card">
+    <div class="form-row">
+      <div class="field">
+        <label>股票代碼</label>
+        <input class="inp" bind:value={code} placeholder="7203" />
       </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">資料種類</label>
-        <select bind:value={kind} class="w-full border rounded px-3 py-2 text-sm">
+      <div class="field">
+        <label>資料種類</label>
+        <select class="sel" bind:value={kind}>
           <option value="margin">信用残 (margin)</option>
           <option value="flow">投資部門別 (flow)</option>
         </select>
@@ -123,22 +122,22 @@
     </div>
 
     {#if previewRows.length > 0}
-      <div class="mb-4">
-        <h3 class="text-sm font-semibold text-gray-600 mb-2">前 {previewRows.length} 列預覽</h3>
-        <div class="overflow-auto border rounded">
-          <table class="w-full text-xs">
-            <thead class="bg-gray-50">
+      <div class="preview-block">
+        <p class="preview-title">前 {previewRows.length} 列預覽</p>
+        <div class="preview-wrap">
+          <table class="preview-table">
+            <thead>
               <tr>
                 {#each previewHeaders as h}
-                  <th class="px-2 py-1 text-left">{h}</th>
+                  <th>{h}</th>
                 {/each}
               </tr>
             </thead>
             <tbody>
               {#each previewRows as row}
-                <tr class="border-t">
+                <tr>
                   {#each previewHeaders as h}
-                    <td class="px-2 py-1">{row[h]}</td>
+                    <td>{row[h]}</td>
                   {/each}
                 </tr>
               {/each}
@@ -148,26 +147,147 @@
       </div>
     {/if}
 
-    <button
-      on:click={doUpload}
-      disabled={uploading || !file}
-      class="px-5 py-2 bg-green-600 text-white rounded-lg text-sm font-semibold disabled:opacity-50 hover:bg-green-700"
-    >
-      {uploading ? '上傳中...' : '確認上傳'}
+    <button class="btn-primary" on:click={doUpload} disabled={uploading || !file}>
+      {uploading ? '上傳中…' : '確認上傳'}
     </button>
   </div>
 
   {#if error}
-    <div class="p-3 bg-red-50 text-red-700 rounded border border-red-200 text-sm">{error}</div>
+    <div class="error-banner">{error}</div>
   {/if}
 
   {#if result}
-    <div class="p-4 bg-green-50 border border-green-200 rounded-xl">
-      <p class="font-semibold text-green-700 mb-1">✓ 上傳成功</p>
-      <p class="text-sm text-green-600">來源：{result.source}，寫入 {result.rows_fetched} 筆</p>
+    <div class="success-banner">
+      <p class="success-title">✓ 上傳成功</p>
+      <p>來源：{result.source}，寫入 {result.rows_fetched} 筆</p>
       {#if result.written_path}
-        <p class="text-xs text-gray-500 mt-1">{result.written_path}</p>
+        <p class="success-path">{result.written_path}</p>
       {/if}
     </div>
   {/if}
 </div>
+
+<style>
+  .page { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+  .page-header { display: flex; align-items: baseline; gap: 16px; }
+
+  .back-link { color: #4ade80; text-decoration: none; font-size: 13px; }
+  .back-link:hover { text-decoration: underline; }
+
+  h1 { color: #4ade80; font-size: 28px; margin: 0; }
+
+  .drop-zone {
+    border: 2px dashed #333;
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .drop-zone.drag-over {
+    border-color: #4ade80;
+    background: #0a2a1a;
+  }
+
+  .drop-hint { color: #6b7280; font-size: 14px; margin: 0 0 12px 0; }
+
+  .file-btn {
+    display: inline-block;
+    background: #2a2a2a;
+    color: #e5e7eb;
+    border: 1px solid #3a3a3a;
+    border-radius: 4px;
+    padding: 6px 16px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .file-btn:hover { background: #333; border-color: #4a4a4a; }
+
+  .hidden-input { display: none; }
+
+  .file-name { color: #4ade80; font-size: 13px; margin: 10px 0 0 0; }
+
+  .card {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+
+  label { color: #a1a1a1; font-size: 13px; }
+
+  .inp, .sel {
+    background: #0f0f0f;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #e5e7eb;
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 100%;
+  }
+  .inp:focus, .sel:focus { outline: none; border-color: #4ade80; }
+
+  .preview-block { display: flex; flex-direction: column; gap: 8px; }
+  .preview-title { color: #a1a1a1; font-size: 13px; margin: 0; }
+  .preview-wrap { overflow: auto; border: 1px solid #333; border-radius: 4px; }
+
+  .preview-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .preview-table th {
+    padding: 6px 10px;
+    background: #111;
+    color: #6b7280;
+    border-bottom: 1px solid #333;
+    text-align: left;
+    white-space: nowrap;
+  }
+  .preview-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #222;
+    color: #e5e7eb;
+  }
+  .preview-table tr:last-child td { border-bottom: none; }
+
+  .btn-primary {
+    background: #4ade80;
+    color: #0f0f0f;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  .btn-primary:hover { background: #22c55e; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .error-banner {
+    background: #7f1d1d;
+    border: 1px solid #ef4444;
+    color: #fca5a5;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .success-banner {
+    background: #064e3b;
+    border: 1px solid #4ade80;
+    color: #d1fae5;
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .success-title { font-weight: 600; font-size: 14px; margin: 0; }
+  .success-path { color: #6ee7b7; font-size: 12px; margin: 0; }
+</style>

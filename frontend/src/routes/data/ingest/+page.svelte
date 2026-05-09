@@ -60,7 +60,6 @@
     jobId = info.job_id;
     total = info.total;
 
-    // SSE 進度
     const evtSource = new EventSource(`${API}/data/batch-ingest/${jobId}/stream`);
     evtSource.onmessage = (ev) => {
       const data = JSON.parse(ev.data);
@@ -90,95 +89,87 @@
   }
 </script>
 
-<div class="p-6 max-w-3xl mx-auto">
-  <div class="flex items-center gap-3 mb-6">
-    <a href="/data" class="text-blue-600 hover:underline text-sm">← 資料管理</a>
-    <h1 class="text-xl font-bold">批量抓取</h1>
+<div class="page">
+  <div class="page-header">
+    <a href="/data" class="back-link">← 資料管理</a>
+    <h1>批量抓取</h1>
   </div>
 
-  <div class="bg-white border rounded-xl p-5 shadow-sm mb-6">
-    <div class="mb-4">
-      <label class="block text-sm font-medium text-gray-700 mb-1">股票代碼（逗號或空白分隔）</label>
+  <div class="card">
+    <div class="field">
+      <label>股票代碼（逗號或空白分隔）</label>
       <input
         bind:value={selectedCodes}
-        class="w-full border rounded px-3 py-2 text-sm"
+        class="inp"
         placeholder="7203, 9984, 6758"
       />
     </div>
 
-    <div class="mb-4">
-      <label class="block text-sm font-medium text-gray-700 mb-2">資料種類</label>
-      <div class="flex gap-3">
+    <div class="field">
+      <label>資料種類</label>
+      <div class="checkbox-group">
         {#each kindOptions as opt}
-          <label class="flex items-center gap-2 cursor-pointer">
+          <label class="checkbox-label">
             <input
               type="checkbox"
               checked={selectedKinds.includes(opt.value)}
               on:change={() => toggleKind(opt.value)}
-              class="rounded"
             />
-            <span class="text-sm">{opt.label}</span>
+            <span>{opt.label}</span>
           </label>
         {/each}
       </div>
     </div>
 
-    <button
-      on:click={startIngest}
-      disabled={running}
-      class="px-5 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold disabled:opacity-50 hover:bg-blue-700"
-    >
-      {running ? '抓取中...' : '執行'}
+    <button class="btn-primary" on:click={startIngest} disabled={running}>
+      {running ? '抓取中…' : '執行'}
     </button>
   </div>
 
   {#if error}
-    <div class="mb-4 p-3 bg-red-50 text-red-700 rounded border border-red-200 text-sm">{error}</div>
+    <div class="error-banner">{error}</div>
   {/if}
 
   {#if running || total > 0}
-    <div class="mb-6">
-      <div class="flex justify-between text-sm text-gray-600 mb-1">
+    <div class="progress-block">
+      <div class="progress-meta">
         <span>進度</span>
         <span>{progress} / {total}</span>
       </div>
-      <div class="w-full bg-gray-200 rounded-full h-2">
-        <div
-          class="bg-blue-600 h-2 rounded-full transition-all"
-          style="width: {total > 0 ? (progress / total * 100) : 0}%"
-        ></div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width: {total > 0 ? (progress / total * 100) : 0}%"></div>
       </div>
     </div>
   {/if}
 
   {#if results.length > 0}
-    <div class="bg-white border rounded-xl shadow-sm overflow-auto">
-      <table class="w-full text-sm">
-        <thead class="bg-gray-50">
+    <div class="table-wrap">
+      <table>
+        <thead>
           <tr>
-            <th class="px-4 py-2 text-left">代碼</th>
-            <th class="px-4 py-2 text-left">種類</th>
-            <th class="px-4 py-2 text-left">來源</th>
-            <th class="px-4 py-2 text-right">筆數</th>
-            <th class="px-4 py-2 text-center">狀態</th>
-            <th class="px-4 py-2 text-left">錯誤</th>
+            <th>代碼</th>
+            <th>種類</th>
+            <th>來源</th>
+            <th class="right">筆數</th>
+            <th class="center">狀態</th>
+            <th>錯誤</th>
           </tr>
         </thead>
         <tbody>
           {#each results as r}
-            <tr class="border-t">
-              <td class="px-4 py-2 font-mono">{r.code}</td>
-              <td class="px-4 py-2">{r.kind}</td>
-              <td class="px-4 py-2 text-gray-500 text-xs">{r.source}</td>
-              <td class="px-4 py-2 text-right">{r.rows}</td>
-              <td class="px-4 py-2 text-center">
+            <tr>
+              <td class="code">{r.code}</td>
+              <td>{r.kind}</td>
+              <td class="muted">{r.source}</td>
+              <td class="right">{r.rows}</td>
+              <td class="center">
                 {#if r.ok}
-                  <span class="text-green-600 font-semibold">✓</span>
+                  <span class="ok">✓</span>
                 {:else}
-                  <span class="text-red-500 font-semibold">✗</span>
+                  <span class="fail">✗</span>
                 {/if}
               </td>
-              <td class="px-4 py-2 text-xs text-red-500">{r.error || ''}</td>
+              <td class="fail">{r.error || ''}</td>
             </tr>
           {/each}
         </tbody>
@@ -186,3 +177,138 @@
     </div>
   {/if}
 </div>
+
+<style>
+  .page { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+  .page-header { display: flex; align-items: baseline; gap: 16px; }
+
+  .back-link {
+    color: #4ade80;
+    text-decoration: none;
+    font-size: 13px;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  h1 { color: #4ade80; font-size: 28px; margin: 0; }
+
+  .card {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+
+  label { color: #a1a1a1; font-size: 13px; }
+
+  .inp {
+    background: #0f0f0f;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #e5e7eb;
+    padding: 8px 12px;
+    font-size: 14px;
+    max-width: 400px;
+  }
+  .inp:focus { outline: none; border-color: #4ade80; }
+
+  .checkbox-group { display: flex; gap: 20px; }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: #e5e7eb;
+    font-size: 14px;
+  }
+  .checkbox-label input { accent-color: #4ade80; }
+
+  .btn-primary {
+    background: #4ade80;
+    color: #0f0f0f;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  .btn-primary:hover { background: #22c55e; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .error-banner {
+    background: #7f1d1d;
+    border: 1px solid #ef4444;
+    color: #fca5a5;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .progress-block {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #a1a1a1;
+    margin-bottom: 8px;
+  }
+  .progress-track {
+    height: 6px;
+    background: #2a2a2a;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: #4ade80;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+  }
+
+  .table-wrap {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: auto;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+  th {
+    text-align: left;
+    padding: 10px 14px;
+    color: #6b7280;
+    border-bottom: 1px solid #333;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #222;
+    color: #e5e7eb;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #222; }
+
+  .code { font-family: monospace; font-weight: 700; }
+  .muted { color: #6b7280; font-size: 12px; }
+  .right { text-align: right; }
+  .center { text-align: center; }
+  .ok { color: #4ade80; font-weight: 700; }
+  .fail { color: #f87171; font-size: 12px; }
+</style>
