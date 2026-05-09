@@ -290,11 +290,11 @@
     color: #6b7280;
   }
 
-  /* age badge colours */
-  .age-new  { color: #4ade80; }
-  .age-mid  { color: #facc15; }
-  .age-old  { color: #f87171; font-weight: 600; }
-  .age-none { color: #4b5563; }
+  /* age badge colours — 用 td. 提高 specificity 蓋過 .data-table td */
+  .data-table td.age-new  { color: #4ade80; }
+  .data-table td.age-mid  { color: #facc15; }
+  .data-table td.age-old  { color: #f87171; font-weight: 600; }
+  .data-table td.age-none { color: #4b5563; }
 
   .ops { white-space: nowrap; }
 
