@@ -141,21 +141,19 @@
   }
 
   .btn-sweep {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: #fff;
-    border: none;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    box-shadow: 0 0 12px rgba(139, 92, 246, 0.45);
+    background: #2a2a2a;
+    color: #e5e7eb;
+    border: 1px solid #444;
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 6px;
   }
 
   .btn-sweep:hover {
-    background: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.7);
+    background: #333;
     color: #fff;
+    border-color: #555;
   }
 
   .sweep-icon {
@@ -205,12 +203,14 @@
   }
 
   .btn-view {
-    background-color: #3b82f6;
-    color: #fff;
+    background-color: #2a2a2a;
+    color: #e5e7eb;
+    border: 1px solid #444;
   }
 
   .btn-view:hover {
-    background-color: #2563eb;
+    background-color: #333;
+    border-color: #555;
   }
 
   .error {

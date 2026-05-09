@@ -250,13 +250,14 @@
 
 <style>
   .page { display: flex; flex-direction: column; gap: 16px; }
-  h2 { margin: 0; }
+  h2 { margin: 0; color: #4ade80; }
   table { width: 100%; border-collapse: collapse; background: #161616; border: 1px solid #2a2a2a; border-radius: 8px; overflow: hidden; }
   th, td { text-align: left; padding: 10px; border-bottom: 1px solid #2a2a2a; font-size: 13px; vertical-align: top; }
   th { color: #9ca3af; font-weight: 500; }
   .job-id { font-size: 11px; color: #6b7280; font-family: monospace; }
   .badge { padding: 2px 8px; border-radius: 4px; color: #052e16; font-size: 11px; font-weight: 600; }
-  button { background: #1f2937; color: #e5e7eb; border: 1px solid #333; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+  button { background: #2a2a2a; color: #e5e7eb; border: 1px solid #3a3a3a; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+  button:hover:not(:disabled) { background: #333; border-color: #4a4a4a; }
   button.expand { background: transparent; border: none; color: #e5e7eb; padding: 0 6px; font-size: 18px; line-height: 1; }
   .runs-row td { background: #0d0d0d; }
   .runs-detail { padding: 8px; }

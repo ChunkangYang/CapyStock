@@ -40,7 +40,7 @@
   .subnav h1 {
     font-size: 18px;
     margin: 0;
-    color: #e5e7eb;
+    color: #4ade80;
   }
   .subnav nav {
     display: flex;

@@ -255,8 +255,8 @@
     margin: 0 4px;
   }
 
-  .op-link.blue  { color: #60a5fa; }
-  .op-link.blue:hover  { color: #93c5fd; }
+  .op-link.blue  { color: #4ade80; }
+  .op-link.blue:hover  { color: #86efac; }
   .op-link.green { color: #4ade80; }
   .op-link.green:hover { color: #86efac; }
 </style>

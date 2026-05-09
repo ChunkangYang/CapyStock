@@ -385,7 +385,7 @@
 
 <style>
   .page { display: flex; flex-direction: column; gap: 24px; }
-  h2 { margin: 0; }
+  h2 { margin: 0; color: #4ade80; }
   h3 { margin: 0 0 8px; color: #e5e7eb; }
   section { background: #161616; border: 1px solid #2a2a2a; border-radius: 8px; padding: 16px; }
   .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
@@ -401,9 +401,12 @@
   th, td { text-align: left; padding: 8px; border-bottom: 1px solid #2a2a2a; font-size: 13px; }
   th { color: #9ca3af; font-weight: 500; }
   td.empty, p.empty { color: #6b7280; font-size: 13px; padding: 16px; }
-  button { background: #1f2937; color: #e5e7eb; border: 1px solid #333; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-right: 4px; }
+  button { background: #2a2a2a; color: #e5e7eb; border: 1px solid #3a3a3a; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-right: 4px; }
+  button:hover:not(:disabled) { background: #333; border-color: #4a4a4a; }
   button.primary { background: #4ade80; color: #052e16; border: none; }
-  button.danger { background: #7f1d1d; }
+  button.primary:hover { background: #22c55e; }
+  button.danger { background: #7f1d1d; color: #fee2e2; border-color: #ef4444; }
+  button.danger:hover { background: #991b1b; }
   .filters { display: flex; gap: 8px; }
   select { background: #111; color: #e5e7eb; border: 1px solid #333; padding: 4px 8px; border-radius: 4px; }
   .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 50; }
