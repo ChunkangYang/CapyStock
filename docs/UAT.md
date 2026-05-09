@@ -356,13 +356,19 @@ cd frontend && npm install && npm run dev
 - 右上角按鈕：「批量抓取」（綠底黑字）、「上傳資料」（黑底綠字外框）
 - 成功後 UI 顯示來源與筆數；資料寫入 `data/cache/7203_margin.csv`
 
+**結果**：✅ Pass（2026-05-08）
+
 #### TC-ING-02 投資部門別（個股估算）
 **步驟**：在「批量抓取」頁勾選「投資部門別」→ 輸入代碼 → 執行
 **預期**：狀態顯示 ✓；來源欄顯示 `jpx_flow`；寫入 `data/cache/{code}_flow.csv`
 
+**結果**：✅ Pass（2026-05-08）
+
 #### TC-ING-03 JPX 週報（市場整體）
 **步驟**：在「資料管理」頁面（`/data`）點右上角「↻ 市場 Flow」按鈕
 **預期**：按鈕變灰並顯示「更新中…」；完成後顯示「✓ 已更新市場 Flow（N 週）」；`data/cache/_market_flow.csv` 寫入最新週資料
+
+**結果**：✅ Pass（2026-05-08）
 
 #### TC-ING-04 手動上傳
 **步驟**：
@@ -377,6 +383,8 @@ cd frontend && npm install && npm run dev
 
 > 另有 `docs/test_data/7203_flow_sample.csv` 可用同樣步驟測試 flow（種類選「投資部門別 (flow)」）
 
+**結果**：✅ Pass（2026-05-08）
+
 #### TC-ING-05 資料總覽
 **步驟**：點側欄「資料管理」進入 `/data`
 **預期**：
@@ -385,9 +393,13 @@ cd frontend && npm install && npm run dev
 - 每列「操作」欄含「重抓」、「上傳」連結
 - 過舊以紅（>30日）/ 黃（7–30日）顏色警示
 
+**結果**：✅ Pass（2026-05-08）
+
 #### TC-ING-06 批量 ingest（SSE）
 **步驟**：在「資料管理」點「批量抓取」→ 全選 → Run All
 **預期**：SSE 即時逐檔回報成功 / 失敗
+
+**結果**：✅ Pass（2026-05-08）
 
 ---
 
