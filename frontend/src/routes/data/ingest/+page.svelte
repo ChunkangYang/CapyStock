@@ -14,6 +14,12 @@
   let results: any[] = [];
   let error = '';
 
+  // 追蹤清單提示
+  let watchlistPrompt: string[] = [];   // 成功且不在清單的代碼
+  let watchlistAdding = false;
+  let watchlistMsg = '';
+  let watchlistDismissed = false;
+
   const kindOptions = [
     { value: 'margin', label: '信用残' },
     { value: 'flow', label: '投資部門別' },
@@ -90,7 +96,45 @@
     if (res.ok) {
       const job = await res.json();
       results = job.results || [];
+      await checkWatchlistPrompt();
     }
+  }
+
+  async function checkWatchlistPrompt() {
+    // 收集成功的唯一代碼
+    const successCodes = [...new Set(results.filter(r => r.ok).map(r => r.code))];
+    if (!successCodes.length) return;
+    // 查現有追蹤清單，過濾掉已在清單的
+    try {
+      const wlRes = await fetch(`${API}/watchlist`);
+      if (wlRes.ok) {
+        const wl: { code: string }[] = await wlRes.json();
+        const existing = new Set(wl.map(w => w.code));
+        watchlistPrompt = successCodes.filter(c => !existing.has(c));
+      }
+    } catch {
+      watchlistPrompt = successCodes;
+    }
+    watchlistDismissed = false;
+    watchlistMsg = '';
+  }
+
+  async function addToWatchlist() {
+    watchlistAdding = true;
+    let added = 0;
+    for (const code of watchlistPrompt) {
+      try {
+        const r = await fetch(`${API}/watchlist`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, start_price: 0 }),
+        });
+        if (r.ok) added++;
+      } catch { /* skip */ }
+    }
+    watchlistMsg = `✓ 已將 ${added} 支股票加入追蹤清單`;
+    watchlistAdding = false;
+    watchlistPrompt = [];
   }
 </script>
 
@@ -145,6 +189,28 @@
         <div class="progress-fill" style="width: {total > 0 ? (progress / total * 100) : 0}%"></div>
       </div>
     </div>
+  {/if}
+
+  {#if watchlistPrompt.length > 0 && !watchlistDismissed}
+    <div class="watchlist-prompt">
+      <div class="wl-prompt-body">
+        <span class="wl-icon">★</span>
+        <div>
+          <p class="wl-title">加入追蹤清單？</p>
+          <p class="wl-codes">以下股票抓取成功：<strong>{watchlistPrompt.join('、')}</strong></p>
+        </div>
+      </div>
+      <div class="wl-prompt-actions">
+        <button class="btn-primary" on:click={addToWatchlist} disabled={watchlistAdding}>
+          {watchlistAdding ? '加入中…' : '加入追蹤清單'}
+        </button>
+        <button class="btn-dismiss" on:click={() => (watchlistDismissed = true)}>略過</button>
+      </div>
+    </div>
+  {/if}
+
+  {#if watchlistMsg}
+    <div class="watchlist-done">{watchlistMsg}</div>
   {/if}
 
   {#if results.length > 0}
@@ -316,4 +382,41 @@
   .center { text-align: center; }
   .ok { color: #4ade80; font-weight: 700; }
   .fail { color: #f87171; font-size: 12px; }
+
+  .watchlist-prompt {
+    background: #0a2a1a;
+    border: 1px solid #4ade80;
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .wl-prompt-body { display: flex; align-items: flex-start; gap: 12px; }
+  .wl-icon { color: #4ade80; font-size: 20px; line-height: 1.4; flex-shrink: 0; }
+  .wl-title { color: #4ade80; font-size: 14px; font-weight: 600; margin: 0 0 4px 0; }
+  .wl-codes { color: #a1a1a1; font-size: 13px; margin: 0; }
+  .wl-codes strong { color: #e5e7eb; }
+  .wl-prompt-actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .btn-dismiss {
+    background: transparent;
+    color: #6b7280;
+    border: 1px solid #3a3a3a;
+    border-radius: 4px;
+    padding: 7px 14px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .btn-dismiss:hover { color: #a1a1a1; border-color: #555; }
+
+  .watchlist-done {
+    background: #064e3b;
+    border: 1px solid #4ade80;
+    color: #d1fae5;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
 </style>
