@@ -17,12 +17,8 @@ class MinkabuMarginSource(IngestionSource):
     kind: Literal["margin"] = "margin"
 
     def fetch(self, code: str) -> pd.DataFrame:
-        url = f"https://minkabu.jp/stock/{code}/credit"
-        headers = {"User-Agent": config.USER_AGENT}
-        time.sleep(config.REQUEST_DELAY_SECONDS)
-        resp = requests.get(url, headers=headers, timeout=config.REQUEST_TIMEOUT)
-        if resp.status_code != 200:
-            raise RuntimeError(f"Minkabu HTTP {resp.status_code} for {code}")
+        # Minkabu 已移除 /stock/{code}/credit 頁面，此來源不再可用
+        raise RuntimeError(f"Minkabu 信用残頁面已停止服務（/stock/{code}/credit 404）")
         return self._parse(resp.text, code)
 
     def health_check(self) -> bool:

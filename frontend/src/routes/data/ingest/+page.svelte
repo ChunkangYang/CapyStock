@@ -19,6 +19,11 @@
     { value: 'flow', label: '投資部門別' },
   ];
 
+  const kindLabel: Record<string, string> = {
+    margin: '信用残',
+    flow: '投資部門別',
+  };
+
   onMount(() => {
     const code = $page.url.searchParams.get('code');
     if (code) selectedCodes = code;
@@ -159,7 +164,7 @@
           {#each results as r}
             <tr>
               <td class="code">{r.code}</td>
-              <td>{r.kind}</td>
+              <td>{kindLabel[r.kind] ?? r.kind}</td>
               <td class="muted">{r.source}</td>
               <td class="right">{r.rows}</td>
               <td class="center">
