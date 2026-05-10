@@ -51,6 +51,7 @@ def run_signals_scan(
     universe: list[dict],
     clock: Optional[date] = None,
     include_technical: bool = True,
+    progress_callback: Optional[callable] = None,
 ) -> tuple[list[SignalScanRow], list[dict]]:
     """掃描所有股票的訊號，回傳 (rows, errors)"""
     if clock is None:
@@ -93,10 +94,14 @@ def run_signals_scan(
         except Exception as e:
             errors.append({"code": code, "name": name, "error": str(e)})
 
+        # 更新進度
+        if progress_callback:
+            progress_callback(i + 1)
+
     return rows, errors
 
 
-def run_dividend_scan(universe: list[dict], clock: Optional[date] = None) -> tuple[list[DividendScanRow], list[dict]]:
+def run_dividend_scan(universe: list[dict], clock: Optional[date] = None, progress_callback: Optional[callable] = None) -> tuple[list[DividendScanRow], list[dict]]:
     """掃描所有股票的基本面，回傳 (rows, errors)"""
     if clock is None:
         clock = date.today()
@@ -178,6 +183,10 @@ def run_dividend_scan(universe: list[dict], clock: Optional[date] = None) -> tup
 
         except Exception as e:
             errors.append({"code": code, "name": name, "error": str(e)})
+
+        # 更新進度
+        if progress_callback:
+            progress_callback(i + 1)
 
     return rows, errors
 

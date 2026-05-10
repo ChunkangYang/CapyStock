@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
 from typing import Optional
+import threading
 
 from fastapi import APIRouter, HTTPException, Query
 
@@ -11,6 +12,7 @@ router = APIRouter()
 
 # In-memory job registry
 jobs_registry: dict[str, JobStatus] = {}
+_registry_lock = threading.Lock()
 
 
 @router.get("/scan/snapshots")
@@ -96,13 +98,59 @@ def get_dividend_snapshot(
     return rows
 
 
+def _background_scan(job_id: str, req: ScanRunRequest):
+    """背景掃描函數，定期更新進度"""
+    try:
+        universe = scan_service.load_universe()
+        today_str = datetime.now().strftime("%Y-%m-%d")
+
+        with _registry_lock:
+            jobs_registry[job_id].progress_total = len(universe)
+
+        if req.kind == "signals":
+            include_technical = req.include_technical if hasattr(req, "include_technical") else True
+            rows, errors = scan_service.run_signals_scan(
+                universe,
+                include_technical=include_technical,
+                progress_callback=lambda curr: _update_progress(job_id, curr)
+            )
+            scan_service.write_snapshot("signals", rows, today_str)
+            if errors:
+                scan_service.write_errors("signals", errors, today_str)
+        elif req.kind == "dividend":
+            rows, errors = scan_service.run_dividend_scan(
+                universe,
+                progress_callback=lambda curr: _update_progress(job_id, curr)
+            )
+            scan_service.write_snapshot("dividend", rows, today_str)
+            if errors:
+                scan_service.write_errors("dividend", errors, today_str)
+
+        with _registry_lock:
+            jobs_registry[job_id].status = "completed"
+            jobs_registry[job_id].finished_at = datetime.now()
+            jobs_registry[job_id].progress_current = len(universe)
+    except Exception as e:
+        with _registry_lock:
+            jobs_registry[job_id].status = "failed"
+            jobs_registry[job_id].message = str(e)
+            jobs_registry[job_id].finished_at = datetime.now()
+
+
+def _update_progress(job_id: str, current: int):
+    """更新掃描進度"""
+    with _registry_lock:
+        if job_id in jobs_registry:
+            jobs_registry[job_id].progress_current = current
+
+
 @router.post("/scan/run")
-def run_scan(req: ScanRunRequest, async_mode: bool = Query(False)) -> JobStatus:
+def run_scan(req: ScanRunRequest, async_mode: bool = Query(True)) -> JobStatus:
     """觸發掃描；async_mode=true 背景跑，false 同步阻塞"""
     job_id = str(uuid.uuid4())
 
     if async_mode:
-        # 背景跑
+        # 背景跑 + 進度追蹤
         status = JobStatus(
             job_id=job_id,
             kind=req.kind,
@@ -110,13 +158,18 @@ def run_scan(req: ScanRunRequest, async_mode: bool = Query(False)) -> JobStatus:
             message=None,
             started_at=datetime.now(),
             finished_at=None,
+            progress_current=0,
+            progress_total=0,
         )
-        jobs_registry[job_id] = status
-        # TODO: 實際背景工作（簡化先不實作，在 S8 加）
+        with _registry_lock:
+            jobs_registry[job_id] = status
+
+        thread = threading.Thread(target=_background_scan, args=(job_id, req), daemon=True)
+        thread.start()
         return status
 
     else:
-        # 同步阻塞
+        # 同步阻塞（已棄用）
         try:
             universe = scan_service.load_universe()
             today_str = datetime.now().strftime("%Y-%m-%d")
@@ -142,8 +195,11 @@ def run_scan(req: ScanRunRequest, async_mode: bool = Query(False)) -> JobStatus:
                 message=None,
                 started_at=datetime.now(),
                 finished_at=datetime.now(),
+                progress_current=len(universe),
+                progress_total=len(universe),
             )
-            jobs_registry[job_id] = status
+            with _registry_lock:
+                jobs_registry[job_id] = status
             return status
 
         except Exception as e:
@@ -155,7 +211,8 @@ def run_scan(req: ScanRunRequest, async_mode: bool = Query(False)) -> JobStatus:
                 started_at=datetime.now(),
                 finished_at=datetime.now(),
             )
-            jobs_registry[job_id] = status
+            with _registry_lock:
+                jobs_registry[job_id] = status
             raise HTTPException(status_code=500, detail=str(e))
 
 

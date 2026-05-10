@@ -22,6 +22,9 @@
   let universeMsg = '';
   let scanLoading = false;
   let scanMsg = '';
+  let scanJobId = '';
+  let scanProgress = 0;
+  let scanProgressTotal = 0;
 
   onMount(async () => {
     try {
@@ -86,22 +89,47 @@
   async function scanNow() {
     scanLoading = true;
     scanMsg = '';
+    scanJobId = '';
+    scanProgress = 0;
+    scanProgressTotal = 0;
+
     try {
-      const res = await fetch(`${API}/scan/run?async_mode=false`, {
+      // 觸發背景掃描
+      const res = await fetch(`${API}/scan/run?async_mode=true`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ kind: 'signals' })
       });
       const body = await res.json();
-      if (body.status === 'completed') {
-        scanMsg = `✓ 掃描完成！已檢查全部股票，結果顯示在「投機訊號」`;
-      } else {
-        scanMsg = `✗ ${body.message || '掃描失敗'}`;
-      }
+      scanJobId = body.job_id;
+      scanProgressTotal = body.progress_total || 3747;
+
+      // 定期輪詢進度
+      const pollInterval = setInterval(async () => {
+        try {
+          const statusRes = await fetch(`${API}/scan/jobs/${scanJobId}`);
+          const status = await statusRes.json();
+
+          scanProgress = status.progress_current || 0;
+          scanProgressTotal = status.progress_total || 3747;
+
+          if (status.status === 'completed') {
+            clearInterval(pollInterval);
+            scanLoading = false;
+            scanMsg = `✓ 掃描完成！已檢查 ${scanProgressTotal} 檔股票，結果顯示在「投機訊號」`;
+          } else if (status.status === 'failed') {
+            clearInterval(pollInterval);
+            scanLoading = false;
+            scanMsg = `✗ 掃描失敗：${status.message}`;
+          }
+        } catch (e) {
+          // 輪詢出錯，繼續
+        }
+      }, 2000);
+
     } catch (e: any) {
-      scanMsg = `✗ ${e.message}`;
-    } finally {
       scanLoading = false;
+      scanMsg = `✗ ${e.message}`;
     }
   }
 </script>
@@ -111,7 +139,11 @@
     <h1>資料管理</h1>
     <div class="actions">
       <button class="btn-primary" on:click={scanNow} disabled={scanLoading} title="掃描全部股票，耗時 5-10 分鐘">
-        {scanLoading ? '掃描中…' : '⚡ 立即掃描全市場'}
+        {#if scanLoading}
+          掃描中 ({scanProgress}/{scanProgressTotal})
+        {:else}
+          ⚡ 立即掃描全市場
+        {/if}
       </button>
       <button class="btn-ghost" on:click={updateUniverse} disabled={universeLoading}>
         {universeLoading ? '更新中…' : '↻ 股票清單'}
@@ -123,6 +155,12 @@
       <a href="/data/upload" class="btn-secondary">上傳資料</a>
     </div>
   </div>
+  {#if scanLoading && scanProgressTotal > 0}
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: {(scanProgress / scanProgressTotal) * 100}%"></div>
+      <div class="progress-text">{scanProgress} / {scanProgressTotal}</div>
+    </div>
+  {/if}
   {#if scanMsg}
     <div class="scan-msg" class:ok={scanMsg.startsWith('✓')} class:err={scanMsg.startsWith('✗')}>
       {scanMsg}
@@ -254,6 +292,33 @@
   }
   .btn-ghost:hover:not(:disabled) { color: #e5e7eb; border-color: #555; }
   .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .progress-bar {
+    position: relative;
+    height: 24px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4ade80, #22c55e);
+    transition: width 0.3s ease;
+  }
+
+  .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    z-index: 1;
+  }
 
   .scan-msg, .universe-msg, .jpx-msg {
     font-size: 13px;

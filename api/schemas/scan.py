@@ -44,6 +44,8 @@ class JobStatus(BaseModel):
     message: str | None
     started_at: datetime | None
     finished_at: datetime | None
+    progress_current: int = 0
+    progress_total: int = 0
 
 
 class ScanRunRequest(BaseModel):
