@@ -20,6 +20,8 @@
   let jpxMsg = '';
   let universeLoading = false;
   let universeMsg = '';
+  let scanLoading = false;
+  let scanMsg = '';
 
   onMount(async () => {
     try {
@@ -80,22 +82,52 @@
       universeLoading = false;
     }
   }
+
+  async function scanNow() {
+    scanLoading = true;
+    scanMsg = '';
+    try {
+      const res = await fetch(`${API}/scan/run?async_mode=false`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kind: 'signals' })
+      });
+      const body = await res.json();
+      if (body.status === 'completed') {
+        scanMsg = `✓ 掃描完成！已檢查全部股票，結果顯示在「投機訊號」`;
+      } else {
+        scanMsg = `✗ ${body.message || '掃描失敗'}`;
+      }
+    } catch (e: any) {
+      scanMsg = `✗ ${e.message}`;
+    } finally {
+      scanLoading = false;
+    }
+  }
 </script>
 
 <div class="data-page">
   <div class="page-header">
     <h1>資料管理</h1>
     <div class="actions">
+      <button class="btn-primary" on:click={scanNow} disabled={scanLoading} title="掃描全部股票，耗時 5-10 分鐘">
+        {scanLoading ? '掃描中…' : '⚡ 立即掃描全市場'}
+      </button>
       <button class="btn-ghost" on:click={updateUniverse} disabled={universeLoading}>
         {universeLoading ? '更新中…' : '↻ 股票清單'}
       </button>
       <button class="btn-ghost" on:click={updateJpxFlow} disabled={jpxLoading}>
         {jpxLoading ? '更新中…' : '↻ 市場 Flow'}
       </button>
-      <a href="/data/ingest" class="btn-primary">批量抓取</a>
+      <a href="/data/ingest" class="btn-secondary">批量抓取</a>
       <a href="/data/upload" class="btn-secondary">上傳資料</a>
     </div>
   </div>
+  {#if scanMsg}
+    <div class="scan-msg" class:ok={scanMsg.startsWith('✓')} class:err={scanMsg.startsWith('✗')}>
+      {scanMsg}
+    </div>
+  {/if}
   {#if universeMsg}
     <div class="universe-msg" class:ok={universeMsg.startsWith('✓')} class:err={universeMsg.startsWith('✗')}>
       {universeMsg}
@@ -223,14 +255,14 @@
   .btn-ghost:hover:not(:disabled) { color: #e5e7eb; border-color: #555; }
   .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .universe-msg, .jpx-msg {
+  .scan-msg, .universe-msg, .jpx-msg {
     font-size: 13px;
     padding: 8px 12px;
     border-radius: 4px;
     margin-bottom: 12px;
   }
-  .universe-msg.ok, .jpx-msg.ok { background: #064e3b; color: #d1fae5; border: 1px solid #4ade80; }
-  .universe-msg.err, .jpx-msg.err { background: #7f1d1d; color: #fca5a5; border: 1px solid #ef4444; }
+  .scan-msg.ok, .universe-msg.ok, .jpx-msg.ok { background: #064e3b; color: #d1fae5; border: 1px solid #4ade80; }
+  .scan-msg.err, .universe-msg.err, .jpx-msg.err { background: #7f1d1d; color: #fca5a5; border: 1px solid #ef4444; }
 
   .error-banner {
     background: #1f1a1a;
