@@ -100,36 +100,52 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ kind: 'signals' })
       });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
       const body = await res.json();
       scanJobId = body.job_id;
       scanProgressTotal = body.progress_total || 3747;
 
       // 定期輪詢進度
+      let pollCount = 0;
       const pollInterval = setInterval(async () => {
+        pollCount++;
         try {
           const statusRes = await fetch(`${API}/scan/jobs/${scanJobId}`);
-          const status = await statusRes.json();
+          if (!statusRes.ok) {
+            throw new Error(`查詢失敗 (${statusRes.status})`);
+          }
 
+          const status = await statusRes.json();
           scanProgress = status.progress_current || 0;
           scanProgressTotal = status.progress_total || 3747;
 
           if (status.status === 'completed') {
             clearInterval(pollInterval);
+            // 清除前端快取，強制重新載入
+            try {
+              localStorage.removeItem('signals_list:market');
+            } catch {}
             scanLoading = false;
-            scanMsg = `✓ 掃描完成！已檢查 ${scanProgressTotal} 檔股票，結果顯示在「投機訊號」`;
+            scanMsg = `✓ 掃描完成！已檢查 ${scanProgressTotal} 檔股票。進入「投機訊號」查看結果`;
           } else if (status.status === 'failed') {
             clearInterval(pollInterval);
             scanLoading = false;
-            scanMsg = `✗ 掃描失敗：${status.message}`;
+            scanMsg = `✗ 掃描失敗：${status.message || '未知錯誤。請檢查伺服器'}`;
           }
-        } catch (e) {
-          // 輪詢出錯，繼續
+        } catch (e: any) {
+          // 輪詢超過 3 分鐘還沒完成，停止輪詢
+          if (pollCount > 90) {
+            clearInterval(pollInterval);
+            scanLoading = false;
+            scanMsg = `⚠️ 掃描逾時。請到「投機訊號」檢查是否有結果。如果沒有，請重試`;
+          }
         }
       }, 2000);
 
     } catch (e: any) {
       scanLoading = false;
-      scanMsg = `✗ ${e.message}`;
+      scanMsg = `✗ 無法啟動掃描：${e.message}`;
     }
   }
 </script>
