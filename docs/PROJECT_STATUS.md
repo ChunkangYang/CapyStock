@@ -1,7 +1,7 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-05-05（IMP-001：新增 /watchlist 前端追蹤清單管理頁）
+2026-05-10（實時掃描進度：snapshot callback + 前端自動重新整理）
 
 ## 目前待做（下一步）
 - ✅ **Milestone 3：Web UI（FastAPI + SvelteKit）** — 全部完成（S1–S8）— 詳見 [MILESTONE_03.md](MILESTONE_03.md)
@@ -17,16 +17,20 @@
   - ✅ S24：IR Bank 橫向表格解析 + Partial Data 支援（3543 コメダHD 成功評分）
 - ✅ **Milestone 8：持倉管理**（S25）— 全部完成 — 詳見 [SPRINT_25.md](SPRINT_25.md)
   - ✅ S25：CLI portfolio / API /portfolio / Dashboard 4 區塊分離 / /portfolio 管理頁
+- **2026-05-10 新增：實時掃描進度**
+  - ✅ `api/services/scan_service.py`：run_signals_scan + run_dividend_scan 皆加入 snapshot_callback
+    - 每掃 50 檔更新一次 parquet 快照，讓前端即時看到新增股票
+  - ✅ `frontend/src/routes/signals/+page.svelte`：自動重新整理邏輯
+    - onMount 檢查 localStorage scan_state，掃描中自動啟動 10 秒定時器
+    - 定時清除市場頁 cache 並重新整理，自動顯示 "🔄 自動更新中..." 指標
+    - 掃描完成時自動停止定時器
+  - 驗證：掃描全市場 → 即時看到進度 (51/3747 → 100/3747 → ...)
 - **下一步**：
   - ✅ SvelteKit SPA 路由 + 金雞/投機頁面 bug 修復（2026-05-04）
-    - `api/main.py` SPA fallback：顯式 catch-all → index.html，僅 `/api/*` 與 docs 排除
-    - `frontend/src/lib/stores/favorites.ts` 修正 `loadFavorites`：API 回傳 array，store 維持 Record；自動轉換
-    - `frontend/src/lib/components/FavoriteToggle.svelte`：將 array-based 操作改為 Record-based（修 `r.filter is not a function`）
-    - `frontend/src/routes/dividend/+page.svelte`、`signals/+page.svelte`：404（無 snapshot）視為空狀態，提示「尚無快照，請至資料管理」
-    - Playwright 驗證 `/dividend`、`/signals`、`/signals/7203` 皆 200 + 空狀態正確顯示
   - ✅ IMP-001：/watchlist 前端追蹤清單管理頁（2026-05-05）
+  - ✅ 實時掃描進度（2026-05-10）
   - 修復 BUG-001（toast 動畫 + channel dot 更新）
-  - 評估是否規劃 M8
+  - 評估是否規劃後續功能
 
 ## 已完成 Sprint（詳細實作紀錄請見對應 detail design）
 
