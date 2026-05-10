@@ -18,6 +18,8 @@
   let error = '';
   let jpxLoading = false;
   let jpxMsg = '';
+  let universeLoading = false;
+  let universeMsg = '';
 
   onMount(async () => {
     try {
@@ -60,12 +62,33 @@
       jpxLoading = false;
     }
   }
+
+  async function updateUniverse() {
+    universeLoading = true;
+    universeMsg = '';
+    try {
+      const res = await fetch(`${API}/ingest/update-universe`, { method: 'POST' });
+      const body = await res.json();
+      if (body.ok) {
+        universeMsg = `✓ 已更新股票清單（Prime ${body.prime} + Standard ${body.standard} + Growth ${body.growth} = ${body.total} 檔）`;
+      } else {
+        universeMsg = `✗ ${body.error || '失敗'}`;
+      }
+    } catch (e: any) {
+      universeMsg = `✗ ${e.message}`;
+    } finally {
+      universeLoading = false;
+    }
+  }
 </script>
 
 <div class="data-page">
   <div class="page-header">
     <h1>資料管理</h1>
     <div class="actions">
+      <button class="btn-ghost" on:click={updateUniverse} disabled={universeLoading}>
+        {universeLoading ? '更新中…' : '↻ 股票清單'}
+      </button>
       <button class="btn-ghost" on:click={updateJpxFlow} disabled={jpxLoading}>
         {jpxLoading ? '更新中…' : '↻ 市場 Flow'}
       </button>
@@ -73,6 +96,11 @@
       <a href="/data/upload" class="btn-secondary">上傳資料</a>
     </div>
   </div>
+  {#if universeMsg}
+    <div class="universe-msg" class:ok={universeMsg.startsWith('✓')} class:err={universeMsg.startsWith('✗')}>
+      {universeMsg}
+    </div>
+  {/if}
   {#if jpxMsg}
     <div class="jpx-msg" class:ok={jpxMsg.startsWith('✓')} class:err={jpxMsg.startsWith('✗')}>
       {jpxMsg}
@@ -195,14 +223,14 @@
   .btn-ghost:hover:not(:disabled) { color: #e5e7eb; border-color: #555; }
   .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .jpx-msg {
+  .universe-msg, .jpx-msg {
     font-size: 13px;
     padding: 8px 12px;
     border-radius: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
-  .jpx-msg.ok { background: #064e3b; color: #d1fae5; border: 1px solid #4ade80; }
-  .jpx-msg.err { background: #7f1d1d; color: #fca5a5; border: 1px solid #ef4444; }
+  .universe-msg.ok, .jpx-msg.ok { background: #064e3b; color: #d1fae5; border: 1px solid #4ade80; }
+  .universe-msg.err, .jpx-msg.err { background: #7f1d1d; color: #fca5a5; border: 1px solid #ef4444; }
 
   .error-banner {
     background: #1f1a1a;
