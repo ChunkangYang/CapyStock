@@ -447,6 +447,8 @@ cd frontend && npm install && npm run dev
 **步驟**：`docker compose up`（依 SPRINT_13.md）
 **預期**：API + 前端容器啟動，`http://localhost` 可達
 
+**結果**：✅ Pass（2026-05-10）｜`docker compose up` 啟動正常，`http://localhost:8000` 同時 serve 前後端（FastAPI + SvelteKit static build），健康檢查 healthy｜注意：port 為 8000 非 80（docker-compose 未配 nginx）
+
 #### TC-DEP-02 Windows NSSM
 **步驟**：依文件以 NSSM 註冊 `CapyStockAPI` service
 **預期**：開機自動啟動，service 狀態 RUNNING
