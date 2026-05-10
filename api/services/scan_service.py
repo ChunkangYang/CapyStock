@@ -1,4 +1,5 @@
 import csv
+import json
 from datetime import date, datetime
 from pathlib import Path
 from typing import Optional
@@ -11,6 +12,7 @@ from api.services.dividend_service import get_fundamental_report
 from api.services.signal_service import analyze_one, get_edinet_events
 
 SCAN_SNAPSHOTS_DIR = DATA_DIR / "scan_snapshots"
+CACHE_DIR = DATA_DIR / "cache"
 
 
 def snapshot_path(kind: str, date_str: str) -> Path:
@@ -47,23 +49,88 @@ def compute_score(result, events, include_technical: bool = True) -> int:
     return score
 
 
+def _signal_cache_path(code: str) -> Path:
+    """訊號掃描快取檔案路徑：cache/{code}_signal_scan.json"""
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    return CACHE_DIR / f"{code}_signal_scan.json"
+
+
+def _is_signal_scanned_today(code: str, today: date) -> bool:
+    """檢查該股票今天是否已掃描過"""
+    cache_file = _signal_cache_path(code)
+    if not cache_file.exists():
+        return False
+    try:
+        with open(cache_file) as f:
+            data = json.load(f)
+        cached_date = data.get("scan_date")
+        return cached_date == str(today)
+    except:
+        return False
+
+
+def _write_signal_cache(code: str, row: SignalScanRow, today: date) -> None:
+    """寫入個股訊號掃描快取"""
+    cache_file = _signal_cache_path(code)
+    data = {
+        "scan_date": str(today),
+        "code": row.code,
+        "name": row.name,
+        "latest_price": row.latest_price,
+        "has_accumulation": row.has_accumulation,
+        "has_exit": row.has_exit,
+        "has_stop_loss": row.has_stop_loss,
+        "edinet_recent_count": row.edinet_recent_count,
+        "score": row.score,
+    }
+    with open(cache_file, 'w') as f:
+        json.dump(data, f, ensure_ascii=False)
+
+
 def run_signals_scan(
     universe: list[dict],
     clock: Optional[date] = None,
     include_technical: bool = True,
     progress_callback: Optional[callable] = None,
 ) -> tuple[list[SignalScanRow], list[dict]]:
-    """掃描所有股票的訊號，回傳 (rows, errors)"""
+    """掃描所有股票的訊號，邊掃邊存快取，回傳 (rows, errors)"""
     if clock is None:
         clock = date.today()
 
     rows = []
     errors = []
     now = datetime.combine(clock, datetime.min.time())
+    skipped = 0
 
     for i, entry in enumerate(universe):
         code = entry["code"]
         name = entry["name"]
+
+        # 檢查是否今天已掃描過，若已掃描就跳過
+        if _is_signal_scanned_today(code, clock):
+            skipped += 1
+            # 從快取讀取結果
+            cache_file = _signal_cache_path(code)
+            try:
+                with open(cache_file) as f:
+                    cached = json.load(f)
+                row = SignalScanRow(
+                    code=cached["code"],
+                    name=cached["name"],
+                    latest_price=cached.get("latest_price"),
+                    has_accumulation=cached["has_accumulation"],
+                    has_exit=cached["has_exit"],
+                    has_stop_loss=cached["has_stop_loss"],
+                    edinet_recent_count=cached["edinet_recent_count"],
+                    score=cached["score"],
+                    generated_at=now,
+                )
+                rows.append(row)
+            except:
+                pass
+            if progress_callback:
+                progress_callback(i + 1)
+            continue
 
         try:
             result = analyze_one(code)
@@ -90,6 +157,9 @@ def run_signals_scan(
                 generated_at=now,
             )
             rows.append(row)
+
+            # 邊掃邊存快取
+            _write_signal_cache(code, row, clock)
 
         except Exception as e:
             errors.append({"code": code, "name": name, "error": str(e)})
