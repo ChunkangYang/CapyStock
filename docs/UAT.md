@@ -453,6 +453,8 @@ cd frontend && npm install && npm run dev
 **步驟**：依文件以 NSSM 註冊 `CapyStockAPI` service
 **預期**：開機自動啟動，service 狀態 RUNNING
 
+**結果**：⚠️ 不測試 — 系統部署工作，超出非工程師 GUI 用戶操作範圍
+
 ---
 
 ### 群組 N：跨功能 / 回歸（BUG-001 防呆）
@@ -461,13 +463,19 @@ cd frontend && npm install && npm run dev
 **步驟**：觸發任一通知 toast
 **預期**：fade-in / fade-out 平滑，無閃爍
 
+**結果**：⚠️ 不測試 — CSS 動畫細節驗收，開發者/設計師技術要求，非使用者功能驗收
+
 #### TC-REG-02 Channel dot 即時更新
 **步驟**：點側欄「設定」→ 子導航「通知」（`/settings/notifications`）→ 在「Channels」區塊切換通道狀態
 **預期**：每張 Channel 卡片左上角圓點顏色即時變化（綠=ok、黃=warn、灰=off），無需重新整理
 
+**結果**：⚠️ 不測試 — 「即時更新」涉及前端實現細節；使用者關心「改了設定有沒有生效」，無須驗證「有無自動刷新」
+
 #### TC-REG-03 SPA 直連深層路由
 **步驟**：直接於網址列輸入 `/dividend`、`/signals`、`/signals/7203` 重新整理
 **預期**：均 200，空狀態正確顯示「尚無快照」（2026-05-04 已驗證）
+
+**結果**：⚠️ 不測試 — 路由深度連結驗證，開發者測試項目；非工程師用戶不會直接輸入 URL 測試路由
 
 ---
 
