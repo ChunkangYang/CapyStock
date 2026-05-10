@@ -68,6 +68,13 @@ DEFAULT_JOBS: list[JobDef] = [
         timeout_seconds=1800,
     ),
     JobDef(
+        id="weekly_universe_scan",
+        name="每週全市場 signals 掃描（包含所有上市股票）",
+        cron="0 9 * * 1",
+        handler="api.services.scheduler_service:_handler_weekly_universe_scan",
+        timeout_seconds=10800,  # 3 小時上限
+    ),
+    JobDef(
         id="healthcheck_ping",
         name="健康檢查 ping",
         cron="*/30 * * * *",
@@ -127,6 +134,39 @@ def _handler_paper_advance():
         except Exception:
             continue
     return {"advanced": advanced}
+
+
+def _handler_weekly_universe_scan():
+    """每週全市場掃描（所有上市股票）"""
+    from api.services import scan_service
+    from datetime import datetime
+
+    print("[weekly_universe_scan] 開始全市場掃描...")
+    start_time = datetime.now()
+
+    try:
+        universe = scan_service.load_universe("data/universe.csv")
+        print(f"  加載 {len(universe)} 檔股票")
+
+        rows, errors = scan_service.run_signals_scan(universe)
+        today_str = datetime.now().strftime("%Y-%m-%d")
+
+        scan_service.write_snapshot("signals", rows, today_str)
+        if errors:
+            scan_service.write_errors("signals", errors, today_str)
+
+        elapsed = (datetime.now() - start_time).total_seconds()
+        result = {
+            "rows": len(rows),
+            "errors": len(errors),
+            "elapsed_seconds": elapsed,
+            "universe_size": len(universe)
+        }
+        print(f"  完成！耗時 {elapsed:.1f} 秒，掃描 {len(rows)} 檔股票，{len(errors)} 個錯誤")
+        return result
+    except Exception as e:
+        print(f"  ✗ 掃描失敗：{e}")
+        return {"error": str(e), "elapsed_seconds": (datetime.now() - start_time).total_seconds()}
 
 
 # ── helper functions ─────────────────────────────────────────────
