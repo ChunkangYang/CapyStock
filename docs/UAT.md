@@ -409,13 +409,19 @@ cd frontend && npm install && npm run dev
 **步驟**：`GET /api/v1/indicators/7203?series=rsi,macd,bb`
 **預期**：JSON 含時序，數值與 capystock 計算一致
 
+**結果**：✅ Pass（2026-05-10）｜series 含 rsi_14/macd/macd_signal/macd_hist/bb_upper/bb_mid/bb_lower，58 points，NaN→null 正確，signals 4 筆（含 rsi_oversold）｜證據：[UAT_GROUP_K_ANL.md](EVIDENCES/UAT_GROUP_K_ANL.md)
+
 #### TC-ANL-02 異常偵測
 **步驟**：`GET /api/v1/analytics/anomaly/7203?days=60`
 **預期**：列出 volume_spike / price_jump / gap_up / gap_down 事件，附 z-score
 
+**結果**：✅ Pass（2026-05-10）｜5 筆事件（gap_up×1、gap_down×2、price_jump×1、volume_spike×1），含 value/threshold/severity｜證據：[UAT_GROUP_K_ANL.md](EVIDENCES/UAT_GROUP_K_ANL.md)
+
 #### TC-ANL-03 事件研究
 **步驟**：`POST /api/v1/analytics/event-study/7203` body 含事件日期清單
 **預期**：回傳 AR / AAR / CAR 序列（事件窗口 ±N 日）
+
+**結果**：✅ Pass（2026-05-10）｜n_events=2，window=[-5,20]，aar/car 各 26 筆，benchmark=self_mean，CAR 累計=0.0804｜證據：[UAT_GROUP_K_ANL.md](EVIDENCES/UAT_GROUP_K_ANL.md)
 
 ---
 
