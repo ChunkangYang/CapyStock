@@ -431,9 +431,13 @@ cd frontend && npm install && npm run dev
 **步驟**：`python -m capystock.main fundamental 3543`（コメダHD）
 **預期**：顯示完整 8 指標與評等
 
+**結果**：✅ Pass（2026-05-10）｜8 指標全顯示（Sales N/A、EPS/OpMargin/OCF PASS、EquityRatio/Cash/DPS WARN、Payout FAIL），Overall CAUTION｜IMP-WIN-001：需 PYTHONIOENCODING=utf-8｜證據：[UAT_GROUP_L_FUN.md](EVIDENCES/UAT_GROUP_L_FUN.md)
+
 #### TC-FUN-02 Partial Data
 **步驟**：對僅有 5–6 項可解析的個股執行 fundamental
 **預期**：缺項標 N/A，仍輸出加權評等而非整體失敗
+
+**結果**：✅ Pass（2026-05-10）｜4883（モダリス）：5 項可解析、3 項 N/A（Sales/DPS/Payout），Overall RISKY 正常輸出不 crash｜證據：[UAT_GROUP_L_FUN.md](EVIDENCES/UAT_GROUP_L_FUN.md)
 
 ---
 
