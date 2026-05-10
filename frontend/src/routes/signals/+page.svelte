@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { goto } from '$app/navigation';
   import { api, ApiError } from '$lib/api';
   import DataTable from '$lib/components/DataTable.svelte';
@@ -18,6 +18,8 @@
   let error = '';
   let noSnapshot = false;
   let cacheTs: number | null = null;
+  let autoReloadInterval: number | null = null;
+  let scanInProgress = false;
 
   let _loadSeq = 0;
 
@@ -25,8 +27,66 @@
     return `signals_list:${tab}`;
   }
 
+  function checkScanStatus() {
+    try {
+      const savedScanState = localStorage.getItem('scan_state');
+      if (savedScanState) {
+        const state = JSON.parse(savedScanState);
+        scanInProgress = state.isRunning === true;
+        return scanInProgress;
+      }
+    } catch {}
+    scanInProgress = false;
+    return false;
+  }
+
+  function startAutoReload() {
+    if (autoReloadInterval !== null) return;
+
+    autoReloadInterval = window.setInterval(async () => {
+      // 檢查掃描是否仍在進行
+      if (!checkScanStatus()) {
+        if (autoReloadInterval !== null) {
+          clearInterval(autoReloadInterval);
+          autoReloadInterval = null;
+        }
+        return;
+      }
+
+      // 只在 market tab 自動重新整理
+      if (activeTab === 'market') {
+        const key = listCacheKey('market');
+        cacheClear(key);
+        try {
+          const result = await api('/scan/signals');
+          if (_loadSeq > 0) {  // 避免第一次載入時覆蓋
+            cacheSet(key, result);
+            data = result;
+            cacheTs = cacheTimestamp(key);
+          }
+        } catch {}
+      }
+    }, 10000);  // 每 10 秒重新整理一次
+  }
+
   onMount(async () => {
     await loadData();
+
+    // 檢查是否有掃描在進行中
+    if (checkScanStatus()) {
+      startAutoReload();
+    }
+  });
+
+  $: if (autoReloadInterval !== null && !scanInProgress) {
+    clearInterval(autoReloadInterval);
+    autoReloadInterval = null;
+  }
+
+  onDestroy(() => {
+    if (autoReloadInterval !== null) {
+      clearInterval(autoReloadInterval);
+    }
   });
 
   async function loadData(forceRefresh = false) {
@@ -151,6 +211,9 @@
     <div class="title-row">
       <h1>投機訊號</h1>
       <div class="header-actions">
+        {#if scanInProgress && activeTab === 'market'}
+          <span class="auto-reload-indicator">🔄 自動更新中...</span>
+        {/if}
         {#if cacheTs !== null}
           <span class="cache-age">上次更新：{formatCacheAge(cacheTs)}</span>
         {/if}
@@ -235,6 +298,17 @@
   .cache-age {
     font-size: 12px;
     color: #666;
+  }
+
+  .auto-reload-indicator {
+    font-size: 12px;
+    color: #4ade80;
+    animation: pulse 1s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
   }
 
   .btn-refresh {

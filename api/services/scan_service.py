@@ -92,8 +92,9 @@ def run_signals_scan(
     clock: Optional[date] = None,
     include_technical: bool = True,
     progress_callback: Optional[callable] = None,
+    snapshot_callback: Optional[callable] = None,
 ) -> tuple[list[SignalScanRow], list[dict]]:
-    """掃描所有股票的訊號，邊掃邊存快取，回傳 (rows, errors)"""
+    """掃描所有股票的訊號，邊掃邊存快取和快照，回傳 (rows, errors)"""
     if clock is None:
         clock = date.today()
 
@@ -164,6 +165,10 @@ def run_signals_scan(
         except Exception as e:
             errors.append({"code": code, "name": name, "error": str(e)})
 
+        # 每掃 50 檔就更新一次快照（讓前端即時看到進度）
+        if (i + 1) % 50 == 0 and snapshot_callback:
+            snapshot_callback(rows, errors)
+
         # 更新進度
         if progress_callback:
             progress_callback(i + 1)
@@ -171,8 +176,8 @@ def run_signals_scan(
     return rows, errors
 
 
-def run_dividend_scan(universe: list[dict], clock: Optional[date] = None, progress_callback: Optional[callable] = None) -> tuple[list[DividendScanRow], list[dict]]:
-    """掃描所有股票的基本面，回傳 (rows, errors)"""
+def run_dividend_scan(universe: list[dict], clock: Optional[date] = None, progress_callback: Optional[callable] = None, snapshot_callback: Optional[callable] = None) -> tuple[list[DividendScanRow], list[dict]]:
+    """掃描所有股票的基本面，邊掃邊存快照，回傳 (rows, errors)"""
     if clock is None:
         clock = date.today()
 
@@ -253,6 +258,10 @@ def run_dividend_scan(universe: list[dict], clock: Optional[date] = None, progre
 
         except Exception as e:
             errors.append({"code": code, "name": name, "error": str(e)})
+
+        # 每掃 50 檔就更新一次快照
+        if (i + 1) % 50 == 0 and snapshot_callback:
+            snapshot_callback(rows, errors)
 
         # 更新進度
         if progress_callback:

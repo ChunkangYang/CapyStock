@@ -99,7 +99,7 @@ def get_dividend_snapshot(
 
 
 def _background_scan(job_id: str, req: ScanRunRequest):
-    """背景掃描函數，定期更新進度"""
+    """背景掃描函數，邊掃邊更新快照"""
     try:
         universe = scan_service.load_universe()
         today_str = datetime.now().strftime("%Y-%m-%d")
@@ -112,7 +112,8 @@ def _background_scan(job_id: str, req: ScanRunRequest):
             rows, errors = scan_service.run_signals_scan(
                 universe,
                 include_technical=include_technical,
-                progress_callback=lambda curr: _update_progress(job_id, curr)
+                progress_callback=lambda curr: _update_progress(job_id, curr),
+                snapshot_callback=lambda r, e: scan_service.write_snapshot("signals", r, today_str)
             )
             scan_service.write_snapshot("signals", rows, today_str)
             if errors:
@@ -120,7 +121,8 @@ def _background_scan(job_id: str, req: ScanRunRequest):
         elif req.kind == "dividend":
             rows, errors = scan_service.run_dividend_scan(
                 universe,
-                progress_callback=lambda curr: _update_progress(job_id, curr)
+                progress_callback=lambda curr: _update_progress(job_id, curr),
+                snapshot_callback=lambda r, e: scan_service.write_snapshot("dividend", r, today_str)
             )
             scan_service.write_snapshot("dividend", rows, today_str)
             if errors:
