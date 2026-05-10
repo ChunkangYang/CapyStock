@@ -27,6 +27,25 @@
   let scanProgressTotal = 0;
 
   onMount(async () => {
+    // 檢查是否有進行中的掃描（localStorage 恢復）
+    try {
+      const savedScanState = localStorage.getItem('scan_state');
+      if (savedScanState) {
+        const state = JSON.parse(savedScanState);
+        if (state.jobId && state.isRunning) {
+          scanJobId = state.jobId;
+          scanLoading = true;
+          scanProgress = state.progress || 0;
+          scanProgressTotal = state.progressTotal || 3747;
+          // 恢復輪詢
+          resumeScanPolling(state.jobId);
+        }
+      }
+    } catch {
+      localStorage.removeItem('scan_state');
+    }
+
+    // 載入資料
     try {
       const res = await fetch(`${API}/data/overview`);
       if (!res.ok) throw new Error(res.statusText);
@@ -37,6 +56,54 @@
       loading = false;
     }
   });
+
+  function resumeScanPolling(jobId: string) {
+    let pollCount = 0;
+    const pollInterval = setInterval(async () => {
+      pollCount++;
+      try {
+        const statusRes = await fetch(`${API}/scan/jobs/${jobId}`);
+        if (!statusRes.ok) {
+          throw new Error(`查詢失敗 (${statusRes.status})`);
+        }
+
+        const status = await statusRes.json();
+        scanProgress = status.progress_current || 0;
+        scanProgressTotal = status.progress_total || 3747;
+
+        // 保存狀態到 localStorage
+        localStorage.setItem('scan_state', JSON.stringify({
+          jobId,
+          isRunning: status.status === 'running',
+          progress: scanProgress,
+          progressTotal: scanProgressTotal,
+        }));
+
+        if (status.status === 'completed') {
+          clearInterval(pollInterval);
+          localStorage.removeItem('scan_state');
+          try {
+            localStorage.removeItem('signals_list:market');
+          } catch {}
+          scanLoading = false;
+          scanMsg = `✓ 掃描完成！已檢查 ${scanProgressTotal} 檔股票。進入「投機訊號」查看結果`;
+        } else if (status.status === 'failed') {
+          clearInterval(pollInterval);
+          localStorage.removeItem('scan_state');
+          scanLoading = false;
+          scanMsg = `✗ 掃描失敗：${status.message || '未知錯誤。請檢查伺服器'}`;
+        }
+      } catch (e: any) {
+        // 輪詢超過 3 分鐘還沒完成，停止輪詢
+        if (pollCount > 90) {
+          clearInterval(pollInterval);
+          localStorage.removeItem('scan_state');
+          scanLoading = false;
+          scanMsg = `⚠️ 掃描逾時。請到「投機訊號」檢查是否有結果。如果沒有，請重試`;
+        }
+      }
+    }, 2000);
+  }
 
   function ageCellClass(days: number | null): string {
     if (days === null) return 'age-none';
@@ -106,42 +173,16 @@
       scanJobId = body.job_id;
       scanProgressTotal = body.progress_total || 3747;
 
-      // 定期輪詢進度
-      let pollCount = 0;
-      const pollInterval = setInterval(async () => {
-        pollCount++;
-        try {
-          const statusRes = await fetch(`${API}/scan/jobs/${scanJobId}`);
-          if (!statusRes.ok) {
-            throw new Error(`查詢失敗 (${statusRes.status})`);
-          }
+      // 保存掃描狀態到 localStorage（用於頁面切換時恢復）
+      localStorage.setItem('scan_state', JSON.stringify({
+        jobId: scanJobId,
+        isRunning: true,
+        progress: 0,
+        progressTotal: scanProgressTotal,
+      }));
 
-          const status = await statusRes.json();
-          scanProgress = status.progress_current || 0;
-          scanProgressTotal = status.progress_total || 3747;
-
-          if (status.status === 'completed') {
-            clearInterval(pollInterval);
-            // 清除前端快取，強制重新載入
-            try {
-              localStorage.removeItem('signals_list:market');
-            } catch {}
-            scanLoading = false;
-            scanMsg = `✓ 掃描完成！已檢查 ${scanProgressTotal} 檔股票。進入「投機訊號」查看結果`;
-          } else if (status.status === 'failed') {
-            clearInterval(pollInterval);
-            scanLoading = false;
-            scanMsg = `✗ 掃描失敗：${status.message || '未知錯誤。請檢查伺服器'}`;
-          }
-        } catch (e: any) {
-          // 輪詢超過 3 分鐘還沒完成，停止輪詢
-          if (pollCount > 90) {
-            clearInterval(pollInterval);
-            scanLoading = false;
-            scanMsg = `⚠️ 掃描逾時。請到「投機訊號」檢查是否有結果。如果沒有，請重試`;
-          }
-        }
-      }, 2000);
+      // 開始輪詢
+      resumeScanPolling(scanJobId);
 
     } catch (e: any) {
       scanLoading = false;
