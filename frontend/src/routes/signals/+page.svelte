@@ -4,7 +4,7 @@
   import { api, ApiError } from '$lib/api';
   import DataTable from '$lib/components/DataTable.svelte';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
-  import { cacheGet, cacheSet, cacheClear, cacheTimestamp, formatCacheAge } from '$lib/utils/signalsCache';
+  import { cacheGet, cacheSet, cacheClear, cacheTimestamp, formatCacheAge, clearAllSignalsCache } from '$lib/utils/signalsCache';
   import type { SignalScanRow, SignalResult } from '$lib/types';
 
   const TABS = ['market', 'favorites', 'portfolio', 'watchlist'] as const;
@@ -26,6 +26,8 @@
   let offset = 0;
   let totalCount = 0;
   let currentPageTotal = 0;
+  // 本次 session 的 canonical total（用來偵測快取 total 不一致）
+  let canonicalTotal = 0;
 
   let _loadSeq = 0;
 
@@ -66,6 +68,10 @@
         try {
           const resp = await api(`/scan/signals?limit=${LIMIT}&offset=${offset}`);
           if (_loadSeq > 0) {  // 避免第一次載入時覆蓋
+            if (canonicalTotal > 0 && resp.total !== canonicalTotal) {
+              clearAllSignalsCache();
+            }
+            canonicalTotal = resp.total;
             cacheSet(pageKey, { rows: resp.data, total: resp.total });
             data = resp.data;
             totalCount = resp.total;
@@ -107,7 +113,11 @@
     const key = listCacheKey(activeTab);
     const pageKey = `${key}:${pageOffset}`;
 
-    if (!forceRefresh && activeTab !== 'market') {
+    if (forceRefresh) {
+      // 強制更新：清除所有訊號快取
+      clearAllSignalsCache();
+      canonicalTotal = 0;
+    } else if (activeTab !== 'market') {
       const cached = cacheGet<SignalScanRow[]>(key);
       if (cached) {
         if (seq !== _loadSeq) return;
@@ -117,20 +127,24 @@
         loading = false;
         return;
       }
-    } else if (pageOffset >= 0 && activeTab === 'market') {
-      // Market tab 分頁快取（包括總數）
+    } else {
+      // Market tab 分頁快取
       const cachedEntry = cacheGet<{ rows: SignalScanRow[]; total: number }>(pageKey);
-      if (cachedEntry && cachedEntry.rows) {
-        if (seq !== _loadSeq) return;
-        data = cachedEntry.rows;
-        totalCount = cachedEntry.total;
-        cacheTs = cacheTimestamp(pageKey);
-        loading = false;
-        return;
+      if (cachedEntry && cachedEntry.rows && typeof cachedEntry.total === 'number') {
+        // 一致性檢查：若快取的 total 與本 session canonical 不符，視為過期快取
+        if (canonicalTotal > 0 && cachedEntry.total !== canonicalTotal) {
+          cacheClear(pageKey);
+          // 繼續往下呼叫 API
+        } else {
+          if (seq !== _loadSeq) return;
+          data = cachedEntry.rows;
+          totalCount = cachedEntry.total;
+          if (canonicalTotal === 0) canonicalTotal = cachedEntry.total;
+          cacheTs = cacheTimestamp(pageKey);
+          loading = false;
+          return;
+        }
       }
-    } else if (forceRefresh) {
-      cacheClear(key);
-      cacheClear(pageKey);
     }
 
     try {
@@ -139,10 +153,15 @@
       if (activeTab === 'market') {
         const resp = await api(`/scan/signals?limit=${LIMIT}&offset=${pageOffset}`);
         result = resp.data;
-        totalCount = resp.total;
+        const newTotal: number = resp.total;
+        // 若 total 與本 session 已知值不同（掃描更新），清除所有舊快取
+        if (canonicalTotal > 0 && newTotal !== canonicalTotal) {
+          clearAllSignalsCache();
+        }
+        canonicalTotal = newTotal;
+        totalCount = newTotal;
         currentPageTotal = result.length;
-        // 快取這一頁（包括總數）
-        cacheSet(pageKey, { rows: result, total: resp.total });
+        cacheSet(pageKey, { rows: result, total: newTotal });
       } else if (activeTab === 'watchlist') {
         const watchlistEntries = await api('/watchlist');
         const results: SignalResult[] = await Promise.all(
@@ -186,7 +205,9 @@
 
   async function refreshAll() {
     refreshingAll = true;
-    cacheClear(listCacheKey(activeTab));
+    clearAllSignalsCache();
+    canonicalTotal = 0;
+    totalCount = 0;
     offset = 0;
     await loadData(true, 0);
     refreshingAll = false;
@@ -525,13 +546,11 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
-    padding: 12px 16px;
-    background: #0d0d0d;
-    border-top: 1px solid #2a2a2a;
+    margin-top: 24px;
+    padding: 16px;
+    background: #0a0a0a;
+    border-radius: 4px;
     flex-wrap: wrap;
-    position: sticky;
-    bottom: 0;
-    z-index: 10;
   }
 
   .page-numbers {
