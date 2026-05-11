@@ -525,11 +525,13 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
-    margin-top: 24px;
-    padding: 16px;
-    background: #0a0a0a;
-    border-radius: 4px;
+    padding: 12px 16px;
+    background: #0d0d0d;
+    border-top: 1px solid #2a2a2a;
     flex-wrap: wrap;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
   }
 
   .page-numbers {
