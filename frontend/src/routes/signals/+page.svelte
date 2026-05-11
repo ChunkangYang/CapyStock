@@ -217,16 +217,26 @@
     refreshingAll = false;
   }
 
-  function goToPage(pageNum: number) {
+  function goToPage(pageNum: unknown) {
+    // 嚴格防護：只接受正整數，攔截 NaN / '...' / 字串 / 浮點數
+    if (typeof pageNum !== 'number' || !Number.isInteger(pageNum) || pageNum < 1) return;
+    if (!Number.isFinite(totalCount) || totalCount <= 0) return;
     const totalPages = Math.ceil(totalCount / LIMIT);
-    if (pageNum < 1 || pageNum > totalPages) return;
+    if (!Number.isFinite(totalPages) || totalPages < 1) return;
+    if (pageNum > totalPages) return;
     const newOffset = (pageNum - 1) * LIMIT;
+    if (!Number.isFinite(newOffset) || newOffset < 0) return;
     loadData(false, newOffset);
   }
 
   function getPageNumbers() {
-    const currentPage = Math.floor(offset / LIMIT) + 1;
+    // 防護：totalCount 未就緒時不產出任何頁碼
+    if (!Number.isFinite(totalCount) || totalCount <= 0) return [];
     const totalPages = Math.ceil(totalCount / LIMIT);
+    if (!Number.isFinite(totalPages) || totalPages < 1) return [];
+    if (totalPages === 1) return [1];
+
+    const currentPage = Math.floor(offset / LIMIT) + 1;
     const pages: (number | string)[] = [];
 
     const range = 2; // 當前頁前後顯示多少頁
@@ -387,8 +397,8 @@
         {/if}
 
         <div class="page-numbers">
-          {#each getPageNumbers() as page}
-            {#if page === '...'}
+          {#each getPageNumbers() as page, idx (typeof page === 'number' ? `p-${page}` : `e-${idx}`)}
+            {#if typeof page !== 'number'}
               <span class="page-ellipsis">...</span>
             {:else}
               <button
