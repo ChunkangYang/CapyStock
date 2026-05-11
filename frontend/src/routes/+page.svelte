@@ -31,8 +31,8 @@
         loadOptional<PortfolioEntry[]>('/portfolio?open_only=true', []),
       ]);
 
-      const signals = await loadOptional<SignalScanRow[]>('/scan/signals', []);
-      recentSignals = [...signals].sort((a, b) => b.score - a.score).slice(0, 5);
+      const signalsResp = await loadOptional<{ data: SignalScanRow[] }>('/scan/signals', { data: [] });
+      recentSignals = [...(signalsResp.data || [])].sort((a, b) => b.score - a.score).slice(0, 5);
 
       topDividends = (
         await loadOptional<any[]>('/scan/dividend?order_by=est_yield&desc=true', [])
