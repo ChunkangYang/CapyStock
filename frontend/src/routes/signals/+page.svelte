@@ -123,6 +123,8 @@
         if (seq !== _loadSeq) return;
         data = cached;
         cacheTs = cacheTimestamp(pageKey);
+        // totalCount 應該在 API 呼叫時就設置過，但從快取讀取時仍需確保它是正確值
+        // 如果快取有資料，totalCount 應該已經被前面的 API 呼叫設置
         loading = false;
         return;
       }
@@ -190,8 +192,10 @@
     refreshingAll = false;
   }
 
-  function goToPage(newOffset: number) {
-    if (newOffset < 0 || newOffset >= totalCount) return;
+  function goToPage(pageNum: number) {
+    const totalPages = Math.ceil(totalCount / LIMIT);
+    if (pageNum < 1 || pageNum > totalPages) return;
+    const newOffset = (pageNum - 1) * LIMIT;
     loadData(false, newOffset);
   }
 
@@ -341,13 +345,16 @@
 
     {#if activeTab === 'market' && totalCount > LIMIT}
       <div class="pagination">
-        <button
-          class="btn-page"
-          disabled={offset === 0}
-          on:click={() => goToPage(offset - LIMIT)}
-        >
-          ← 上一頁
-        </button>
+        {#if Math.floor(offset / LIMIT) + 1 > 1}
+          <button
+            class="btn-page"
+            on:click={() => goToPage(Math.floor(offset / LIMIT))}
+          >
+            ← 上一頁
+          </button>
+        {:else}
+          <button class="btn-page" disabled>← 上一頁</button>
+        {/if}
 
         <div class="page-numbers">
           {#each getPageNumbers() as page}
@@ -357,7 +364,7 @@
               <button
                 class="page-num"
                 class:active={Math.floor(offset / LIMIT) + 1 === page}
-                on:click={() => goToPage((page - 1) * LIMIT)}
+                on:click={() => goToPage(page)}
               >
                 {page}
               </button>
@@ -365,13 +372,16 @@
           {/each}
         </div>
 
-        <button
-          class="btn-page"
-          disabled={offset + LIMIT >= totalCount}
-          on:click={() => goToPage(offset + LIMIT)}
-        >
-          下一頁 →
-        </button>
+        {#if Math.floor(offset / LIMIT) + 1 < Math.ceil(totalCount / LIMIT)}
+          <button
+            class="btn-page"
+            on:click={() => goToPage(Math.floor(offset / LIMIT) + 2)}
+          >
+            下一頁 →
+          </button>
+        {:else}
+          <button class="btn-page" disabled>下一頁 →</button>
+        {/if}
       </div>
     {/if}
   {/if}
