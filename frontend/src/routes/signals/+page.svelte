@@ -21,6 +21,12 @@
   let autoReloadInterval: number | null = null;
   let scanInProgress = false;
 
+  // 分頁參數
+  const LIMIT = 50;
+  let offset = 0;
+  let totalCount = 0;
+  let currentPageTotal = 0;
+
   let _loadSeq = 0;
 
   function listCacheKey(tab: Tab) {
@@ -55,14 +61,16 @@
 
       // 只在 market tab 自動重新整理
       if (activeTab === 'market') {
-        const key = listCacheKey('market');
-        cacheClear(key);
+        const pageKey = `${listCacheKey('market')}:${offset}`;
+        cacheClear(pageKey);
         try {
-          const result = await api('/scan/signals');
+          const resp = await api(`/scan/signals?limit=${LIMIT}&offset=${offset}`);
           if (_loadSeq > 0) {  // 避免第一次載入時覆蓋
-            cacheSet(key, result);
-            data = result;
-            cacheTs = cacheTimestamp(key);
+            cacheSet(pageKey, resp.data);
+            data = resp.data;
+            totalCount = resp.total;
+            currentPageTotal = resp.data.length;
+            cacheTs = cacheTimestamp(pageKey);
           }
         } catch {}
       }
@@ -89,15 +97,17 @@
     }
   });
 
-  async function loadData(forceRefresh = false) {
+  async function loadData(forceRefresh = false, pageOffset = 0) {
     const seq = ++_loadSeq;
     loading = true;
     error = '';
     noSnapshot = false;
+    offset = pageOffset;
 
     const key = listCacheKey(activeTab);
+    const pageKey = `${key}:${pageOffset}`;
 
-    if (!forceRefresh) {
+    if (!forceRefresh && activeTab !== 'market') {
       const cached = cacheGet<SignalScanRow[]>(key);
       if (cached) {
         if (seq !== _loadSeq) return;
@@ -106,38 +116,59 @@
         loading = false;
         return;
       }
-    } else {
+    } else if (pageOffset > 0) {
+      // Market tab 分頁快取
+      const cached = cacheGet<SignalScanRow[]>(pageKey);
+      if (cached) {
+        if (seq !== _loadSeq) return;
+        data = cached;
+        cacheTs = cacheTimestamp(pageKey);
+        loading = false;
+        return;
+      }
+    } else if (forceRefresh) {
       cacheClear(key);
+      cacheClear(pageKey);
     }
 
     try {
       let result: SignalScanRow[] = [];
 
       if (activeTab === 'market') {
-        result = await api('/scan/signals');
+        const resp = await api(`/scan/signals?limit=${LIMIT}&offset=${pageOffset}`);
+        result = resp.data;
+        totalCount = resp.total;
+        currentPageTotal = result.length;
+        // 快取這一頁
+        cacheSet(pageKey, result);
       } else if (activeTab === 'watchlist') {
         const watchlistEntries = await api('/watchlist');
         const results: SignalResult[] = await Promise.all(
           watchlistEntries.map((e: { code: string }) => api(`/signals/${e.code}`))
         );
         result = results.map(r => toScanRow(r));
+        totalCount = result.length;
+        cacheSet(key, result);
       } else if (activeTab === 'portfolio') {
         const portfolioEntries = await api('/portfolio');
         const results: SignalResult[] = await Promise.all(
           portfolioEntries.map((e: { code: string }) => api(`/signals/${e.code}`))
         );
         result = results.map(r => toScanRow(r));
+        totalCount = result.length;
+        cacheSet(key, result);
       } else if (activeTab === 'favorites') {
         const favorites = await api('/favorites?tag=speculative');
         const results: SignalResult[] = await Promise.all(
           favorites.map((f: { code: string }) => api(`/signals/${f.code}`))
         );
         result = results.map(r => toScanRow(r));
+        totalCount = result.length;
+        cacheSet(key, result);
       }
 
       if (seq !== _loadSeq) return;
-      cacheSet(key, result);
-      cacheTs = cacheTimestamp(key);
+      cacheTs = cacheTimestamp(activeTab === 'market' ? pageKey : key);
       data = result;
     } catch (e) {
       if (seq !== _loadSeq) return;
@@ -154,8 +185,14 @@
   async function refreshAll() {
     refreshingAll = true;
     cacheClear(listCacheKey(activeTab));
-    await loadData(true);
+    offset = 0;
+    await loadData(true, 0);
     refreshingAll = false;
+  }
+
+  function goToPage(newOffset: number) {
+    if (newOffset < 0 || newOffset >= totalCount) return;
+    loadData(false, newOffset);
   }
 
   async function refreshRow(code: string) {
@@ -190,6 +227,7 @@
   function handleTabChange(tab: Tab) {
     if (tab === activeTab) return;
     activeTab = tab;
+    offset = 0;
     loadData();
   }
 
@@ -274,6 +312,30 @@
       onRefreshRow={refreshRow}
       {refreshingCodes}
     />
+
+    {#if activeTab === 'market' && totalCount > LIMIT}
+      <div class="pagination">
+        <button
+          class="btn-page"
+          disabled={offset === 0}
+          on:click={() => goToPage(offset - LIMIT)}
+        >
+          ← 上一頁
+        </button>
+
+        <span class="page-info">
+          {offset + 1}–{Math.min(offset + LIMIT, totalCount)} / {totalCount}
+        </span>
+
+        <button
+          class="btn-page"
+          disabled={offset + LIMIT >= totalCount}
+          on:click={() => goToPage(offset + LIMIT)}
+        >
+          下一頁 →
+        </button>
+      </div>
+    {/if}
   {/if}
 </div>
 
@@ -403,5 +465,44 @@
 
   .empty-state a {
     color: #4ade80;
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 24px;
+    padding: 16px;
+    background: #0a0a0a;
+    border-radius: 4px;
+  }
+
+  .page-info {
+    font-size: 13px;
+    color: #888;
+    min-width: 120px;
+    text-align: center;
+  }
+
+  .btn-page {
+    background: #1a1a1a;
+    border: 1px solid #444;
+    color: #ccc;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+
+  .btn-page:hover:not(:disabled) {
+    color: #4ade80;
+    border-color: #4ade80;
+  }
+
+  .btn-page:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
   }
 </style>

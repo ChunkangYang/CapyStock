@@ -23,14 +23,18 @@ def get_snapshots(kind: Optional[str] = None) -> list[SnapshotMeta]:
 
 
 @router.get("/scan/signals")
-def get_signals_snapshot(date: Optional[str] = None) -> list[SignalScanRow]:
-    """讀訊號快照（缺省最新）"""
+def get_signals_snapshot(date: Optional[str] = None, limit: int = 50, offset: int = 0) -> dict:
+    """讀訊號快照（支持分頁，缺省最新）"""
     df = scan_service.load_latest_snapshot("signals", date)
     if df is None:
         raise HTTPException(status_code=404, detail="No snapshot found")
 
+    total = len(df)
+    # 分頁
+    df_page = df.iloc[offset:offset + limit]
+
     rows = []
-    for _, row in df.iterrows():
+    for _, row in df_page.iterrows():
         rows.append(
             SignalScanRow(
                 code=row["code"],
@@ -45,7 +49,7 @@ def get_signals_snapshot(date: Optional[str] = None) -> list[SignalScanRow]:
             )
         )
 
-    return rows
+    return {"data": rows, "total": total, "limit": limit, "offset": offset}
 
 
 @router.get("/scan/dividend")
