@@ -7,8 +7,8 @@
   interface WatchlistEntry { code: string; name: string; }
   interface PriceEntry { code: string; close: number | null; }
 
-  // 追蹤清單
-  let watchlist: WatchlistEntry[] = [];
+  // 全市場股票列表
+  let allStocks: WatchlistEntry[] = [];
   let prices: Record<string, number | null> = {};
   let checkedCodes = new Set<string>();
 
@@ -37,30 +37,32 @@
   let watchlistMsg = '';
   let watchlistDismissed = false;
 
-  // 從 query param 預設 code
+  // 從 query param 預設 code，或預設全選市場股票
   onMount(async () => {
     const code = $page.url.searchParams.get('code');
     try {
-      const r = await fetch(`${API}/watchlist`);
+      // 從資料管理頁讀全市場股票列表（同樣的 API）
+      const r = await fetch(`${API}/data/overview`);
       if (r.ok) {
-        watchlist = await r.json();
+        allStocks = await r.json();
         if (code) {
           checkedCodes = new Set([code.toUpperCase()]);
         } else {
-          checkedCodes = new Set(watchlist.map(w => w.code));
+          // 預設全選整個市場
+          checkedCodes = new Set(allStocks.map(s => s.code));
         }
         // 並行載入各股最新價格（靜默失敗）
         const priceResults = await Promise.allSettled(
-          watchlist.map(w => fetch(`${API}/data/latest-price/${w.code}`).then(r => r.ok ? r.json() : null))
+          allStocks.map(s => fetch(`${API}/data/latest-price/${s.code}`).then(r => r.ok ? r.json() : null))
         );
-        for (let i = 0; i < watchlist.length; i++) {
+        for (let i = 0; i < allStocks.length; i++) {
           const res = priceResults[i];
-          prices[watchlist[i].code] = res.status === 'fulfilled' && res.value ? res.value.close : null;
+          prices[allStocks[i].code] = res.status === 'fulfilled' && res.value ? res.value.close : null;
         }
         prices = { ...prices };
       }
     } catch { /* ignore */ }
-    if (code && !watchlist.find(w => w.code === code.toUpperCase())) {
+    if (code && !allStocks.find(s => s.code === code.toUpperCase())) {
       extraInput = code;
     }
   });
@@ -71,7 +73,7 @@
     checkedCodes = next;
   }
 
-  function selectAll() { checkedCodes = new Set(watchlist.map(w => w.code)); }
+  function selectAll() { checkedCodes = new Set(allStocks.map(s => s.code)); }
   function selectNone() { checkedCodes = new Set(); }
 
   function toggleKind(kind: string) {
@@ -80,8 +82,8 @@
       : [...selectedKinds, kind];
   }
 
-  $: allChecked = watchlist.length > 0 && checkedCodes.size === watchlist.length;
-  $: someChecked = checkedCodes.size > 0 && checkedCodes.size < watchlist.length;
+  $: allChecked = allStocks.length > 0 && checkedCodes.size === allStocks.length;
+  $: someChecked = checkedCodes.size > 0 && checkedCodes.size < allStocks.length;
 
   $: allCodes = [
     ...checkedCodes,
@@ -193,11 +195,11 @@
   </div>
 
   <div class="card">
-    <!-- 追蹤清單股票選擇 -->
+    <!-- 全市場股票選擇 -->
     <div class="field">
-      <label>追蹤清單（{checkedCodes.size} / {watchlist.length} 已選）</label>
-      {#if watchlist.length === 0}
-        <p class="empty-hint">追蹤清單為空，請先至「追蹤清單」新增股票</p>
+      <label>全市場股票（{checkedCodes.size} / {allStocks.length} 已選）</label>
+      {#if allStocks.length === 0}
+        <p class="empty-hint">載入中…</p>
       {:else}
         <table class="wl-table">
           <thead>
@@ -214,19 +216,19 @@
             </tr>
           </thead>
           <tbody>
-            {#each watchlist as w}
-              <tr class:row-checked={checkedCodes.has(w.code)} on:click={() => toggleCode(w.code)}>
+            {#each allStocks as s}
+              <tr class:row-checked={checkedCodes.has(s.code)} on:click={() => toggleCode(s.code)}>
                 <td class="col-check" on:click|stopPropagation>
                   <input type="checkbox"
-                    checked={checkedCodes.has(w.code)}
-                    on:change={() => toggleCode(w.code)}
+                    checked={checkedCodes.has(s.code)}
+                    on:change={() => toggleCode(s.code)}
                   />
                 </td>
-                <td class="col-code">{w.code}</td>
-                <td class="col-name">{w.name || '—'}</td>
+                <td class="col-code">{s.code}</td>
+                <td class="col-name">{s.name || '—'}</td>
                 <td class="col-price">
-                  {#if prices[w.code] != null}
-                    ¥{Number(prices[w.code]).toLocaleString()}
+                  {#if prices[s.code] != null}
+                    ¥{Number(prices[s.code]).toLocaleString()}
                   {:else}
                     <span class="no-price">—</span>
                   {/if}
