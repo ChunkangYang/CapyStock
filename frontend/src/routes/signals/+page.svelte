@@ -112,19 +112,19 @@
       if (cached) {
         if (seq !== _loadSeq) return;
         data = cached;
+        totalCount = cached.length;
         cacheTs = cacheTimestamp(key);
         loading = false;
         return;
       }
-    } else if (pageOffset > 0) {
+    } else if (pageOffset >= 0 && activeTab === 'market') {
       // Market tab 分頁快取
       const cached = cacheGet<SignalScanRow[]>(pageKey);
       if (cached) {
         if (seq !== _loadSeq) return;
         data = cached;
         cacheTs = cacheTimestamp(pageKey);
-        // totalCount 應該在 API 呼叫時就設置過，但從快取讀取時仍需確保它是正確值
-        // 如果快取有資料，totalCount 應該已經被前面的 API 呼叫設置
+        // totalCount 應該從首次 API 呼叫設置，保持不變
         loading = false;
         return;
       }
