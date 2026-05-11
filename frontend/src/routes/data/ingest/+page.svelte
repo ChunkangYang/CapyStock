@@ -4,13 +4,21 @@
 
   const API = '/api/v1';
 
-  interface WatchlistEntry { code: string; name: string; }
-  interface PriceEntry { code: string; close: number | null; }
+  interface StockEntry { code: string; name: string; market?: string; }
 
   // 全市場股票列表
-  let allStocks: WatchlistEntry[] = [];
-  let prices: Record<string, number | null> = {};
+  let allStocks: StockEntry[] = [];
+  let loadingStocks = true;
   let checkedCodes = new Set<string>();
+
+  // 搜尋過濾
+  let searchQuery = '';
+  $: filteredStocks = searchQuery.trim()
+    ? allStocks.filter(s =>
+        s.code.includes(searchQuery.trim()) ||
+        s.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
+      )
+    : allStocks;
 
   // 額外手填代碼
   let extraInput = '';
@@ -37,31 +45,19 @@
   let watchlistMsg = '';
   let watchlistDismissed = false;
 
-  // 從 query param 預設 code，或預設全選市場股票
   onMount(async () => {
     const code = $page.url.searchParams.get('code');
     try {
-      // 從資料管理頁讀全市場股票列表（同樣的 API）
-      const r = await fetch(`${API}/data/overview`);
+      const r = await fetch(`${API}/data/universe-list`);
       if (r.ok) {
         allStocks = await r.json();
         if (code) {
           checkedCodes = new Set([code.toUpperCase()]);
-        } else {
-          // 預設全選整個市場
-          checkedCodes = new Set(allStocks.map(s => s.code));
         }
-        // 並行載入各股最新價格（靜默失敗）
-        const priceResults = await Promise.allSettled(
-          allStocks.map(s => fetch(`${API}/data/latest-price/${s.code}`).then(r => r.ok ? r.json() : null))
-        );
-        for (let i = 0; i < allStocks.length; i++) {
-          const res = priceResults[i];
-          prices[allStocks[i].code] = res.status === 'fulfilled' && res.value ? res.value.close : null;
-        }
-        prices = { ...prices };
+        // 預設不全選（3747 支全選會讓執行按鈕太危險）
       }
     } catch { /* ignore */ }
+    loadingStocks = false;
     if (code && !allStocks.find(s => s.code === code.toUpperCase())) {
       extraInput = code;
     }
@@ -75,6 +71,12 @@
 
   function selectAll() { checkedCodes = new Set(allStocks.map(s => s.code)); }
   function selectNone() { checkedCodes = new Set(); }
+  function selectFiltered() { checkedCodes = new Set([...checkedCodes, ...filteredStocks.map(s => s.code)]); }
+  function deselectFiltered() {
+    const next = new Set(checkedCodes);
+    filteredStocks.forEach(s => next.delete(s.code));
+    checkedCodes = next;
+  }
 
   function toggleKind(kind: string) {
     selectedKinds = selectedKinds.includes(kind)
@@ -84,6 +86,7 @@
 
   $: allChecked = allStocks.length > 0 && checkedCodes.size === allStocks.length;
   $: someChecked = checkedCodes.size > 0 && checkedCodes.size < allStocks.length;
+  $: filteredAllChecked = filteredStocks.length > 0 && filteredStocks.every(s => checkedCodes.has(s.code));
 
   $: allCodes = [
     ...checkedCodes,
@@ -197,46 +200,59 @@
   <div class="card">
     <!-- 全市場股票選擇 -->
     <div class="field">
-      <label>全市場股票（{checkedCodes.size} / {allStocks.length} 已選）</label>
-      {#if allStocks.length === 0}
+      <div class="stock-header">
+        <label>全市場股票（{checkedCodes.size} / {allStocks.length} 已選）</label>
+        <div class="stock-actions">
+          <button class="btn-sm" on:click={selectAll}>全選</button>
+          <button class="btn-sm" on:click={selectNone}>清除</button>
+        </div>
+      </div>
+      <input
+        class="inp search-inp"
+        bind:value={searchQuery}
+        placeholder="搜尋代號或名稱…"
+      />
+      {#if loadingStocks}
         <p class="empty-hint">載入中…</p>
+      {:else if allStocks.length === 0}
+        <p class="empty-hint">無法載入股票清單</p>
       {:else}
-        <table class="wl-table">
-          <thead>
-            <tr>
-              <th class="col-check">
-                <input type="checkbox"
-                  checked={allChecked}
-                  on:change={() => allChecked ? selectNone() : selectAll()}
-                />
-              </th>
-              <th>代號</th>
-              <th>名稱</th>
-              <th class="col-price">現在價格</th>
-            </tr>
-          </thead>
-          <tbody>
-            {#each allStocks as s}
-              <tr class:row-checked={checkedCodes.has(s.code)} on:click={() => toggleCode(s.code)}>
-                <td class="col-check" on:click|stopPropagation>
+        <div class="table-scroll">
+          <table class="wl-table">
+            <thead>
+              <tr>
+                <th class="col-check">
                   <input type="checkbox"
-                    checked={checkedCodes.has(s.code)}
-                    on:change={() => toggleCode(s.code)}
+                    checked={filteredAllChecked}
+                    on:change={() => filteredAllChecked ? deselectFiltered() : selectFiltered()}
                   />
-                </td>
-                <td class="col-code">{s.code}</td>
-                <td class="col-name">{s.name || '—'}</td>
-                <td class="col-price">
-                  {#if prices[s.code] != null}
-                    ¥{Number(prices[s.code]).toLocaleString()}
-                  {:else}
-                    <span class="no-price">—</span>
-                  {/if}
-                </td>
+                </th>
+                <th>代號</th>
+                <th>名稱</th>
+                <th>市場</th>
               </tr>
-            {/each}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {#each filteredStocks as s}
+                <tr class:row-checked={checkedCodes.has(s.code)} on:click={() => toggleCode(s.code)}>
+                  <td class="col-check" on:click|stopPropagation>
+                    <input type="checkbox"
+                      checked={checkedCodes.has(s.code)}
+                      on:change={() => toggleCode(s.code)}
+                    />
+                  </td>
+                  <td class="col-code">{s.code}</td>
+                  <td class="col-name">{s.name || '—'}</td>
+                  <td class="col-market">{s.market || '—'}</td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+        <p class="stock-count-hint">
+          顯示 {filteredStocks.length} / {allStocks.length} 支
+          {#if searchQuery}（搜尋：「{searchQuery}」）{/if}
+        </p>
       {/if}
     </div>
 
@@ -346,10 +362,19 @@
 
   .empty-hint { color: #4b5563; font-size: 13px; margin: 0; }
 
+  .stock-header { display: flex; align-items: center; justify-content: space-between; }
+  .stock-actions { display: flex; gap: 6px; }
+  .btn-sm { background: #1a1a1a; border: 1px solid #444; color: #a1a1a1; border-radius: 4px; padding: 3px 10px; font-size: 12px; cursor: pointer; }
+  .btn-sm:hover { color: #4ade80; border-color: #4ade80; }
+
+  .search-inp { width: 100%; box-sizing: border-box; }
+  .table-scroll { max-height: 360px; overflow-y: auto; border: 1px solid #2a2a2a; border-radius: 4px; }
+  .stock-count-hint { color: #4b5563; font-size: 12px; margin: 4px 0 0 0; }
+
   .wl-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .wl-table thead tr { border-bottom: 1px solid #333; }
+  .wl-table thead tr { border-bottom: 1px solid #333; background: #111; position: sticky; top: 0; z-index: 1; }
   .wl-table th { padding: 7px 12px; color: #6b7280; font-weight: 500; text-align: left; }
-  .wl-table td { padding: 8px 12px; border-bottom: 1px solid #1e1e1e; color: #e5e7eb; }
+  .wl-table td { padding: 7px 12px; border-bottom: 1px solid #1e1e1e; color: #e5e7eb; }
   .wl-table tbody tr { cursor: pointer; transition: background 0.1s; }
   .wl-table tbody tr:hover { background: #222; }
   .wl-table tbody tr.row-checked { background: #0a2216; }
@@ -359,8 +384,7 @@
   .col-check input { accent-color: #4ade80; cursor: pointer; }
   .col-code { font-family: monospace; font-weight: 700; color: #4ade80; width: 70px; }
   .col-name { color: #a1a1a1; }
-  .col-price { text-align: right; width: 110px; font-variant-numeric: tabular-nums; }
-  .no-price { color: #4b5563; }
+  .col-market { color: #6b7280; font-size: 12px; width: 80px; }
 
   .inp { background: #0f0f0f; border: 1px solid #333; border-radius: 4px; color: #e5e7eb; padding: 8px 12px; font-size: 14px; }
   .inp:focus { outline: none; border-color: #4ade80; }

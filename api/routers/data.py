@@ -12,6 +12,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from api.services.ingest_service import IngestService, _cache_age, _cache_path, _load_meta
+from api.services.scan_service import load_universe
 from capystock import config, storage
 
 logger = logging.getLogger(__name__)
@@ -34,6 +35,22 @@ class CacheOverviewRow(BaseModel):
 class BatchIngestRequest(BaseModel):
     codes: List[str]
     kinds: List[str]
+
+
+class UniverseStock(BaseModel):
+    code: str
+    name: str
+    market: str = ""
+
+
+@router.get("/universe-list", response_model=List[UniverseStock])
+async def universe_list():
+    """回傳全市場股票清單（從 universe.csv）。"""
+    try:
+        rows = load_universe()
+        return [UniverseStock(code=str(r["code"]), name=str(r.get("name", "")), market=str(r.get("market", ""))) for r in rows]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/overview", response_model=List[CacheOverviewRow])
