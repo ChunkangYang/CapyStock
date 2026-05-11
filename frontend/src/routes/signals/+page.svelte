@@ -66,7 +66,7 @@
         try {
           const resp = await api(`/scan/signals?limit=${LIMIT}&offset=${offset}`);
           if (_loadSeq > 0) {  // 避免第一次載入時覆蓋
-            cacheSet(pageKey, resp.data);
+            cacheSet(pageKey, { rows: resp.data, total: resp.total });
             data = resp.data;
             totalCount = resp.total;
             currentPageTotal = resp.data.length;
@@ -118,13 +118,13 @@
         return;
       }
     } else if (pageOffset >= 0 && activeTab === 'market') {
-      // Market tab 分頁快取
-      const cached = cacheGet<SignalScanRow[]>(pageKey);
-      if (cached) {
+      // Market tab 分頁快取（包括總數）
+      const cachedEntry = cacheGet<{ rows: SignalScanRow[]; total: number }>(pageKey);
+      if (cachedEntry && cachedEntry.rows) {
         if (seq !== _loadSeq) return;
-        data = cached;
+        data = cachedEntry.rows;
+        totalCount = cachedEntry.total;
         cacheTs = cacheTimestamp(pageKey);
-        // totalCount 應該從首次 API 呼叫設置，保持不變
         loading = false;
         return;
       }
@@ -141,8 +141,8 @@
         result = resp.data;
         totalCount = resp.total;
         currentPageTotal = result.length;
-        // 快取這一頁
-        cacheSet(pageKey, result);
+        // 快取這一頁（包括總數）
+        cacheSet(pageKey, { rows: result, total: resp.total });
       } else if (activeTab === 'watchlist') {
         const watchlistEntries = await api('/watchlist');
         const results: SignalResult[] = await Promise.all(
@@ -234,8 +234,13 @@
       const updated = toScanRow(result);
       data = data.map(row => row.code === code ? updated : row);
       // 更新 list 快取
-      cacheSet(listCacheKey(activeTab), data);
-      cacheTs = cacheTimestamp(listCacheKey(activeTab));
+      const cacheKey = activeTab === 'market' ? `${listCacheKey(activeTab)}:${offset}` : listCacheKey(activeTab);
+      if (activeTab === 'market') {
+        cacheSet(cacheKey, { rows: data, total: totalCount });
+      } else {
+        cacheSet(cacheKey, data);
+      }
+      cacheTs = cacheTimestamp(cacheKey);
     } catch {}
     refreshingCodes = new Set([...refreshingCodes].filter(c => c !== code));
   }
