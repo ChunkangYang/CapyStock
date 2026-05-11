@@ -51,7 +51,9 @@ def _analyze_watchlist(today: _date) -> dict[str, list]:
         return {}
     for code in wl.keys():
         try:
-            res = signal_service.analyze_one(code, datetime.combine(today, datetime.min.time()))
+            entry = wl[code]
+            start_price = entry.get("start_price") if isinstance(entry, dict) else None
+            res = signal_service.analyze_one(code, start_price=start_price)
             if res and res.alerts:
                 out[code] = list(res.alerts)
         except Exception:

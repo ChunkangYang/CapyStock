@@ -1,5 +1,8 @@
 {
   "healthcheck_ping": {
     "cron": "*/30 * * * *"
+  },
+  "daily_pipeline": {
+    "cron": "0 8 * * 1-5"
   }
 }

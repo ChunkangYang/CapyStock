@@ -122,23 +122,31 @@ def _compute_technical_score(signals: list[IndicatorSignal]) -> float:
     return float(max(-3.0, min(3.0, score)))
 
 
-def analyze_one(code: str, start_price: Optional[float] = None) -> SignalResult:
+def analyze_one(code: str, name: str = "", start_price: Optional[float] = None) -> SignalResult:
     """分析單檔股票訊號。
 
     Args:
         code: 股票代碼
+        name: 股票名稱（若為空，會自動爬取）
         start_price: 起始價（若為 None，視為非 watchlist 股票）
 
     Returns:
         SignalResult 物件
     """
-    # 取得股票名稱
-    name = scraper.fetch_name(code) or ""
+    if not name:
+        name = scraper.fetch_name(code) or ""
 
-    # 取得價格、margin、flow 資料
-    price_df, _ = scraper.fetch_price(code)
-    margin_df = scraper.fetch_margin(code)
-    flow_df = scraper.fetch_flow(code)
+    from concurrent.futures import ThreadPoolExecutor
+
+    # 平行化爬蟲呼叫（price、margin、flow 可並行）
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        price_future = executor.submit(scraper.fetch_price, code)
+        margin_future = executor.submit(scraper.fetch_margin, code)
+        flow_future = executor.submit(scraper.fetch_flow, code)
+
+        price_df, _ = price_future.result()
+        margin_df = margin_future.result()
+        flow_df = flow_future.result()
 
     # 使用既有的 analyzer 邏輯
     if start_price is None:
@@ -222,7 +230,9 @@ def analyze_watchlist() -> list[SignalResult]:
     results = []
     for code, entry in wl.items():
         try:
-            result = analyze_one(code, entry.get("start_price"))
+            name = entry.get("name", "") if isinstance(entry, dict) else ""
+            start_price = entry.get("start_price") if isinstance(entry, dict) else None
+            result = analyze_one(code, name=name, start_price=start_price)
             results.append(result)
         except Exception:
             # 單檔失敗不中斷，記錄為空結果

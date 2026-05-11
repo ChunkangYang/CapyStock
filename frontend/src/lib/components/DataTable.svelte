@@ -136,17 +136,17 @@
         </th>
         <th>
           <button class="sort-btn" class:active={sortKey === 'c1'} on:click={() => toggleSort('c1')}>
-            C1{#if sortKey === 'c1'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+            吃貨{#if sortKey === 'c1'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
         <th>
           <button class="sort-btn" class:active={sortKey === 'c2'} on:click={() => toggleSort('c2')}>
-            C2{#if sortKey === 'c2'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+            融資{#if sortKey === 'c2'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
         <th>
           <button class="sort-btn" class:active={sortKey === 'c3'} on:click={() => toggleSort('c3')}>
-            C3{#if sortKey === 'c3'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+            停損{#if sortKey === 'c3'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
         <th>訊號</th>

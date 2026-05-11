@@ -25,6 +25,31 @@
         "email"
       ],
       "delivery": "digest"
+    },
+    {
+      "id": "rule-9a1d9677",
+      "name": "投機 score >= 80 即時 push",
+      "mode": "digest",
+      "trigger": {
+        "schedule": "daily",
+        "time": "18:00",
+        "on_alert": null
+      },
+      "filters": {
+        "alert_types": [],
+        "min_severity": "info",
+        "scope": "watchlist",
+        "codes": []
+      },
+      "channels": [
+        "email",
+        "line"
+      ],
+      "recipients_by_channel": {
+        "email": [],
+        "line": []
+      },
+      "enabled": true
     }
   ]
 }

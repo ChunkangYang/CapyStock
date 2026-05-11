@@ -1,0 +1,412 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]: CapyStock
+    - list [ref=e6]:
+      - listitem [ref=e7]:
+        - link "Dashboard" [ref=e8] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=e9]:
+        - link "投機訊號" [ref=e10] [cursor=pointer]:
+          - /url: /signals
+      - listitem [ref=e11]:
+        - link "投機對比" [ref=e12] [cursor=pointer]:
+          - /url: /compare
+      - listitem [ref=e13]:
+        - link "金雞高股息" [ref=e14] [cursor=pointer]:
+          - /url: /dividend
+      - listitem [ref=e15]:
+        - link "金雞對比" [ref=e16] [cursor=pointer]:
+          - /url: /dividend/compare
+      - listitem [ref=e17]:
+        - link "持倉管理" [ref=e18] [cursor=pointer]:
+          - /url: /portfolio
+      - listitem [ref=e19]:
+        - link "追蹤清單" [ref=e20] [cursor=pointer]:
+          - /url: /watchlist
+      - listitem [ref=e21]:
+        - link "我的最愛" [ref=e22] [cursor=pointer]:
+          - /url: /favorites
+      - listitem [ref=e23]:
+        - link "模擬交易" [ref=e24] [cursor=pointer]:
+          - /url: /simulation
+      - listitem [ref=e25]:
+        - link "資料管理" [ref=e26] [cursor=pointer]:
+          - /url: /data
+      - listitem [ref=e27]:
+        - link "設定" [ref=e28] [cursor=pointer]:
+          - /url: /settings/notifications
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - heading "投機訊號" [level=1] [ref=e33]
+          - generic [ref=e34]:
+            - generic [ref=e46]: 上次更新：3 分鐘前
+            - button "↻ 全部更新" [ref=e35] [cursor=pointer]:
+              - generic [ref=e36]: ↻
+              - generic [ref=e37]: 全部更新
+        - tablist "訊號分類" [ref=e38]:
+          - tab "全市場訊號" [selected] [ref=e39] [cursor=pointer]
+          - tab "我的最愛" [ref=e40] [cursor=pointer]
+          - tab "我的持倉" [ref=e41] [cursor=pointer]
+          - tab "追蹤清單" [ref=e42] [cursor=pointer]
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e49] [cursor=pointer]:
+            - checkbox "只看吃貨" [ref=e50]
+            - text: 只看吃貨
+          - generic [ref=e51] [cursor=pointer]:
+            - checkbox "只看出場" [ref=e52]
+            - text: 只看出場
+          - generic [ref=e53] [cursor=pointer]:
+            - checkbox "只看停損" [ref=e54]
+            - text: 只看停損
+          - generic [ref=e55] [cursor=pointer]:
+            - text: "最低 score:"
+            - spinbutton "最低 score:" [ref=e56]: "0"
+        - table [ref=e57]:
+          - rowgroup [ref=e58]:
+            - row "★ 代號 名稱 價格 吃貨 融資 停損 訊號 EDINET Score ▼" [ref=e59]:
+              - columnheader "★" [ref=e60]:
+                - button "★" [ref=e61] [cursor=pointer]
+              - columnheader "代號" [ref=e62]:
+                - button "代號" [ref=e63] [cursor=pointer]
+              - columnheader "名稱" [ref=e64]:
+                - button "名稱" [ref=e65] [cursor=pointer]
+              - columnheader "價格" [ref=e66]:
+                - button "價格" [ref=e67] [cursor=pointer]
+              - columnheader "吃貨" [ref=e68]:
+                - button "吃貨" [ref=e69] [cursor=pointer]
+              - columnheader "融資" [ref=e70]:
+                - button "融資" [ref=e71] [cursor=pointer]
+              - columnheader "停損" [ref=e72]:
+                - button "停損" [ref=e73] [cursor=pointer]
+              - columnheader "訊號" [ref=e74]
+              - columnheader "EDINET" [ref=e75]:
+                - button "EDINET" [ref=e76] [cursor=pointer]
+              - columnheader "Score ▼" [ref=e77]:
+                - button "Score ▼" [ref=e78] [cursor=pointer]
+              - columnheader [ref=e79]
+          - rowgroup [ref=e80]:
+            - row "☆ 1431 Ｌｉｂ Ｗｏｒｋ 649 🔵 🟠 🔴 0 2.0 ↻" [ref=e81] [cursor=pointer]:
+              - cell "☆" [ref=e82]:
+                - button "☆" [ref=e83]
+              - cell "1431" [ref=e84]
+              - cell "Ｌｉｂ Ｗｏｒｋ" [ref=e85]
+              - cell "649" [ref=e86]
+              - cell "🔵" [ref=e87]
+              - cell "🟠" [ref=e88]
+              - cell "🔴" [ref=e89]
+              - cell [ref=e90]
+              - cell "0" [ref=e91]
+              - cell "2.0" [ref=e92]
+              - cell "↻" [ref=e93]:
+                - button "↻" [ref=e94]
+            - row "☆ 1447 ＳＡＡＦＨＤ 300 🔵 🟠 🔴 0 2.0 ↻" [ref=e95] [cursor=pointer]:
+              - cell "☆" [ref=e96]:
+                - button "☆" [ref=e97]
+              - cell "1447" [ref=e98]
+              - cell "ＳＡＡＦＨＤ" [ref=e99]
+              - cell "300" [ref=e100]
+              - cell "🔵" [ref=e101]
+              - cell "🟠" [ref=e102]
+              - cell "🔴" [ref=e103]
+              - cell [ref=e104]
+              - cell "0" [ref=e105]
+              - cell "2.0" [ref=e106]
+              - cell "↻" [ref=e107]:
+                - button "↻" [ref=e108]
+            - row "☆ 2978 ツクルバ 425 🔵 🟠 🔴 0 2.0 ↻" [ref=e109] [cursor=pointer]:
+              - cell "☆" [ref=e110]:
+                - button "☆" [ref=e111]
+              - cell "2978" [ref=e112]
+              - cell "ツクルバ" [ref=e113]
+              - cell "425" [ref=e114]
+              - cell "🔵" [ref=e115]
+              - cell "🟠" [ref=e116]
+              - cell "🔴" [ref=e117]
+              - cell [ref=e118]
+              - cell "0" [ref=e119]
+              - cell "2.0" [ref=e120]
+              - cell "↻" [ref=e121]:
+                - button "↻" [ref=e122]
+            - row "☆ 3185 夢展望 209 🔵 🟠 🔴 0 2.0 ↻" [ref=e123] [cursor=pointer]:
+              - cell "☆" [ref=e124]:
+                - button "☆" [ref=e125]
+              - cell "3185" [ref=e126]
+              - cell "夢展望" [ref=e127]
+              - cell "209" [ref=e128]
+              - cell "🔵" [ref=e129]
+              - cell "🟠" [ref=e130]
+              - cell "🔴" [ref=e131]
+              - cell [ref=e132]
+              - cell "0" [ref=e133]
+              - cell "2.0" [ref=e134]
+              - cell "↻" [ref=e135]:
+                - button "↻" [ref=e136]
+            - row "☆ 3237 イントランス 73 🔵 🟠 🔴 0 2.0 ↻" [ref=e137] [cursor=pointer]:
+              - cell "☆" [ref=e138]:
+                - button "☆" [ref=e139]
+              - cell "3237" [ref=e140]
+              - cell "イントランス" [ref=e141]
+              - cell "73" [ref=e142]
+              - cell "🔵" [ref=e143]
+              - cell "🟠" [ref=e144]
+              - cell "🔴" [ref=e145]
+              - cell [ref=e146]
+              - cell "0" [ref=e147]
+              - cell "2.0" [ref=e148]
+              - cell "↻" [ref=e149]:
+                - button "↻" [ref=e150]
+            - row "☆ 3556 リネットＪ 973 🔵 🟠 🔴 0 2.0 ↻" [ref=e151] [cursor=pointer]:
+              - cell "☆" [ref=e152]:
+                - button "☆" [ref=e153]
+              - cell "3556" [ref=e154]
+              - cell "リネットＪ" [ref=e155]
+              - cell "973" [ref=e156]
+              - cell "🔵" [ref=e157]
+              - cell "🟠" [ref=e158]
+              - cell "🔴" [ref=e159]
+              - cell [ref=e160]
+              - cell "0" [ref=e161]
+              - cell "2.0" [ref=e162]
+              - cell "↻" [ref=e163]:
+                - button "↻" [ref=e164]
+            - row "☆ 2321 ソフトフロン 183 🔵 🟠 🔴 0 1.0 ↻" [ref=e165] [cursor=pointer]:
+              - cell "☆" [ref=e166]:
+                - button "☆" [ref=e167]
+              - cell "2321" [ref=e168]
+              - cell "ソフトフロン" [ref=e169]
+              - cell "183" [ref=e170]
+              - cell "🔵" [ref=e171]
+              - cell "🟠" [ref=e172]
+              - cell "🔴" [ref=e173]
+              - cell [ref=e174]
+              - cell "0" [ref=e175]
+              - cell "1.0" [ref=e176]
+              - cell "↻" [ref=e177]:
+                - button "↻" [ref=e178]
+            - row "☆ 2937 サンクゼール 1678 🔵 🟠 🔴 0 1.0 ↻" [ref=e179] [cursor=pointer]:
+              - cell "☆" [ref=e180]:
+                - button "☆" [ref=e181]
+              - cell "2937" [ref=e182]
+              - cell "サンクゼール" [ref=e183]
+              - cell "1678" [ref=e184]
+              - cell "🔵" [ref=e185]
+              - cell "🟠" [ref=e186]
+              - cell "🔴" [ref=e187]
+              - cell [ref=e188]
+              - cell "0" [ref=e189]
+              - cell "1.0" [ref=e190]
+              - cell "↻" [ref=e191]:
+                - button "↻" [ref=e192]
+            - row "☆ 3477 フォーライフ 788 🔵 🟠 🔴 0 1.0 ↻" [ref=e193] [cursor=pointer]:
+              - cell "☆" [ref=e194]:
+                - button "☆" [ref=e195]
+              - cell "3477" [ref=e196]
+              - cell "フォーライフ" [ref=e197]
+              - cell "788" [ref=e198]
+              - cell "🔵" [ref=e199]
+              - cell "🟠" [ref=e200]
+              - cell "🔴" [ref=e201]
+              - cell [ref=e202]
+              - cell "0" [ref=e203]
+              - cell "1.0" [ref=e204]
+              - cell "↻" [ref=e205]:
+                - button "↻" [ref=e206]
+            - row "☆ 1436 グリーンエナ 1748 🔵 🟠 🔴 0 0.0 ↻" [ref=e207] [cursor=pointer]:
+              - cell "☆" [ref=e208]:
+                - button "☆" [ref=e209]
+              - cell "1436" [ref=e210]
+              - cell "グリーンエナ" [ref=e211]
+              - cell "1748" [ref=e212]
+              - cell "🔵" [ref=e213]
+              - cell "🟠" [ref=e214]
+              - cell "🔴" [ref=e215]
+              - cell [ref=e216]
+              - cell "0" [ref=e217]
+              - cell "0.0" [ref=e218]
+              - cell "↻" [ref=e219]:
+                - button "↻" [ref=e220]
+            - row "☆ 2334 イオレ 544 🔵 🟠 🔴 0 0.0 ↻" [ref=e221] [cursor=pointer]:
+              - cell "☆" [ref=e222]:
+                - button "☆" [ref=e223]
+              - cell "2334" [ref=e224]
+              - cell "イオレ" [ref=e225]
+              - cell "544" [ref=e226]
+              - cell "🔵" [ref=e227]
+              - cell "🟠" [ref=e228]
+              - cell "🔴" [ref=e229]
+              - cell [ref=e230]
+              - cell "0" [ref=e231]
+              - cell "0.0" [ref=e232]
+              - cell "↻" [ref=e233]:
+                - button "↻" [ref=e234]
+            - row "☆ 2385 総医研ホールディングス 254 🔵 🟠 🔴 0 0.0 ↻" [ref=e235] [cursor=pointer]:
+              - cell "☆" [ref=e236]:
+                - button "☆" [ref=e237]
+              - cell "2385" [ref=e238]
+              - cell "総医研ホールディングス" [ref=e239]
+              - cell "254" [ref=e240]
+              - cell "🔵" [ref=e241]
+              - cell "🟠" [ref=e242]
+              - cell "🔴" [ref=e243]
+              - cell [ref=e244]
+              - cell "0" [ref=e245]
+              - cell "0.0" [ref=e246]
+              - cell "↻" [ref=e247]:
+                - button "↻" [ref=e248]
+            - row "☆ 2388 ウェッジＨＤ 51 🔵 🟠 🔴 0 0.0 ↻" [ref=e249] [cursor=pointer]:
+              - cell "☆" [ref=e250]:
+                - button "☆" [ref=e251]
+              - cell "2388" [ref=e252]
+              - cell "ウェッジＨＤ" [ref=e253]
+              - cell "51" [ref=e254]
+              - cell "🔵" [ref=e255]
+              - cell "🟠" [ref=e256]
+              - cell "🔴" [ref=e257]
+              - cell [ref=e258]
+              - cell "0" [ref=e259]
+              - cell "0.0" [ref=e260]
+              - cell "↻" [ref=e261]:
+                - button "↻" [ref=e262]
+            - row "☆ 2438 アスカネット 338 🔵 🟠 🔴 0 0.0 ↻" [ref=e263] [cursor=pointer]:
+              - cell "☆" [ref=e264]:
+                - button "☆" [ref=e265]
+              - cell "2438" [ref=e266]
+              - cell "アスカネット" [ref=e267]
+              - cell "338" [ref=e268]
+              - cell "🔵" [ref=e269]
+              - cell "🟠" [ref=e270]
+              - cell "🔴" [ref=e271]
+              - cell [ref=e272]
+              - cell "0" [ref=e273]
+              - cell "0.0" [ref=e274]
+              - cell "↻" [ref=e275]:
+                - button "↻" [ref=e276]
+            - row "☆ 2497 ユナイテッド 505 🔵 🟠 🔴 0 0.0 ↻" [ref=e277] [cursor=pointer]:
+              - cell "☆" [ref=e278]:
+                - button "☆" [ref=e279]
+              - cell "2497" [ref=e280]
+              - cell "ユナイテッド" [ref=e281]
+              - cell "505" [ref=e282]
+              - cell "🔵" [ref=e283]
+              - cell "🟠" [ref=e284]
+              - cell "🔴" [ref=e285]
+              - cell [ref=e286]
+              - cell "0" [ref=e287]
+              - cell "0.0" [ref=e288]
+              - cell "↻" [ref=e289]:
+                - button "↻" [ref=e290]
+            - row "☆ 2934 ジェイフロンティア 1760 🔵 🟠 🔴 0 0.0 ↻" [ref=e291] [cursor=pointer]:
+              - cell "☆" [ref=e292]:
+                - button "☆" [ref=e293]
+              - cell "2934" [ref=e294]
+              - cell "ジェイフロンティア" [ref=e295]
+              - cell "1760" [ref=e296]
+              - cell "🔵" [ref=e297]
+              - cell "🟠" [ref=e298]
+              - cell "🔴" [ref=e299]
+              - cell [ref=e300]
+              - cell "0" [ref=e301]
+              - cell "0.0" [ref=e302]
+              - cell "↻" [ref=e303]:
+                - button "↻" [ref=e304]
+            - row "☆ 2981 ランディックス 2163 🔵 🟠 🔴 0 0.0 ↻" [ref=e305] [cursor=pointer]:
+              - cell "☆" [ref=e306]:
+                - button "☆" [ref=e307]
+              - cell "2981" [ref=e308]
+              - cell "ランディックス" [ref=e309]
+              - cell "2163" [ref=e310]
+              - cell "🔵" [ref=e311]
+              - cell "🟠" [ref=e312]
+              - cell "🔴" [ref=e313]
+              - cell [ref=e314]
+              - cell "0" [ref=e315]
+              - cell "0.0" [ref=e316]
+              - cell "↻" [ref=e317]:
+                - button "↻" [ref=e318]
+            - row "☆ 2997 ストレージ王 961 🔵 🟠 🔴 0 0.0 ↻" [ref=e319] [cursor=pointer]:
+              - cell "☆" [ref=e320]:
+                - button "☆" [ref=e321]
+              - cell "2997" [ref=e322]
+              - cell "ストレージ王" [ref=e323]
+              - cell "961" [ref=e324]
+              - cell "🔵" [ref=e325]
+              - cell "🟠" [ref=e326]
+              - cell "🔴" [ref=e327]
+              - cell [ref=e328]
+              - cell "0" [ref=e329]
+              - cell "0.0" [ref=e330]
+              - cell "↻" [ref=e331]:
+                - button "↻" [ref=e332]
+            - row "☆ 3133 海帆 241 🔵 🟠 🔴 0 0.0 ↻" [ref=e333] [cursor=pointer]:
+              - cell "☆" [ref=e334]:
+                - button "☆" [ref=e335]
+              - cell "3133" [ref=e336]
+              - cell "海帆" [ref=e337]
+              - cell "241" [ref=e338]
+              - cell "🔵" [ref=e339]
+              - cell "🟠" [ref=e340]
+              - cell "🔴" [ref=e341]
+              - cell [ref=e342]
+              - cell "0" [ref=e343]
+              - cell "0.0" [ref=e344]
+              - cell "↻" [ref=e345]:
+                - button "↻" [ref=e346]
+            - row "☆ 3224 ゼネラル・オイスター 761 🔵 🟠 🔴 0 0.0 ↻" [ref=e347] [cursor=pointer]:
+              - cell "☆" [ref=e348]:
+                - button "☆" [ref=e349]
+              - cell "3224" [ref=e350]
+              - cell "ゼネラル・オイスター" [ref=e351]
+              - cell "761" [ref=e352]
+              - cell "🔵" [ref=e353]
+              - cell "🟠" [ref=e354]
+              - cell "🔴" [ref=e355]
+              - cell [ref=e356]
+              - cell "0" [ref=e357]
+              - cell "0.0" [ref=e358]
+              - cell "↻" [ref=e359]:
+                - button "↻" [ref=e360]
+            - row "☆ 3491 ＧＡテクノ 1608 🔵 🟠 🔴 0 0.0 ↻" [ref=e361] [cursor=pointer]:
+              - cell "☆" [ref=e362]:
+                - button "☆" [ref=e363]
+              - cell "3491" [ref=e364]
+              - cell "ＧＡテクノ" [ref=e365]
+              - cell "1608" [ref=e366]
+              - cell "🔵" [ref=e367]
+              - cell "🟠" [ref=e368]
+              - cell "🔴" [ref=e369]
+              - cell [ref=e370]
+              - cell "0" [ref=e371]
+              - cell "0.0" [ref=e372]
+              - cell "↻" [ref=e373]:
+                - button "↻" [ref=e374]
+            - row "☆ 3557 Ｕ＆Ｃ 574 🔵 🟠 🔴 0 0.0 ↻" [ref=e375] [cursor=pointer]:
+              - cell "☆" [ref=e376]:
+                - button "☆" [ref=e377]
+              - cell "3557" [ref=e378]
+              - cell "Ｕ＆Ｃ" [ref=e379]
+              - cell "574" [ref=e380]
+              - cell "🔵" [ref=e381]
+              - cell "🟠" [ref=e382]
+              - cell "🔴" [ref=e383]
+              - cell [ref=e384]
+              - cell "0" [ref=e385]
+              - cell "0.0" [ref=e386]
+              - cell "↻" [ref=e387]:
+                - button "↻" [ref=e388]
+            - row "☆ 3566 ユニフォームネクスト 937 🔵 🟠 🔴 0 0.0 ↻" [ref=e389] [cursor=pointer]:
+              - cell "☆" [ref=e390]:
+                - button "☆" [ref=e391]
+              - cell "3566" [ref=e392]
+              - cell "ユニフォームネクスト" [ref=e393]
+              - cell "937" [ref=e394]
+              - cell "🔵" [ref=e395]
+              - cell "🟠" [ref=e396]
+              - cell "🔴" [ref=e397]
+              - cell [ref=e398]
+              - cell "0" [ref=e399]
+              - cell "0.0" [ref=e400]
+              - cell "↻" [ref=e401]:
+                - button "↻" [ref=e402]

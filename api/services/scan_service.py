@@ -103,6 +103,25 @@ def run_signals_scan(
     now = datetime.combine(clock, datetime.min.time())
     skipped = 0
 
+    # 掃描開始前，一次性取得 3 天內的所有 EDINET 報告（避免每檔都查一遍 API）
+    try:
+        from capystock import edinet, config
+        all_edinet_reports = edinet.fetch_since(days=3) if config.EDINET_API_KEY else []
+        # 建立 code → events 快篩表
+        edinet_by_code: dict[str, list] = {}
+        for report in all_edinet_reports:
+            sec_code = str(report.get("securities_code", "")).zfill(4)
+            if sec_code not in edinet_by_code:
+                edinet_by_code[sec_code] = []
+            edinet_by_code[sec_code].append({
+                "date": report.get("submit_date"),
+                "filer": report.get("filer_name"),
+                "doc_type_code": report.get("doc_type_code"),
+                "pdf_url": report.get("pdf_url"),
+            })
+    except Exception:
+        edinet_by_code = {}
+
     for i, entry in enumerate(universe):
         code = entry["code"]
         name = entry["name"]
@@ -134,8 +153,9 @@ def run_signals_scan(
             continue
 
         try:
-            result = analyze_one(code)
-            events = get_edinet_events(code, days=3)
+            result = analyze_one(code, name=name)
+            # 從快篩表查詢 EDINET 事件（O(1) lookup）
+            events = edinet_by_code.get(str(code).zfill(4), [])
             score = compute_score(result, events, include_technical=include_technical)
 
             # 統計 alert 數量
@@ -190,7 +210,7 @@ def run_dividend_scan(universe: list[dict], clock: Optional[date] = None, progre
         name = entry["name"]
 
         try:
-            result = analyze_one(code)  # 取最新價
+            result = analyze_one(code, name=name)  # 取最新價
             report = get_fundamental_report(code)
 
             if report is None:

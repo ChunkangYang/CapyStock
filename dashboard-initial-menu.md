@@ -1,0 +1,99 @@
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]: CapyStock
+    - list [ref=e6]:
+      - listitem [ref=e7]:
+        - link "Dashboard" [ref=e8] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=e9]:
+        - link "投機訊號" [ref=e10] [cursor=pointer]:
+          - /url: /signals
+      - listitem [ref=e11]:
+        - link "投機對比" [ref=e12] [cursor=pointer]:
+          - /url: /compare
+      - listitem [ref=e13]:
+        - link "金雞高股息" [ref=e14] [cursor=pointer]:
+          - /url: /dividend
+      - listitem [ref=e15]:
+        - link "金雞對比" [ref=e16] [cursor=pointer]:
+          - /url: /dividend/compare
+      - listitem [ref=e17]:
+        - link "持倉管理" [ref=e18] [cursor=pointer]:
+          - /url: /portfolio
+      - listitem [ref=e19]:
+        - link "追蹤清單" [ref=e20] [cursor=pointer]:
+          - /url: /watchlist
+      - listitem [ref=e21]:
+        - link "我的最愛" [ref=e22] [cursor=pointer]:
+          - /url: /favorites
+      - listitem [ref=e23]:
+        - link "模擬交易" [ref=e24] [cursor=pointer]:
+          - /url: /simulation
+      - listitem [ref=e25]:
+        - link "資料管理" [ref=e26] [cursor=pointer]:
+          - /url: /data
+      - listitem [ref=e27]:
+        - link "設定" [ref=e28] [cursor=pointer]:
+          - /url: /settings/notifications
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - heading "Dashboard" [level=1] [ref=e31]
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - heading "持倉狀態 0" [level=2] [ref=e34]:
+            - text: 持倉狀態
+            - generic [ref=e35]: "0"
+          - paragraph [ref=e37]:
+            - text: 尚無持倉。請至
+            - link "持倉管理" [ref=e38] [cursor=pointer]:
+              - /url: /portfolio
+            - text: 新增買入記錄。
+          - link "管理持倉" [ref=e39] [cursor=pointer]:
+            - /url: /portfolio
+        - generic [ref=e40]:
+          - heading "追蹤清單 3" [level=2] [ref=e58]:
+            - text: 追蹤清單
+            - generic [ref=e42]: "3"
+          - generic [ref=e59]:
+            - generic [ref=e60]:
+              - generic [ref=e61]: "7203"
+              - generic [ref=e62]: トヨタ自動車
+              - generic [ref=e63]: ¥3,000
+            - generic [ref=e64]:
+              - generic [ref=e65]: "6098"
+              - generic [ref=e66]: リクルート
+              - generic [ref=e67]: ¥0
+            - generic [ref=e68]:
+              - generic [ref=e69]: "7974"
+              - generic [ref=e70]: 任天堂
+              - generic [ref=e71]: ¥0
+          - link "查看訊號" [ref=e46] [cursor=pointer]:
+            - /url: /signals
+        - generic [ref=e47]:
+          - heading "今日訊號" [level=2] [ref=e48]
+          - generic [ref=e72]:
+            - generic [ref=e73]:
+              - generic [ref=e74]: "7203"
+              - generic [ref=e75]: "+9"
+            - generic [ref=e76]:
+              - generic [ref=e77]: "6098"
+              - generic [ref=e78]: "+9"
+            - generic [ref=e79]:
+              - generic [ref=e80]: "7974"
+              - generic [ref=e81]: "+9"
+          - link "查看全部" [ref=e51] [cursor=pointer]:
+            - /url: /signals
+        - generic [ref=e52]:
+          - heading "金雞 Top" [level=2] [ref=e53]
+          - generic [ref=e82]:
+            - generic [ref=e83]:
+              - generic [ref=e84]: "2914"
+              - generic [ref=e85]: 5.20%
+            - generic [ref=e86]:
+              - generic [ref=e87]: "8316"
+              - generic [ref=e88]: 4.30%
+            - generic [ref=e89]:
+              - generic [ref=e90]: "8058"
+              - generic [ref=e91]: 3.80%
+          - link "查看全部" [ref=e56] [cursor=pointer]:
+            - /url: /dividend
