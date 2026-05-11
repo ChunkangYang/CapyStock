@@ -129,20 +129,24 @@
       }
     } else {
       // Market tab 分頁快取
-      const cachedEntry = cacheGet<{ rows: SignalScanRow[]; total: number }>(pageKey);
-      if (cachedEntry && cachedEntry.rows && typeof cachedEntry.total === 'number') {
-        // 一致性檢查：若快取的 total 與本 session canonical 不符，視為過期快取
-        if (canonicalTotal > 0 && cachedEntry.total !== canonicalTotal) {
-          cacheClear(pageKey);
-          // 繼續往下呼叫 API
-        } else {
-          if (seq !== _loadSeq) return;
-          data = cachedEntry.rows;
-          totalCount = cachedEntry.total;
-          if (canonicalTotal === 0) canonicalTotal = cachedEntry.total;
-          cacheTs = cacheTimestamp(pageKey);
-          loading = false;
-          return;
+      // 每次 session 第一次載入（offset=0 且尚未建立 canonical）一律打 API，
+      // 避免把汙染的快取 total 當成 canonicalTotal。
+      const isFirstLoad = pageOffset === 0 && canonicalTotal === 0;
+      if (!isFirstLoad) {
+        const cachedEntry = cacheGet<{ rows: SignalScanRow[]; total: number }>(pageKey);
+        if (cachedEntry && cachedEntry.rows && typeof cachedEntry.total === 'number') {
+          // 一致性檢查：若快取的 total 與本 session canonical 不符，視為過期快取
+          if (canonicalTotal > 0 && cachedEntry.total !== canonicalTotal) {
+            cacheClear(pageKey);
+            // 繼續往下呼叫 API
+          } else {
+            if (seq !== _loadSeq) return;
+            data = cachedEntry.rows;
+            totalCount = cachedEntry.total;
+            cacheTs = cacheTimestamp(pageKey);
+            loading = false;
+            return;
+          }
         }
       }
     }
