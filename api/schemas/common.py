@@ -60,7 +60,7 @@ class SignalConditions(BaseModel):
 
 class Alert(BaseModel):
     """警示訊息。"""
-    alert_type: Literal["exit", "stop_loss", "accumulation", "info"]
+    alert_type: Literal["exit", "stop_loss", "accumulation", "info", "volume_stop"]
     severity: Literal["info", "warn", "critical"]
     message: str
     details: dict = Field(default_factory=dict)
