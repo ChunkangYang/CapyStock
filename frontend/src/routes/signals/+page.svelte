@@ -4,7 +4,7 @@
   import { api, ApiError } from '$lib/api';
   import DataTable from '$lib/components/DataTable.svelte';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
-  import { cacheGet, cacheSet, cacheClear, cacheTimestamp, clearAllSignalsCache, formatCacheAge } from '$lib/utils/signalsCache';
+  import { cacheGet, cacheSet, cacheClear, cacheTimestamp, formatCacheAge } from '$lib/utils/signalsCache';
   import type { SignalScanRow, SignalResult } from '$lib/types';
 
   const TABS = ['market', 'favorites', 'portfolio', 'watchlist'] as const;
@@ -153,7 +153,7 @@
 
   async function refreshAll() {
     refreshingAll = true;
-    clearAllSignalsCache();
+    cacheClear(listCacheKey(activeTab));
     await loadData(true);
     refreshingAll = false;
   }
@@ -229,12 +229,12 @@
         {/if}
         <button
           class="btn-refresh"
-          class:spinning={refreshingAll}
           disabled={refreshingAll || loading}
           title="清除快取，重新抓取全部資料"
           on:click={refreshAll}
         >
-          ↻ 全部更新
+          <span class="refresh-icon" class:spinning={refreshingAll}>↻</span>
+          <span class="refresh-text">全部更新</span>
         </button>
       </div>
     </div>
@@ -345,8 +345,9 @@
     cursor: not-allowed;
   }
 
-  .btn-refresh.spinning {
+  .refresh-icon.spinning {
     animation: spin 0.7s linear infinite;
+    display: inline-block;
   }
 
   @keyframes spin {
