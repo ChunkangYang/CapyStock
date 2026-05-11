@@ -7,7 +7,7 @@
   import { cacheGet, cacheSet, cacheClear, cacheTimestamp, clearAllSignalsCache, formatCacheAge } from '$lib/utils/signalsCache';
   import type { SignalScanRow, SignalResult } from '$lib/types';
 
-  const TABS = ['market', 'watchlist', 'favorites'] as const;
+  const TABS = ['market', 'favorites', 'portfolio', 'watchlist'] as const;
   type Tab = (typeof TABS)[number];
 
   let activeTab: Tab = 'market';
@@ -116,8 +116,17 @@
       if (activeTab === 'market') {
         result = await api('/scan/signals');
       } else if (activeTab === 'watchlist') {
-        const watchlistSignals: SignalResult[] = await api('/signals');
-        result = watchlistSignals.map(r => toScanRow(r));
+        const watchlistEntries = await api('/watchlist');
+        const results: SignalResult[] = await Promise.all(
+          watchlistEntries.map((e: { code: string }) => api(`/signals/${e.code}`))
+        );
+        result = results.map(r => toScanRow(r));
+      } else if (activeTab === 'portfolio') {
+        const portfolioEntries = await api('/portfolio');
+        const results: SignalResult[] = await Promise.all(
+          portfolioEntries.map((e: { code: string }) => api(`/signals/${e.code}`))
+        );
+        result = results.map(r => toScanRow(r));
       } else if (activeTab === 'favorites') {
         const favorites = await api('/favorites?tag=speculative');
         const results: SignalResult[] = await Promise.all(
@@ -201,8 +210,9 @@
 
   const TAB_LABELS: Record<Tab, string> = {
     market: '全市場訊號',
-    watchlist: '我的持倉',
     favorites: '我的最愛',
+    portfolio: '我的持倉',
+    watchlist: '追蹤清單',
   };
 </script>
 
