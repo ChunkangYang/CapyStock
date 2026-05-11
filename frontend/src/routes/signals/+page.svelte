@@ -195,6 +195,32 @@
     loadData(false, newOffset);
   }
 
+  function getPageNumbers() {
+    const currentPage = Math.floor(offset / LIMIT) + 1;
+    const totalPages = Math.ceil(totalCount / LIMIT);
+    const pages: (number | string)[] = [];
+
+    const range = 2; // 當前頁前後顯示多少頁
+    const start = Math.max(1, currentPage - range);
+    const end = Math.min(totalPages, currentPage + range);
+
+    if (start > 1) {
+      pages.push(1);
+      if (start > 2) pages.push('...');
+    }
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (end < totalPages) {
+      if (end < totalPages - 1) pages.push('...');
+      pages.push(totalPages);
+    }
+
+    return pages;
+  }
+
   async function refreshRow(code: string) {
     refreshingCodes = new Set([...refreshingCodes, code]);
     // 清除個股快取（detail 頁面會重新抓）
@@ -323,9 +349,21 @@
           ← 上一頁
         </button>
 
-        <span class="page-info">
-          {offset + 1}–{Math.min(offset + LIMIT, totalCount)} / {totalCount}
-        </span>
+        <div class="page-numbers">
+          {#each getPageNumbers() as page}
+            {#if page === '...'}
+              <span class="page-ellipsis">...</span>
+            {:else}
+              <button
+                class="page-num"
+                class:active={Math.floor(offset / LIMIT) + 1 === page}
+                on:click={() => goToPage((page - 1) * LIMIT)}
+              >
+                {page}
+              </button>
+            {/if}
+          {/each}
+        </div>
 
         <button
           class="btn-page"
@@ -471,18 +509,49 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: 12px;
     margin-top: 24px;
     padding: 16px;
     background: #0a0a0a;
     border-radius: 4px;
+    flex-wrap: wrap;
   }
 
-  .page-info {
-    font-size: 13px;
-    color: #888;
-    min-width: 120px;
+  .page-numbers {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .page-num {
+    background: #1a1a1a;
+    border: 1px solid #444;
+    color: #ccc;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+    min-width: 32px;
     text-align: center;
+  }
+
+  .page-num:hover {
+    color: #4ade80;
+    border-color: #4ade80;
+  }
+
+  .page-num.active {
+    background: #4ade80;
+    color: #000;
+    border-color: #4ade80;
+    font-weight: bold;
+  }
+
+  .page-ellipsis {
+    color: #666;
+    font-size: 12px;
+    padding: 0 2px;
   }
 
   .btn-page {
