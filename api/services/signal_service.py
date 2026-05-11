@@ -122,31 +122,39 @@ def _compute_technical_score(signals: list[IndicatorSignal]) -> float:
     return float(max(-3.0, min(3.0, score)))
 
 
-def analyze_one(code: str, name: str = "", start_price: Optional[float] = None) -> SignalResult:
+def analyze_one(
+    code: str,
+    name: str = "",
+    start_price: Optional[float] = None,
+    price_df: Optional[pd.DataFrame] = None,
+) -> SignalResult:
     """分析單檔股票訊號。
 
     Args:
         code: 股票代碼
         name: 股票名稱（若為空，會自動爬取）
         start_price: 起始價（若為 None，視為非 watchlist 股票）
-
-    Returns:
-        SignalResult 物件
+        price_df: 預先下載的價格 DataFrame（批次掃描用，傳入則跳過 HTTP 爬取）
     """
     if not name:
         name = scraper.fetch_name(code) or ""
 
-    from concurrent.futures import ThreadPoolExecutor
-
-    # 平行化爬蟲呼叫（price、margin、flow 可並行）
-    with ThreadPoolExecutor(max_workers=3) as executor:
-        price_future = executor.submit(scraper.fetch_price, code)
-        margin_future = executor.submit(scraper.fetch_margin, code)
-        flow_future = executor.submit(scraper.fetch_flow, code)
-
-        price_df, _ = price_future.result()
-        margin_df = margin_future.result()
-        flow_df = flow_future.result()
+    if price_df is None:
+        # 個股詳頁路徑：平行化爬蟲（price、margin、flow）
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            price_future = executor.submit(scraper.fetch_price, code)
+            margin_future = executor.submit(scraper.fetch_margin, code)
+            flow_future = executor.submit(scraper.fetch_flow, code)
+            price_df, _ = price_future.result()
+            margin_df = margin_future.result()
+            flow_df = flow_future.result()
+    else:
+        # 批次掃描路徑：price 已預先下載，margin/flow 讀本地 CSV
+        if isinstance(price_df, pd.DataFrame) and price_df.empty:
+            price_df = None
+        margin_df = scraper.fetch_margin(code)
+        flow_df = scraper.fetch_flow(code)
 
     # 使用既有的 analyzer 邏輯
     if start_price is None:

@@ -1,5 +1,7 @@
 import csv
 import json
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime
 from pathlib import Path
 from typing import Optional
@@ -87,111 +89,144 @@ def _write_signal_cache(code: str, row: SignalScanRow, today: date) -> None:
         json.dump(data, f, ensure_ascii=False)
 
 
+def _load_edinet_by_code() -> dict[str, list]:
+    """一次性取得 3 天內的所有 EDINET 報告，建立 code → events 快篩表。"""
+    try:
+        from capystock import edinet, config
+        if not config.EDINET_API_KEY:
+            return {}
+        all_edinet_reports = edinet.fetch_since(days=3)
+        edinet_by_code: dict[str, list] = {}
+        for report in all_edinet_reports:
+            sec_code = str(report.get("securities_code", "")).zfill(4)
+            edinet_by_code.setdefault(sec_code, []).append({
+                "date": report.get("submit_date"),
+                "filer": report.get("filer_name"),
+                "doc_type_code": report.get("doc_type_code"),
+                "pdf_url": report.get("pdf_url"),
+            })
+        return edinet_by_code
+    except Exception:
+        return {}
+
+
 def run_signals_scan(
     universe: list[dict],
     clock: Optional[date] = None,
     include_technical: bool = True,
     progress_callback: Optional[callable] = None,
     snapshot_callback: Optional[callable] = None,
+    max_workers: int = 16,
 ) -> tuple[list[SignalScanRow], list[dict]]:
-    """掃描所有股票的訊號，邊掃邊存快取和快照，回傳 (rows, errors)"""
+    """掃描所有股票的訊號（方案C：yfinance批次下載 + 並行分析）。
+
+    流程：
+    1. 分離「今日已快取」與「待掃描」兩群。
+    2. 批次用 yfinance 下載待掃描股票的價格（每批100支，約6分鐘）。
+    3. 用 ThreadPoolExecutor 並行做訊號分析（無 HTTP，約10分鐘）。
+    """
     if clock is None:
         clock = date.today()
-
-    rows = []
-    errors = []
     now = datetime.combine(clock, datetime.min.time())
-    skipped = 0
 
-    # 掃描開始前，一次性取得 3 天內的所有 EDINET 報告（避免每檔都查一遍 API）
-    try:
-        from capystock import edinet, config
-        all_edinet_reports = edinet.fetch_since(days=3) if config.EDINET_API_KEY else []
-        # 建立 code → events 快篩表
-        edinet_by_code: dict[str, list] = {}
-        for report in all_edinet_reports:
-            sec_code = str(report.get("securities_code", "")).zfill(4)
-            if sec_code not in edinet_by_code:
-                edinet_by_code[sec_code] = []
-            edinet_by_code[sec_code].append({
-                "date": report.get("submit_date"),
-                "filer": report.get("filer_name"),
-                "doc_type_code": report.get("doc_type_code"),
-                "pdf_url": report.get("pdf_url"),
-            })
-    except Exception:
-        edinet_by_code = {}
+    # ── Step 1: 分離快取與待掃描 ──────────────────────────────────────────
+    cached_rows: list[SignalScanRow] = []
+    to_scan: list[dict] = []
 
-    for i, entry in enumerate(universe):
+    for entry in universe:
         code = entry["code"]
-        name = entry["name"]
-
-        # 檢查是否今天已掃描過，若已掃描就跳過
         if _is_signal_scanned_today(code, clock):
-            skipped += 1
-            # 從快取讀取結果
             cache_file = _signal_cache_path(code)
             try:
                 with open(cache_file) as f:
-                    cached = json.load(f)
-                row = SignalScanRow(
-                    code=cached["code"],
-                    name=cached["name"],
-                    latest_price=cached.get("latest_price"),
-                    has_accumulation=cached["has_accumulation"],
-                    has_exit=cached["has_exit"],
-                    has_stop_loss=cached["has_stop_loss"],
-                    edinet_recent_count=cached["edinet_recent_count"],
-                    score=cached["score"],
+                    c = json.load(f)
+                cached_rows.append(SignalScanRow(
+                    code=c["code"], name=c["name"],
+                    latest_price=c.get("latest_price"),
+                    has_accumulation=c["has_accumulation"],
+                    has_exit=c["has_exit"],
+                    has_stop_loss=c["has_stop_loss"],
+                    edinet_recent_count=c["edinet_recent_count"],
+                    score=c["score"],
                     generated_at=now,
-                )
-                rows.append(row)
-            except:
-                pass
-            if progress_callback:
-                progress_callback(i + 1)
-            continue
+                ))
+            except Exception:
+                to_scan.append(entry)  # 快取損壞，重新掃
+        else:
+            to_scan.append(entry)
 
+    # ── Step 2: 一次性 EDINET 查詢 ────────────────────────────────────────
+    edinet_by_code = _load_edinet_by_code()
+
+    # ── Step 3: yfinance 批次下載價格（主要速度提升點）─────────────────────
+    price_data: dict[str, Optional[pd.DataFrame]] = {}
+    if to_scan:
         try:
-            result = analyze_one(code, name=name)
-            # 從快篩表查詢 EDINET 事件（O(1) lookup）
+            from capystock import scraper as _scraper
+            codes_to_fetch = [e["code"] for e in to_scan]
+            price_data = _scraper.fetch_price_bulk(codes_to_fetch)
+        except Exception:
+            pass  # 全部 fallback 到 kabutan 單支爬取
+
+    # ── Step 4: 並行訊號分析 ──────────────────────────────────────────────
+    rows: list[SignalScanRow] = list(cached_rows)
+    errors: list[dict] = []
+    completed = len(cached_rows)
+    _lock = threading.Lock()
+
+    # snapshot 寫入序列化（避免並發寫同一檔案）
+    _snapshot_lock = threading.Lock()
+
+    def _process_one(entry: dict) -> tuple[Optional[SignalScanRow], Optional[dict]]:
+        code = entry["code"]
+        name = entry["name"]
+        try:
+            pre_price = price_data.get(code)  # None 表示 yfinance 失敗，fallback kabutan
+            result = analyze_one(code, name=name, price_df=pre_price)
             events = edinet_by_code.get(str(code).zfill(4), [])
             score = compute_score(result, events, include_technical=include_technical)
 
-            # 統計 alert 數量
-            has_accumulation = any(a.alert_type == "accumulation" for a in result.alerts)
-            has_exit = any(a.alert_type == "exit" for a in result.alerts)
-            has_stop_loss = any(a.alert_type == "stop_loss" for a in result.alerts)
-
-            # EDINET 事件計數
-            edinet_recent_count = len(events)
-
             row = SignalScanRow(
-                code=code,
-                name=name,
+                code=code, name=name,
                 latest_price=result.latest_price,
-                has_accumulation=has_accumulation,
-                has_exit=has_exit,
-                has_stop_loss=has_stop_loss,
-                edinet_recent_count=edinet_recent_count,
+                has_accumulation=any(a.alert_type == "accumulation" for a in result.alerts),
+                has_exit=any(a.alert_type == "exit" for a in result.alerts),
+                has_stop_loss=any(a.alert_type == "stop_loss" for a in result.alerts),
+                edinet_recent_count=len(events),
                 score=score,
                 generated_at=now,
             )
-            rows.append(row)
-
-            # 邊掃邊存快取
             _write_signal_cache(code, row, clock)
-
+            return row, None
         except Exception as e:
-            errors.append({"code": code, "name": name, "error": str(e)})
+            return None, {"code": code, "name": name, "error": str(e)}
 
-        # 每掃 50 檔就更新一次快照（讓前端即時看到進度）
-        if (i + 1) % 50 == 0 and snapshot_callback:
-            snapshot_callback(rows, errors)
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(_process_one, entry): entry for entry in to_scan}
+        for future in as_completed(futures):
+            row, err = future.result()
+            with _lock:
+                if row:
+                    rows.append(row)
+                if err:
+                    errors.append(err)
+                completed += 1
+                curr = completed
 
-        # 更新進度
-        if progress_callback:
-            progress_callback(i + 1)
+            if progress_callback:
+                progress_callback(curr)
+
+            # 每完成 50 支更新一次快照
+            if curr % 50 == 0 and snapshot_callback:
+                with _snapshot_lock:
+                    with _lock:
+                        snap_rows = list(rows)
+                        snap_errs = list(errors)
+                    snapshot_callback(snap_rows, snap_errs)
+
+    # 最終進度
+    if progress_callback:
+        progress_callback(len(universe))
 
     return rows, errors
 

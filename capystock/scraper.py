@@ -134,6 +134,96 @@ def _fetch_price_yfinance(code: str, days: int = 90) -> Optional[pd.DataFrame]:
     return df[["date", "open", "high", "low", "close", "volume"]].sort_values("date").reset_index(drop=True)
 
 
+def _normalize_yfinance_df(df: pd.DataFrame) -> Optional[pd.DataFrame]:
+    """yfinance DataFrame → 標準格式（date, open, high, low, close, volume 千股）"""
+    try:
+        df = df.copy()
+        # reset_index 處理 DatetimeIndex
+        if df.index.name in ("Date", "Datetime", "date"):
+            df = df.reset_index()
+        df = df.rename(columns={
+            "Date": "date", "Datetime": "date",
+            "Open": "open", "High": "high", "Low": "low",
+            "Close": "close", "Adj Close": "adj_close", "Volume": "volume",
+        })
+        if "date" not in df.columns:
+            return None
+        needed = ["date", "open", "high", "low", "close", "volume"]
+        for col in needed:
+            if col not in df.columns:
+                return None
+        df["date"] = pd.to_datetime(df["date"]).dt.tz_localize(None)
+        df = df[needed].dropna(subset=["close", "open"]).copy()
+        df["volume"] = df["volume"] / 1000.0
+        df = df.sort_values("date").reset_index(drop=True)
+        return df if len(df) >= 5 else None
+    except Exception:
+        return None
+
+
+def fetch_price_bulk(
+    codes: list[str],
+    days: int = 90,
+    batch_size: int = 100,
+) -> dict[str, Optional[pd.DataFrame]]:
+    """yfinance 批次下載多支股票價格（掃描加速用）。
+    回傳 code → DataFrame（失敗為 None）。
+    """
+    try:
+        import yfinance as yf
+    except ImportError:
+        return {code: None for code in codes}
+
+    results: dict[str, Optional[pd.DataFrame]] = {}
+    period = "6mo" if days > 90 else "3mo"
+
+    for batch_start in range(0, len(codes), batch_size):
+        batch_codes = codes[batch_start:batch_start + batch_size]
+        batch_tickers = [f"{c}.T" for c in batch_codes]
+
+        try:
+            if len(batch_tickers) == 1:
+                t = yf.Ticker(batch_tickers[0])
+                hist = t.history(period=period, auto_adjust=False)
+                results[batch_codes[0]] = _normalize_yfinance_df(hist.reset_index()) if (hist is not None and not hist.empty) else None
+            else:
+                hist = yf.download(
+                    batch_tickers,
+                    period=period,
+                    auto_adjust=False,
+                    group_by="ticker",
+                    progress=False,
+                    threads=True,
+                    timeout=60,
+                )
+                if hist.empty:
+                    for code in batch_codes:
+                        results[code] = None
+                else:
+                    if isinstance(hist.columns, pd.MultiIndex):
+                        lvl0 = hist.columns.get_level_values(0).unique()
+                        for code, ticker in zip(batch_codes, batch_tickers):
+                            if ticker in lvl0:
+                                df_t = hist[ticker].dropna(how="all").reset_index()
+                                results[code] = _normalize_yfinance_df(df_t)
+                            else:
+                                results[code] = None
+                    else:
+                        # 只有一個 ticker 被處理，flat columns
+                        results[batch_codes[0]] = _normalize_yfinance_df(hist.reset_index())
+                        for code in batch_codes[1:]:
+                            results[code] = None
+        except Exception:
+            for code in batch_codes:
+                if code not in results:
+                    results[code] = None
+
+        # 批次間禮貌等待
+        time.sleep(1.0)
+
+    return results
+
+
 def fetch_price(code: str, days: int = 90) -> tuple[Optional[pd.DataFrame], str]:
     df = _fetch_price_kabutan(code)
     if df is not None and len(df) >= 5:
