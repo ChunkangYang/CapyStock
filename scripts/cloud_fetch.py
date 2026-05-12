@@ -60,6 +60,64 @@ def fetch_margin(code: str) -> dict:
     return {"ok": False, "source": "none", "rows": 0, "error": "; ".join(errors)}
 
 
+def fetch_price(code: str) -> dict:
+    """從 yfinance 抓股價，寫 cloud-cache。每次覆寫（yfinance 一次回完整歷史）。"""
+    import yfinance as yf
+
+    try:
+        ticker = yf.Ticker(f"{code}.T")
+        df = ticker.history(period="6mo", auto_adjust=False)
+        if df.empty:
+            return {"ok": False, "source": "yfinance", "rows": 0, "error": "empty"}
+        df = df.reset_index()
+        # 規一欄位名：與本地 cache 對齊
+        df.columns = [c.lower() if isinstance(c, str) else c for c in df.columns]
+        if "date" in df.columns:
+            df["date"] = df["date"].astype(str).str.slice(0, 10)
+        out = CLOUD_CACHE_DIR / f"{code}_price.csv"
+        df.to_csv(out, index=False)
+        return {"ok": True, "source": "yfinance", "rows": len(df), "path": str(out.relative_to(ROOT))}
+    except Exception as e:
+        return {"ok": False, "source": "yfinance", "rows": 0, "error": str(e)}
+
+
+def fetch_edinet(days: int = 7, codes: list[str] | None = None) -> dict:
+    """抓 EDINET 大量保有報告（>5% 持股申報）。不分股票，整批回掃 N 天。"""
+    import os
+
+    if not os.environ.get("EDINET_API_KEY"):
+        return {"ok": False, "source": "edinet", "rows": 0, "error": "EDINET_API_KEY 未設定"}
+
+    from capystock import edinet
+
+    try:
+        code_set = set(codes) if codes else None
+        reports = edinet.fetch_since(days=days, codes=code_set)
+        out = CLOUD_CACHE_DIR / "edinet_reports.json"
+        # append + dedupe by (sec_code, doc_id-from-url, submit_date)
+        existing = []
+        if out.exists():
+            try:
+                existing = json.loads(out.read_text(encoding="utf-8"))
+            except Exception:
+                existing = []
+        merged = existing + reports
+        seen = set()
+        dedup = []
+        for r in merged:
+            key = (r.get("sec_code"), r.get("submit_date"), r.get("filer_name"), r.get("doc_type_code"))
+            if key in seen:
+                continue
+            seen.add(key)
+            dedup.append(r)
+        dedup.sort(key=lambda x: x.get("submit_date", ""), reverse=True)
+        out.write_text(json.dumps(dedup, ensure_ascii=False, indent=2), encoding="utf-8")
+        return {"ok": True, "source": "edinet", "rows": len(reports), "total_after_dedup": len(dedup),
+                "path": str(out.relative_to(ROOT))}
+    except Exception as e:
+        return {"ok": False, "source": "edinet", "rows": 0, "error": str(e)}
+
+
 def fetch_flow(code: str) -> dict:
     """JPX flow 每次只回當週一筆；append 到既有 cloud-cache CSV 並去重，雲端自己累積歷史。"""
     import pandas as pd
@@ -118,8 +176,9 @@ def main():
     ap.add_argument("--codes", help="逗號分隔代碼，覆蓋預設 PoC 清單")
     ap.add_argument("--all", action="store_true", help="抓 universe.csv 全部")
     ap.add_argument("--watchlist", action="store_true", help="抓 data/watchlist.json 內所有股票")
-    ap.add_argument("--kinds", default="margin,flow", help="margin / flow / margin,flow")
+    ap.add_argument("--kinds", default="margin,flow", help="margin / flow / price，可逗號組合；edinet 為整批回掃，需在 --edinet-days 指定天數")
     ap.add_argument("--limit", type=int, default=0, help=">0 時截斷代碼數（避免 Actions 超時）")
+    ap.add_argument("--edinet-days", type=int, default=0, help=">0 時抓 EDINET 大量保有報告（回掃 N 日）")
     args = ap.parse_args()
 
     if args.all:
@@ -157,6 +216,8 @@ def main():
                     r = fetch_margin(code)
                 elif kind == "flow":
                     r = fetch_flow(code)
+                elif kind == "price":
+                    r = fetch_price(code)
                 else:
                     r = {"ok": False, "error": f"unknown kind {kind}", "source": "n/a", "rows": 0}
             except Exception as e:
@@ -178,6 +239,17 @@ def main():
         else:
             continue
         break
+
+    # 額外：EDINET 整批模式（不依賴 codes 迴圈，因為是回掃日期）
+    if args.edinet_days and args.edinet_days > 0:
+        t0 = time.time()
+        edinet_res = fetch_edinet(days=args.edinet_days, codes=codes if codes else None)
+        edinet_res.update({"code": "*", "kind": "edinet", "elapsed_sec": round(time.time() - t0, 2)})
+        report["results"].append(edinet_res)
+        status = "OK" if edinet_res["ok"] else "FAIL"
+        print(f"  [edinet days={args.edinet_days}] {status} rows={edinet_res.get('rows')} "
+              f"t={edinet_res['elapsed_sec']}s"
+              + (f"  err={edinet_res.get('error')}" if not edinet_res["ok"] else ""))
 
     ended = datetime.now(timezone.utc)
     total_ok = sum(1 for r in report["results"] if r["ok"])

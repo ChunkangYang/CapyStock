@@ -1,26 +1,35 @@
 {
-  "started_utc": "2026-05-12T12:15:52.634063+00:00",
+  "started_utc": "2026-05-12T12:35:41.873531+00:00",
   "codes_total": 1,
   "kinds": [
-    "flow"
+    "price"
   ],
   "results": [
     {
       "ok": true,
-      "source": "jpx_flow",
-      "rows": 3,
-      "path": "data\\cloud-cache\\7203_flow.csv",
-      "appended": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data\\cloud-cache\\7203_price.csv",
       "code": "7203",
-      "kind": "flow",
-      "elapsed_sec": 4.84
+      "kind": "price",
+      "elapsed_sec": 2.33
+    },
+    {
+      "ok": true,
+      "source": "edinet",
+      "rows": 0,
+      "total_after_dedup": 0,
+      "path": "data\\cloud-cache\\edinet_reports.json",
+      "code": "*",
+      "kind": "edinet",
+      "elapsed_sec": 2.29
     }
   ],
   "summary": {
-    "ok": 1,
+    "ok": 2,
     "fail": 0,
-    "total": 1
+    "total": 2
   },
-  "ended_utc": "2026-05-12T12:15:57.469577+00:00",
-  "elapsed_sec": 4.8
+  "ended_utc": "2026-05-12T12:35:46.492500+00:00",
+  "elapsed_sec": 4.6
 }

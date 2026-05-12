@@ -308,6 +308,7 @@ async def cloud_sync(req: CloudSyncRequest):
 
     copied = []
     skipped = []
+    # CSV: 信用残 / flow / price
     for src in cloud_dir.glob("*.csv"):
         dst = local_dir / src.name
         try:
@@ -315,6 +316,14 @@ async def cloud_sync(req: CloudSyncRequest):
             copied.append(src.name)
         except Exception as e:
             skipped.append({"file": src.name, "error": str(e)})
+    # EDINET reports JSON → 仍保留在 cloud-cache 內，但也複製一份到 cache 給 analyzer 用
+    edinet_json = cloud_dir / "edinet_reports.json"
+    if edinet_json.exists():
+        try:
+            shutil.copy2(edinet_json, local_dir / "edinet_reports.json")
+            copied.append("edinet_reports.json")
+        except Exception as e:
+            skipped.append({"file": "edinet_reports.json", "error": str(e)})
 
     return {
         "pulled": pulled_info,

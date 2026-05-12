@@ -18,9 +18,13 @@ name: Cloud Fetch
         required: false
         default: ""
       kinds:
-        description: "margin / flow / margin,flow"
+        description: "margin / flow / price (comma combo)"
         required: false
-        default: "margin,flow"
+        default: "margin,flow,price"
+      edinet_days:
+        description: "EDINET lookback days (0 = skip)"
+        required: false
+        default: "3"
       limit:
         description: "max codes to fetch (0 = no limit)"
         required: false
@@ -62,8 +66,10 @@ jobs:
           # schedule event has no inputs -> defaults below kick in
           INPUT_MODE: ${{ github.event.inputs.mode || 'watchlist' }}
           INPUT_CODES: ${{ github.event.inputs.codes }}
-          INPUT_KINDS: ${{ github.event.inputs.kinds || 'margin,flow' }}
+          INPUT_KINDS: ${{ github.event.inputs.kinds || 'margin,flow,price' }}
+          INPUT_EDINET_DAYS: ${{ github.event.inputs.edinet_days || '3' }}
           INPUT_LIMIT: ${{ github.event.inputs.limit || '0' }}
+          EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
         run: |
           ARGS="--kinds $INPUT_KINDS"
           case "$INPUT_MODE" in
@@ -72,6 +78,7 @@ jobs:
             watchlist|*) ARGS="$ARGS --watchlist" ;;
           esac
           [ -n "$INPUT_LIMIT" ] && [ "$INPUT_LIMIT" != "0" ] && ARGS="$ARGS --limit $INPUT_LIMIT"
+          [ -n "$INPUT_EDINET_DAYS" ] && [ "$INPUT_EDINET_DAYS" != "0" ] && ARGS="$ARGS --edinet-days $INPUT_EDINET_DAYS"
           echo "Running: python scripts/cloud_fetch.py $ARGS"
           python scripts/cloud_fetch.py $ARGS
 
@@ -94,4 +101,34 @@ jobs:
           else
             git commit -m "chore(cloud-fetch): update $(date -u +%Y-%m-%dT%H:%MZ)"
             git push
+          fi
+
+      - name: Notify Telegram on failure
+        if: failure() && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          MSG="❌ CapyStock Cloud Fetch FAILED%0Arepo: ${{ github.repository }}%0Abranch: ${{ github.ref_name }}%0Arun: $RUN_URL"
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" \
+            -d "text=${MSG}" \
+            -d "disable_web_page_preview=true" || true
+
+      - name: Notify Telegram on success (summary)
+        if: success() && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != '' && github.event_name == 'schedule'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          REPORT="data/cloud-cache/_fetch_report.json"
+          if [ -f "$REPORT" ]; then
+            OK=$(python -c "import json; print(json.load(open('$REPORT'))['summary'].get('ok',0))")
+            FAIL=$(python -c "import json; print(json.load(open('$REPORT'))['summary'].get('fail',0))")
+            ELAPSED=$(python -c "import json; print(json.load(open('$REPORT')).get('elapsed_sec',0))")
+            MSG="✅ Cloud Fetch ok=${OK} fail=${FAIL} elapsed=${ELAPSED}s"
+            curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+              -d "chat_id=${TELEGRAM_CHAT_ID}" \
+              -d "text=${MSG}" || true
           fi

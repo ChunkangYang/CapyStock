@@ -9,18 +9,59 @@
 
 ## 排程說明
 
-預設排程：**每週一到五，JST 16:00（東京收盤後 1 小時）**
-- 對應 cron：`0 7 * * 1-5`（UTC）
-- 預設 mode：`watchlist`（只抓 `data/watchlist.json` 內的股票，避免燒額度）
+預設：**每週一到五 JST 16:00（東京收盤後 1h）**，跑 `watchlist` + `margin,flow,price` + EDINET 回掃 3 日。
 
-修改排程：編輯 `.github/workflows/cloud-fetch.yml` 的 `cron:` 那行。Cron 語法：
+對應 cron：`0 7 * * 1-5`（UTC，GitHub Actions 全用 UTC）。
+
+### Cron 語法（5 個欄位，從左到右）
 ```
-分 時 日 月 週
-0  7 *  *  1-5   = 每週一到五 UTC 07:00 = JST 16:00
-0  */6 * * *     = 每 6 小時跑一次
+分(0-59)  時(0-23)  日(1-31)  月(1-12)  週(0-6, 0=週日)
 ```
 
-修改後 commit + push 即生效。
+### 範例（JST = UTC + 9）
+| 想要的觸發時間 | cron 表達式 | 說明 |
+|---|---|---|
+| 每天 JST 16:00（東京收盤後） | `0 7 * * *` | 每天，包含週末 |
+| 週一到五 JST 16:00（**目前預設**） | `0 7 * * 1-5` | 跳過週末 |
+| 週一到五 JST 9:00（開盤前） | `0 0 * * 1-5` | UTC 0 點 = JST 9 點 |
+| 每天 JST 7:00 + 15:00 + 23:00 | `0 22,6,14 * * *` | 注意「7:00 JST = 22:00 UTC 前一天」 |
+| 每 4 小時 | `0 */4 * * *` | |
+| 每 30 分鐘 | `*/30 * * * *` | 注意：實際執行常延遲 5–30 分鐘 |
+| 只在週六 JST 8:00 | `0 23 * * 5` | 週五 UTC 23:00 = 週六 JST 8:00 |
+
+### 修改步驟
+1. 編輯 `.github/workflows/cloud-fetch.yml` 的 `cron:` 那行
+2. `git commit` + `git push`
+3. **必須 push 到 default branch**（你的 default 是 `feature/s25-portfolio`）才會生效
+
+### 限制
+- 最小間隔 5 分鐘
+- 實際延遲常達 10–30 分鐘（GitHub 排隊）
+- repo 連續 60 天無 push，scheduled workflow 會自動停用（手動 run 一次即可恢復）
+
+---
+
+## GitHub Secrets 設定（EDINET + Telegram）
+
+到 repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**，加入：
+
+| Secret 名稱 | 用途 | 必需性 |
+|---|---|---|
+| `EDINET_API_KEY` | EDINET 金融廳 API key（5% rule 申報） | 選用（沒設則 EDINET 跳過） |
+| `TELEGRAM_BOT_TOKEN` | Telegram bot token（失敗通知） | 選用 |
+| `TELEGRAM_CHAT_ID` | 收通知的 chat id（個人或群組） | 選用 |
+
+### 怎麼拿 EDINET_API_KEY
+你本地的 `data/.env` 已有，直接複製 `EDINET_API_KEY=` 後面那串。
+
+### 怎麼拿 Telegram bot token + chat id
+- bot token：找 @BotFather 建 bot 時拿到的字串
+- chat id：把 bot 加進想收通知的對話，傳一句話，然後 `curl https://api.telegram.org/bot<TOKEN>/getUpdates`，找 `chat.id`
+
+### 通知行為
+- 失敗時（任何 step 失敗）：傳「❌ FAILED + 連結到 run」
+- 排程成功時：傳「✅ ok=X fail=Y elapsed=Zs」（手動觸發不會傳，避免吵）
+- 沒設 `TELEGRAM_BOT_TOKEN` 或 `TELEGRAM_CHAT_ID` 時通知 step 跳過
 
 ### 手動觸發
 GitHub repo → Actions → **Cloud Fetch** → Run workflow，可指定：
