@@ -1,0 +1,35 @@
+{
+  "started_utc": "2026-05-12T11:40:13.494609+00:00",
+  "codes_total": 1,
+  "kinds": [
+    "margin",
+    "flow"
+  ],
+  "results": [
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data\\cloud-cache\\7203_margin.csv",
+      "code": "7203",
+      "kind": "margin",
+      "elapsed_sec": 2.51
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 3,
+      "path": "data\\cloud-cache\\7203_flow.csv",
+      "code": "7203",
+      "kind": "flow",
+      "elapsed_sec": 5.0
+    }
+  ],
+  "summary": {
+    "ok": 2,
+    "fail": 0,
+    "total": 2
+  },
+  "ended_utc": "2026-05-12T11:40:21.002375+00:00",
+  "elapsed_sec": 7.5
+}

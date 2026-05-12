@@ -1,0 +1,90 @@
+name: Cloud Fetch (PoC)
+
+# 觸發方式：
+#   1. 手動：Actions 頁面點 Run workflow
+#   2. 排程：每日 JST 16:00（東京收盤後 1h）= UTC 07:00
+on:
+  workflow_dispatch:
+    inputs:
+      codes:
+        description: '逗號分隔代碼（空白=用預設 PoC 5 檔）'
+        required: false
+        default: ''
+      kinds:
+        description: '資料種類：margin / flow / margin,flow'
+        required: false
+        default: 'margin,flow'
+      limit:
+        description: '限制檔數（debug 用，0=不限）'
+        required: false
+        default: '0'
+  schedule:
+    # 每日 UTC 07:00 = JST 16:00
+    - cron: '0 7 * * 1-5'
+
+# 必須給 contents: write 才能 commit 回 repo
+permissions:
+  contents: write
+
+concurrency:
+  group: cloud-fetch
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # 取得 cloud-data 分支；不存在則用預設分支
+          ref: ${{ github.ref }}
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install deps
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run cloud fetch
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.codes }}" ]; then
+            ARGS="$ARGS --codes ${{ github.event.inputs.codes }}"
+          fi
+          if [ -n "${{ github.event.inputs.kinds }}" ]; then
+            ARGS="$ARGS --kinds ${{ github.event.inputs.kinds }}"
+          fi
+          if [ "${{ github.event.inputs.limit }}" != "" ] && [ "${{ github.event.inputs.limit }}" != "0" ]; then
+            ARGS="$ARGS --limit ${{ github.event.inputs.limit }}"
+          fi
+          python scripts/cloud_fetch.py $ARGS
+
+      - name: Upload report as artifact (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fetch-report-${{ github.run_id }}
+          path: data/cloud-cache/_fetch_report.json
+          if-no-files-found: ignore
+
+      - name: Commit cloud cache
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/cloud-cache/
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "chore(cloud-fetch): update $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
