@@ -1,6 +1,6 @@
 {
-  "started_utc": "2026-05-12T11:40:13.494609+00:00",
-  "codes_total": 1,
+  "started_utc": "2026-05-12T11:56:38.343679+00:00",
+  "codes_total": 5,
   "kinds": [
     "margin",
     "flow"
@@ -10,26 +10,98 @@
       "ok": true,
       "source": "yahoo_jp",
       "rows": 20,
-      "path": "data\\cloud-cache\\7203_margin.csv",
+      "path": "data/cloud-cache/7203_margin.csv",
       "code": "7203",
       "kind": "margin",
-      "elapsed_sec": 2.51
+      "elapsed_sec": 3.17
+    },
+    {
+      "ok": false,
+      "source": "jpx_flow",
+      "rows": 0,
+      "error": "`Import xlrd` failed. Install xlrd >= 2.0.1 for xls Excel support Use pip or conda to install the xlrd package.",
+      "code": "7203",
+      "kind": "flow",
+      "elapsed_sec": 4.83
     },
     {
       "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/6758_margin.csv",
+      "code": "6758",
+      "kind": "margin",
+      "elapsed_sec": 2.78
+    },
+    {
+      "ok": false,
       "source": "jpx_flow",
-      "rows": 3,
-      "path": "data\\cloud-cache\\7203_flow.csv",
-      "code": "7203",
+      "rows": 0,
+      "error": "`Import xlrd` failed. Install xlrd >= 2.0.1 for xls Excel support Use pip or conda to install the xlrd package.",
+      "code": "6758",
       "kind": "flow",
-      "elapsed_sec": 5.0
+      "elapsed_sec": 4.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/9984_margin.csv",
+      "code": "9984",
+      "kind": "margin",
+      "elapsed_sec": 2.75
+    },
+    {
+      "ok": false,
+      "source": "jpx_flow",
+      "rows": 0,
+      "error": "`Import xlrd` failed. Install xlrd >= 2.0.1 for xls Excel support Use pip or conda to install the xlrd package.",
+      "code": "9984",
+      "kind": "flow",
+      "elapsed_sec": 4.5
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/8035_margin.csv",
+      "code": "8035",
+      "kind": "margin",
+      "elapsed_sec": 3.38
+    },
+    {
+      "ok": false,
+      "source": "jpx_flow",
+      "rows": 0,
+      "error": "`Import xlrd` failed. Install xlrd >= 2.0.1 for xls Excel support Use pip or conda to install the xlrd package.",
+      "code": "8035",
+      "kind": "flow",
+      "elapsed_sec": 4.39
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/6367_margin.csv",
+      "code": "6367",
+      "kind": "margin",
+      "elapsed_sec": 2.84
+    },
+    {
+      "ok": false,
+      "source": "jpx_flow",
+      "rows": 0,
+      "error": "`Import xlrd` failed. Install xlrd >= 2.0.1 for xls Excel support Use pip or conda to install the xlrd package.",
+      "code": "6367",
+      "kind": "flow",
+      "elapsed_sec": 4.48
     }
   ],
   "summary": {
-    "ok": 2,
-    "fail": 0,
-    "total": 2
+    "ok": 5,
+    "fail": 5,
+    "total": 10
   },
-  "ended_utc": "2026-05-12T11:40:21.002375+00:00",
-  "elapsed_sec": 7.5
+  "ended_utc": "2026-05-12T11:57:15.750443+00:00",
+  "elapsed_sec": 37.4
 }
