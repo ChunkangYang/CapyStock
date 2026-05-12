@@ -72,6 +72,16 @@ def fetch_flow(code: str) -> dict:
         return {"ok": False, "source": "jpx_flow", "rows": 0, "error": str(e)}
 
 
+def load_watchlist_codes() -> list[str]:
+    p = ROOT / "data" / "watchlist.json"
+    if not p.exists():
+        return []
+    wl = json.loads(p.read_text(encoding="utf-8"))
+    if isinstance(wl, list):
+        return [str(item.get("code", "")).strip() for item in wl if item.get("code")]
+    return [str(k).strip() for k in wl.keys()]
+
+
 def load_universe_codes() -> list[str]:
     p = ROOT / "data" / "universe.csv"
     codes = []
@@ -88,12 +98,15 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--codes", help="逗號分隔代碼，覆蓋預設 PoC 清單")
     ap.add_argument("--all", action="store_true", help="抓 universe.csv 全部")
+    ap.add_argument("--watchlist", action="store_true", help="抓 data/watchlist.json 內所有股票")
     ap.add_argument("--kinds", default="margin,flow", help="margin / flow / margin,flow")
     ap.add_argument("--limit", type=int, default=0, help=">0 時截斷代碼數（避免 Actions 超時）")
     args = ap.parse_args()
 
     if args.all:
         codes = load_universe_codes()
+    elif args.watchlist:
+        codes = load_watchlist_codes()
     elif args.codes:
         codes = [c.strip() for c in args.codes.split(",") if c.strip()]
     else:

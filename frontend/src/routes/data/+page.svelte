@@ -20,6 +20,16 @@
   let jpxMsg = '';
   let universeLoading = false;
   let universeMsg = '';
+  let cloudLoading = false;
+  let cloudMsg = '';
+  interface CloudStatus {
+    available: boolean;
+    message?: string;
+    ended_utc?: string;
+    summary?: { ok?: number; fail?: number; total?: number };
+    files_count?: number;
+  }
+  let cloudStatus: CloudStatus | null = null;
   let scanLoading = false;
   let scanMsg = '';
   let scanJobId = '';
@@ -44,6 +54,9 @@
     } catch {
       localStorage.removeItem('scan_state');
     }
+
+    // 載入雲端狀態
+    loadCloudStatus();
 
     // 載入資料
     try {
@@ -115,6 +128,37 @@
   function ageLabel(days: number | null): string {
     if (days === null) return '—';
     return `${days}d`;
+  }
+
+  async function loadCloudStatus() {
+    try {
+      const r = await fetch(`${API}/data/cloud-sync/status`);
+      if (r.ok) cloudStatus = await r.json();
+    } catch { /* ignore */ }
+  }
+
+  async function syncFromCloud() {
+    cloudLoading = true;
+    cloudMsg = '';
+    try {
+      const r = await fetch(`${API}/data/cloud-sync`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pull: true }),
+      });
+      const body = await r.json();
+      if (!r.ok) throw new Error(body.detail || `HTTP ${r.status}`);
+      cloudMsg = `✓ 從雲端同步 ${body.copied_count} 個檔案到本地 cache`
+        + (body.pulled?.branch ? `（branch=${body.pulled.branch}）` : '');
+      await loadCloudStatus();
+      // 重新載入 overview 顯示新的 age
+      const ov = await fetch(`${API}/data/overview`);
+      if (ov.ok) rows = await ov.json();
+    } catch (e: any) {
+      cloudMsg = `✗ ${e.message}`;
+    } finally {
+      cloudLoading = false;
+    }
   }
 
   async function updateJpxFlow() {
@@ -210,8 +254,33 @@
       </button>
       <a href="/data/ingest" class="btn-secondary">批量抓取</a>
       <a href="/data/upload" class="btn-secondary">上傳資料</a>
+      <button class="btn-cloud" on:click={syncFromCloud} disabled={cloudLoading}
+        title="從 GitHub Actions 雲端排程的最新結果同步到本地 cache">
+        {cloudLoading ? '同步中…' : '☁ 從雲端同步'}
+      </button>
     </div>
   </div>
+
+  {#if cloudStatus}
+    <div class="cloud-banner" class:cloud-banner-empty={!cloudStatus.available}>
+      {#if cloudStatus.available}
+        <span class="cloud-label">☁ 雲端最新批次</span>
+        <span class="cloud-meta">
+          {cloudStatus.ended_utc ? new Date(cloudStatus.ended_utc).toLocaleString('zh-TW') : '—'}
+          ・成功 {cloudStatus.summary?.ok ?? 0} / 失敗 {cloudStatus.summary?.fail ?? 0}
+          ・檔案 {cloudStatus.files_count ?? 0}
+        </span>
+      {:else}
+        <span class="cloud-label">☁ 雲端</span>
+        <span class="cloud-meta">{cloudStatus.message ?? '尚未有雲端資料'}</span>
+      {/if}
+    </div>
+  {/if}
+  {#if cloudMsg}
+    <div class="cloud-msg" class:ok={cloudMsg.startsWith('✓')} class:err={cloudMsg.startsWith('✗')}>
+      {cloudMsg}
+    </div>
+  {/if}
   {#if scanLoading && scanProgressTotal > 0}
     <div class="progress-bar">
       <div class="progress-fill" style="width: {(scanProgress / scanProgressTotal) * 100}%"></div>
@@ -349,6 +418,42 @@
   }
   .btn-ghost:hover:not(:disabled) { color: #e5e7eb; border-color: #555; }
   .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-cloud {
+    background: #0c4a6e;
+    color: #e0f2fe;
+    border: 1px solid #0ea5e9;
+    border-radius: 4px;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .btn-cloud:hover:not(:disabled) { background: #075985; }
+  .btn-cloud:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .cloud-banner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #0c1f2e;
+    border: 1px solid #1e3a52;
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .cloud-banner-empty { background: #1a1a1a; border-color: #333; }
+  .cloud-label { color: #38bdf8; font-weight: 600; }
+  .cloud-meta { color: #94a3b8; }
+  .cloud-msg {
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .cloud-msg.ok { background: #064e3b; color: #d1fae5; border: 1px solid #4ade80; }
+  .cloud-msg.err { background: #7f1d1d; color: #fca5a5; border: 1px solid #ef4444; }
 
   .progress-bar {
     position: relative;

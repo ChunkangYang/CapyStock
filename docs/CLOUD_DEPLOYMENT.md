@@ -1,3 +1,55 @@
+# Cloud Fetch 部署文件（GitHub Actions 正式版）
+
+## 狀態
+- ✅ PoC 驗證通過：Azure IP 沒被擋（yahoo_jp / minkabu / jpx 都能訪問）
+- ✅ 已升級為正式版：`cloud-fetch.yml`
+- ✅ 已加入「從雲端同步」按鈕：`/data` 頁面右上 `☁ 從雲端同步`
+
+---
+
+## 排程說明
+
+預設排程：**每週一到五，JST 16:00（東京收盤後 1 小時）**
+- 對應 cron：`0 7 * * 1-5`（UTC）
+- 預設 mode：`watchlist`（只抓 `data/watchlist.json` 內的股票，避免燒額度）
+
+修改排程：編輯 `.github/workflows/cloud-fetch.yml` 的 `cron:` 那行。Cron 語法：
+```
+分 時 日 月 週
+0  7 *  *  1-5   = 每週一到五 UTC 07:00 = JST 16:00
+0  */6 * * *     = 每 6 小時跑一次
+```
+
+修改後 commit + push 即生效。
+
+### 手動觸發
+GitHub repo → Actions → **Cloud Fetch** → Run workflow，可指定：
+- `mode`：`watchlist`（預設）/ `all`（全市場 3747 檔）/ `codes`（自訂代碼）
+- `codes`：當 mode=codes 時填，例如 `7203,6758`
+- `kinds`：`margin` / `flow` / `margin,flow`
+- `limit`：除錯用，限制檔數
+
+### 暫停/關閉排程
+Actions → Cloud Fetch → 右上 `…` → **Disable workflow**
+
+---
+
+## 在系統內使用（一鍵同步）
+
+1. **重啟 API 伺服器** 讓新 endpoint 生效
+2. 進 `/data` 頁面
+3. 上方藍色 banner 顯示「☁ 雲端最新批次」狀態
+4. 點 **☁ 從雲端同步** 按鈕：
+   - 後端執行 `git fetch` + `git checkout origin/<branch> -- data/cloud-cache/`
+   - 把 `data/cloud-cache/*.csv` 複製到 `data/cache/`（覆蓋本地舊資料）
+   - overview 表格的 age 欄會即時刷新
+
+**API endpoint**（給其他系統呼叫）：
+- `GET /api/v1/data/cloud-sync/status` — 查最新雲端批次資訊
+- `POST /api/v1/data/cloud-sync` body=`{"pull": true}` — 觸發同步
+
+---
+
 # Cloud Fetch 部署文件（GitHub Actions PoC）
 
 ## 目的

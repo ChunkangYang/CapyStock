@@ -1,11 +1,20 @@
-name: Cloud Fetch PoC
+name: Cloud Fetch
 
-# Trigger: manual (Run workflow button) or daily JST 16:00 (UTC 07:00)
+# Trigger: manual (Run workflow button) or daily JST 16:00 (UTC 07:00) Mon-Fri
 "on":
   workflow_dispatch:
     inputs:
+      mode:
+        description: "scope: watchlist / all / codes"
+        required: false
+        default: "watchlist"
+        type: choice
+        options:
+          - watchlist
+          - all
+          - codes
       codes:
-        description: "comma-separated codes (empty = default 5 PoC codes)"
+        description: "when mode=codes, comma-separated (e.g. 7203,6758)"
         required: false
         default: ""
       kinds:
@@ -50,14 +59,20 @@ jobs:
 
       - name: Run cloud fetch
         env:
+          # schedule event has no inputs -> defaults below kick in
+          INPUT_MODE: ${{ github.event.inputs.mode || 'watchlist' }}
           INPUT_CODES: ${{ github.event.inputs.codes }}
-          INPUT_KINDS: ${{ github.event.inputs.kinds }}
-          INPUT_LIMIT: ${{ github.event.inputs.limit }}
+          INPUT_KINDS: ${{ github.event.inputs.kinds || 'margin,flow' }}
+          INPUT_LIMIT: ${{ github.event.inputs.limit || '0' }}
         run: |
-          ARGS=""
-          [ -n "$INPUT_CODES" ] && ARGS="$ARGS --codes $INPUT_CODES"
-          [ -n "$INPUT_KINDS" ] && ARGS="$ARGS --kinds $INPUT_KINDS"
+          ARGS="--kinds $INPUT_KINDS"
+          case "$INPUT_MODE" in
+            all)        ARGS="$ARGS --all" ;;
+            codes)      [ -n "$INPUT_CODES" ] && ARGS="$ARGS --codes $INPUT_CODES" ;;
+            watchlist|*) ARGS="$ARGS --watchlist" ;;
+          esac
           [ -n "$INPUT_LIMIT" ] && [ "$INPUT_LIMIT" != "0" ] && ARGS="$ARGS --limit $INPUT_LIMIT"
+          echo "Running: python scripts/cloud_fetch.py $ARGS"
           python scripts/cloud_fetch.py $ARGS
 
       - name: Upload report artifact

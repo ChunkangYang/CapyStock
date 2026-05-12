@@ -155,6 +155,96 @@ async def get_batch_job(job_id: str):
     return job
 
 
+@router.get("/cloud-sync/status")
+async def cloud_sync_status():
+    """回傳雲端 cache 狀態（從 data/cloud-cache/_fetch_report.json 讀）。"""
+    import json
+    from pathlib import Path
+
+    report_path = Path("data/cloud-cache/_fetch_report.json")
+    cache_dir = Path("data/cloud-cache")
+
+    if not report_path.exists():
+        return {"available": False, "message": "尚未從雲端拉取過資料"}
+
+    try:
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        csv_files = sorted([p.name for p in cache_dir.glob("*.csv")])
+        return {
+            "available": True,
+            "ended_utc": report.get("ended_utc"),
+            "summary": report.get("summary", {}),
+            "kinds": report.get("kinds", []),
+            "files_count": len(csv_files),
+            "files_sample": csv_files[:10],
+        }
+    except Exception as e:
+        return {"available": False, "message": f"報告檔解析失敗: {e}"}
+
+
+class CloudSyncRequest(BaseModel):
+    pull: bool = True  # True=git fetch+checkout 雲端最新；False=只套用現有 cloud-cache 到 cache
+
+
+@router.post("/cloud-sync")
+async def cloud_sync(req: CloudSyncRequest):
+    """從雲端同步資料：
+    1. (可選) git fetch + checkout origin/<branch> -- data/cloud-cache/
+    2. 複製 data/cloud-cache/*.csv -> data/cache/*.csv
+    """
+    import shutil
+    import subprocess
+    from pathlib import Path
+
+    cloud_dir = Path("data/cloud-cache")
+    local_dir = Path("data/cache")
+    local_dir.mkdir(parents=True, exist_ok=True)
+
+    pulled_info = None
+    if req.pull:
+        try:
+            branch_proc = subprocess.run(
+                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+                capture_output=True, text=True, timeout=10, check=True,
+            )
+            branch = branch_proc.stdout.strip()
+            subprocess.run(["git", "fetch", "origin", branch], capture_output=True, text=True, timeout=60, check=True)
+            co = subprocess.run(
+                ["git", "checkout", f"origin/{branch}", "--", "data/cloud-cache/"],
+                capture_output=True, text=True, timeout=30,
+            )
+            if co.returncode != 0:
+                raise RuntimeError(f"git checkout failed: {co.stderr.strip()}")
+            pulled_info = {"branch": branch, "ok": True}
+        except subprocess.TimeoutExpired:
+            raise HTTPException(status_code=504, detail="git operation timeout")
+        except subprocess.CalledProcessError as e:
+            raise HTTPException(status_code=500, detail=f"git failed: {e.stderr.strip() if e.stderr else str(e)}")
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"pull error: {e}")
+
+    if not cloud_dir.exists():
+        raise HTTPException(status_code=404, detail="data/cloud-cache 不存在，先在 GitHub 觸發一次 Cloud Fetch")
+
+    copied = []
+    skipped = []
+    for src in cloud_dir.glob("*.csv"):
+        dst = local_dir / src.name
+        try:
+            shutil.copy2(src, dst)
+            copied.append(src.name)
+        except Exception as e:
+            skipped.append({"file": src.name, "error": str(e)})
+
+    return {
+        "pulled": pulled_info,
+        "copied_count": len(copied),
+        "copied_sample": copied[:10],
+        "skipped": skipped,
+        "applied_to": str(local_dir),
+    }
+
+
 @router.get("/latest-price/{code}")
 async def get_latest_price(code: str):
     """只讀 cache，回傳最新收盤價。不發網路請求。"""
