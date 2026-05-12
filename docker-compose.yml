@@ -12,6 +12,9 @@ services:
       - CAPYSTOCK_FRONTEND_DIR=/app/frontend/dist
       # 排程器預設啟用；若要在 container 中關閉設為 1
       # - CAPYSTOCK_SCHEDULER_DISABLED=1
+      # 雲端同步（GitHub Actions Cloud Fetch）對應的 repo 與 branch
+      - CAPYSTOCK_GITHUB_REPO=ChunkangYang/CapyStock
+      - CAPYSTOCK_GITHUB_BRANCH=feature/s25-portfolio
     env_file:
       - ./data/.env
     restart: unless-stopped

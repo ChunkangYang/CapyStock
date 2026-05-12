@@ -186,21 +186,36 @@ class CloudSyncRequest(BaseModel):
 
 
 def _parse_github_remote() -> tuple[str, str, str]:
-    """從 .git/config + .git/HEAD 解析 (owner, repo, branch)。不使用 git CLI。"""
+    """解析 (owner, repo, branch)。
+    優先讀 env var（Docker 友善）；fallback 解析 .git/config + .git/HEAD。
+      CAPYSTOCK_GITHUB_REPO=owner/repo
+      CAPYSTOCK_GITHUB_BRANCH=feature/s25-portfolio
+    """
+    import os
     import re
 
+    env_repo = os.environ.get("CAPYSTOCK_GITHUB_REPO", "").strip()
+    env_branch = os.environ.get("CAPYSTOCK_GITHUB_BRANCH", "").strip()
+    if env_repo and env_branch and "/" in env_repo:
+        owner, repo = env_repo.split("/", 1)
+        return owner, repo, env_branch
+
+    # fallback: 從 .git/ 解析（非 docker 情境）
     git_dir = config.PROJECT_ROOT / ".git"
     cfg = git_dir / "config"
     head = git_dir / "HEAD"
     if not cfg.exists() or not head.exists():
-        raise RuntimeError(f"找不到 {cfg} 或 {head}（這個目錄不是 git repo？）")
+        raise RuntimeError(
+            "找不到 .git/config 或 .git/HEAD。"
+            "若在 Docker 內執行，請在 docker-compose.yml 設定 env："
+            "CAPYSTOCK_GITHUB_REPO=<owner>/<repo>、CAPYSTOCK_GITHUB_BRANCH=<branch>"
+        )
 
     cfg_text = cfg.read_text(encoding="utf-8", errors="ignore")
     m = re.search(r"\[remote\s+\"origin\"\][^\[]*?url\s*=\s*(\S+)", cfg_text)
     if not m:
         raise RuntimeError("找不到 origin remote")
     url = m.group(1).strip()
-    # https://github.com/OWNER/REPO(.git)?  或  git@github.com:OWNER/REPO(.git)?
     m2 = re.search(r"github\.com[:/]([^/]+)/([^/\s]+?)(?:\.git)?$", url)
     if not m2:
         raise RuntimeError(f"無法解析 GitHub repo: {url}")
