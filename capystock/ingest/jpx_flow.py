@@ -107,6 +107,20 @@ def parse_jpx_excel(content: bytes, week_label: Optional[str] = None) -> pd.Data
     }])
 
 
+def _iso_week_to_date(s: str) -> str:
+    """'2026-W18' -> '2026-04-27'（該週週一）。失敗時回今天。"""
+    from datetime import datetime as _dt
+
+    try:
+        if isinstance(s, str) and "-W" in s:
+            year_str, week_str = s.split("-W", 1)
+            return _dt.fromisocalendar(int(year_str), int(week_str), 1).strftime("%Y-%m-%d")
+        # 已是 yyyy-mm-dd 之類就直接回傳
+        return str(s)
+    except Exception:
+        return str(date.today())
+
+
 def estimate_stock_flow(
     code: str,
     market_flow: pd.DataFrame,
@@ -121,7 +135,7 @@ def estimate_stock_flow(
         if market_total_volume and stock_volume and market_total_volume > 0:
             ratio = stock_volume / market_total_volume
         rows.append({
-            "date": mrow.get("week", str(date.today())),
+            "date": _iso_week_to_date(mrow.get("week", str(date.today()))),
             "foreign_net": (mrow.get("foreign_net") or 0) * ratio,
             "institution_net": (mrow.get("institution_net") or 0) * ratio,
             "individual_net": (mrow.get("individual_net") or 0) * ratio,
