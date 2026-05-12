@@ -183,43 +183,111 @@ async def cloud_sync_status():
 
 
 class CloudSyncRequest(BaseModel):
-    pull: bool = True  # True=git fetch+checkout 雲端最新；False=只套用現有 cloud-cache 到 cache
+    pull: bool = True  # True=從 GitHub 下載最新；False=只套用現有 cloud-cache 到 cache
+
+
+def _parse_github_remote() -> tuple[str, str, str]:
+    """從 .git/config + .git/HEAD 解析 (owner, repo, branch)。不使用 git CLI。"""
+    import re
+    from pathlib import Path
+
+    git_dir = Path(".git")
+    cfg = git_dir / "config"
+    head = git_dir / "HEAD"
+    if not cfg.exists() or not head.exists():
+        raise RuntimeError("找不到 .git/config 或 .git/HEAD（這個目錄不是 git repo？）")
+
+    cfg_text = cfg.read_text(encoding="utf-8", errors="ignore")
+    m = re.search(r"\[remote\s+\"origin\"\][^\[]*?url\s*=\s*(\S+)", cfg_text)
+    if not m:
+        raise RuntimeError("找不到 origin remote")
+    url = m.group(1).strip()
+    # https://github.com/OWNER/REPO(.git)?  或  git@github.com:OWNER/REPO(.git)?
+    m2 = re.search(r"github\.com[:/]([^/]+)/([^/\s]+?)(?:\.git)?$", url)
+    if not m2:
+        raise RuntimeError(f"無法解析 GitHub repo: {url}")
+    owner, repo = m2.group(1), m2.group(2)
+
+    head_text = head.read_text(encoding="utf-8").strip()
+    m3 = re.match(r"ref:\s*refs/heads/(.+)$", head_text)
+    if not m3:
+        raise RuntimeError(f"HEAD 處於 detached 狀態：{head_text}")
+    branch = m3.group(1)
+    return owner, repo, branch
 
 
 @router.post("/cloud-sync")
 async def cloud_sync(req: CloudSyncRequest):
-    """從雲端同步資料：
-    1. (可選) git fetch + checkout origin/<branch> -- data/cloud-cache/
+    """從雲端同步資料（用 GitHub API，不依賴本機 git CLI）：
+    1. (可選) GitHub Contents API 列出 data/cloud-cache/，並行下載 -> data/cloud-cache/
     2. 複製 data/cloud-cache/*.csv -> data/cache/*.csv
     """
+    import asyncio
     import shutil
-    import subprocess
     from pathlib import Path
+
+    import httpx
 
     cloud_dir = Path("data/cloud-cache")
     local_dir = Path("data/cache")
     local_dir.mkdir(parents=True, exist_ok=True)
+    cloud_dir.mkdir(parents=True, exist_ok=True)
 
     pulled_info = None
     if req.pull:
         try:
-            branch_proc = subprocess.run(
-                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-                capture_output=True, text=True, timeout=10, check=True,
-            )
-            branch = branch_proc.stdout.strip()
-            subprocess.run(["git", "fetch", "origin", branch], capture_output=True, text=True, timeout=60, check=True)
-            co = subprocess.run(
-                ["git", "checkout", f"origin/{branch}", "--", "data/cloud-cache/"],
-                capture_output=True, text=True, timeout=30,
-            )
-            if co.returncode != 0:
-                raise RuntimeError(f"git checkout failed: {co.stderr.strip()}")
-            pulled_info = {"branch": branch, "ok": True}
-        except subprocess.TimeoutExpired:
-            raise HTTPException(status_code=504, detail="git operation timeout")
-        except subprocess.CalledProcessError as e:
-            raise HTTPException(status_code=500, detail=f"git failed: {e.stderr.strip() if e.stderr else str(e)}")
+            owner, repo, branch = _parse_github_remote()
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"解析 git config 失敗: {e}")
+
+        api_url = f"https://api.github.com/repos/{owner}/{repo}/contents/data/cloud-cache"
+        headers = {"Accept": "application/vnd.github+json"}
+        params = {"ref": branch}
+
+        try:
+            async with httpx.AsyncClient(timeout=30.0) as client:
+                r = await client.get(api_url, params=params, headers=headers)
+                if r.status_code == 404:
+                    raise HTTPException(status_code=404, detail="GitHub repo 上沒有 data/cloud-cache/ 目錄（先觸發一次 Cloud Fetch）")
+                if r.status_code == 403:
+                    raise HTTPException(status_code=403, detail=f"GitHub API 拒絕（rate limit 或 private repo 需 token）: {r.text[:200]}")
+                r.raise_for_status()
+                files = r.json()
+                if not isinstance(files, list):
+                    raise HTTPException(status_code=500, detail=f"GitHub API 回傳非預期格式: {str(files)[:200]}")
+
+                # 並行下載所有檔案
+                async def fetch_one(meta):
+                    name = meta["name"]
+                    dl = meta.get("download_url")
+                    if not dl:
+                        return name, False, "no download_url"
+                    resp = await client.get(dl)
+                    resp.raise_for_status()
+                    (cloud_dir / name).write_bytes(resp.content)
+                    return name, True, None
+
+                results = await asyncio.gather(*(fetch_one(f) for f in files), return_exceptions=True)
+
+            downloaded, dl_errors = [], []
+            for res in results:
+                if isinstance(res, Exception):
+                    dl_errors.append(str(res))
+                    continue
+                name, ok, err = res
+                if ok:
+                    downloaded.append(name)
+                else:
+                    dl_errors.append(f"{name}: {err}")
+
+            pulled_info = {
+                "owner": owner, "repo": repo, "branch": branch,
+                "downloaded": len(downloaded), "errors": dl_errors,
+            }
+        except HTTPException:
+            raise
+        except httpx.HTTPError as e:
+            raise HTTPException(status_code=502, detail=f"GitHub API 失敗: {e}")
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"pull error: {e}")
 

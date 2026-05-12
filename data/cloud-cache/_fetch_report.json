@@ -1,197 +1,26 @@
 {
-  "started_utc": "2026-05-12T12:10:27.447109+00:00",
-  "codes_total": 10,
+  "started_utc": "2026-05-12T12:15:52.634063+00:00",
+  "codes_total": 1,
   "kinds": [
-    "margin",
     "flow"
   ],
   "results": [
     {
       "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/7203_margin.csv",
-      "code": "7203",
-      "kind": "margin",
-      "elapsed_sec": 3.01
-    },
-    {
-      "ok": true,
       "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/7203_flow.csv",
+      "rows": 3,
+      "path": "data\\cloud-cache\\7203_flow.csv",
+      "appended": true,
       "code": "7203",
       "kind": "flow",
-      "elapsed_sec": 4.64
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/6758_margin.csv",
-      "code": "6758",
-      "kind": "margin",
-      "elapsed_sec": 2.98
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/6758_flow.csv",
-      "code": "6758",
-      "kind": "flow",
-      "elapsed_sec": 4.29
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/9984_margin.csv",
-      "code": "9984",
-      "kind": "margin",
-      "elapsed_sec": 2.75
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/9984_flow.csv",
-      "code": "9984",
-      "kind": "flow",
-      "elapsed_sec": 4.54
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/8035_margin.csv",
-      "code": "8035",
-      "kind": "margin",
-      "elapsed_sec": 2.8
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/8035_flow.csv",
-      "code": "8035",
-      "kind": "flow",
-      "elapsed_sec": 4.57
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/6367_margin.csv",
-      "code": "6367",
-      "kind": "margin",
-      "elapsed_sec": 2.78
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/6367_flow.csv",
-      "code": "6367",
-      "kind": "flow",
-      "elapsed_sec": 4.54
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/7974_margin.csv",
-      "code": "7974",
-      "kind": "margin",
-      "elapsed_sec": 3.29
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/7974_flow.csv",
-      "code": "7974",
-      "kind": "flow",
-      "elapsed_sec": 4.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/8306_margin.csv",
-      "code": "8306",
-      "kind": "margin",
-      "elapsed_sec": 2.76
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/8306_flow.csv",
-      "code": "8306",
-      "kind": "flow",
-      "elapsed_sec": 4.6
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/9432_margin.csv",
-      "code": "9432",
-      "kind": "margin",
-      "elapsed_sec": 2.88
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/9432_flow.csv",
-      "code": "9432",
-      "kind": "flow",
-      "elapsed_sec": 4.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/9433_margin.csv",
-      "code": "9433",
-      "kind": "margin",
-      "elapsed_sec": 2.75
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/9433_flow.csv",
-      "code": "9433",
-      "kind": "flow",
-      "elapsed_sec": 4.6
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/6501_margin.csv",
-      "code": "6501",
-      "kind": "margin",
-      "elapsed_sec": 3.18
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/6501_flow.csv",
-      "code": "6501",
-      "kind": "flow",
-      "elapsed_sec": 4.28
+      "elapsed_sec": 4.84
     }
   ],
   "summary": {
-    "ok": 20,
+    "ok": 1,
     "fail": 0,
-    "total": 20
+    "total": 1
   },
-  "ended_utc": "2026-05-12T12:11:41.328615+00:00",
-  "elapsed_sec": 73.9
+  "ended_utc": "2026-05-12T12:15:57.469577+00:00",
+  "elapsed_sec": 4.8
 }
