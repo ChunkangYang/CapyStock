@@ -159,10 +159,9 @@ async def get_batch_job(job_id: str):
 async def cloud_sync_status():
     """回傳雲端 cache 狀態（從 data/cloud-cache/_fetch_report.json 讀）。"""
     import json
-    from pathlib import Path
 
-    report_path = Path("data/cloud-cache/_fetch_report.json")
-    cache_dir = Path("data/cloud-cache")
+    cache_dir = config.PROJECT_ROOT / "data" / "cloud-cache"
+    report_path = cache_dir / "_fetch_report.json"
 
     if not report_path.exists():
         return {"available": False, "message": "尚未從雲端拉取過資料"}
@@ -189,13 +188,12 @@ class CloudSyncRequest(BaseModel):
 def _parse_github_remote() -> tuple[str, str, str]:
     """從 .git/config + .git/HEAD 解析 (owner, repo, branch)。不使用 git CLI。"""
     import re
-    from pathlib import Path
 
-    git_dir = Path(".git")
+    git_dir = config.PROJECT_ROOT / ".git"
     cfg = git_dir / "config"
     head = git_dir / "HEAD"
     if not cfg.exists() or not head.exists():
-        raise RuntimeError("找不到 .git/config 或 .git/HEAD（這個目錄不是 git repo？）")
+        raise RuntimeError(f"找不到 {cfg} 或 {head}（這個目錄不是 git repo？）")
 
     cfg_text = cfg.read_text(encoding="utf-8", errors="ignore")
     m = re.search(r"\[remote\s+\"origin\"\][^\[]*?url\s*=\s*(\S+)", cfg_text)
@@ -224,12 +222,11 @@ async def cloud_sync(req: CloudSyncRequest):
     """
     import asyncio
     import shutil
-    from pathlib import Path
 
     import httpx
 
-    cloud_dir = Path("data/cloud-cache")
-    local_dir = Path("data/cache")
+    cloud_dir = config.PROJECT_ROOT / "data" / "cloud-cache"
+    local_dir = config.CACHE_DIR
     local_dir.mkdir(parents=True, exist_ok=True)
     cloud_dir.mkdir(parents=True, exist_ok=True)
 
