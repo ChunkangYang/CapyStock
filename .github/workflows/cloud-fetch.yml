@@ -30,7 +30,7 @@ name: Cloud Fetch
         required: false
         default: "0"
   schedule:
-    - cron: "0 7 * * 1-5"
+    - cron: "0 22 * * 0-4"
 
 permissions:
   contents: write
