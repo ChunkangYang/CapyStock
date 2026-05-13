@@ -117,17 +117,7 @@
       // 強制更新：清除所有訊號快取
       clearAllSignalsCache();
       canonicalTotal = 0;
-    } else if (activeTab !== 'market') {
-      const cached = cacheGet<SignalScanRow[]>(key);
-      if (cached) {
-        if (seq !== _loadSeq) return;
-        data = cached;
-        totalCount = cached.length;
-        cacheTs = cacheTimestamp(key);
-        loading = false;
-        return;
-      }
-    } else {
+    } else if (activeTab === 'market') {
       // Market tab 分頁快取
       // 每次 session 第一次載入（offset=0 且尚未建立 canonical）一律打 API，
       // 避免把汙染的快取 total 當成 canonicalTotal。
@@ -166,26 +156,37 @@
         totalCount = newTotal;
         currentPageTotal = result.length;
         cacheSet(pageKey, { rows: result, total: newTotal });
-      } else if (activeTab === 'watchlist') {
-        const watchlistEntries = await api('/watchlist');
+      } else {
+        // watchlist / portfolio / favorites：先抓 list entries，再比對快取 codes 一致性
+        let listEntries: { code: string }[] = [];
+        if (activeTab === 'watchlist') {
+          listEntries = await api('/watchlist');
+        } else if (activeTab === 'portfolio') {
+          listEntries = await api('/portfolio');
+        } else if (activeTab === 'favorites') {
+          listEntries = await api('/favorites?tag=speculative');
+        }
+
+        const liveCodes = listEntries.map(e => e.code).sort().join(',');
+
+        if (!forceRefresh) {
+          const cached = cacheGet<SignalScanRow[]>(key);
+          if (cached) {
+            const cachedCodes = cached.map(r => r.code).sort().join(',');
+            if (cachedCodes === liveCodes) {
+              if (seq !== _loadSeq) return;
+              data = cached;
+              totalCount = cached.length;
+              cacheTs = cacheTimestamp(key);
+              loading = false;
+              return;
+            }
+            cacheClear(key);
+          }
+        }
+
         const results: SignalResult[] = await Promise.all(
-          watchlistEntries.map((e: { code: string }) => api(`/signals/${e.code}`))
-        );
-        result = results.map(r => toScanRow(r));
-        totalCount = result.length;
-        cacheSet(key, result);
-      } else if (activeTab === 'portfolio') {
-        const portfolioEntries = await api('/portfolio');
-        const results: SignalResult[] = await Promise.all(
-          portfolioEntries.map((e: { code: string }) => api(`/signals/${e.code}`))
-        );
-        result = results.map(r => toScanRow(r));
-        totalCount = result.length;
-        cacheSet(key, result);
-      } else if (activeTab === 'favorites') {
-        const favorites = await api('/favorites?tag=speculative');
-        const results: SignalResult[] = await Promise.all(
-          favorites.map((f: { code: string }) => api(`/signals/${f.code}`))
+          listEntries.map(e => api(`/signals/${e.code}`))
         );
         result = results.map(r => toScanRow(r));
         totalCount = result.length;
