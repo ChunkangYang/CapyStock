@@ -315,6 +315,7 @@
     if (tab === activeTab) return;
     activeTab = tab;
     offset = 0;
+    data = [];  // タブ切替時は前タブのデータを消去
     loadData();
   }
 
@@ -380,7 +381,7 @@
     </div>
   </div>
 
-  {#if loading}
+  {#if loading && data.length === 0}
     <LoadingSpinner />
   {:else if error}
     <p class="error">{error}</p>
