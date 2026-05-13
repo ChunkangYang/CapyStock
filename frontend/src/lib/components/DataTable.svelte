@@ -29,7 +29,7 @@
   let filterAccumulation = false;
   let filterExit = false;
   let filterStopLoss = false;
-  let minScore = 0;
+  let minScore: number | null = null;
 
   function getSortValue(row: SignalScanRow, key: SortKey, favMap: Record<string, { tags: string[] }>): number | string {
     switch (key) {
@@ -49,7 +49,7 @@
     if (filterAccumulation && !row.has_accumulation) return false;
     if (filterExit && !row.has_exit) return false;
     if (filterStopLoss && !row.has_stop_loss) return false;
-    if (row.score < minScore) return false;
+    if (minScore !== null && row.score < minScore) return false;
     return true;
   });
 
@@ -107,7 +107,7 @@
     </label>
     <label>
       最低 score:
-      <input type="number" bind:value={minScore} min="0" />
+      <input type="number" bind:value={minScore} placeholder="不限" />
     </label>
   </div>
 
