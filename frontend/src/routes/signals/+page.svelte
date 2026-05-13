@@ -5,7 +5,8 @@
   import DataTable from '$lib/components/DataTable.svelte';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
   import { cacheGet, cacheSet, cacheClear, cacheTimestamp, formatCacheAge, clearAllSignalsCache } from '$lib/utils/signalsCache';
-  import { favorites } from '$lib/stores/favorites';
+  import { favorites, loadFavorites } from '$lib/stores/favorites';
+  import { get } from 'svelte/store';
   import type { SignalScanRow, SignalResult } from '$lib/types';
 
   const TABS = ['market', 'favorites', 'portfolio', 'watchlist'] as const;
@@ -211,6 +212,16 @@
 
       if (seq !== _loadSeq) return;
       cacheTs = cacheTimestamp(activeTab === 'market' ? pageKey : key);
+
+      // market tab：favorite シグナル取得を await して table 表示前に揃える
+      if (activeTab === 'market') {
+        if (Object.keys(get(favorites)).length === 0) {
+          await loadFavorites();
+        }
+        await fetchFavoriteSignals(get(favorites));
+        if (seq !== _loadSeq) return;
+      }
+
       data = result;
     } catch (e) {
       if (seq !== _loadSeq) return;
