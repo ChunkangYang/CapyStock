@@ -4,6 +4,7 @@
   import type { SignalScanRow } from '$lib/types';
 
   export let data: SignalScanRow[] = [];
+  export let extraRows: SignalScanRow[] = [];
   export let onRowClick: (code: string) => void = () => {};
   export let onRefreshRow: ((code: string) => void) | null = null;
   export let refreshingCodes: Set<string> = new Set();
@@ -45,7 +46,13 @@
     }
   }
 
-  $: filteredData = data.filter(row => {
+  // extraRows（favorite 銘柄）を現在ページデータにマージ（重複除去）
+  $: mergedData = [
+    ...extraRows.filter(r => !data.some(d => d.code === r.code)),
+    ...data,
+  ];
+
+  $: filteredData = mergedData.filter(row => {
     if (filterAccumulation && !row.has_accumulation) return false;
     if (filterExit && !row.has_exit) return false;
     if (filterStopLoss && !row.has_stop_loss) return false;
@@ -168,7 +175,7 @@
     <tbody>
       {#each sortedData as row}
         <tr on:click={() => onRowClick(row.code)} class="clickable">
-          <td>
+          <td on:click|stopPropagation>
             <FavoriteToggle code={row.code} name={row.name} tag="speculative" />
           </td>
           <td class="code">{row.code}</td>

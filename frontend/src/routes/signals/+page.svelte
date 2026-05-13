@@ -5,6 +5,7 @@
   import DataTable from '$lib/components/DataTable.svelte';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
   import { cacheGet, cacheSet, cacheClear, cacheTimestamp, formatCacheAge, clearAllSignalsCache } from '$lib/utils/signalsCache';
+  import { favorites } from '$lib/stores/favorites';
   import type { SignalScanRow, SignalResult } from '$lib/types';
 
   const TABS = ['market', 'favorites', 'portfolio', 'watchlist'] as const;
@@ -30,6 +31,21 @@
   let canonicalTotal = 0;
 
   let _loadSeq = 0;
+  let favoriteSignals: SignalScanRow[] = [];
+
+  // market tab 用：$favorites が変わったら現在値を引数で渡して signal を fetch
+  $: fetchFavoriteSignals($favorites);
+
+  async function fetchFavoriteSignals(favMap: Record<string, unknown>) {
+    const codes = Object.keys(favMap);
+    if (codes.length === 0) { favoriteSignals = []; return; }
+    try {
+      const results: SignalResult[] = await Promise.all(
+        codes.map(code => api<SignalResult>(`/signals/${code}`))
+      );
+      favoriteSignals = results.map(toScanRow);
+    } catch {}
+  }
 
   function listCacheKey(tab: Tab) {
     return `signals_list:${tab}`;
@@ -379,6 +395,7 @@
   {:else}
     <DataTable
       {data}
+      extraRows={activeTab === 'market' ? favoriteSignals : []}
       onRowClick={handleRowClick}
       onRefreshRow={refreshRow}
       {refreshingCodes}
