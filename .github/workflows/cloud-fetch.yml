@@ -7,7 +7,7 @@ name: Cloud Fetch
       mode:
         description: "scope: watchlist / all / codes"
         required: false
-        default: "watchlist"
+        default: "all"
         type: choice
         options:
           - watchlist
@@ -64,7 +64,7 @@ jobs:
       - name: Run cloud fetch
         env:
           # schedule event has no inputs -> defaults below kick in
-          INPUT_MODE: ${{ github.event.inputs.mode || 'watchlist' }}
+          INPUT_MODE: ${{ github.event.inputs.mode || 'all' }}
           INPUT_CODES: ${{ github.event.inputs.codes }}
           INPUT_KINDS: ${{ github.event.inputs.kinds || 'margin,flow,price' }}
           INPUT_EDINET_DAYS: ${{ github.event.inputs.edinet_days || '3' }}
