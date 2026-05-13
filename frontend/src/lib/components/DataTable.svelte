@@ -174,12 +174,12 @@
     </thead>
     <tbody>
       {#each sortedData as row}
-        <tr on:click={() => onRowClick(row.code)} class="clickable">
-          <td on:click|stopPropagation>
+        <tr>
+          <td>
             <FavoriteToggle code={row.code} name={row.name} tag="speculative" />
           </td>
-          <td class="code">{row.code}</td>
-          <td>{row.name}</td>
+          <td class="code clickable" on:click={() => onRowClick(row.code)}>{row.code}</td>
+          <td class="clickable" on:click={() => onRowClick(row.code)}>{row.name}</td>
           <td class="price">{row.latest_price.toFixed(0)}</td>
           <td class="indicator" class:active={row.has_accumulation}>🔵</td>
           <td class="indicator" class:active={row.has_exit}>🟠</td>
@@ -287,8 +287,12 @@
     background: #1a1a1a;
   }
 
-  tr.clickable {
+  td.clickable {
     cursor: pointer;
+  }
+
+  td.clickable:hover {
+    color: #4ade80;
   }
 
   .code {
