@@ -164,7 +164,7 @@
         } else if (activeTab === 'portfolio') {
           listEntries = await api('/portfolio');
         } else if (activeTab === 'favorites') {
-          listEntries = await api('/favorites?tag=speculative');
+          listEntries = await api('/favorites');
         }
 
         const liveCodes = listEntries.map(e => e.code).sort().join(',');

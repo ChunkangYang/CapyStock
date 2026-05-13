@@ -33,7 +33,7 @@
 
   function getSortValue(row: SignalScanRow, key: SortKey, favMap: Record<string, { tags: string[] }>): number | string {
     switch (key) {
-      case 'favorite': return favMap[row.code]?.tags?.includes('speculative') ? 1 : 0;
+      case 'favorite': return favMap[row.code]?.tags?.length > 0 ? 1 : 0;
       case 'code': return row.code;
       case 'name': return row.name;
       case 'latest_price': return row.latest_price ?? 0;
