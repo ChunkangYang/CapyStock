@@ -179,6 +179,9 @@ def main():
     ap.add_argument("--kinds", default="margin,flow", help="margin / flow / price，可逗號組合；edinet 為整批回掃，需在 --edinet-days 指定天數")
     ap.add_argument("--limit", type=int, default=0, help=">0 時截斷代碼數（避免 Actions 超時）")
     ap.add_argument("--edinet-days", type=int, default=0, help=">0 時抓 EDINET 大量保有報告（回掃 N 日）")
+    ap.add_argument("--offset", type=int, default=0, help="從 codes[offset] 開始（分批斷點續跑）")
+    ap.add_argument("--batch-size", type=int, default=0, help=">0 時只處理這批 N 支")
+    ap.add_argument("--time-limit", type=int, default=0, help=">0 時超過 N 秒後完成當前代碼即停（soft stop）")
     args = ap.parse_args()
 
     if args.all:
@@ -193,22 +196,41 @@ def main():
     if args.limit > 0:
         codes = codes[: args.limit]
 
+    # 分批：先記錄完整總數，再切片
+    total_universe = len(codes)
+    batch_offset = args.offset
+    if batch_offset > 0:
+        codes = codes[batch_offset:]
+    if args.batch_size > 0:
+        codes = codes[: args.batch_size]
+
     kinds = [k.strip() for k in args.kinds.split(",") if k.strip()]
     CLOUD_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
     started = datetime.now(timezone.utc)
-    print(f"[cloud_fetch] start ts={started.isoformat()} codes={len(codes)} kinds={kinds}")
+    batch_label = f"offset={batch_offset} batch={len(codes)}" if args.batch_size else f"all={len(codes)}"
+    print(f"[cloud_fetch] start ts={started.isoformat()} {batch_label} kinds={kinds}")
 
     report = {
         "started_utc": started.isoformat(),
         "codes_total": len(codes),
+        "batch_offset": batch_offset,
+        "universe_total": total_universe,
         "kinds": kinds,
         "results": [],
         "summary": {},
     }
 
     fail_streak = 0
+    codes_done = 0
+    time_exceeded = False
     for i, code in enumerate(codes, 1):
+        # soft stop：完成上一支後才檢查時間
+        if args.time_limit > 0 and (time.time() - started.timestamp()) > args.time_limit:
+            print(f"[cloud_fetch] 時間限制 {args.time_limit}s 到達，停在 offset={batch_offset + i - 1}")
+            time_exceeded = True
+            break
+
         for kind in kinds:
             t0 = time.time()
             try:
@@ -237,8 +259,12 @@ def main():
                 report["summary"]["aborted"] = "consecutive_failures"
                 break
         else:
+            codes_done += 1
             continue
+        # inner break（熔斷或時間）
         break
+    else:
+        codes_done = len(codes)
 
     # 額外：EDINET 整批模式（不依賴 codes 迴圈，因為是回掃日期）
     if args.edinet_days and args.edinet_days > 0:
@@ -265,6 +291,24 @@ def main():
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"[cloud_fetch] done {report['summary']} elapsed={report['elapsed_sec']}s")
     print(f"[cloud_fetch] report -> {report_path.relative_to(ROOT)}")
+
+    # 寫入批次進度 state（供 Actions 決定是否觸發下一輪）
+    if args.batch_size > 0 or args.offset > 0:
+        next_offset = batch_offset + codes_done
+        # 若因熔斷提早停，next_offset 停在實際跑完的位置
+        if report["summary"].get("aborted") == "consecutive_failures":
+            next_offset = batch_offset + codes_done
+        batch_done = next_offset >= total_universe
+        state = {
+            "next_offset": next_offset,
+            "total": total_universe,
+            "batch_size": args.batch_size or len(codes),
+            "done": batch_done,
+            "updated_utc": ended.isoformat(),
+        }
+        state_path = CLOUD_CACHE_DIR / "_fetch_state.json"
+        state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"[cloud_fetch] state -> next_offset={next_offset}/{total_universe} done={batch_done}")
 
     # 全失敗時非零退出，讓 Actions 顯示紅燈
     if report["summary"]["ok"] == 0:

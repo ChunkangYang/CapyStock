@@ -5,7 +5,7 @@ name: Cloud Fetch
   workflow_dispatch:
     inputs:
       mode:
-        description: "scope: watchlist / all / codes"
+        description: "scope: watchlist / all / codes / resume"
         required: false
         default: "all"
         type: choice
@@ -13,6 +13,7 @@ name: Cloud Fetch
           - watchlist
           - all
           - codes
+          - resume
       codes:
         description: "when mode=codes, comma-separated (e.g. 7203,6758)"
         required: false
@@ -25,15 +26,24 @@ name: Cloud Fetch
         description: "EDINET lookback days (0 = skip)"
         required: false
         default: "3"
-      limit:
-        description: "max codes to fetch (0 = no limit)"
+      batch_size:
+        description: "codes per batch (0 = no chunking)"
+        required: false
+        default: "200"
+      offset:
+        description: "start offset for resume mode (auto-set by chaining)"
         required: false
         default: "0"
+      time_limit:
+        description: "soft stop after N seconds (0 = no limit)"
+        required: false
+        default: "1100"
   schedule:
-    - cron: "0 22 * * 0-4"
+    - cron: "0 7 * * 1-5"
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: cloud-fetch
@@ -42,7 +52,7 @@ concurrency:
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 25
 
     steps:
       - name: Checkout
@@ -63,22 +73,40 @@ jobs:
 
       - name: Run cloud fetch
         env:
-          # schedule event has no inputs -> defaults below kick in
-          INPUT_MODE: ${{ github.event.inputs.mode || 'all' }}
-          INPUT_CODES: ${{ github.event.inputs.codes }}
-          INPUT_KINDS: ${{ github.event.inputs.kinds || 'margin,flow,price' }}
+          INPUT_MODE:       ${{ github.event.inputs.mode       || 'all' }}
+          INPUT_CODES:      ${{ github.event.inputs.codes }}
+          INPUT_KINDS:      ${{ github.event.inputs.kinds      || 'margin,flow,price' }}
           INPUT_EDINET_DAYS: ${{ github.event.inputs.edinet_days || '3' }}
-          INPUT_LIMIT: ${{ github.event.inputs.limit || '0' }}
-          EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+          INPUT_BATCH_SIZE: ${{ github.event.inputs.batch_size || '200' }}
+          INPUT_OFFSET:     ${{ github.event.inputs.offset     || '0' }}
+          INPUT_TIME_LIMIT: ${{ github.event.inputs.time_limit || '1100' }}
+          EDINET_API_KEY:   ${{ secrets.EDINET_API_KEY }}
         run: |
           ARGS="--kinds $INPUT_KINDS"
+
+          # 決定來源
           case "$INPUT_MODE" in
-            all)        ARGS="$ARGS --all" ;;
-            codes)      [ -n "$INPUT_CODES" ] && ARGS="$ARGS --codes $INPUT_CODES" ;;
+            all|resume)  ARGS="$ARGS --all" ;;
+            codes)       [ -n "$INPUT_CODES" ] && ARGS="$ARGS --codes $INPUT_CODES" ;;
             watchlist|*) ARGS="$ARGS --watchlist" ;;
           esac
-          [ -n "$INPUT_LIMIT" ] && [ "$INPUT_LIMIT" != "0" ] && ARGS="$ARGS --limit $INPUT_LIMIT"
+
+          # resume 或有 offset 時傳入 offset
+          if [ "$INPUT_MODE" = "resume" ] && [ -f "data/cloud-cache/_fetch_state.json" ]; then
+            NEXT=$(python -c "import json; print(json.load(open('data/cloud-cache/_fetch_state.json')).get('next_offset', 0))")
+            ARGS="$ARGS --offset $NEXT"
+          elif [ -n "$INPUT_OFFSET" ] && [ "$INPUT_OFFSET" != "0" ]; then
+            ARGS="$ARGS --offset $INPUT_OFFSET"
+          fi
+
+          # batch-size & time-limit（排程和 all/resume 模式才啟用分批）
+          if [ "$INPUT_MODE" != "codes" ] && [ "$INPUT_MODE" != "watchlist" ]; then
+            [ -n "$INPUT_BATCH_SIZE" ] && [ "$INPUT_BATCH_SIZE" != "0" ] && ARGS="$ARGS --batch-size $INPUT_BATCH_SIZE"
+            [ -n "$INPUT_TIME_LIMIT" ] && [ "$INPUT_TIME_LIMIT" != "0" ] && ARGS="$ARGS --time-limit $INPUT_TIME_LIMIT"
+          fi
+
           [ -n "$INPUT_EDINET_DAYS" ] && [ "$INPUT_EDINET_DAYS" != "0" ] && ARGS="$ARGS --edinet-days $INPUT_EDINET_DAYS"
+
           echo "Running: python scripts/cloud_fetch.py $ARGS"
           python scripts/cloud_fetch.py $ARGS
 
@@ -103,32 +131,74 @@ jobs:
             git push
           fi
 
-      - name: Notify Telegram on failure
-        if: (failure() || cancelled()) && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
+      - name: Check batch state & trigger next
+        if: success()
+        id: chain
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_KINDS:      ${{ github.event.inputs.kinds      || 'margin,flow,price' }}
+          INPUT_EDINET_DAYS: ${{ github.event.inputs.edinet_days || '3' }}
+          INPUT_BATCH_SIZE: ${{ github.event.inputs.batch_size || '200' }}
+          INPUT_TIME_LIMIT: ${{ github.event.inputs.time_limit || '1100' }}
         run: |
-          MSG="❌ CapyStock Cloud Fetch FAILED%0Arepo: ${{ github.repository }}%0Abranch: ${{ github.ref_name }}%0Arun: $RUN_URL"
-          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            -d "chat_id=${TELEGRAM_CHAT_ID}" \
-            -d "text=${MSG}" \
-            -d "disable_web_page_preview=true" || true
+          STATE="data/cloud-cache/_fetch_state.json"
+          if [ ! -f "$STATE" ]; then
+            echo "no state file, assuming done"
+            echo "batch_done=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          DONE=$(python -c "import json; d=json.load(open('$STATE')); print(str(d.get('done', True)).lower())")
+          NEXT=$(python -c "import json; print(json.load(open('$STATE')).get('next_offset', 0))")
+          TOTAL=$(python -c "import json; print(json.load(open('$STATE')).get('total', 0))")
+          echo "batch_done=$DONE" >> $GITHUB_OUTPUT
+          echo "next_offset=$NEXT" >> $GITHUB_OUTPUT
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
 
-      - name: Notify Telegram on success (summary)
-        if: success() && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != '' && github.event_name == 'schedule'
+          if [ "$DONE" = "false" ]; then
+            echo "Triggering next batch: offset=$NEXT / $TOTAL"
+            gh workflow run cloud-fetch.yml \
+              --ref "${{ github.ref_name }}" \
+              -f mode=resume \
+              -f kinds="$INPUT_KINDS" \
+              -f edinet_days=0 \
+              -f batch_size="$INPUT_BATCH_SIZE" \
+              -f time_limit="$INPUT_TIME_LIMIT" \
+              -f offset="$NEXT"
+          else
+            echo "All batches done (total=$TOTAL)"
+          fi
+
+      - name: Notify Telegram — batch done (full scan complete)
+        if: success() && steps.chain.outputs.batch_done == 'true'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           REPORT="data/cloud-cache/_fetch_report.json"
           if [ -f "$REPORT" ]; then
             OK=$(python -c "import json; print(json.load(open('$REPORT'))['summary'].get('ok',0))")
             FAIL=$(python -c "import json; print(json.load(open('$REPORT'))['summary'].get('fail',0))")
             ELAPSED=$(python -c "import json; print(json.load(open('$REPORT')).get('elapsed_sec',0))")
-            MSG="✅ Cloud Fetch ok=${OK} fail=${FAIL} elapsed=${ELAPSED}s"
+            TOTAL="${{ steps.chain.outputs.total }}"
+            MSG="✅ CapyStock 全市場掃描完成%0Aok=${OK} fail=${FAIL} elapsed=${ELAPSED}s total=${TOTAL}"
+          else
+            MSG="✅ CapyStock Cloud Fetch 完成（無 report）"
+          fi
+          [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ] && \
             curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
               -d "chat_id=${TELEGRAM_CHAT_ID}" \
               -d "text=${MSG}" || true
-          fi
+
+      - name: Notify Telegram — failure or cancelled
+        if: (failure() || cancelled()) && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          STATUS="${{ job.status }}"
+          MSG="❌ CapyStock Cloud Fetch ${STATUS}%0Arepo: ${{ github.repository }}%0Abranch: ${{ github.ref_name }}%0Arun: $RUN_URL"
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" \
+            -d "text=${MSG}" \
+            -d "disable_web_page_preview=true" || true
