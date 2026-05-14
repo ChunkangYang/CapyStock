@@ -29,7 +29,7 @@ name: Cloud Fetch
       batch_size:
         description: "codes per batch (0 = no chunking)"
         required: false
-        default: "200"
+        default: "130"
       offset:
         description: "start offset for resume mode (auto-set by chaining)"
         required: false
