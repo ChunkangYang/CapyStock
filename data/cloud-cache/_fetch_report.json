@@ -1,7 +1,7 @@
 {
-  "started_utc": "2026-05-15T03:14:21.587363+00:00",
+  "started_utc": "2026-05-15T03:33:18.101178+00:00",
   "codes_total": 200,
-  "batch_offset": 563,
+  "batch_offset": 702,
   "universe_total": 3747,
   "kinds": [
     "margin",
@@ -13,64 +13,36 @@
       "ok": false,
       "source": "none",
       "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 373A; minkabu: Minkabu 信用残頁面已停止服務（/stock/373A/credit 404）",
-      "code": "373A",
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2211; minkabu: Minkabu 信用残頁面已停止服務（/stock/2211/credit 404）",
+      "code": "2211",
       "kind": "margin",
-      "elapsed_sec": 3.43
+      "elapsed_sec": 3.63
     },
     {
       "ok": true,
       "source": "jpx_flow",
       "rows": 1,
-      "path": "data/cloud-cache/373A_flow.csv",
+      "path": "data/cloud-cache/2211_flow.csv",
       "appended": false,
-      "code": "373A",
+      "code": "2211",
       "kind": "flow",
-      "elapsed_sec": 4.7
+      "elapsed_sec": 4.78
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 118,
-      "path": "data/cloud-cache/373A_price.csv",
-      "code": "373A",
+      "path": "data/cloud-cache/2211_price.csv",
+      "code": "2211",
       "kind": "price",
-      "elapsed_sec": 0.77
+      "elapsed_sec": 0.57
     },
     {
       "ok": false,
       "source": "none",
       "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 378A; minkabu: Minkabu 信用残頁面已停止服務（/stock/378A/credit 404）",
-      "code": "378A",
-      "kind": "margin",
-      "elapsed_sec": 3.08
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/378A_flow.csv",
-      "appended": false,
-      "code": "378A",
-      "kind": "flow",
-      "elapsed_sec": 4.33
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/378A_price.csv",
-      "code": "378A",
-      "kind": "price",
-      "elapsed_sec": 0.28
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 387A; minkabu: Minkabu 信用残頁面已停止服務（/stock/387A/credit 404）",
-      "code": "387A",
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2212; minkabu: Minkabu 信用残頁面已停止服務（/stock/2212/credit 404）",
+      "code": "2212",
       "kind": "margin",
       "elapsed_sec": 2.91
     },
@@ -78,1185 +50,9 @@
       "ok": true,
       "source": "jpx_flow",
       "rows": 1,
-      "path": "data/cloud-cache/387A_flow.csv",
+      "path": "data/cloud-cache/2212_flow.csv",
       "appended": false,
-      "code": "387A",
-      "kind": "flow",
-      "elapsed_sec": 4.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/387A_price.csv",
-      "code": "387A",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 402A; minkabu: Minkabu 信用残頁面已停止服務（/stock/402A/credit 404）",
-      "code": "402A",
-      "kind": "margin",
-      "elapsed_sec": 3.08
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/402A_flow.csv",
-      "appended": false,
-      "code": "402A",
-      "kind": "flow",
-      "elapsed_sec": 4.57
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/402A_price.csv",
-      "code": "402A",
-      "kind": "price",
-      "elapsed_sec": 0.23
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 410A; minkabu: Minkabu 信用残頁面已停止服務（/stock/410A/credit 404）",
-      "code": "410A",
-      "kind": "margin",
-      "elapsed_sec": 3.09
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/410A_flow.csv",
-      "appended": false,
-      "code": "410A",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/410A_price.csv",
-      "code": "410A",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 414A; minkabu: Minkabu 信用残頁面已停止服務（/stock/414A/credit 404）",
-      "code": "414A",
-      "kind": "margin",
-      "elapsed_sec": 2.91
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/414A_flow.csv",
-      "appended": false,
-      "code": "414A",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/414A_price.csv",
-      "code": "414A",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 415A; minkabu: Minkabu 信用残頁面已停止服務（/stock/415A/credit 404）",
-      "code": "415A",
-      "kind": "margin",
-      "elapsed_sec": 3.08
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/415A_flow.csv",
-      "appended": false,
-      "code": "415A",
-      "kind": "flow",
-      "elapsed_sec": 4.69
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/415A_price.csv",
-      "code": "415A",
-      "kind": "price",
-      "elapsed_sec": 0.19
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 421A; minkabu: Minkabu 信用残頁面已停止服務（/stock/421A/credit 404）",
-      "code": "421A",
-      "kind": "margin",
-      "elapsed_sec": 3.08
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/421A_flow.csv",
-      "appended": false,
-      "code": "421A",
-      "kind": "flow",
-      "elapsed_sec": 4.37
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/421A_price.csv",
-      "code": "421A",
-      "kind": "price",
-      "elapsed_sec": 0.24
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 431A; minkabu: Minkabu 信用残頁面已停止服務（/stock/431A/credit 404）",
-      "code": "431A",
-      "kind": "margin",
-      "elapsed_sec": 3.07
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/431A_flow.csv",
-      "appended": false,
-      "code": "431A",
-      "kind": "flow",
-      "elapsed_sec": 4.57
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/431A_price.csv",
-      "code": "431A",
-      "kind": "price",
-      "elapsed_sec": 0.27
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 436A; minkabu: Minkabu 信用残頁面已停止服務（/stock/436A/credit 404）",
-      "code": "436A",
-      "kind": "margin",
-      "elapsed_sec": 2.55
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/436A_flow.csv",
-      "appended": false,
-      "code": "436A",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/436A_price.csv",
-      "code": "436A",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 438A; minkabu: Minkabu 信用残頁面已停止服務（/stock/438A/credit 404）",
-      "code": "438A",
-      "kind": "margin",
-      "elapsed_sec": 2.73
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/438A_flow.csv",
-      "appended": false,
-      "code": "438A",
-      "kind": "flow",
-      "elapsed_sec": 4.57
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/438A_price.csv",
-      "code": "438A",
-      "kind": "price",
-      "elapsed_sec": 0.25
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 441A; minkabu: Minkabu 信用残頁面已停止服務（/stock/441A/credit 404）",
-      "code": "441A",
-      "kind": "margin",
-      "elapsed_sec": 2.73
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/441A_flow.csv",
-      "appended": false,
-      "code": "441A",
-      "kind": "flow",
-      "elapsed_sec": 4.41
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/441A_price.csv",
-      "code": "441A",
-      "kind": "price",
-      "elapsed_sec": 0.25
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 442A; minkabu: Minkabu 信用残頁面已停止服務（/stock/442A/credit 404）",
-      "code": "442A",
-      "kind": "margin",
-      "elapsed_sec": 3.09
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/442A_flow.csv",
-      "appended": false,
-      "code": "442A",
-      "kind": "flow",
-      "elapsed_sec": 4.89
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/442A_price.csv",
-      "code": "442A",
-      "kind": "price",
-      "elapsed_sec": 0.24
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 446A; minkabu: Minkabu 信用残頁面已停止服務（/stock/446A/credit 404）",
-      "code": "446A",
-      "kind": "margin",
-      "elapsed_sec": 2.72
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/446A_flow.csv",
-      "appended": false,
-      "code": "446A",
-      "kind": "flow",
-      "elapsed_sec": 4.36
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 114,
-      "path": "data/cloud-cache/446A_price.csv",
-      "code": "446A",
-      "kind": "price",
-      "elapsed_sec": 0.24
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 456A; minkabu: Minkabu 信用残頁面已停止服務（/stock/456A/credit 404）",
-      "code": "456A",
-      "kind": "margin",
-      "elapsed_sec": 2.55
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/456A_flow.csv",
-      "appended": false,
-      "code": "456A",
-      "kind": "flow",
-      "elapsed_sec": 4.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 111,
-      "path": "data/cloud-cache/456A_price.csv",
-      "code": "456A",
-      "kind": "price",
-      "elapsed_sec": 0.28
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/460A_margin.csv",
-      "code": "460A",
-      "kind": "margin",
-      "elapsed_sec": 3.95
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/460A_flow.csv",
-      "appended": false,
-      "code": "460A",
-      "kind": "flow",
-      "elapsed_sec": 4.36
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 109,
-      "path": "data/cloud-cache/460A_price.csv",
-      "code": "460A",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/462A_margin.csv",
-      "code": "462A",
-      "kind": "margin",
-      "elapsed_sec": 3.64
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/462A_flow.csv",
-      "appended": false,
-      "code": "462A",
-      "kind": "flow",
-      "elapsed_sec": 4.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 105,
-      "path": "data/cloud-cache/462A_price.csv",
-      "code": "462A",
-      "kind": "price",
-      "elapsed_sec": 0.25
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/464A_margin.csv",
-      "code": "464A",
-      "kind": "margin",
-      "elapsed_sec": 3.27
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/464A_flow.csv",
-      "appended": false,
-      "code": "464A",
-      "kind": "flow",
-      "elapsed_sec": 4.36
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/464A_price.csv",
-      "code": "464A",
-      "kind": "price",
-      "elapsed_sec": 0.24
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/469A_margin.csv",
-      "code": "469A",
-      "kind": "margin",
-      "elapsed_sec": 3.16
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/469A_flow.csv",
-      "appended": false,
-      "code": "469A",
-      "kind": "flow",
-      "elapsed_sec": 4.58
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 100,
-      "path": "data/cloud-cache/469A_price.csv",
-      "code": "469A",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 19,
-      "path": "data/cloud-cache/472A_margin.csv",
-      "code": "472A",
-      "kind": "margin",
-      "elapsed_sec": 3.85
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/472A_flow.csv",
-      "appended": false,
-      "code": "472A",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 96,
-      "path": "data/cloud-cache/472A_price.csv",
-      "code": "472A",
-      "kind": "price",
-      "elapsed_sec": 0.27
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 18,
-      "path": "data/cloud-cache/477A_margin.csv",
-      "code": "477A",
-      "kind": "margin",
-      "elapsed_sec": 3.5
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/477A_flow.csv",
-      "appended": false,
-      "code": "477A",
-      "kind": "flow",
-      "elapsed_sec": 4.59
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 94,
-      "path": "data/cloud-cache/477A_price.csv",
-      "code": "477A",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 18,
-      "path": "data/cloud-cache/478A_margin.csv",
-      "code": "478A",
-      "kind": "margin",
-      "elapsed_sec": 3.14
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/478A_flow.csv",
-      "appended": false,
-      "code": "478A",
-      "kind": "flow",
-      "elapsed_sec": 4.34
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 92,
-      "path": "data/cloud-cache/478A_price.csv",
-      "code": "478A",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 18,
-      "path": "data/cloud-cache/479A_margin.csv",
-      "code": "479A",
-      "kind": "margin",
-      "elapsed_sec": 3.28
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/479A_flow.csv",
-      "appended": false,
-      "code": "479A",
-      "kind": "flow",
-      "elapsed_sec": 4.67
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 92,
-      "path": "data/cloud-cache/479A_price.csv",
-      "code": "479A",
-      "kind": "price",
-      "elapsed_sec": 0.51
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 18,
-      "path": "data/cloud-cache/480A_margin.csv",
-      "code": "480A",
-      "kind": "margin",
-      "elapsed_sec": 3.21
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/480A_flow.csv",
-      "appended": false,
-      "code": "480A",
-      "kind": "flow",
-      "elapsed_sec": 4.37
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 91,
-      "path": "data/cloud-cache/480A_price.csv",
-      "code": "480A",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 19,
-      "path": "data/cloud-cache/485A_margin.csv",
-      "code": "485A",
-      "kind": "margin",
-      "elapsed_sec": 3.29
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/485A_flow.csv",
-      "appended": false,
-      "code": "485A",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 95,
-      "path": "data/cloud-cache/485A_price.csv",
-      "code": "485A",
-      "kind": "price",
-      "elapsed_sec": 0.24
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 10,
-      "path": "data/cloud-cache/504A_margin.csv",
-      "code": "504A",
-      "kind": "margin",
-      "elapsed_sec": 3.21
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/504A_flow.csv",
-      "appended": false,
-      "code": "504A",
-      "kind": "flow",
-      "elapsed_sec": 4.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 54,
-      "path": "data/cloud-cache/504A_price.csv",
-      "code": "504A",
-      "kind": "price",
-      "elapsed_sec": 0.24
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 6,
-      "path": "data/cloud-cache/519A_margin.csv",
-      "code": "519A",
-      "kind": "margin",
-      "elapsed_sec": 3.41
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/519A_flow.csv",
-      "appended": false,
-      "code": "519A",
-      "kind": "flow",
-      "elapsed_sec": 4.42
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 34,
-      "path": "data/cloud-cache/519A_price.csv",
-      "code": "519A",
-      "kind": "price",
-      "elapsed_sec": 0.25
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 6,
-      "path": "data/cloud-cache/520A_margin.csv",
-      "code": "520A",
-      "kind": "margin",
-      "elapsed_sec": 3.1
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/520A_flow.csv",
-      "appended": false,
-      "code": "520A",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 34,
-      "path": "data/cloud-cache/520A_price.csv",
-      "code": "520A",
-      "kind": "price",
-      "elapsed_sec": 0.19
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 6,
-      "path": "data/cloud-cache/523A_margin.csv",
-      "code": "523A",
-      "kind": "margin",
-      "elapsed_sec": 3.1
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/523A_flow.csv",
-      "appended": false,
-      "code": "523A",
-      "kind": "flow",
-      "elapsed_sec": 4.36
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 32,
-      "path": "data/cloud-cache/523A_price.csv",
-      "code": "523A",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 5,
-      "path": "data/cloud-cache/542A_margin.csv",
-      "code": "542A",
-      "kind": "margin",
-      "elapsed_sec": 3.24
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/542A_flow.csv",
-      "appended": false,
-      "code": "542A",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 28,
-      "path": "data/cloud-cache/542A_price.csv",
-      "code": "542A",
-      "kind": "price",
-      "elapsed_sec": 0.27
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 2,
-      "path": "data/cloud-cache/554A_margin.csv",
-      "code": "554A",
-      "kind": "margin",
-      "elapsed_sec": 3.06
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/554A_flow.csv",
-      "appended": false,
-      "code": "554A",
-      "kind": "flow",
-      "elapsed_sec": 4.43
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 14,
-      "path": "data/cloud-cache/554A_price.csv",
-      "code": "554A",
-      "kind": "price",
-      "elapsed_sec": 0.27
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 2,
-      "path": "data/cloud-cache/556A_margin.csv",
-      "code": "556A",
-      "kind": "margin",
-      "elapsed_sec": 3.23
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/556A_flow.csv",
-      "appended": false,
-      "code": "556A",
-      "kind": "flow",
-      "elapsed_sec": 4.85
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 13,
-      "path": "data/cloud-cache/556A_price.csv",
-      "code": "556A",
-      "kind": "price",
-      "elapsed_sec": 0.26
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 2,
-      "path": "data/cloud-cache/558A_margin.csv",
-      "code": "558A",
-      "kind": "margin",
-      "elapsed_sec": 3.32
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/558A_flow.csv",
-      "appended": false,
-      "code": "558A",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 14,
-      "path": "data/cloud-cache/558A_price.csv",
-      "code": "558A",
-      "kind": "price",
-      "elapsed_sec": 0.3
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1301_margin.csv",
-      "code": "1301",
-      "kind": "margin",
-      "elapsed_sec": 3.27
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1301_flow.csv",
-      "appended": false,
-      "code": "1301",
-      "kind": "flow",
-      "elapsed_sec": 4.63
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1301_price.csv",
-      "code": "1301",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1332_margin.csv",
-      "code": "1332",
-      "kind": "margin",
-      "elapsed_sec": 3.29
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1332_flow.csv",
-      "appended": false,
-      "code": "1332",
-      "kind": "flow",
-      "elapsed_sec": 4.34
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1332_price.csv",
-      "code": "1332",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1333_margin.csv",
-      "code": "1333",
-      "kind": "margin",
-      "elapsed_sec": 3.14
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1333_flow.csv",
-      "appended": false,
-      "code": "1333",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1333_price.csv",
-      "code": "1333",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1375_margin.csv",
-      "code": "1375",
-      "kind": "margin",
-      "elapsed_sec": 3.17
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1375_flow.csv",
-      "appended": false,
-      "code": "1375",
-      "kind": "flow",
-      "elapsed_sec": 4.36
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1375_price.csv",
-      "code": "1375",
-      "kind": "price",
-      "elapsed_sec": 0.24
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1377_margin.csv",
-      "code": "1377",
-      "kind": "margin",
-      "elapsed_sec": 3.07
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1377_flow.csv",
-      "appended": false,
-      "code": "1377",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1377_price.csv",
-      "code": "1377",
-      "kind": "price",
-      "elapsed_sec": 0.29
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1379_margin.csv",
-      "code": "1379",
-      "kind": "margin",
-      "elapsed_sec": 3.09
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1379_flow.csv",
-      "appended": false,
-      "code": "1379",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1379_price.csv",
-      "code": "1379",
-      "kind": "price",
-      "elapsed_sec": 0.48
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1414_margin.csv",
-      "code": "1414",
-      "kind": "margin",
-      "elapsed_sec": 3.18
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1414_flow.csv",
-      "appended": false,
-      "code": "1414",
-      "kind": "flow",
-      "elapsed_sec": 4.6
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1414_price.csv",
-      "code": "1414",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1417_margin.csv",
-      "code": "1417",
-      "kind": "margin",
-      "elapsed_sec": 3.55
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1417_flow.csv",
-      "appended": false,
-      "code": "1417",
-      "kind": "flow",
-      "elapsed_sec": 4.4
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1417_price.csv",
-      "code": "1417",
-      "kind": "price",
-      "elapsed_sec": 0.25
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1419_margin.csv",
-      "code": "1419",
-      "kind": "margin",
-      "elapsed_sec": 3.18
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1419_flow.csv",
-      "appended": false,
-      "code": "1419",
-      "kind": "flow",
-      "elapsed_sec": 4.63
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1419_price.csv",
-      "code": "1419",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1429_margin.csv",
-      "code": "1429",
-      "kind": "margin",
-      "elapsed_sec": 3.36
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1429_flow.csv",
-      "appended": false,
-      "code": "1429",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1429_price.csv",
-      "code": "1429",
-      "kind": "price",
-      "elapsed_sec": 0.26
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1433_margin.csv",
-      "code": "1433",
-      "kind": "margin",
-      "elapsed_sec": 3.05
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1433_flow.csv",
-      "appended": false,
-      "code": "1433",
-      "kind": "flow",
-      "elapsed_sec": 4.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1433_price.csv",
-      "code": "1433",
-      "kind": "price",
-      "elapsed_sec": 0.27
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1515_margin.csv",
-      "code": "1515",
-      "kind": "margin",
-      "elapsed_sec": 3.31
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1515_flow.csv",
-      "appended": false,
-      "code": "1515",
+      "code": "2212",
       "kind": "flow",
       "elapsed_sec": 4.43
     },
@@ -1264,913 +60,17 @@
       "ok": true,
       "source": "yfinance",
       "rows": 118,
-      "path": "data/cloud-cache/1515_price.csv",
-      "code": "1515",
-      "kind": "price",
-      "elapsed_sec": 0.35
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1518_margin.csv",
-      "code": "1518",
-      "kind": "margin",
-      "elapsed_sec": 2.93
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1518_flow.csv",
-      "appended": false,
-      "code": "1518",
-      "kind": "flow",
-      "elapsed_sec": 4.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1518_price.csv",
-      "code": "1518",
-      "kind": "price",
-      "elapsed_sec": 0.25
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1605_margin.csv",
-      "code": "1605",
-      "kind": "margin",
-      "elapsed_sec": 3.47
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1605_flow.csv",
-      "appended": false,
-      "code": "1605",
-      "kind": "flow",
-      "elapsed_sec": 4.37
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1605_price.csv",
-      "code": "1605",
-      "kind": "price",
-      "elapsed_sec": 0.36
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1662_margin.csv",
-      "code": "1662",
-      "kind": "margin",
-      "elapsed_sec": 3.32
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1662_flow.csv",
-      "appended": false,
-      "code": "1662",
-      "kind": "flow",
-      "elapsed_sec": 4.58
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1662_price.csv",
-      "code": "1662",
-      "kind": "price",
-      "elapsed_sec": 0.3
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1663_margin.csv",
-      "code": "1663",
-      "kind": "margin",
-      "elapsed_sec": 2.92
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1663_flow.csv",
-      "appended": false,
-      "code": "1663",
-      "kind": "flow",
-      "elapsed_sec": 4.48
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1663_price.csv",
-      "code": "1663",
-      "kind": "price",
-      "elapsed_sec": 0.37
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1719_margin.csv",
-      "code": "1719",
-      "kind": "margin",
-      "elapsed_sec": 2.97
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1719_flow.csv",
-      "appended": false,
-      "code": "1719",
-      "kind": "flow",
-      "elapsed_sec": 4.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1719_price.csv",
-      "code": "1719",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1720_margin.csv",
-      "code": "1720",
-      "kind": "margin",
-      "elapsed_sec": 3.5
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1720_flow.csv",
-      "appended": false,
-      "code": "1720",
-      "kind": "flow",
-      "elapsed_sec": 4.34
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1720_price.csv",
-      "code": "1720",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1721_margin.csv",
-      "code": "1721",
-      "kind": "margin",
-      "elapsed_sec": 3.87
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1721_flow.csv",
-      "appended": false,
-      "code": "1721",
-      "kind": "flow",
-      "elapsed_sec": 4.64
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1721_price.csv",
-      "code": "1721",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1726_margin.csv",
-      "code": "1726",
-      "kind": "margin",
-      "elapsed_sec": 3.37
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1726_flow.csv",
-      "appended": false,
-      "code": "1726",
-      "kind": "flow",
-      "elapsed_sec": 4.43
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1726_price.csv",
-      "code": "1726",
+      "path": "data/cloud-cache/2212_price.csv",
+      "code": "2212",
       "kind": "price",
       "elapsed_sec": 0.26
     },
     {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1762_margin.csv",
-      "code": "1762",
-      "kind": "margin",
-      "elapsed_sec": 3.11
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1762_flow.csv",
-      "appended": false,
-      "code": "1762",
-      "kind": "flow",
-      "elapsed_sec": 4.64
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1762_price.csv",
-      "code": "1762",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1766_margin.csv",
-      "code": "1766",
-      "kind": "margin",
-      "elapsed_sec": 3.1
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1766_flow.csv",
-      "appended": false,
-      "code": "1766",
-      "kind": "flow",
-      "elapsed_sec": 4.38
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1766_price.csv",
-      "code": "1766",
-      "kind": "price",
-      "elapsed_sec": 0.37
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1780_margin.csv",
-      "code": "1780",
-      "kind": "margin",
-      "elapsed_sec": 3.07
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1780_flow.csv",
-      "appended": false,
-      "code": "1780",
-      "kind": "flow",
-      "elapsed_sec": 4.59
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1780_price.csv",
-      "code": "1780",
-      "kind": "price",
-      "elapsed_sec": 0.28
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1786_margin.csv",
-      "code": "1786",
-      "kind": "margin",
-      "elapsed_sec": 3.08
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1786_flow.csv",
-      "appended": false,
-      "code": "1786",
-      "kind": "flow",
-      "elapsed_sec": 4.33
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1786_price.csv",
-      "code": "1786",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1801_margin.csv",
-      "code": "1801",
-      "kind": "margin",
-      "elapsed_sec": 3.83
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1801_flow.csv",
-      "appended": false,
-      "code": "1801",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1801_price.csv",
-      "code": "1801",
-      "kind": "price",
-      "elapsed_sec": 0.34
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1802_margin.csv",
-      "code": "1802",
-      "kind": "margin",
-      "elapsed_sec": 3.73
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1802_flow.csv",
-      "appended": false,
-      "code": "1802",
-      "kind": "flow",
-      "elapsed_sec": 4.47
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1802_price.csv",
-      "code": "1802",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
       "ok": false,
       "source": "none",
       "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1803; minkabu: Minkabu 信用残頁面已停止服務（/stock/1803/credit 404）",
-      "code": "1803",
-      "kind": "margin",
-      "elapsed_sec": 3.12
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1803_flow.csv",
-      "appended": false,
-      "code": "1803",
-      "kind": "flow",
-      "elapsed_sec": 4.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1803_price.csv",
-      "code": "1803",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1808; minkabu: Minkabu 信用残頁面已停止服務（/stock/1808/credit 404）",
-      "code": "1808",
-      "kind": "margin",
-      "elapsed_sec": 3.38
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1808_flow.csv",
-      "appended": false,
-      "code": "1808",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1808_price.csv",
-      "code": "1808",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1812; minkabu: Minkabu 信用残頁面已停止服務（/stock/1812/credit 404）",
-      "code": "1812",
-      "kind": "margin",
-      "elapsed_sec": 3.13
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1812_flow.csv",
-      "appended": false,
-      "code": "1812",
-      "kind": "flow",
-      "elapsed_sec": 4.63
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1812_price.csv",
-      "code": "1812",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1813; minkabu: Minkabu 信用残頁面已停止服務（/stock/1813/credit 404）",
-      "code": "1813",
-      "kind": "margin",
-      "elapsed_sec": 3.1
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1813_flow.csv",
-      "appended": false,
-      "code": "1813",
-      "kind": "flow",
-      "elapsed_sec": 4.4
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1813_price.csv",
-      "code": "1813",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1814; minkabu: Minkabu 信用残頁面已停止服務（/stock/1814/credit 404）",
-      "code": "1814",
-      "kind": "margin",
-      "elapsed_sec": 3.36
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1814_flow.csv",
-      "appended": false,
-      "code": "1814",
-      "kind": "flow",
-      "elapsed_sec": 4.64
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1814_price.csv",
-      "code": "1814",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1815; minkabu: Minkabu 信用残頁面已停止服務（/stock/1815/credit 404）",
-      "code": "1815",
-      "kind": "margin",
-      "elapsed_sec": 2.94
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1815_flow.csv",
-      "appended": false,
-      "code": "1815",
-      "kind": "flow",
-      "elapsed_sec": 4.38
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1815_price.csv",
-      "code": "1815",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1820; minkabu: Minkabu 信用残頁面已停止服務（/stock/1820/credit 404）",
-      "code": "1820",
-      "kind": "margin",
-      "elapsed_sec": 2.95
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1820_flow.csv",
-      "appended": false,
-      "code": "1820",
-      "kind": "flow",
-      "elapsed_sec": 4.6
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1820_price.csv",
-      "code": "1820",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1833; minkabu: Minkabu 信用残頁面已停止服務（/stock/1833/credit 404）",
-      "code": "1833",
-      "kind": "margin",
-      "elapsed_sec": 3.04
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1833_flow.csv",
-      "appended": false,
-      "code": "1833",
-      "kind": "flow",
-      "elapsed_sec": 4.37
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1833_price.csv",
-      "code": "1833",
-      "kind": "price",
-      "elapsed_sec": 0.28
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1835; minkabu: Minkabu 信用残頁面已停止服務（/stock/1835/credit 404）",
-      "code": "1835",
-      "kind": "margin",
-      "elapsed_sec": 2.86
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1835_flow.csv",
-      "appended": false,
-      "code": "1835",
-      "kind": "flow",
-      "elapsed_sec": 4.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1835_price.csv",
-      "code": "1835",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1852; minkabu: Minkabu 信用残頁面已停止服務（/stock/1852/credit 404）",
-      "code": "1852",
-      "kind": "margin",
-      "elapsed_sec": 3.01
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1852_flow.csv",
-      "appended": false,
-      "code": "1852",
-      "kind": "flow",
-      "elapsed_sec": 4.34
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1852_price.csv",
-      "code": "1852",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1860; minkabu: Minkabu 信用残頁面已停止服務（/stock/1860/credit 404）",
-      "code": "1860",
-      "kind": "margin",
-      "elapsed_sec": 3.27
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1860_flow.csv",
-      "appended": false,
-      "code": "1860",
-      "kind": "flow",
-      "elapsed_sec": 4.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1860_price.csv",
-      "code": "1860",
-      "kind": "price",
-      "elapsed_sec": 0.34
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1861; minkabu: Minkabu 信用残頁面已停止服務（/stock/1861/credit 404）",
-      "code": "1861",
-      "kind": "margin",
-      "elapsed_sec": 3.03
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1861_flow.csv",
-      "appended": false,
-      "code": "1861",
-      "kind": "flow",
-      "elapsed_sec": 4.37
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1861_price.csv",
-      "code": "1861",
-      "kind": "price",
-      "elapsed_sec": 0.45
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1870; minkabu: Minkabu 信用残頁面已停止服務（/stock/1870/credit 404）",
-      "code": "1870",
-      "kind": "margin",
-      "elapsed_sec": 2.86
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1870_flow.csv",
-      "appended": false,
-      "code": "1870",
-      "kind": "flow",
-      "elapsed_sec": 4.66
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1870_price.csv",
-      "code": "1870",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1871; minkabu: Minkabu 信用残頁面已停止服務（/stock/1871/credit 404）",
-      "code": "1871",
-      "kind": "margin",
-      "elapsed_sec": 2.9
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1871_flow.csv",
-      "appended": false,
-      "code": "1871",
-      "kind": "flow",
-      "elapsed_sec": 4.41
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1871_price.csv",
-      "code": "1871",
-      "kind": "price",
-      "elapsed_sec": 0.38
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1873; minkabu: Minkabu 信用残頁面已停止服務（/stock/1873/credit 404）",
-      "code": "1873",
-      "kind": "margin",
-      "elapsed_sec": 3.31
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1873_flow.csv",
-      "appended": false,
-      "code": "1873",
-      "kind": "flow",
-      "elapsed_sec": 4.58
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1873_price.csv",
-      "code": "1873",
-      "kind": "price",
-      "elapsed_sec": 0.35
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1878; minkabu: Minkabu 信用残頁面已停止服務（/stock/1878/credit 404）",
-      "code": "1878",
-      "kind": "margin",
-      "elapsed_sec": 3.02
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1878_flow.csv",
-      "appended": false,
-      "code": "1878",
-      "kind": "flow",
-      "elapsed_sec": 4.38
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1878_price.csv",
-      "code": "1878",
-      "kind": "price",
-      "elapsed_sec": 0.47
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1879; minkabu: Minkabu 信用残頁面已停止服務（/stock/1879/credit 404）",
-      "code": "1879",
-      "kind": "margin",
-      "elapsed_sec": 2.75
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1879_flow.csv",
-      "appended": false,
-      "code": "1879",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1879_price.csv",
-      "code": "1879",
-      "kind": "price",
-      "elapsed_sec": 0.39
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1882; minkabu: Minkabu 信用残頁面已停止服務（/stock/1882/credit 404）",
-      "code": "1882",
-      "kind": "margin",
-      "elapsed_sec": 2.54
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1882_flow.csv",
-      "appended": false,
-      "code": "1882",
-      "kind": "flow",
-      "elapsed_sec": 4.36
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1882_price.csv",
-      "code": "1882",
-      "kind": "price",
-      "elapsed_sec": 0.39
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1885; minkabu: Minkabu 信用残頁面已停止服務（/stock/1885/credit 404）",
-      "code": "1885",
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2217; minkabu: Minkabu 信用残頁面已停止服務（/stock/2217/credit 404）",
+      "code": "2217",
       "kind": "margin",
       "elapsed_sec": 2.76
     },
@@ -2178,9 +78,65 @@
       "ok": true,
       "source": "jpx_flow",
       "rows": 1,
-      "path": "data/cloud-cache/1885_flow.csv",
+      "path": "data/cloud-cache/2217_flow.csv",
       "appended": false,
-      "code": "1885",
+      "code": "2217",
+      "kind": "flow",
+      "elapsed_sec": 4.57
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2217_price.csv",
+      "code": "2217",
+      "kind": "price",
+      "elapsed_sec": 0.2
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2220; minkabu: Minkabu 信用残頁面已停止服務（/stock/2220/credit 404）",
+      "code": "2220",
+      "kind": "margin",
+      "elapsed_sec": 3.1
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2220_flow.csv",
+      "appended": false,
+      "code": "2220",
+      "kind": "flow",
+      "elapsed_sec": 4.49
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2220_price.csv",
+      "code": "2220",
+      "kind": "price",
+      "elapsed_sec": 0.37
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2222; minkabu: Minkabu 信用残頁面已停止服務（/stock/2222/credit 404）",
+      "code": "2222",
+      "kind": "margin",
+      "elapsed_sec": 2.9
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2222_flow.csv",
+      "appended": false,
+      "code": "2222",
       "kind": "flow",
       "elapsed_sec": 4.68
     },
@@ -2188,148 +144,8 @@
       "ok": true,
       "source": "yfinance",
       "rows": 118,
-      "path": "data/cloud-cache/1885_price.csv",
-      "code": "1885",
-      "kind": "price",
-      "elapsed_sec": 0.36
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1887; minkabu: Minkabu 信用残頁面已停止服務（/stock/1887/credit 404）",
-      "code": "1887",
-      "kind": "margin",
-      "elapsed_sec": 2.54
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1887_flow.csv",
-      "appended": false,
-      "code": "1887",
-      "kind": "flow",
-      "elapsed_sec": 4.36
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1887_price.csv",
-      "code": "1887",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1888; minkabu: Minkabu 信用残頁面已停止服務（/stock/1888/credit 404）",
-      "code": "1888",
-      "kind": "margin",
-      "elapsed_sec": 2.57
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1888_flow.csv",
-      "appended": false,
-      "code": "1888",
-      "kind": "flow",
-      "elapsed_sec": 4.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1888_price.csv",
-      "code": "1888",
-      "kind": "price",
-      "elapsed_sec": 0.29
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1893; minkabu: Minkabu 信用残頁面已停止服務（/stock/1893/credit 404）",
-      "code": "1893",
-      "kind": "margin",
-      "elapsed_sec": 2.54
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1893_flow.csv",
-      "appended": false,
-      "code": "1893",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1893_price.csv",
-      "code": "1893",
-      "kind": "price",
-      "elapsed_sec": 0.36
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1898; minkabu: Minkabu 信用残頁面已停止服務（/stock/1898/credit 404）",
-      "code": "1898",
-      "kind": "margin",
-      "elapsed_sec": 2.76
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1898_flow.csv",
-      "appended": false,
-      "code": "1898",
-      "kind": "flow",
-      "elapsed_sec": 4.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1898_price.csv",
-      "code": "1898",
-      "kind": "price",
-      "elapsed_sec": 0.35
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1899; minkabu: Minkabu 信用残頁面已停止服務（/stock/1899/credit 404）",
-      "code": "1899",
-      "kind": "margin",
-      "elapsed_sec": 2.56
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1899_flow.csv",
-      "appended": false,
-      "code": "1899",
-      "kind": "flow",
-      "elapsed_sec": 4.38
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1899_price.csv",
-      "code": "1899",
+      "path": "data/cloud-cache/2222_price.csv",
+      "code": "2222",
       "kind": "price",
       "elapsed_sec": 0.3
     },
@@ -2337,1436 +153,8 @@
       "ok": false,
       "source": "none",
       "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1911; minkabu: Minkabu 信用残頁面已停止服務（/stock/1911/credit 404）",
-      "code": "1911",
-      "kind": "margin",
-      "elapsed_sec": 2.54
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1911_flow.csv",
-      "appended": false,
-      "code": "1911",
-      "kind": "flow",
-      "elapsed_sec": 4.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1911_price.csv",
-      "code": "1911",
-      "kind": "price",
-      "elapsed_sec": 0.35
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 1925; minkabu: Minkabu 信用残頁面已停止服務（/stock/1925/credit 404）",
-      "code": "1925",
-      "kind": "margin",
-      "elapsed_sec": 2.54
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1925_flow.csv",
-      "appended": false,
-      "code": "1925",
-      "kind": "flow",
-      "elapsed_sec": 4.37
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1925_price.csv",
-      "code": "1925",
-      "kind": "price",
-      "elapsed_sec": 0.41
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1926_margin.csv",
-      "code": "1926",
-      "kind": "margin",
-      "elapsed_sec": 2.97
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1926_flow.csv",
-      "appended": false,
-      "code": "1926",
-      "kind": "flow",
-      "elapsed_sec": 4.63
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1926_price.csv",
-      "code": "1926",
-      "kind": "price",
-      "elapsed_sec": 0.37
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1928_margin.csv",
-      "code": "1928",
-      "kind": "margin",
-      "elapsed_sec": 3.03
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1928_flow.csv",
-      "appended": false,
-      "code": "1928",
-      "kind": "flow",
-      "elapsed_sec": 4.34
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1928_price.csv",
-      "code": "1928",
-      "kind": "price",
-      "elapsed_sec": 0.76
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1929_margin.csv",
-      "code": "1929",
-      "kind": "margin",
-      "elapsed_sec": 2.9
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1929_flow.csv",
-      "appended": false,
-      "code": "1929",
-      "kind": "flow",
-      "elapsed_sec": 4.69
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1929_price.csv",
-      "code": "1929",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1930_margin.csv",
-      "code": "1930",
-      "kind": "margin",
-      "elapsed_sec": 3.47
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1930_flow.csv",
-      "appended": false,
-      "code": "1930",
-      "kind": "flow",
-      "elapsed_sec": 4.33
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1930_price.csv",
-      "code": "1930",
-      "kind": "price",
-      "elapsed_sec": 0.38
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1934_margin.csv",
-      "code": "1934",
-      "kind": "margin",
-      "elapsed_sec": 3.25
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1934_flow.csv",
-      "appended": false,
-      "code": "1934",
-      "kind": "flow",
-      "elapsed_sec": 4.69
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1934_price.csv",
-      "code": "1934",
-      "kind": "price",
-      "elapsed_sec": 0.42
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1938_margin.csv",
-      "code": "1938",
-      "kind": "margin",
-      "elapsed_sec": 3.12
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1938_flow.csv",
-      "appended": false,
-      "code": "1938",
-      "kind": "flow",
-      "elapsed_sec": 4.34
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1938_price.csv",
-      "code": "1938",
-      "kind": "price",
-      "elapsed_sec": 0.41
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1939_margin.csv",
-      "code": "1939",
-      "kind": "margin",
-      "elapsed_sec": 3.14
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1939_flow.csv",
-      "appended": false,
-      "code": "1939",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1939_price.csv",
-      "code": "1939",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1941_margin.csv",
-      "code": "1941",
-      "kind": "margin",
-      "elapsed_sec": 3.34
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1941_flow.csv",
-      "appended": false,
-      "code": "1941",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1941_price.csv",
-      "code": "1941",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1942_margin.csv",
-      "code": "1942",
-      "kind": "margin",
-      "elapsed_sec": 3.48
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1942_flow.csv",
-      "appended": false,
-      "code": "1942",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1942_price.csv",
-      "code": "1942",
-      "kind": "price",
-      "elapsed_sec": 0.34
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1944_margin.csv",
-      "code": "1944",
-      "kind": "margin",
-      "elapsed_sec": 3.3
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1944_flow.csv",
-      "appended": false,
-      "code": "1944",
-      "kind": "flow",
-      "elapsed_sec": 4.39
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1944_price.csv",
-      "code": "1944",
-      "kind": "price",
-      "elapsed_sec": 0.34
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1945_margin.csv",
-      "code": "1945",
-      "kind": "margin",
-      "elapsed_sec": 3.3
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1945_flow.csv",
-      "appended": false,
-      "code": "1945",
-      "kind": "flow",
-      "elapsed_sec": 4.71
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1945_price.csv",
-      "code": "1945",
-      "kind": "price",
-      "elapsed_sec": 0.37
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1946_margin.csv",
-      "code": "1946",
-      "kind": "margin",
-      "elapsed_sec": 3.68
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1946_flow.csv",
-      "appended": false,
-      "code": "1946",
-      "kind": "flow",
-      "elapsed_sec": 4.33
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1946_price.csv",
-      "code": "1946",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1950_margin.csv",
-      "code": "1950",
-      "kind": "margin",
-      "elapsed_sec": 3.11
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1950_flow.csv",
-      "appended": false,
-      "code": "1950",
-      "kind": "flow",
-      "elapsed_sec": 4.6
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1950_price.csv",
-      "code": "1950",
-      "kind": "price",
-      "elapsed_sec": 0.27
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1951_margin.csv",
-      "code": "1951",
-      "kind": "margin",
-      "elapsed_sec": 3.08
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1951_flow.csv",
-      "appended": false,
-      "code": "1951",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1951_price.csv",
-      "code": "1951",
-      "kind": "price",
-      "elapsed_sec": 0.3
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1952_margin.csv",
-      "code": "1952",
-      "kind": "margin",
-      "elapsed_sec": 3.31
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1952_flow.csv",
-      "appended": false,
-      "code": "1952",
-      "kind": "flow",
-      "elapsed_sec": 4.67
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1952_price.csv",
-      "code": "1952",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1959_margin.csv",
-      "code": "1959",
-      "kind": "margin",
-      "elapsed_sec": 3.08
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1959_flow.csv",
-      "appended": false,
-      "code": "1959",
-      "kind": "flow",
-      "elapsed_sec": 4.37
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1959_price.csv",
-      "code": "1959",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1961_margin.csv",
-      "code": "1961",
-      "kind": "margin",
-      "elapsed_sec": 3.07
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1961_flow.csv",
-      "appended": false,
-      "code": "1961",
-      "kind": "flow",
-      "elapsed_sec": 4.58
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1961_price.csv",
-      "code": "1961",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1963_margin.csv",
-      "code": "1963",
-      "kind": "margin",
-      "elapsed_sec": 3.27
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1963_flow.csv",
-      "appended": false,
-      "code": "1963",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1963_price.csv",
-      "code": "1963",
-      "kind": "price",
-      "elapsed_sec": 0.38
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1964_margin.csv",
-      "code": "1964",
-      "kind": "margin",
-      "elapsed_sec": 3.12
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1964_flow.csv",
-      "appended": false,
-      "code": "1964",
-      "kind": "flow",
-      "elapsed_sec": 4.73
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1964_price.csv",
-      "code": "1964",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1968_margin.csv",
-      "code": "1968",
-      "kind": "margin",
-      "elapsed_sec": 3.27
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1968_flow.csv",
-      "appended": false,
-      "code": "1968",
-      "kind": "flow",
-      "elapsed_sec": 4.38
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1968_price.csv",
-      "code": "1968",
-      "kind": "price",
-      "elapsed_sec": 0.37
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1969_margin.csv",
-      "code": "1969",
-      "kind": "margin",
-      "elapsed_sec": 3.09
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1969_flow.csv",
-      "appended": false,
-      "code": "1969",
-      "kind": "flow",
-      "elapsed_sec": 4.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1969_price.csv",
-      "code": "1969",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1975_margin.csv",
-      "code": "1975",
-      "kind": "margin",
-      "elapsed_sec": 4.03
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1975_flow.csv",
-      "appended": false,
-      "code": "1975",
-      "kind": "flow",
-      "elapsed_sec": 4.34
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1975_price.csv",
-      "code": "1975",
-      "kind": "price",
-      "elapsed_sec": 0.29
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1976_margin.csv",
-      "code": "1976",
-      "kind": "margin",
-      "elapsed_sec": 3.06
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1976_flow.csv",
-      "appended": false,
-      "code": "1976",
-      "kind": "flow",
-      "elapsed_sec": 4.33
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1976_price.csv",
-      "code": "1976",
-      "kind": "price",
-      "elapsed_sec": 0.38
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1979_margin.csv",
-      "code": "1979",
-      "kind": "margin",
-      "elapsed_sec": 3.29
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1979_flow.csv",
-      "appended": false,
-      "code": "1979",
-      "kind": "flow",
-      "elapsed_sec": 4.58
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1979_price.csv",
-      "code": "1979",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1980_margin.csv",
-      "code": "1980",
-      "kind": "margin",
-      "elapsed_sec": 3.29
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1980_flow.csv",
-      "appended": false,
-      "code": "1980",
-      "kind": "flow",
-      "elapsed_sec": 4.39
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1980_price.csv",
-      "code": "1980",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/1982_margin.csv",
-      "code": "1982",
-      "kind": "margin",
-      "elapsed_sec": 3.6
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/1982_flow.csv",
-      "appended": false,
-      "code": "1982",
-      "kind": "flow",
-      "elapsed_sec": 4.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/1982_price.csv",
-      "code": "1982",
-      "kind": "price",
-      "elapsed_sec": 0.41
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2001_margin.csv",
-      "code": "2001",
-      "kind": "margin",
-      "elapsed_sec": 3.31
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2001_flow.csv",
-      "appended": false,
-      "code": "2001",
-      "kind": "flow",
-      "elapsed_sec": 4.38
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2001_price.csv",
-      "code": "2001",
-      "kind": "price",
-      "elapsed_sec": 0.26
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2002_margin.csv",
-      "code": "2002",
-      "kind": "margin",
-      "elapsed_sec": 3.48
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2002_flow.csv",
-      "appended": false,
-      "code": "2002",
-      "kind": "flow",
-      "elapsed_sec": 4.34
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2002_price.csv",
-      "code": "2002",
-      "kind": "price",
-      "elapsed_sec": 0.29
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2004_margin.csv",
-      "code": "2004",
-      "kind": "margin",
-      "elapsed_sec": 3.26
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2004_flow.csv",
-      "appended": false,
-      "code": "2004",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2004_price.csv",
-      "code": "2004",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2053_margin.csv",
-      "code": "2053",
-      "kind": "margin",
-      "elapsed_sec": 3.16
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2053_flow.csv",
-      "appended": false,
-      "code": "2053",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2053_price.csv",
-      "code": "2053",
-      "kind": "price",
-      "elapsed_sec": 0.38
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2060_margin.csv",
-      "code": "2060",
-      "kind": "margin",
-      "elapsed_sec": 3.15
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2060_flow.csv",
-      "appended": false,
-      "code": "2060",
-      "kind": "flow",
-      "elapsed_sec": 4.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2060_price.csv",
-      "code": "2060",
-      "kind": "price",
-      "elapsed_sec": 0.28
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2108_margin.csv",
-      "code": "2108",
-      "kind": "margin",
-      "elapsed_sec": 3.14
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2108_flow.csv",
-      "appended": false,
-      "code": "2108",
-      "kind": "flow",
-      "elapsed_sec": 4.34
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2108_price.csv",
-      "code": "2108",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2109_margin.csv",
-      "code": "2109",
-      "kind": "margin",
-      "elapsed_sec": 3.2
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2109_flow.csv",
-      "appended": false,
-      "code": "2109",
-      "kind": "flow",
-      "elapsed_sec": 4.6
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2109_price.csv",
-      "code": "2109",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2117_margin.csv",
-      "code": "2117",
-      "kind": "margin",
-      "elapsed_sec": 3.13
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2117_flow.csv",
-      "appended": false,
-      "code": "2117",
-      "kind": "flow",
-      "elapsed_sec": 4.38
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2117_price.csv",
-      "code": "2117",
-      "kind": "price",
-      "elapsed_sec": 0.41
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2120_margin.csv",
-      "code": "2120",
-      "kind": "margin",
-      "elapsed_sec": 3.67
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2120_flow.csv",
-      "appended": false,
-      "code": "2120",
-      "kind": "flow",
-      "elapsed_sec": 4.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2120_price.csv",
-      "code": "2120",
-      "kind": "price",
-      "elapsed_sec": 0.25
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2121_margin.csv",
-      "code": "2121",
-      "kind": "margin",
-      "elapsed_sec": 3.46
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2121_flow.csv",
-      "appended": false,
-      "code": "2121",
-      "kind": "flow",
-      "elapsed_sec": 4.42
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2121_price.csv",
-      "code": "2121",
-      "kind": "price",
-      "elapsed_sec": 0.23
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2124_margin.csv",
-      "code": "2124",
-      "kind": "margin",
-      "elapsed_sec": 3.92
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2124_flow.csv",
-      "appended": false,
-      "code": "2124",
-      "kind": "flow",
-      "elapsed_sec": 4.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2124_price.csv",
-      "code": "2124",
-      "kind": "price",
-      "elapsed_sec": 0.29
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2127_margin.csv",
-      "code": "2127",
-      "kind": "margin",
-      "elapsed_sec": 3.15
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2127_flow.csv",
-      "appended": false,
-      "code": "2127",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2127_price.csv",
-      "code": "2127",
-      "kind": "price",
-      "elapsed_sec": 0.24
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2130_margin.csv",
-      "code": "2130",
-      "kind": "margin",
-      "elapsed_sec": 3.13
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2130_flow.csv",
-      "appended": false,
-      "code": "2130",
-      "kind": "flow",
-      "elapsed_sec": 4.64
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2130_price.csv",
-      "code": "2130",
-      "kind": "price",
-      "elapsed_sec": 0.25
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2146_margin.csv",
-      "code": "2146",
-      "kind": "margin",
-      "elapsed_sec": 2.94
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2146_flow.csv",
-      "appended": false,
-      "code": "2146",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2146_price.csv",
-      "code": "2146",
-      "kind": "price",
-      "elapsed_sec": 0.28
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2148_margin.csv",
-      "code": "2148",
-      "kind": "margin",
-      "elapsed_sec": 3.0
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2148_flow.csv",
-      "appended": false,
-      "code": "2148",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2148_price.csv",
-      "code": "2148",
-      "kind": "price",
-      "elapsed_sec": 0.29
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2153_margin.csv",
-      "code": "2153",
-      "kind": "margin",
-      "elapsed_sec": 3.15
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2153_flow.csv",
-      "appended": false,
-      "code": "2153",
-      "kind": "flow",
-      "elapsed_sec": 4.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2153_price.csv",
-      "code": "2153",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2154_margin.csv",
-      "code": "2154",
-      "kind": "margin",
-      "elapsed_sec": 3.37
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2154_flow.csv",
-      "appended": false,
-      "code": "2154",
-      "kind": "flow",
-      "elapsed_sec": 4.6
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2154_price.csv",
-      "code": "2154",
-      "kind": "price",
-      "elapsed_sec": 0.27
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2157_margin.csv",
-      "code": "2157",
-      "kind": "margin",
-      "elapsed_sec": 3.13
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2157_flow.csv",
-      "appended": false,
-      "code": "2157",
-      "kind": "flow",
-      "elapsed_sec": 4.46
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2157_price.csv",
-      "code": "2157",
-      "kind": "price",
-      "elapsed_sec": 0.29
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2163_margin.csv",
-      "code": "2163",
-      "kind": "margin",
-      "elapsed_sec": 3.44
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2163_flow.csv",
-      "appended": false,
-      "code": "2163",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2163_price.csv",
-      "code": "2163",
-      "kind": "price",
-      "elapsed_sec": 0.27
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2168_margin.csv",
-      "code": "2168",
-      "kind": "margin",
-      "elapsed_sec": 2.94
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2168_flow.csv",
-      "appended": false,
-      "code": "2168",
-      "kind": "flow",
-      "elapsed_sec": 4.33
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2168_price.csv",
-      "code": "2168",
-      "kind": "price",
-      "elapsed_sec": 0.32
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2170_margin.csv",
-      "code": "2170",
-      "kind": "margin",
-      "elapsed_sec": 2.9
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2170_flow.csv",
-      "appended": false,
-      "code": "2170",
-      "kind": "flow",
-      "elapsed_sec": 4.66
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2170_price.csv",
-      "code": "2170",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2175_margin.csv",
-      "code": "2175",
-      "kind": "margin",
-      "elapsed_sec": 2.91
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2175_flow.csv",
-      "appended": false,
-      "code": "2175",
-      "kind": "flow",
-      "elapsed_sec": 4.37
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2175_price.csv",
-      "code": "2175",
-      "kind": "price",
-      "elapsed_sec": 0.33
-    },
-    {
-      "ok": true,
-      "source": "yahoo_jp",
-      "rows": 20,
-      "path": "data/cloud-cache/2181_margin.csv",
-      "code": "2181",
-      "kind": "margin",
-      "elapsed_sec": 3.24
-    },
-    {
-      "ok": true,
-      "source": "jpx_flow",
-      "rows": 1,
-      "path": "data/cloud-cache/2181_flow.csv",
-      "appended": false,
-      "code": "2181",
-      "kind": "flow",
-      "elapsed_sec": 4.61
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 118,
-      "path": "data/cloud-cache/2181_price.csv",
-      "code": "2181",
-      "kind": "price",
-      "elapsed_sec": 0.31
-    },
-    {
-      "ok": false,
-      "source": "none",
-      "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2198; minkabu: Minkabu 信用残頁面已停止服務（/stock/2198/credit 404）",
-      "code": "2198",
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2229; minkabu: Minkabu 信用残頁面已停止服務（/stock/2229/credit 404）",
+      "code": "2229",
       "kind": "margin",
       "elapsed_sec": 2.75
     },
@@ -3774,18 +162,186 @@
       "ok": true,
       "source": "jpx_flow",
       "rows": 1,
-      "path": "data/cloud-cache/2198_flow.csv",
+      "path": "data/cloud-cache/2229_flow.csv",
       "appended": false,
-      "code": "2198",
+      "code": "2229",
       "kind": "flow",
-      "elapsed_sec": 4.34
+      "elapsed_sec": 4.32
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 118,
-      "path": "data/cloud-cache/2198_price.csv",
-      "code": "2198",
+      "path": "data/cloud-cache/2229_price.csv",
+      "code": "2229",
+      "kind": "price",
+      "elapsed_sec": 0.24
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2264; minkabu: Minkabu 信用残頁面已停止服務（/stock/2264/credit 404）",
+      "code": "2264",
+      "kind": "margin",
+      "elapsed_sec": 2.92
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2264_flow.csv",
+      "appended": false,
+      "code": "2264",
+      "kind": "flow",
+      "elapsed_sec": 4.72
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2264_price.csv",
+      "code": "2264",
+      "kind": "price",
+      "elapsed_sec": 0.26
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2266; minkabu: Minkabu 信用残頁面已停止服務（/stock/2266/credit 404）",
+      "code": "2266",
+      "kind": "margin",
+      "elapsed_sec": 2.91
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2266_flow.csv",
+      "appended": false,
+      "code": "2266",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2266_price.csv",
+      "code": "2266",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2267; minkabu: Minkabu 信用残頁面已停止服務（/stock/2267/credit 404）",
+      "code": "2267",
+      "kind": "margin",
+      "elapsed_sec": 3.11
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2267_flow.csv",
+      "appended": false,
+      "code": "2267",
+      "kind": "flow",
+      "elapsed_sec": 4.52
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2267_price.csv",
+      "code": "2267",
+      "kind": "price",
+      "elapsed_sec": 0.2
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2269; minkabu: Minkabu 信用残頁面已停止服務（/stock/2269/credit 404）",
+      "code": "2269",
+      "kind": "margin",
+      "elapsed_sec": 2.96
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2269_flow.csv",
+      "appended": false,
+      "code": "2269",
+      "kind": "flow",
+      "elapsed_sec": 4.49
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2269_price.csv",
+      "code": "2269",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2270; minkabu: Minkabu 信用残頁面已停止服務（/stock/2270/credit 404）",
+      "code": "2270",
+      "kind": "margin",
+      "elapsed_sec": 2.81
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2270_flow.csv",
+      "appended": false,
+      "code": "2270",
+      "kind": "flow",
+      "elapsed_sec": 4.65
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2270_price.csv",
+      "code": "2270",
+      "kind": "price",
+      "elapsed_sec": 0.18
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2281; minkabu: Minkabu 信用残頁面已停止服務（/stock/2281/credit 404）",
+      "code": "2281",
+      "kind": "margin",
+      "elapsed_sec": 3.54
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2281_flow.csv",
+      "appended": false,
+      "code": "2281",
+      "kind": "flow",
+      "elapsed_sec": 4.35
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2281_price.csv",
+      "code": "2281",
       "kind": "price",
       "elapsed_sec": 0.33
     },
@@ -3793,27 +349,27 @@
       "ok": false,
       "source": "none",
       "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2201; minkabu: Minkabu 信用残頁面已停止服務（/stock/2201/credit 404）",
-      "code": "2201",
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2282; minkabu: Minkabu 信用残頁面已停止服務（/stock/2282/credit 404）",
+      "code": "2282",
       "kind": "margin",
-      "elapsed_sec": 2.57
+      "elapsed_sec": 2.96
     },
     {
       "ok": true,
       "source": "jpx_flow",
       "rows": 1,
-      "path": "data/cloud-cache/2201_flow.csv",
+      "path": "data/cloud-cache/2282_flow.csv",
       "appended": false,
-      "code": "2201",
+      "code": "2282",
       "kind": "flow",
-      "elapsed_sec": 4.59
+      "elapsed_sec": 4.76
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 118,
-      "path": "data/cloud-cache/2201_price.csv",
-      "code": "2201",
+      "path": "data/cloud-cache/2282_price.csv",
+      "code": "2282",
       "kind": "price",
       "elapsed_sec": 0.28
     },
@@ -3821,18 +377,18 @@
       "ok": false,
       "source": "none",
       "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2206; minkabu: Minkabu 信用残頁面已停止服務（/stock/2206/credit 404）",
-      "code": "2206",
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2288; minkabu: Minkabu 信用残頁面已停止服務（/stock/2288/credit 404）",
+      "code": "2288",
       "kind": "margin",
-      "elapsed_sec": 2.61
+      "elapsed_sec": 2.81
     },
     {
       "ok": true,
       "source": "jpx_flow",
       "rows": 1,
-      "path": "data/cloud-cache/2206_flow.csv",
+      "path": "data/cloud-cache/2288_flow.csv",
       "appended": false,
-      "code": "2206",
+      "code": "2288",
       "kind": "flow",
       "elapsed_sec": 4.36
     },
@@ -3840,55 +396,111 @@
       "ok": true,
       "source": "yfinance",
       "rows": 118,
-      "path": "data/cloud-cache/2206_price.csv",
-      "code": "2206",
+      "path": "data/cloud-cache/2288_price.csv",
+      "code": "2288",
       "kind": "price",
-      "elapsed_sec": 0.35
+      "elapsed_sec": 0.56
     },
     {
       "ok": false,
       "source": "none",
       "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2207; minkabu: Minkabu 信用残頁面已停止服務（/stock/2207/credit 404）",
-      "code": "2207",
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2292; minkabu: Minkabu 信用残頁面已停止服務（/stock/2292/credit 404）",
+      "code": "2292",
       "kind": "margin",
-      "elapsed_sec": 2.9
+      "elapsed_sec": 2.81
     },
     {
       "ok": true,
       "source": "jpx_flow",
       "rows": 1,
-      "path": "data/cloud-cache/2207_flow.csv",
+      "path": "data/cloud-cache/2292_flow.csv",
       "appended": false,
-      "code": "2207",
+      "code": "2292",
       "kind": "flow",
-      "elapsed_sec": 4.57
+      "elapsed_sec": 4.65
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 118,
-      "path": "data/cloud-cache/2207_price.csv",
-      "code": "2207",
+      "path": "data/cloud-cache/2292_price.csv",
+      "code": "2292",
       "kind": "price",
-      "elapsed_sec": 0.32
+      "elapsed_sec": 0.28
     },
     {
       "ok": false,
       "source": "none",
       "rows": 0,
-      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2209; minkabu: Minkabu 信用残頁面已停止服務（/stock/2209/credit 404）",
-      "code": "2209",
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2294; minkabu: Minkabu 信用残頁面已停止服務（/stock/2294/credit 404）",
+      "code": "2294",
       "kind": "margin",
-      "elapsed_sec": 2.72
+      "elapsed_sec": 2.81
     },
     {
       "ok": true,
       "source": "jpx_flow",
       "rows": 1,
-      "path": "data/cloud-cache/2209_flow.csv",
+      "path": "data/cloud-cache/2294_flow.csv",
       "appended": false,
-      "code": "2209",
+      "code": "2294",
+      "kind": "flow",
+      "elapsed_sec": 4.59
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2294_price.csv",
+      "code": "2294",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2296; minkabu: Minkabu 信用残頁面已停止服務（/stock/2296/credit 404）",
+      "code": "2296",
+      "kind": "margin",
+      "elapsed_sec": 2.99
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2296_flow.csv",
+      "appended": false,
+      "code": "2296",
+      "kind": "flow",
+      "elapsed_sec": 4.55
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2296_price.csv",
+      "code": "2296",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2301; minkabu: Minkabu 信用残頁面已停止服務（/stock/2301/credit 404）",
+      "code": "2301",
+      "kind": "margin",
+      "elapsed_sec": 2.78
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2301_flow.csv",
+      "appended": false,
+      "code": "2301",
       "kind": "flow",
       "elapsed_sec": 4.34
     },
@@ -3896,17 +508,3461 @@
       "ok": true,
       "source": "yfinance",
       "rows": 118,
-      "path": "data/cloud-cache/2209_price.csv",
-      "code": "2209",
+      "path": "data/cloud-cache/2301_price.csv",
+      "code": "2301",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2307; minkabu: Minkabu 信用残頁面已停止服務（/stock/2307/credit 404）",
+      "code": "2307",
+      "kind": "margin",
+      "elapsed_sec": 2.92
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2307_flow.csv",
+      "appended": false,
+      "code": "2307",
+      "kind": "flow",
+      "elapsed_sec": 4.58
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2307_price.csv",
+      "code": "2307",
+      "kind": "price",
+      "elapsed_sec": 0.26
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2317; minkabu: Minkabu 信用残頁面已停止服務（/stock/2317/credit 404）",
+      "code": "2317",
+      "kind": "margin",
+      "elapsed_sec": 2.92
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2317_flow.csv",
+      "appended": false,
+      "code": "2317",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2317_price.csv",
+      "code": "2317",
+      "kind": "price",
+      "elapsed_sec": 0.26
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2325; minkabu: Minkabu 信用残頁面已停止服務（/stock/2325/credit 404）",
+      "code": "2325",
+      "kind": "margin",
+      "elapsed_sec": 2.79
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2325_flow.csv",
+      "appended": false,
+      "code": "2325",
+      "kind": "flow",
+      "elapsed_sec": 4.56
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2325_price.csv",
+      "code": "2325",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2326; minkabu: Minkabu 信用残頁面已停止服務（/stock/2326/credit 404）",
+      "code": "2326",
+      "kind": "margin",
+      "elapsed_sec": 2.78
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2326_flow.csv",
+      "appended": false,
+      "code": "2326",
+      "kind": "flow",
+      "elapsed_sec": 4.34
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2326_price.csv",
+      "code": "2326",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2327; minkabu: Minkabu 信用残頁面已停止服務（/stock/2327/credit 404）",
+      "code": "2327",
+      "kind": "margin",
+      "elapsed_sec": 2.79
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2327_flow.csv",
+      "appended": false,
+      "code": "2327",
+      "kind": "flow",
+      "elapsed_sec": 4.55
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2327_price.csv",
+      "code": "2327",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2331_margin.csv",
+      "code": "2331",
+      "kind": "margin",
+      "elapsed_sec": 3.12
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2331_flow.csv",
+      "appended": false,
+      "code": "2331",
+      "kind": "flow",
+      "elapsed_sec": 4.3
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2331_price.csv",
+      "code": "2331",
+      "kind": "price",
+      "elapsed_sec": 0.26
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2335_margin.csv",
+      "code": "2335",
+      "kind": "margin",
+      "elapsed_sec": 3.15
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2335_flow.csv",
+      "appended": false,
+      "code": "2335",
+      "kind": "flow",
+      "elapsed_sec": 4.63
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2335_price.csv",
+      "code": "2335",
+      "kind": "price",
+      "elapsed_sec": 0.47
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2337_margin.csv",
+      "code": "2337",
+      "kind": "margin",
+      "elapsed_sec": 2.96
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2337_flow.csv",
+      "appended": false,
+      "code": "2337",
+      "kind": "flow",
+      "elapsed_sec": 4.36
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2337_price.csv",
+      "code": "2337",
+      "kind": "price",
+      "elapsed_sec": 0.21
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2353_margin.csv",
+      "code": "2353",
+      "kind": "margin",
+      "elapsed_sec": 3.16
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2353_flow.csv",
+      "appended": false,
+      "code": "2353",
+      "kind": "flow",
+      "elapsed_sec": 4.57
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2353_price.csv",
+      "code": "2353",
+      "kind": "price",
+      "elapsed_sec": 0.32
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2359_margin.csv",
+      "code": "2359",
+      "kind": "margin",
+      "elapsed_sec": 3.11
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2359_flow.csv",
+      "appended": false,
+      "code": "2359",
+      "kind": "flow",
+      "elapsed_sec": 4.49
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2359_price.csv",
+      "code": "2359",
+      "kind": "price",
+      "elapsed_sec": 0.29
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2371_margin.csv",
+      "code": "2371",
+      "kind": "margin",
+      "elapsed_sec": 3.04
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2371_flow.csv",
+      "appended": false,
+      "code": "2371",
+      "kind": "flow",
+      "elapsed_sec": 4.54
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2371_price.csv",
+      "code": "2371",
+      "kind": "price",
+      "elapsed_sec": 0.29
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2378_margin.csv",
+      "code": "2378",
+      "kind": "margin",
+      "elapsed_sec": 3.29
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2378_flow.csv",
+      "appended": false,
+      "code": "2378",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2378_price.csv",
+      "code": "2378",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2379_margin.csv",
+      "code": "2379",
+      "kind": "margin",
+      "elapsed_sec": 3.11
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2379_flow.csv",
+      "appended": false,
+      "code": "2379",
+      "kind": "flow",
+      "elapsed_sec": 4.67
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2379_price.csv",
+      "code": "2379",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2384_margin.csv",
+      "code": "2384",
+      "kind": "margin",
+      "elapsed_sec": 3.01
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2384_flow.csv",
+      "appended": false,
+      "code": "2384",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2384_price.csv",
+      "code": "2384",
+      "kind": "price",
+      "elapsed_sec": 0.29
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2395_margin.csv",
+      "code": "2395",
+      "kind": "margin",
+      "elapsed_sec": 2.94
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2395_flow.csv",
+      "appended": false,
+      "code": "2395",
+      "kind": "flow",
+      "elapsed_sec": 4.63
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2395_price.csv",
+      "code": "2395",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2410_margin.csv",
+      "code": "2410",
+      "kind": "margin",
+      "elapsed_sec": 2.99
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2410_flow.csv",
+      "appended": false,
+      "code": "2410",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2410_price.csv",
+      "code": "2410",
+      "kind": "price",
+      "elapsed_sec": 0.32
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2413_margin.csv",
+      "code": "2413",
+      "kind": "margin",
+      "elapsed_sec": 3.04
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2413_flow.csv",
+      "appended": false,
+      "code": "2413",
+      "kind": "flow",
+      "elapsed_sec": 4.59
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2413_price.csv",
+      "code": "2413",
+      "kind": "price",
+      "elapsed_sec": 0.37
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2429_margin.csv",
+      "code": "2429",
+      "kind": "margin",
+      "elapsed_sec": 3.06
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2429_flow.csv",
+      "appended": false,
+      "code": "2429",
+      "kind": "flow",
+      "elapsed_sec": 4.43
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2429_price.csv",
+      "code": "2429",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2432_margin.csv",
+      "code": "2432",
+      "kind": "margin",
+      "elapsed_sec": 2.97
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2432_flow.csv",
+      "appended": false,
+      "code": "2432",
+      "kind": "flow",
+      "elapsed_sec": 4.6
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2432_price.csv",
+      "code": "2432",
+      "kind": "price",
+      "elapsed_sec": 0.32
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2433_margin.csv",
+      "code": "2433",
+      "kind": "margin",
+      "elapsed_sec": 3.31
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2433_flow.csv",
+      "appended": false,
+      "code": "2433",
+      "kind": "flow",
+      "elapsed_sec": 4.3
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2433_price.csv",
+      "code": "2433",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2461_margin.csv",
+      "code": "2461",
+      "kind": "margin",
+      "elapsed_sec": 3.24
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2461_flow.csv",
+      "appended": false,
+      "code": "2461",
+      "kind": "flow",
+      "elapsed_sec": 4.62
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2461_price.csv",
+      "code": "2461",
+      "kind": "price",
+      "elapsed_sec": 0.23
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2462_margin.csv",
+      "code": "2462",
+      "kind": "margin",
+      "elapsed_sec": 3.3
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2462_flow.csv",
+      "appended": false,
+      "code": "2462",
+      "kind": "flow",
+      "elapsed_sec": 4.35
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2462_price.csv",
+      "code": "2462",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2471_margin.csv",
+      "code": "2471",
+      "kind": "margin",
+      "elapsed_sec": 3.04
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2471_flow.csv",
+      "appended": false,
+      "code": "2471",
+      "kind": "flow",
+      "elapsed_sec": 4.55
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2471_price.csv",
+      "code": "2471",
+      "kind": "price",
+      "elapsed_sec": 0.34
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2475_margin.csv",
+      "code": "2475",
+      "kind": "margin",
+      "elapsed_sec": 3.19
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2475_flow.csv",
+      "appended": false,
+      "code": "2475",
+      "kind": "flow",
+      "elapsed_sec": 4.34
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2475_price.csv",
+      "code": "2475",
+      "kind": "price",
+      "elapsed_sec": 0.24
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2491_margin.csv",
+      "code": "2491",
+      "kind": "margin",
+      "elapsed_sec": 3.05
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2491_flow.csv",
+      "appended": false,
+      "code": "2491",
+      "kind": "flow",
+      "elapsed_sec": 4.56
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2491_price.csv",
+      "code": "2491",
+      "kind": "price",
+      "elapsed_sec": 0.33
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2492_margin.csv",
+      "code": "2492",
+      "kind": "margin",
+      "elapsed_sec": 3.11
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2492_flow.csv",
+      "appended": false,
+      "code": "2492",
+      "kind": "flow",
+      "elapsed_sec": 4.39
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2492_price.csv",
+      "code": "2492",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2501_margin.csv",
+      "code": "2501",
+      "kind": "margin",
+      "elapsed_sec": 3.09
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2501_flow.csv",
+      "appended": false,
+      "code": "2501",
+      "kind": "flow",
+      "elapsed_sec": 4.57
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2501_price.csv",
+      "code": "2501",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2502_margin.csv",
+      "code": "2502",
+      "kind": "margin",
+      "elapsed_sec": 3.06
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2502_flow.csv",
+      "appended": false,
+      "code": "2502",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2502_price.csv",
+      "code": "2502",
+      "kind": "price",
+      "elapsed_sec": 0.33
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2503_margin.csv",
+      "code": "2503",
+      "kind": "margin",
+      "elapsed_sec": 2.97
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2503_flow.csv",
+      "appended": false,
+      "code": "2503",
+      "kind": "flow",
+      "elapsed_sec": 4.46
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2503_price.csv",
+      "code": "2503",
+      "kind": "price",
+      "elapsed_sec": 0.32
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2531_margin.csv",
+      "code": "2531",
+      "kind": "margin",
+      "elapsed_sec": 3.05
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2531_flow.csv",
+      "appended": false,
+      "code": "2531",
+      "kind": "flow",
+      "elapsed_sec": 4.6
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2531_price.csv",
+      "code": "2531",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2533_margin.csv",
+      "code": "2533",
+      "kind": "margin",
+      "elapsed_sec": 2.87
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2533_flow.csv",
+      "appended": false,
+      "code": "2533",
+      "kind": "flow",
+      "elapsed_sec": 4.37
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2533_price.csv",
+      "code": "2533",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2540_margin.csv",
+      "code": "2540",
+      "kind": "margin",
+      "elapsed_sec": 2.95
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2540_flow.csv",
+      "appended": false,
+      "code": "2540",
+      "kind": "flow",
+      "elapsed_sec": 4.6
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2540_price.csv",
+      "code": "2540",
+      "kind": "price",
+      "elapsed_sec": 0.37
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2579_margin.csv",
+      "code": "2579",
+      "kind": "margin",
+      "elapsed_sec": 2.85
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2579_flow.csv",
+      "appended": false,
+      "code": "2579",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2579_price.csv",
+      "code": "2579",
+      "kind": "price",
+      "elapsed_sec": 0.32
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2585_margin.csv",
+      "code": "2585",
+      "kind": "margin",
+      "elapsed_sec": 2.83
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2585_flow.csv",
+      "appended": false,
+      "code": "2585",
+      "kind": "flow",
+      "elapsed_sec": 4.57
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2585_price.csv",
+      "code": "2585",
+      "kind": "price",
+      "elapsed_sec": 0.22
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2587_margin.csv",
+      "code": "2587",
+      "kind": "margin",
+      "elapsed_sec": 2.97
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2587_flow.csv",
+      "appended": false,
+      "code": "2587",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2587_price.csv",
+      "code": "2587",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2590_margin.csv",
+      "code": "2590",
+      "kind": "margin",
+      "elapsed_sec": 3.4
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2590_flow.csv",
+      "appended": false,
+      "code": "2590",
+      "kind": "flow",
+      "elapsed_sec": 4.54
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2590_price.csv",
+      "code": "2590",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2593_margin.csv",
+      "code": "2593",
+      "kind": "margin",
+      "elapsed_sec": 3.22
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2593_flow.csv",
+      "appended": false,
+      "code": "2593",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2593_price.csv",
+      "code": "2593",
+      "kind": "price",
+      "elapsed_sec": 0.2
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2594_margin.csv",
+      "code": "2594",
+      "kind": "margin",
+      "elapsed_sec": 3.25
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2594_flow.csv",
+      "appended": false,
+      "code": "2594",
+      "kind": "flow",
+      "elapsed_sec": 4.58
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2594_price.csv",
+      "code": "2594",
       "kind": "price",
       "elapsed_sec": 0.35
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2602_margin.csv",
+      "code": "2602",
+      "kind": "margin",
+      "elapsed_sec": 3.14
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2602_flow.csv",
+      "appended": false,
+      "code": "2602",
+      "kind": "flow",
+      "elapsed_sec": 4.31
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2602_price.csv",
+      "code": "2602",
+      "kind": "price",
+      "elapsed_sec": 0.34
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2607_margin.csv",
+      "code": "2607",
+      "kind": "margin",
+      "elapsed_sec": 3.05
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2607_flow.csv",
+      "appended": false,
+      "code": "2607",
+      "kind": "flow",
+      "elapsed_sec": 4.59
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2607_price.csv",
+      "code": "2607",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2613_margin.csv",
+      "code": "2613",
+      "kind": "margin",
+      "elapsed_sec": 3.07
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2613_flow.csv",
+      "appended": false,
+      "code": "2613",
+      "kind": "flow",
+      "elapsed_sec": 4.31
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2613_price.csv",
+      "code": "2613",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2659_margin.csv",
+      "code": "2659",
+      "kind": "margin",
+      "elapsed_sec": 3.12
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2659_flow.csv",
+      "appended": false,
+      "code": "2659",
+      "kind": "flow",
+      "elapsed_sec": 4.52
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2659_price.csv",
+      "code": "2659",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2664_margin.csv",
+      "code": "2664",
+      "kind": "margin",
+      "elapsed_sec": 4.01
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2664_flow.csv",
+      "appended": false,
+      "code": "2664",
+      "kind": "flow",
+      "elapsed_sec": 4.58
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2664_price.csv",
+      "code": "2664",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2670_margin.csv",
+      "code": "2670",
+      "kind": "margin",
+      "elapsed_sec": 3.01
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2670_flow.csv",
+      "appended": false,
+      "code": "2670",
+      "kind": "flow",
+      "elapsed_sec": 4.47
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2670_price.csv",
+      "code": "2670",
+      "kind": "price",
+      "elapsed_sec": 0.35
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2674_margin.csv",
+      "code": "2674",
+      "kind": "margin",
+      "elapsed_sec": 3.18
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2674_flow.csv",
+      "appended": false,
+      "code": "2674",
+      "kind": "flow",
+      "elapsed_sec": 4.57
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2674_price.csv",
+      "code": "2674",
+      "kind": "price",
+      "elapsed_sec": 0.32
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2676_margin.csv",
+      "code": "2676",
+      "kind": "margin",
+      "elapsed_sec": 3.45
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2676_flow.csv",
+      "appended": false,
+      "code": "2676",
+      "kind": "flow",
+      "elapsed_sec": 4.47
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2676_price.csv",
+      "code": "2676",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2678_margin.csv",
+      "code": "2678",
+      "kind": "margin",
+      "elapsed_sec": 3.01
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2678_flow.csv",
+      "appended": false,
+      "code": "2678",
+      "kind": "flow",
+      "elapsed_sec": 4.46
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2678_price.csv",
+      "code": "2678",
+      "kind": "price",
+      "elapsed_sec": 0.33
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2681_margin.csv",
+      "code": "2681",
+      "kind": "margin",
+      "elapsed_sec": 3.0
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2681_flow.csv",
+      "appended": false,
+      "code": "2681",
+      "kind": "flow",
+      "elapsed_sec": 4.6
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2681_price.csv",
+      "code": "2681",
+      "kind": "price",
+      "elapsed_sec": 0.21
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2685_margin.csv",
+      "code": "2685",
+      "kind": "margin",
+      "elapsed_sec": 3.58
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2685_flow.csv",
+      "appended": false,
+      "code": "2685",
+      "kind": "flow",
+      "elapsed_sec": 4.55
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2685_price.csv",
+      "code": "2685",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2692_margin.csv",
+      "code": "2692",
+      "kind": "margin",
+      "elapsed_sec": 3.29
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2692_flow.csv",
+      "appended": false,
+      "code": "2692",
+      "kind": "flow",
+      "elapsed_sec": 4.46
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2692_price.csv",
+      "code": "2692",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2695_margin.csv",
+      "code": "2695",
+      "kind": "margin",
+      "elapsed_sec": 3.42
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2695_flow.csv",
+      "appended": false,
+      "code": "2695",
+      "kind": "flow",
+      "elapsed_sec": 4.66
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2695_price.csv",
+      "code": "2695",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2726; minkabu: Minkabu 信用残頁面已停止服務（/stock/2726/credit 404）",
+      "code": "2726",
+      "kind": "margin",
+      "elapsed_sec": 2.77
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2726_flow.csv",
+      "appended": false,
+      "code": "2726",
+      "kind": "flow",
+      "elapsed_sec": 4.49
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2726_price.csv",
+      "code": "2726",
+      "kind": "price",
+      "elapsed_sec": 0.34
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2730; minkabu: Minkabu 信用残頁面已停止服務（/stock/2730/credit 404）",
+      "code": "2730",
+      "kind": "margin",
+      "elapsed_sec": 3.1
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2730_flow.csv",
+      "appended": false,
+      "code": "2730",
+      "kind": "flow",
+      "elapsed_sec": 4.6
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2730_price.csv",
+      "code": "2730",
+      "kind": "price",
+      "elapsed_sec": 0.38
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2733; minkabu: Minkabu 信用残頁面已停止服務（/stock/2733/credit 404）",
+      "code": "2733",
+      "kind": "margin",
+      "elapsed_sec": 2.94
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2733_flow.csv",
+      "appended": false,
+      "code": "2733",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2733_price.csv",
+      "code": "2733",
+      "kind": "price",
+      "elapsed_sec": 0.24
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2734; minkabu: Minkabu 信用残頁面已停止服務（/stock/2734/credit 404）",
+      "code": "2734",
+      "kind": "margin",
+      "elapsed_sec": 2.79
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2734_flow.csv",
+      "appended": false,
+      "code": "2734",
+      "kind": "flow",
+      "elapsed_sec": 4.63
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2734_price.csv",
+      "code": "2734",
+      "kind": "price",
+      "elapsed_sec": 0.33
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2737; minkabu: Minkabu 信用残頁面已停止服務（/stock/2737/credit 404）",
+      "code": "2737",
+      "kind": "margin",
+      "elapsed_sec": 2.8
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2737_flow.csv",
+      "appended": false,
+      "code": "2737",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2737_price.csv",
+      "code": "2737",
+      "kind": "price",
+      "elapsed_sec": 0.24
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2742; minkabu: Minkabu 信用残頁面已停止服務（/stock/2742/credit 404）",
+      "code": "2742",
+      "kind": "margin",
+      "elapsed_sec": 2.96
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2742_flow.csv",
+      "appended": false,
+      "code": "2742",
+      "kind": "flow",
+      "elapsed_sec": 4.56
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2742_price.csv",
+      "code": "2742",
+      "kind": "price",
+      "elapsed_sec": 0.2
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2749; minkabu: Minkabu 信用残頁面已停止服務（/stock/2749/credit 404）",
+      "code": "2749",
+      "kind": "margin",
+      "elapsed_sec": 2.8
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2749_flow.csv",
+      "appended": false,
+      "code": "2749",
+      "kind": "flow",
+      "elapsed_sec": 4.5
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2749_price.csv",
+      "code": "2749",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2752; minkabu: Minkabu 信用残頁面已停止服務（/stock/2752/credit 404）",
+      "code": "2752",
+      "kind": "margin",
+      "elapsed_sec": 2.8
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2752_flow.csv",
+      "appended": false,
+      "code": "2752",
+      "kind": "flow",
+      "elapsed_sec": 4.54
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2752_price.csv",
+      "code": "2752",
+      "kind": "price",
+      "elapsed_sec": 0.26
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2753; minkabu: Minkabu 信用残頁面已停止服務（/stock/2753/credit 404）",
+      "code": "2753",
+      "kind": "margin",
+      "elapsed_sec": 2.8
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2753_flow.csv",
+      "appended": false,
+      "code": "2753",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2753_price.csv",
+      "code": "2753",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2760; minkabu: Minkabu 信用残頁面已停止服務（/stock/2760/credit 404）",
+      "code": "2760",
+      "kind": "margin",
+      "elapsed_sec": 2.66
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2760_flow.csv",
+      "appended": false,
+      "code": "2760",
+      "kind": "flow",
+      "elapsed_sec": 4.59
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2760_price.csv",
+      "code": "2760",
+      "kind": "price",
+      "elapsed_sec": 0.26
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2767; minkabu: Minkabu 信用残頁面已停止服務（/stock/2767/credit 404）",
+      "code": "2767",
+      "kind": "margin",
+      "elapsed_sec": 2.64
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2767_flow.csv",
+      "appended": false,
+      "code": "2767",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2767_price.csv",
+      "code": "2767",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2768; minkabu: Minkabu 信用残頁面已停止服務（/stock/2768/credit 404）",
+      "code": "2768",
+      "kind": "margin",
+      "elapsed_sec": 2.48
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2768_flow.csv",
+      "appended": false,
+      "code": "2768",
+      "kind": "flow",
+      "elapsed_sec": 4.56
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2768_price.csv",
+      "code": "2768",
+      "kind": "price",
+      "elapsed_sec": 0.33
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2784; minkabu: Minkabu 信用残頁面已停止服務（/stock/2784/credit 404）",
+      "code": "2784",
+      "kind": "margin",
+      "elapsed_sec": 2.49
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2784_flow.csv",
+      "appended": false,
+      "code": "2784",
+      "kind": "flow",
+      "elapsed_sec": 4.49
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2784_price.csv",
+      "code": "2784",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2791; minkabu: Minkabu 信用残頁面已停止服務（/stock/2791/credit 404）",
+      "code": "2791",
+      "kind": "margin",
+      "elapsed_sec": 2.49
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2791_flow.csv",
+      "appended": false,
+      "code": "2791",
+      "kind": "flow",
+      "elapsed_sec": 4.53
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2791_price.csv",
+      "code": "2791",
+      "kind": "price",
+      "elapsed_sec": 0.22
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2792; minkabu: Minkabu 信用残頁面已停止服務（/stock/2792/credit 404）",
+      "code": "2792",
+      "kind": "margin",
+      "elapsed_sec": 2.64
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2792_flow.csv",
+      "appended": false,
+      "code": "2792",
+      "kind": "flow",
+      "elapsed_sec": 4.36
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2792_price.csv",
+      "code": "2792",
+      "kind": "price",
+      "elapsed_sec": 0.32
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2801; minkabu: Minkabu 信用残頁面已停止服務（/stock/2801/credit 404）",
+      "code": "2801",
+      "kind": "margin",
+      "elapsed_sec": 2.49
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2801_flow.csv",
+      "appended": false,
+      "code": "2801",
+      "kind": "flow",
+      "elapsed_sec": 4.65
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2801_price.csv",
+      "code": "2801",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2802; minkabu: Minkabu 信用残頁面已停止服務（/stock/2802/credit 404）",
+      "code": "2802",
+      "kind": "margin",
+      "elapsed_sec": 2.49
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2802_flow.csv",
+      "appended": false,
+      "code": "2802",
+      "kind": "flow",
+      "elapsed_sec": 4.4
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2802_price.csv",
+      "code": "2802",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2804; minkabu: Minkabu 信用残頁面已停止服務（/stock/2804/credit 404）",
+      "code": "2804",
+      "kind": "margin",
+      "elapsed_sec": 2.64
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2804_flow.csv",
+      "appended": false,
+      "code": "2804",
+      "kind": "flow",
+      "elapsed_sec": 4.56
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2804_price.csv",
+      "code": "2804",
+      "kind": "price",
+      "elapsed_sec": 0.26
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2809; minkabu: Minkabu 信用残頁面已停止服務（/stock/2809/credit 404）",
+      "code": "2809",
+      "kind": "margin",
+      "elapsed_sec": 2.9
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2809_flow.csv",
+      "appended": false,
+      "code": "2809",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2809_price.csv",
+      "code": "2809",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2810; minkabu: Minkabu 信用残頁面已停止服務（/stock/2810/credit 404）",
+      "code": "2810",
+      "kind": "margin",
+      "elapsed_sec": 2.91
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2810_flow.csv",
+      "appended": false,
+      "code": "2810",
+      "kind": "flow",
+      "elapsed_sec": 4.56
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2810_price.csv",
+      "code": "2810",
+      "kind": "price",
+      "elapsed_sec": 0.26
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2811; minkabu: Minkabu 信用残頁面已停止服務（/stock/2811/credit 404）",
+      "code": "2811",
+      "kind": "margin",
+      "elapsed_sec": 2.76
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2811_flow.csv",
+      "appended": false,
+      "code": "2811",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2811_price.csv",
+      "code": "2811",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2815; minkabu: Minkabu 信用残頁面已停止服務（/stock/2815/credit 404）",
+      "code": "2815",
+      "kind": "margin",
+      "elapsed_sec": 2.76
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2815_flow.csv",
+      "appended": false,
+      "code": "2815",
+      "kind": "flow",
+      "elapsed_sec": 4.58
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2815_price.csv",
+      "code": "2815",
+      "kind": "price",
+      "elapsed_sec": 0.38
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2871; minkabu: Minkabu 信用残頁面已停止服務（/stock/2871/credit 404）",
+      "code": "2871",
+      "kind": "margin",
+      "elapsed_sec": 2.76
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2871_flow.csv",
+      "appended": false,
+      "code": "2871",
+      "kind": "flow",
+      "elapsed_sec": 4.34
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2871_price.csv",
+      "code": "2871",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2874; minkabu: Minkabu 信用残頁面已停止服務（/stock/2874/credit 404）",
+      "code": "2874",
+      "kind": "margin",
+      "elapsed_sec": 2.92
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2874_flow.csv",
+      "appended": false,
+      "code": "2874",
+      "kind": "flow",
+      "elapsed_sec": 4.59
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2874_price.csv",
+      "code": "2874",
+      "kind": "price",
+      "elapsed_sec": 0.29
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2875; minkabu: Minkabu 信用残頁面已停止服務（/stock/2875/credit 404）",
+      "code": "2875",
+      "kind": "margin",
+      "elapsed_sec": 2.76
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2875_flow.csv",
+      "appended": false,
+      "code": "2875",
+      "kind": "flow",
+      "elapsed_sec": 4.31
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2875_price.csv",
+      "code": "2875",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": false,
+      "source": "none",
+      "rows": 0,
+      "error": "yahoo_jp: Yahoo JP HTTP 500 for 2882; minkabu: Minkabu 信用残頁面已停止服務（/stock/2882/credit 404）",
+      "code": "2882",
+      "kind": "margin",
+      "elapsed_sec": 2.77
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2882_flow.csv",
+      "appended": false,
+      "code": "2882",
+      "kind": "flow",
+      "elapsed_sec": 4.59
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2882_price.csv",
+      "code": "2882",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2884_margin.csv",
+      "code": "2884",
+      "kind": "margin",
+      "elapsed_sec": 2.82
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2884_flow.csv",
+      "appended": false,
+      "code": "2884",
+      "kind": "flow",
+      "elapsed_sec": 4.31
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2884_price.csv",
+      "code": "2884",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2897_margin.csv",
+      "code": "2897",
+      "kind": "margin",
+      "elapsed_sec": 2.86
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2897_flow.csv",
+      "appended": false,
+      "code": "2897",
+      "kind": "flow",
+      "elapsed_sec": 4.56
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2897_price.csv",
+      "code": "2897",
+      "kind": "price",
+      "elapsed_sec": 0.32
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2908_margin.csv",
+      "code": "2908",
+      "kind": "margin",
+      "elapsed_sec": 3.17
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2908_flow.csv",
+      "appended": false,
+      "code": "2908",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2908_price.csv",
+      "code": "2908",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2910_margin.csv",
+      "code": "2910",
+      "kind": "margin",
+      "elapsed_sec": 3.54
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2910_flow.csv",
+      "appended": false,
+      "code": "2910",
+      "kind": "flow",
+      "elapsed_sec": 4.75
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2910_price.csv",
+      "code": "2910",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2914_margin.csv",
+      "code": "2914",
+      "kind": "margin",
+      "elapsed_sec": 3.3
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2914_flow.csv",
+      "appended": false,
+      "code": "2914",
+      "kind": "flow",
+      "elapsed_sec": 4.45
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2914_price.csv",
+      "code": "2914",
+      "kind": "price",
+      "elapsed_sec": 0.38
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2915_margin.csv",
+      "code": "2915",
+      "kind": "margin",
+      "elapsed_sec": 3.25
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2915_flow.csv",
+      "appended": false,
+      "code": "2915",
+      "kind": "flow",
+      "elapsed_sec": 4.67
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2915_price.csv",
+      "code": "2915",
+      "kind": "price",
+      "elapsed_sec": 0.26
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2918_margin.csv",
+      "code": "2918",
+      "kind": "margin",
+      "elapsed_sec": 3.76
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2918_flow.csv",
+      "appended": false,
+      "code": "2918",
+      "kind": "flow",
+      "elapsed_sec": 4.39
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2918_price.csv",
+      "code": "2918",
+      "kind": "price",
+      "elapsed_sec": 0.24
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2922_margin.csv",
+      "code": "2922",
+      "kind": "margin",
+      "elapsed_sec": 2.94
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2922_flow.csv",
+      "appended": false,
+      "code": "2922",
+      "kind": "flow",
+      "elapsed_sec": 4.65
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2922_price.csv",
+      "code": "2922",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2929_margin.csv",
+      "code": "2929",
+      "kind": "margin",
+      "elapsed_sec": 3.18
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2929_flow.csv",
+      "appended": false,
+      "code": "2929",
+      "kind": "flow",
+      "elapsed_sec": 4.36
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2929_price.csv",
+      "code": "2929",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2930_margin.csv",
+      "code": "2930",
+      "kind": "margin",
+      "elapsed_sec": 3.06
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2930_flow.csv",
+      "appended": false,
+      "code": "2930",
+      "kind": "flow",
+      "elapsed_sec": 4.54
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2930_price.csv",
+      "code": "2930",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2931_margin.csv",
+      "code": "2931",
+      "kind": "margin",
+      "elapsed_sec": 3.17
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2931_flow.csv",
+      "appended": false,
+      "code": "2931",
+      "kind": "flow",
+      "elapsed_sec": 4.37
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2931_price.csv",
+      "code": "2931",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2933_margin.csv",
+      "code": "2933",
+      "kind": "margin",
+      "elapsed_sec": 3.33
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2933_flow.csv",
+      "appended": false,
+      "code": "2933",
+      "kind": "flow",
+      "elapsed_sec": 4.59
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2933_price.csv",
+      "code": "2933",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2935_margin.csv",
+      "code": "2935",
+      "kind": "margin",
+      "elapsed_sec": 3.73
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2935_flow.csv",
+      "appended": false,
+      "code": "2935",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2935_price.csv",
+      "code": "2935",
+      "kind": "price",
+      "elapsed_sec": 0.21
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2975_margin.csv",
+      "code": "2975",
+      "kind": "margin",
+      "elapsed_sec": 3.13
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2975_flow.csv",
+      "appended": false,
+      "code": "2975",
+      "kind": "flow",
+      "elapsed_sec": 4.6
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2975_price.csv",
+      "code": "2975",
+      "kind": "price",
+      "elapsed_sec": 0.22
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2980_margin.csv",
+      "code": "2980",
+      "kind": "margin",
+      "elapsed_sec": 3.46
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2980_flow.csv",
+      "appended": false,
+      "code": "2980",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2980_price.csv",
+      "code": "2980",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/2982_margin.csv",
+      "code": "2982",
+      "kind": "margin",
+      "elapsed_sec": 3.7
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/2982_flow.csv",
+      "appended": false,
+      "code": "2982",
+      "kind": "flow",
+      "elapsed_sec": 4.57
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/2982_price.csv",
+      "code": "2982",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3002_margin.csv",
+      "code": "3002",
+      "kind": "margin",
+      "elapsed_sec": 3.26
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3002_flow.csv",
+      "appended": false,
+      "code": "3002",
+      "kind": "flow",
+      "elapsed_sec": 4.46
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3002_price.csv",
+      "code": "3002",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3003_margin.csv",
+      "code": "3003",
+      "kind": "margin",
+      "elapsed_sec": 3.11
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3003_flow.csv",
+      "appended": false,
+      "code": "3003",
+      "kind": "flow",
+      "elapsed_sec": 4.6
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3003_price.csv",
+      "code": "3003",
+      "kind": "price",
+      "elapsed_sec": 0.2
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3028_margin.csv",
+      "code": "3028",
+      "kind": "margin",
+      "elapsed_sec": 2.97
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3028_flow.csv",
+      "appended": false,
+      "code": "3028",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3028_price.csv",
+      "code": "3028",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3031_margin.csv",
+      "code": "3031",
+      "kind": "margin",
+      "elapsed_sec": 3.07
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3031_flow.csv",
+      "appended": false,
+      "code": "3031",
+      "kind": "flow",
+      "elapsed_sec": 4.6
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3031_price.csv",
+      "code": "3031",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3034_margin.csv",
+      "code": "3034",
+      "kind": "margin",
+      "elapsed_sec": 2.87
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3034_flow.csv",
+      "appended": false,
+      "code": "3034",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3034_price.csv",
+      "code": "3034",
+      "kind": "price",
+      "elapsed_sec": 0.25
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3036_margin.csv",
+      "code": "3036",
+      "kind": "margin",
+      "elapsed_sec": 2.83
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3036_flow.csv",
+      "appended": false,
+      "code": "3036",
+      "kind": "flow",
+      "elapsed_sec": 4.57
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3036_price.csv",
+      "code": "3036",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3038_margin.csv",
+      "code": "3038",
+      "kind": "margin",
+      "elapsed_sec": 2.89
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3038_flow.csv",
+      "appended": false,
+      "code": "3038",
+      "kind": "flow",
+      "elapsed_sec": 4.33
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3038_price.csv",
+      "code": "3038",
+      "kind": "price",
+      "elapsed_sec": 0.24
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3040_margin.csv",
+      "code": "3040",
+      "kind": "margin",
+      "elapsed_sec": 2.82
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3040_flow.csv",
+      "appended": false,
+      "code": "3040",
+      "kind": "flow",
+      "elapsed_sec": 4.55
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3040_price.csv",
+      "code": "3040",
+      "kind": "price",
+      "elapsed_sec": 0.29
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3046_margin.csv",
+      "code": "3046",
+      "kind": "margin",
+      "elapsed_sec": 2.89
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3046_flow.csv",
+      "appended": false,
+      "code": "3046",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3046_price.csv",
+      "code": "3046",
+      "kind": "price",
+      "elapsed_sec": 0.23
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3048_margin.csv",
+      "code": "3048",
+      "kind": "margin",
+      "elapsed_sec": 2.83
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3048_flow.csv",
+      "appended": false,
+      "code": "3048",
+      "kind": "flow",
+      "elapsed_sec": 4.62
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3048_price.csv",
+      "code": "3048",
+      "kind": "price",
+      "elapsed_sec": 0.22
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3050_margin.csv",
+      "code": "3050",
+      "kind": "margin",
+      "elapsed_sec": 3.22
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3050_flow.csv",
+      "appended": false,
+      "code": "3050",
+      "kind": "flow",
+      "elapsed_sec": 4.31
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3050_price.csv",
+      "code": "3050",
+      "kind": "price",
+      "elapsed_sec": 0.49
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3064_margin.csv",
+      "code": "3064",
+      "kind": "margin",
+      "elapsed_sec": 3.04
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3064_flow.csv",
+      "appended": false,
+      "code": "3064",
+      "kind": "flow",
+      "elapsed_sec": 4.59
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3064_price.csv",
+      "code": "3064",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3076_margin.csv",
+      "code": "3076",
+      "kind": "margin",
+      "elapsed_sec": 3.0
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3076_flow.csv",
+      "appended": false,
+      "code": "3076",
+      "kind": "flow",
+      "elapsed_sec": 5.66
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3076_price.csv",
+      "code": "3076",
+      "kind": "price",
+      "elapsed_sec": 0.29
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3086_margin.csv",
+      "code": "3086",
+      "kind": "margin",
+      "elapsed_sec": 3.02
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3086_flow.csv",
+      "appended": false,
+      "code": "3086",
+      "kind": "flow",
+      "elapsed_sec": 4.31
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3086_price.csv",
+      "code": "3086",
+      "kind": "price",
+      "elapsed_sec": 0.27
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3087_margin.csv",
+      "code": "3087",
+      "kind": "margin",
+      "elapsed_sec": 3.01
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3087_flow.csv",
+      "appended": false,
+      "code": "3087",
+      "kind": "flow",
+      "elapsed_sec": 4.57
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3087_price.csv",
+      "code": "3087",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3088_margin.csv",
+      "code": "3088",
+      "kind": "margin",
+      "elapsed_sec": 3.27
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3088_flow.csv",
+      "appended": false,
+      "code": "3088",
+      "kind": "flow",
+      "elapsed_sec": 4.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3088_price.csv",
+      "code": "3088",
+      "kind": "price",
+      "elapsed_sec": 0.24
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3091_margin.csv",
+      "code": "3091",
+      "kind": "margin",
+      "elapsed_sec": 3.07
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3091_flow.csv",
+      "appended": false,
+      "code": "3091",
+      "kind": "flow",
+      "elapsed_sec": 4.59
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3091_price.csv",
+      "code": "3091",
+      "kind": "price",
+      "elapsed_sec": 0.29
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3092_margin.csv",
+      "code": "3092",
+      "kind": "margin",
+      "elapsed_sec": 3.17
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3092_flow.csv",
+      "appended": false,
+      "code": "3092",
+      "kind": "flow",
+      "elapsed_sec": 4.43
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3092_price.csv",
+      "code": "3092",
+      "kind": "price",
+      "elapsed_sec": 0.33
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3093_margin.csv",
+      "code": "3093",
+      "kind": "margin",
+      "elapsed_sec": 3.12
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3093_flow.csv",
+      "appended": false,
+      "code": "3093",
+      "kind": "flow",
+      "elapsed_sec": 4.61
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3093_price.csv",
+      "code": "3093",
+      "kind": "price",
+      "elapsed_sec": 0.32
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3097_margin.csv",
+      "code": "3097",
+      "kind": "margin",
+      "elapsed_sec": 3.14
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3097_flow.csv",
+      "appended": false,
+      "code": "3097",
+      "kind": "flow",
+      "elapsed_sec": 4.34
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3097_price.csv",
+      "code": "3097",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3099_margin.csv",
+      "code": "3099",
+      "kind": "margin",
+      "elapsed_sec": 3.31
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3099_flow.csv",
+      "appended": false,
+      "code": "3099",
+      "kind": "flow",
+      "elapsed_sec": 4.63
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3099_price.csv",
+      "code": "3099",
+      "kind": "price",
+      "elapsed_sec": 0.26
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3101_margin.csv",
+      "code": "3101",
+      "kind": "margin",
+      "elapsed_sec": 3.13
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3101_flow.csv",
+      "appended": false,
+      "code": "3101",
+      "kind": "flow",
+      "elapsed_sec": 4.53
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3101_price.csv",
+      "code": "3101",
+      "kind": "price",
+      "elapsed_sec": 0.3
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3104_margin.csv",
+      "code": "3104",
+      "kind": "margin",
+      "elapsed_sec": 3.49
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3104_flow.csv",
+      "appended": false,
+      "code": "3104",
+      "kind": "flow",
+      "elapsed_sec": 4.53
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3104_price.csv",
+      "code": "3104",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3105_margin.csv",
+      "code": "3105",
+      "kind": "margin",
+      "elapsed_sec": 3.68
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3105_flow.csv",
+      "appended": false,
+      "code": "3105",
+      "kind": "flow",
+      "elapsed_sec": 4.34
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3105_price.csv",
+      "code": "3105",
+      "kind": "price",
+      "elapsed_sec": 0.32
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3106_margin.csv",
+      "code": "3106",
+      "kind": "margin",
+      "elapsed_sec": 3.11
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3106_flow.csv",
+      "appended": false,
+      "code": "3106",
+      "kind": "flow",
+      "elapsed_sec": 4.49
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3106_price.csv",
+      "code": "3106",
+      "kind": "price",
+      "elapsed_sec": 0.31
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3107_margin.csv",
+      "code": "3107",
+      "kind": "margin",
+      "elapsed_sec": 3.09
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3107_flow.csv",
+      "appended": false,
+      "code": "3107",
+      "kind": "flow",
+      "elapsed_sec": 4.54
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3107_price.csv",
+      "code": "3107",
+      "kind": "price",
+      "elapsed_sec": 0.33
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3109_margin.csv",
+      "code": "3109",
+      "kind": "margin",
+      "elapsed_sec": 3.59
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3109_flow.csv",
+      "appended": false,
+      "code": "3109",
+      "kind": "flow",
+      "elapsed_sec": 4.32
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3109_price.csv",
+      "code": "3109",
+      "kind": "price",
+      "elapsed_sec": 0.28
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3110_margin.csv",
+      "code": "3110",
+      "kind": "margin",
+      "elapsed_sec": 2.93
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3110_flow.csv",
+      "appended": false,
+      "code": "3110",
+      "kind": "flow",
+      "elapsed_sec": 4.6
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3110_price.csv",
+      "code": "3110",
+      "kind": "price",
+      "elapsed_sec": 0.38
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3116_margin.csv",
+      "code": "3116",
+      "kind": "margin",
+      "elapsed_sec": 2.8
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3116_flow.csv",
+      "appended": false,
+      "code": "3116",
+      "kind": "flow",
+      "elapsed_sec": 4.34
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3116_price.csv",
+      "code": "3116",
+      "kind": "price",
+      "elapsed_sec": 0.24
+    },
+    {
+      "ok": true,
+      "source": "yahoo_jp",
+      "rows": 20,
+      "path": "data/cloud-cache/3132_margin.csv",
+      "code": "3132",
+      "kind": "margin",
+      "elapsed_sec": 3.05
+    },
+    {
+      "ok": true,
+      "source": "jpx_flow",
+      "rows": 1,
+      "path": "data/cloud-cache/3132_flow.csv",
+      "appended": false,
+      "code": "3132",
+      "kind": "flow",
+      "elapsed_sec": 4.57
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 118,
+      "path": "data/cloud-cache/3132_price.csv",
+      "code": "3132",
+      "kind": "price",
+      "elapsed_sec": 0.26
     }
   ],
   "summary": {
-    "ok": 371,
-    "fail": 46,
-    "total": 417
+    "ok": 374,
+    "fail": 49,
+    "total": 423
   },
-  "ended_utc": "2026-05-15T03:32:47.367967+00:00",
-  "elapsed_sec": 1105.8
+  "ended_utc": "2026-05-15T03:51:41.129884+00:00",
+  "elapsed_sec": 1103.0
 }
