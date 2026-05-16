@@ -6,7 +6,8 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./data:/app/data
+      - ./data:/app/data              # git-tracked data (watchlist, cloud-cache, .env)
+      - capystock_cache:/app/data/cache  # gitignored scrape cache — persists across rebuilds
     environment:
       - TZ=Asia/Tokyo
       - CAPYSTOCK_FRONTEND_DIR=/app/frontend/dist
@@ -18,3 +19,6 @@ services:
     env_file:
       - ./data/.env
     restart: unless-stopped
+
+volumes:
+  capystock_cache:   # named volume — Docker 管理，不隨 image rebuild 消失
