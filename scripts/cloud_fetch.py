@@ -32,32 +32,35 @@ sys.path.insert(0, str(ROOT))
 
 from capystock import config  # noqa: E402
 from capystock.ingest.jpx_flow import JpxFlowSource  # noqa: E402
-from capystock.ingest.minkabu_margin import MinkabuMarginSource  # noqa: E402
-from capystock.ingest.yahoo_jp_margin import YahooJpMarginSource  # noqa: E402
+from capystock.ingest.jpx_margin import JpxMarginSource  # noqa: E402
 
 # PoC 預設代碼：大型權值股 + 中型股，混合驗證
 POC_CODES = ["7203", "6758", "9984", "8035", "6367"]
 
 CLOUD_CACHE_DIR = ROOT / "data" / "cloud-cache"
 
-_MARGIN_SOURCES = [YahooJpMarginSource(), MinkabuMarginSource()]
+_JPX_MARGIN = JpxMarginSource()
 
 
 def fetch_margin(code: str) -> dict:
-    """嘗試所有 margin 來源，第一個成功即停。"""
-    errors = []
-    for src in _MARGIN_SOURCES:
-        try:
-            df = src.fetch(code)
-            if df.empty:
-                errors.append(f"{src.name}: empty")
-                continue
-            out = CLOUD_CACHE_DIR / f"{code}_margin.csv"
-            df.to_csv(out, index=False)
-            return {"ok": True, "source": src.name, "rows": len(df), "path": str(out.relative_to(ROOT))}
-        except Exception as e:
-            errors.append(f"{src.name}: {e}")
-    return {"ok": False, "source": "none", "rows": 0, "error": "; ".join(errors)}
+    """從 JPX 週次 PDF 取得信用残（全市場一次下載，不逐股爬蟲）。"""
+    try:
+        df = _JPX_MARGIN.fetch(code)
+        if df.empty:
+            return {"ok": False, "source": "jpx_margin", "rows": 0, "error": "empty"}
+        out = CLOUD_CACHE_DIR / f"{code}_margin.csv"
+        # append 既有歷史，去重
+        import pandas as pd
+        if out.exists():
+            try:
+                existing = pd.read_csv(out)
+                df = pd.concat([existing, df], ignore_index=True).drop_duplicates("week", keep="last").sort_values("week")
+            except Exception:
+                pass
+        df.to_csv(out, index=False)
+        return {"ok": True, "source": "jpx_margin", "rows": len(df), "path": str(out.relative_to(ROOT))}
+    except Exception as e:
+        return {"ok": False, "source": "jpx_margin", "rows": 0, "error": str(e)}
 
 
 def fetch_price(code: str) -> dict:
