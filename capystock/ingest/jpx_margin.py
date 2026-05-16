@@ -113,19 +113,25 @@ def _parse_margin_pdf(content: bytes, week_label: str) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def fetch_market_margin() -> pd.DataFrame:
-    """下載最新週次 PDF，解析全市場信用残，cache 到 _market_margin.csv。"""
-    url = _find_latest_pdf_url()
-    week_label = _extract_week_from_url(url)
+def fetch_market_margin(force: bool = False) -> pd.DataFrame:
+    """下載最新週次 PDF，解析全市場信用残，cache 到 _market_margin.csv。
 
-    # 若已有當週資料，直接用 cache
-    if MARKET_MARGIN_PATH.exists():
+    cache 存在且非空時直接回傳（不發任何 HTTP 請求）。
+    GitHub Actions 每次冷啟動所以自然會下載最新；
+    本地若需強制刷新，傳 force=True 或手動刪除 _market_margin.csv。
+    """
+    # 優先用 cache（不發 HTTP）
+    if not force and MARKET_MARGIN_PATH.exists():
         try:
             existing = pd.read_csv(MARKET_MARGIN_PATH, dtype={"code": str})
-            if week_label in existing["week"].values:
+            if not existing.empty:
                 return existing
         except Exception:
             pass
+
+    # Cache miss 或 force — 下載最新 PDF
+    url = _find_latest_pdf_url()
+    week_label = _extract_week_from_url(url)
 
     time.sleep(config.REQUEST_DELAY_SECONDS)
     headers = {"User-Agent": config.USER_AGENT}
