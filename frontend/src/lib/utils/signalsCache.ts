@@ -1,4 +1,5 @@
-const TTL = 24 * 60 * 60 * 1000; // 24 h
+// 30 天 — 使用者不要即時，永遠用 cache 顯示，直到手動點「更新」
+const TTL = 30 * 24 * 60 * 60 * 1000;
 
 interface CacheEntry<T> {
   data: T;
@@ -46,12 +47,34 @@ export function cacheTimestamp(key: string): number | null {
   }
 }
 
-/** 清除所有 signals_ 開頭的快取 */
-export function clearAllSignalsCache(): void {
+/** 清除指定 prefix 開頭的快取 */
+export function clearCacheByPrefix(prefix: string): void {
   if (typeof localStorage === 'undefined') return;
   Object.keys(localStorage)
-    .filter(k => k.startsWith('signals_'))
+    .filter(k => k.startsWith(prefix))
     .forEach(k => localStorage.removeItem(k));
+}
+
+/** 清除所有 signals_ 開頭的快取（向後相容） */
+export function clearAllSignalsCache(): void {
+  clearCacheByPrefix('signals_');
+}
+
+/** 帶 cache 的 fetch 包裝：cache 有就用 cache，否則打 API 並 cache */
+export async function cachedFetch<T>(
+  key: string,
+  fetcher: () => Promise<T>,
+  forceRefresh = false,
+): Promise<{ data: T; fromCache: boolean; ts: number }> {
+  if (!forceRefresh) {
+    const cached = cacheGet<T>(key);
+    if (cached !== null) {
+      return { data: cached, fromCache: true, ts: cacheTimestamp(key) ?? Date.now() };
+    }
+  }
+  const data = await fetcher();
+  cacheSet(key, data);
+  return { data, fromCache: false, ts: Date.now() };
 }
 
 /** 格式化快取年齡為人類可讀字串 */

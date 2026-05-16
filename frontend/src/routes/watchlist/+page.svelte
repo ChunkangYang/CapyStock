@@ -1,7 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { api } from '$lib/api';
+  import { cachedFetch, cacheClear, formatCacheAge } from '$lib/utils/signalsCache';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
+
+  const CACHE_KEY = 'page_watchlist';
 
   interface WatchlistEntry {
     code: string;
@@ -12,20 +15,35 @@
 
   let watchlist: WatchlistEntry[] = [];
   let loading = true;
+  let refreshing = false;
   let error: string | null = null;
+  let cacheTs: number | null = null;
 
   let addCode = '';
   let addLoading = false;
   let addMsg = '';
 
-  async function loadWatchlist() {
+  async function loadWatchlist(forceRefresh = false) {
+    if (forceRefresh) refreshing = true; else loading = true;
     try {
-      watchlist = await api<WatchlistEntry[]>('/watchlist');
+      const { data, ts } = await cachedFetch(
+        CACHE_KEY,
+        () => api<WatchlistEntry[]>('/watchlist'),
+        forceRefresh,
+      );
+      watchlist = data;
+      cacheTs = ts;
     } catch (e) {
       error = e instanceof Error ? e.message : '載入失敗';
     } finally {
       loading = false;
+      refreshing = false;
     }
+  }
+
+  async function handleRefresh() {
+    cacheClear(CACHE_KEY);
+    await loadWatchlist(true);
   }
 
   async function handleAdd() {
@@ -40,7 +58,8 @@
       });
       addMsg = `✓ 已加入追蹤：${addCode.trim()}`;
       addCode = '';
-      await loadWatchlist();
+      cacheClear(CACHE_KEY);
+      await loadWatchlist(true);
     } catch (e) {
       addMsg = `✗ ${e instanceof Error ? e.message : '新增失敗'}`;
     } finally {
@@ -56,7 +75,8 @@
     if (!confirm(`確認移除 ${code}？`)) return;
     try {
       await api(`/watchlist/${code}`, { method: 'DELETE' });
-      await loadWatchlist();
+      cacheClear(CACHE_KEY);
+      await loadWatchlist(true);
     } catch (e) {
       alert(`移除失敗：${e instanceof Error ? e.message : String(e)}`);
     }
@@ -66,7 +86,15 @@
 </script>
 
 <div class="watchlist-page">
-  <h1>追蹤清單</h1>
+  <div class="title-row">
+    <h1>追蹤清單</h1>
+    <div class="header-actions">
+      {#if cacheTs}<span class="cache-age">上次更新：{formatCacheAge(cacheTs)}</span>{/if}
+      <button class="btn-refresh" disabled={refreshing || loading} on:click={handleRefresh}>
+        <span class:spinning={refreshing}>↻</span> 更新
+      </button>
+    </div>
+  </div>
 
   <!-- 新增表單 -->
   <section class="add-section">
@@ -287,4 +315,16 @@
   .btn-remove:hover {
     background: #7f1d1d;
   }
+  .title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .cache-age { font-size: 12px; color: #666; }
+  .btn-refresh {
+    background: #1a1a1a; border: 1px solid #444; color: #ccc;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-refresh:hover:not(:disabled) { color: #4ade80; border-color: #4ade80; }
+  .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
+  .spinning { animation: spin 0.7s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>

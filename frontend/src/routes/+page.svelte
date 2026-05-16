@@ -1,15 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { api } from '$lib/api';
+  import { cachedFetch, cacheClear, cacheTimestamp, formatCacheAge } from '$lib/utils/signalsCache';
   import type { WatchlistEntry, SignalScanRow, PortfolioEntry } from '$lib/types';
+
+  const CACHE_KEY = 'page_dashboard';
 
   let watchlist: WatchlistEntry[] = [];
   let portfolioEntries: PortfolioEntry[] = [];
   let recentSignals: SignalScanRow[] = [];
   let topDividends: any[] = [];
   let loading = true;
+  let refreshing = false;
   let error: string | null = null;
   let noSnapshot = false;
+  let cacheTs: number | null = null;
 
   async function loadOptional<T>(path: string, fallback: T): Promise<T> {
     try {
@@ -24,26 +29,44 @@
     }
   }
 
-  onMount(async () => {
+  async function loadData(forceRefresh = false) {
+    if (forceRefresh) refreshing = true; else loading = true;
+    error = null;
     try {
-      [watchlist, portfolioEntries] = await Promise.all([
-        api<WatchlistEntry[]>('/watchlist'),
-        loadOptional<PortfolioEntry[]>('/portfolio?open_only=true', []),
-      ]);
-
-      const signalsResp = await loadOptional<{ data: SignalScanRow[] }>('/scan/signals', { data: [] });
-      recentSignals = [...(signalsResp.data || [])].sort((a, b) => b.score - a.score).slice(0, 5);
-
-      topDividends = (
-        await loadOptional<any[]>('/scan/dividend?order_by=est_yield&desc=true', [])
-      ).slice(0, 5);
+      const { data, ts } = await cachedFetch(CACHE_KEY, async () => {
+        const [wl, pf] = await Promise.all([
+          api<WatchlistEntry[]>('/watchlist'),
+          loadOptional<PortfolioEntry[]>('/portfolio?open_only=true', []),
+        ]);
+        const signalsResp = await loadOptional<{ data: SignalScanRow[] }>('/scan/signals', { data: [] });
+        const top = (await loadOptional<any[]>('/scan/dividend?order_by=est_yield&desc=true', [])).slice(0, 5);
+        return {
+          watchlist: wl,
+          portfolioEntries: pf,
+          recentSignals: [...(signalsResp.data || [])].sort((a, b) => b.score - a.score).slice(0, 5),
+          topDividends: top,
+        };
+      }, forceRefresh);
+      watchlist = data.watchlist;
+      portfolioEntries = data.portfolioEntries;
+      recentSignals = data.recentSignals;
+      topDividends = data.topDividends;
+      cacheTs = ts;
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to load data';
       console.error(error);
     } finally {
       loading = false;
+      refreshing = false;
     }
-  });
+  }
+
+  async function handleRefresh() {
+    cacheClear(CACHE_KEY);
+    await loadData(true);
+  }
+
+  onMount(() => loadData());
 
   $: totalOpenLots = portfolioEntries.reduce((s, e) => s + e.lots.length, 0);
   $: totalPnl = portfolioEntries.reduce(
@@ -53,7 +76,15 @@
 </script>
 
 <div class="dashboard">
-  <h1>Dashboard</h1>
+  <div class="title-row">
+    <h1>Dashboard</h1>
+    <div class="header-actions">
+      {#if cacheTs}<span class="cache-age">上次更新：{formatCacheAge(cacheTs)}</span>{/if}
+      <button class="btn-refresh" disabled={refreshing || loading} on:click={handleRefresh}>
+        <span class:spinning={refreshing}>↻</span> 更新
+      </button>
+    </div>
+  </div>
 
   {#if error}
     <div class="error-banner">{error}</div>
@@ -200,6 +231,21 @@
     border-radius: 3px;
     color: #93c5fd;
   }
+
+  .title-row {
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+  }
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .cache-age { font-size: 12px; color: #666; }
+  .btn-refresh {
+    background: #1a1a1a; border: 1px solid #444; color: #ccc;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-refresh:hover:not(:disabled) { color: #4ade80; border-color: #4ade80; }
+  .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
+  .spinning { animation: spin 0.7s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   .cards-grid {
     display: grid;

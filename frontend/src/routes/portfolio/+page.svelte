@@ -1,12 +1,17 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { api } from '$lib/api';
+  import { cachedFetch, cacheClear, formatCacheAge } from '$lib/utils/signalsCache';
   import type { PortfolioEntry, PortfolioLot } from '$lib/types';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 
+  const CACHE_KEY = 'page_portfolio';
+
   let portfolio: PortfolioEntry[] = [];
   let loading = true;
+  let refreshing = false;
   let error: string | null = null;
+  let cacheTs: number | null = null;
 
   // 新增 lot 表單
   let addCode = '';
@@ -16,14 +21,32 @@
   let addLoading = false;
   let addMsg = '';
 
-  async function loadPortfolio() {
+  async function loadPortfolio(forceRefresh = false) {
+    if (forceRefresh) refreshing = true; else loading = true;
     try {
-      portfolio = await api<PortfolioEntry[]>('/portfolio?open_only=true');
+      const { data, ts } = await cachedFetch(
+        CACHE_KEY,
+        () => api<PortfolioEntry[]>('/portfolio?open_only=true'),
+        forceRefresh,
+      );
+      portfolio = data;
+      cacheTs = ts;
     } catch (e) {
       error = e instanceof Error ? e.message : 'Failed to load portfolio';
     } finally {
       loading = false;
+      refreshing = false;
     }
+  }
+
+  async function handleRefresh() {
+    cacheClear(CACHE_KEY);
+    await loadPortfolio(true);
+  }
+
+  // 寫入操作（新增/平倉）後 invalidate cache
+  function invalidateCache() {
+    cacheClear(CACHE_KEY);
   }
 
   async function handleAdd() {
@@ -42,7 +65,8 @@
       });
       addMsg = `✓ 新增成功：${addCode}`;
       addCode = ''; addEntryPrice = ''; addQuantity = ''; addNote = '';
-      await loadPortfolio();
+      invalidateCache();
+      await loadPortfolio(true);
     } catch (e) {
       addMsg = `✗ ${e instanceof Error ? e.message : '新增失敗'}`;
     } finally {
@@ -60,7 +84,8 @@
         method: 'POST',
         body: JSON.stringify({ exit_price: exitPrice }),
       });
-      await loadPortfolio();
+      invalidateCache();
+      await loadPortfolio(true);
     } catch (e) {
       alert(`平倉失敗：${e instanceof Error ? e.message : String(e)}`);
     }
@@ -75,7 +100,15 @@
 </script>
 
 <div class="portfolio-page">
-  <h1>持倉管理</h1>
+  <div class="title-row">
+    <h1>持倉管理</h1>
+    <div class="header-actions">
+      {#if cacheTs}<span class="cache-age">上次更新：{formatCacheAge(cacheTs)}</span>{/if}
+      <button class="btn-refresh" disabled={refreshing || loading} on:click={handleRefresh}>
+        <span class:spinning={refreshing}>↻</span> 更新
+      </button>
+    </div>
+  </div>
 
   <!-- 新增買入 -->
   <section class="add-section">
@@ -336,4 +369,16 @@
   .btn-close:hover {
     background: #7f1d1d;
   }
+  .title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .cache-age { font-size: 12px; color: #666; }
+  .btn-refresh {
+    background: #1a1a1a; border: 1px solid #444; color: #ccc;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-refresh:hover:not(:disabled) { color: #4ade80; border-color: #4ade80; }
+  .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
+  .spinning { animation: spin 0.7s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>

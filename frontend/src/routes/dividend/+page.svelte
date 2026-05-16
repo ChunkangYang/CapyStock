@@ -1,10 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { api, ApiError } from '$lib/api';
+  import { cachedFetch, cacheClear, formatCacheAge } from '$lib/utils/signalsCache';
   import type { DividendScanRow } from '$lib/types';
   import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
   import { favorites } from '$lib/stores/favorites';
+
+  const CACHE_KEY = 'page_dividend';
 
   interface FilterState {
     overall: Set<string>;
@@ -21,10 +24,12 @@
   }
 
   let loading = true;
+  let refreshing = false;
   let error = '';
   let noSnapshot = false;
   let rows: DividendScanRow[] = [];
   let filtered: DividendScanRow[] = [];
+  let cacheTs: number | null = null;
 
   const filters: FilterState = {
     overall: new Set(['STRONG', 'HEALTHY', 'CAUTION', 'RISKY']),
@@ -44,10 +49,16 @@
     applyFiltersAndSort();
   }
 
-  onMount(async () => {
+  async function loadData(forceRefresh = false) {
+    if (forceRefresh) refreshing = true; else loading = true;
     try {
-      const data = await api<DividendScanRow[]>('/scan/dividend');
+      const { data, ts } = await cachedFetch(
+        CACHE_KEY,
+        () => api<DividendScanRow[]>('/scan/dividend'),
+        forceRefresh,
+      );
       rows = data;
+      cacheTs = ts;
       applyFiltersAndSort();
     } catch (e) {
       if (e instanceof ApiError && e.status === 404) {
@@ -57,8 +68,16 @@
       }
     } finally {
       loading = false;
+      refreshing = false;
     }
-  });
+  }
+
+  async function handleRefresh() {
+    cacheClear(CACHE_KEY);
+    await loadData(true);
+  }
+
+  onMount(() => loadData());
 
   function applyFiltersAndSort() {
     const favoriteSet = new Set(
@@ -147,8 +166,14 @@
 </script>
 
 <div class="page">
-  <div class="header">
+  <div class="header title-row">
     <h1>金雞高股息</h1>
+    <div class="header-actions">
+      {#if cacheTs}<span class="cache-age">上次更新：{formatCacheAge(cacheTs)}</span>{/if}
+      <button class="btn-refresh" disabled={refreshing || loading} on:click={handleRefresh}>
+        <span class:spinning={refreshing}>↻</span> 更新
+      </button>
+    </div>
   </div>
 
   {#if error}
@@ -508,4 +533,16 @@
   .empty-state a {
     color: #4ade80;
   }
+  .title-row { display: flex !important; align-items: center; justify-content: space-between; }
+  .header-actions { display: flex; align-items: center; gap: 12px; }
+  .cache-age { font-size: 12px; color: #666; }
+  .btn-refresh {
+    background: #1a1a1a; border: 1px solid #444; color: #ccc;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-refresh:hover:not(:disabled) { color: #4ade80; border-color: #4ade80; }
+  .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
+  .spinning { animation: spin 0.7s linear infinite; display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>

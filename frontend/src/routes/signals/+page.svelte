@@ -135,25 +135,21 @@
       clearAllSignalsCache();
       canonicalTotal = 0;
     } else if (activeTab === 'market') {
-      // Market tab 分頁快取
-      // 每次 session 第一次載入（offset=0 且尚未建立 canonical）一律打 API，
-      // 避免把汙染的快取 total 當成 canonicalTotal。
-      const isFirstLoad = pageOffset === 0 && canonicalTotal === 0;
-      if (!isFirstLoad) {
-        const cachedEntry = cacheGet<{ rows: SignalScanRow[]; total: number }>(pageKey);
-        if (cachedEntry && cachedEntry.rows && typeof cachedEntry.total === 'number') {
-          // 一致性檢查：若快取的 total 與本 session canonical 不符，視為過期快取
-          if (canonicalTotal > 0 && cachedEntry.total !== canonicalTotal) {
-            cacheClear(pageKey);
-            // 繼續往下呼叫 API
-          } else {
-            if (seq !== _loadSeq) return;
-            data = cachedEntry.rows;
-            totalCount = cachedEntry.total;
-            cacheTs = cacheTimestamp(pageKey);
-            loading = false;
-            return;
-          }
+      // Market tab 分頁快取（永遠優先用 cache，使用者按「全部更新」才重抓）
+      const cachedEntry = cacheGet<{ rows: SignalScanRow[]; total: number }>(pageKey);
+      if (cachedEntry && cachedEntry.rows && typeof cachedEntry.total === 'number') {
+        // 一致性檢查：若快取的 total 與本 session canonical 不符，視為過期快取
+        if (canonicalTotal > 0 && cachedEntry.total !== canonicalTotal) {
+          cacheClear(pageKey);
+          // 繼續往下呼叫 API
+        } else {
+          if (seq !== _loadSeq) return;
+          data = cachedEntry.rows;
+          totalCount = cachedEntry.total;
+          canonicalTotal = cachedEntry.total;
+          cacheTs = cacheTimestamp(pageKey);
+          loading = false;
+          return;
         }
       }
     }
@@ -174,7 +170,20 @@
         currentPageTotal = result.length;
         cacheSet(pageKey, { rows: result, total: newTotal });
       } else {
-        // watchlist / portfolio / favorites：先抓 list entries，再比對快取 codes 一致性
+        // watchlist / portfolio / favorites：cache 永遠優先，不打 API 比對
+        if (!forceRefresh) {
+          const cached = cacheGet<SignalScanRow[]>(key);
+          if (cached) {
+            if (seq !== _loadSeq) return;
+            data = cached;
+            totalCount = cached.length;
+            cacheTs = cacheTimestamp(key);
+            loading = false;
+            return;
+          }
+        }
+
+        // cache miss 或 forceRefresh：先抓 list 再逐個 fetch signal
         let listEntries: { code: string }[] = [];
         if (activeTab === 'watchlist') {
           listEntries = await api('/watchlist');
@@ -182,24 +191,6 @@
           listEntries = await api('/portfolio');
         } else if (activeTab === 'favorites') {
           listEntries = await api('/favorites');
-        }
-
-        const liveCodes = listEntries.map(e => e.code).sort().join(',');
-
-        if (!forceRefresh) {
-          const cached = cacheGet<SignalScanRow[]>(key);
-          if (cached) {
-            const cachedCodes = cached.map(r => r.code).sort().join(',');
-            if (cachedCodes === liveCodes) {
-              if (seq !== _loadSeq) return;
-              data = cached;
-              totalCount = cached.length;
-              cacheTs = cacheTimestamp(key);
-              loading = false;
-              return;
-            }
-            cacheClear(key);
-          }
         }
 
         const results: SignalResult[] = await Promise.all(
