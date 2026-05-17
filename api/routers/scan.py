@@ -22,25 +22,50 @@ _live_signals_lock = threading.Lock()
 _live_signals_state: dict = {"key": None, "rows": None, "errors": None, "at": None}
 
 
-def _csv_mtime_key() -> float:
-    """data/cache 內所有 .csv 的最新 mtime — 任一檔被寫入就會改變。"""
+def _inputs_mtime_key() -> str:
+    """涵蓋 run_signals_scan 的**所有輸入**的最新 mtime — 任一輸入變動就失效 cache。
+
+    輸入有兩條來源：
+    - data/cache/*.csv（cloud-sync 寫入；CSV 影響 analyze_one 的算出值）
+    - data/watchlist.json（影響 start_price 注入；不納入會導致改 watchlist 後 stale）
+    """
     cache_dir: Path = DATA_DIR / "cache"
-    if not cache_dir.exists():
-        return 0.0
-    latest = 0.0
-    for p in cache_dir.glob("*.csv"):
-        try:
-            m = p.stat().st_mtime
-            if m > latest:
-                latest = m
-        except OSError:
-            pass
-    return latest
+    csv_max = 0.0
+    if cache_dir.exists():
+        for p in cache_dir.glob("*.csv"):
+            try:
+                m = p.stat().st_mtime
+                if m > csv_max:
+                    csv_max = m
+            except OSError:
+                pass
+    wl_path = DATA_DIR / "watchlist.json"
+    wl_mtime = 0.0
+    try:
+        if wl_path.exists():
+            wl_mtime = wl_path.stat().st_mtime
+    except OSError:
+        pass
+    return f"csv:{csv_max}|wl:{wl_mtime}"
+
+
+def prime_live_signals_cache(
+    rows: list[SignalScanRow], errors: list[dict], computed_at: datetime
+) -> None:
+    """讓其他 endpoint（如 /api/data/cloud-sync）在剛重算完後把結果塞進 cache，
+    避免下次首發 /scan/signals 又花 60 秒重算同樣的東西。"""
+    with _live_signals_lock:
+        _live_signals_state.update({
+            "key": _inputs_mtime_key(),
+            "rows": rows,
+            "errors": errors,
+            "at": computed_at,
+        })
 
 
 def _get_or_compute_live_signals() -> tuple[list[SignalScanRow], list[dict], datetime]:
-    """即時計算全市場訊號；用 CSV mtime 當 cache key，CSV 變動自動失效。"""
-    current_key = _csv_mtime_key()
+    """即時計算全市場訊號；cache key 涵蓋 CSV 與 watchlist mtime，任一變動自動失效。"""
+    current_key = _inputs_mtime_key()
     state = _live_signals_state
     if state["key"] == current_key and state["rows"] is not None:
         return state["rows"], state["errors"], state["at"]

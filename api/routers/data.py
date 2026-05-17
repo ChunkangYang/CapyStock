@@ -332,12 +332,16 @@ async def cloud_sync(req: CloudSyncRequest):
     if req.rescan_after_sync if hasattr(req, "rescan_after_sync") else True:
         try:
             from api.services import scan_service as _scan_service
+            from api.routers.scan import prime_live_signals_cache
             universe = _scan_service.load_universe()
             rows, errors = _scan_service.run_signals_scan(universe)
-            today_str = datetime.now().strftime("%Y-%m-%d")
+            now = datetime.now()
+            today_str = now.strftime("%Y-%m-%d")
             _scan_service.write_snapshot("signals", rows, today_str)
             if errors:
                 _scan_service.write_errors("signals", errors, today_str)
+            # 把結果塞進 in-mem cache：下次 /scan/signals 即時回，不再花 60 秒重算
+            prime_live_signals_cache(rows, errors, now)
             scan_summary = {"rows": len(rows), "errors": len(errors), "snapshot_date": today_str}
         except Exception as e:
             scan_summary = {"error": str(e)}
