@@ -4,6 +4,8 @@ from fastapi import APIRouter, HTTPException
 from api.schemas.common import (
     FlowRow, MarginRow, PriceBar, SignalResult,
 )
+from capystock import storage
+
 from api.services import signal_service
 
 router = APIRouter()
@@ -17,9 +19,15 @@ def list_signals() -> list[SignalResult]:
 
 @router.get("/signals/{code}")
 def get_signal(code: str) -> SignalResult:
-    """取得單檔股票訊號。"""
+    """取得單檔股票訊號。watchlist 內的股票會帶入其 start_price / master_cost。"""
     try:
-        return signal_service.analyze_one(code)
+        wl = storage.load_watchlist()
+        entry = wl.get(code) if isinstance(wl, dict) else None
+        start_price = entry.get("start_price") if isinstance(entry, dict) else None
+        name = entry.get("name", "") if isinstance(entry, dict) else ""
+        return signal_service.analyze_one(
+            code, name=name, start_price=start_price,
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
