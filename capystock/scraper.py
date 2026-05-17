@@ -231,7 +231,8 @@ def fetch_price(code: str, days: int = 90) -> tuple[Optional[pd.DataFrame], str]
         try:
             df = pd.read_csv(path)
             if "date" in df.columns:
-                df["date"] = pd.to_datetime(df["date"])
+                df["date"] = pd.to_datetime(df["date"], format="mixed", errors="coerce")
+                df = df.dropna(subset=["date"])
             if len(df) >= 5:
                 return df, "cache"
         except Exception:
@@ -272,7 +273,9 @@ def fetch_margin(code: str) -> Optional[pd.DataFrame]:
         return None
     if "week" not in df.columns or "margin_long" not in df.columns:
         return None
-    df["week"] = pd.to_datetime(df["week"])
+    # format='mixed' 兼容 JPX ingester 的 'YYYY-MM-DD' 與舊 yahoo/minkabu 的 'YYYY/M/D'
+    df["week"] = pd.to_datetime(df["week"], format="mixed", errors="coerce")
+    df = df.dropna(subset=["week"])
     return df.sort_values("week").reset_index(drop=True)
 
 
@@ -294,7 +297,8 @@ def fetch_flow(code: str) -> Optional[pd.DataFrame]:
         return None
     if "date" not in df.columns:
         return None
-    df["date"] = pd.to_datetime(df["date"])
+    df["date"] = pd.to_datetime(df["date"], format="mixed", errors="coerce")
+    df = df.dropna(subset=["date"])
     return df.sort_values("date").reset_index(drop=True)
 
 
