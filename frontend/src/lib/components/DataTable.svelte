@@ -173,7 +173,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each sortedData as row}
+      {#each sortedData as row (row.code)}
         <tr>
           <td>
             <FavoriteToggle code={row.code} name={row.name} tag="speculative" />
