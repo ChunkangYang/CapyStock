@@ -51,42 +51,11 @@ def compute_score(result, events, include_technical: bool = True) -> int:
     return score
 
 
-def _signal_cache_path(code: str) -> Path:
-    """訊號掃描快取檔案路徑：cache/{code}_signal_scan.json"""
-    CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    return CACHE_DIR / f"{code}_signal_scan.json"
-
-
-def _is_signal_scanned_today(code: str, today: date) -> bool:
-    """檢查該股票今天是否已掃描過"""
-    cache_file = _signal_cache_path(code)
-    if not cache_file.exists():
-        return False
-    try:
-        with open(cache_file) as f:
-            data = json.load(f)
-        cached_date = data.get("scan_date")
-        return cached_date == str(today)
-    except:
-        return False
-
-
-def _write_signal_cache(code: str, row: SignalScanRow, today: date) -> None:
-    """寫入個股訊號掃描快取"""
-    cache_file = _signal_cache_path(code)
-    data = {
-        "scan_date": str(today),
-        "code": row.code,
-        "name": row.name,
-        "latest_price": row.latest_price,
-        "has_accumulation": row.has_accumulation,
-        "has_exit": row.has_exit,
-        "has_stop_loss": row.has_stop_loss,
-        "edinet_recent_count": row.edinet_recent_count,
-        "score": row.score,
-    }
-    with open(cache_file, 'w') as f:
-        json.dump(data, f, ensure_ascii=False)
+# NOTE: _signal_cache_path / _is_signal_scanned_today / _write_signal_cache 已移除。
+# 過去用 cache/{code}_signal_scan.json 當「今日已掃描」的 skip-cache 機制，
+# 但這層 cache 跨日 / 跨資料更新後會 stale，是「同檔股票在不同 tab 顯示不一致」
+# 的元兇之一。改為單一 source of truth = data/cache/*.csv，每次重算。
+# 既有的 *_signal_scan.json 檔案可由使用者手動清理（規則允許改名為 DELETE_ prefix）。
 
 
 def _load_edinet_by_code() -> dict[str, list]:
@@ -118,71 +87,42 @@ def run_signals_scan(
     snapshot_callback: Optional[callable] = None,
     max_workers: int = 16,
 ) -> tuple[list[SignalScanRow], list[dict]]:
-    """掃描所有股票的訊號（方案C：yfinance批次下載 + 並行分析）。
+    """掃描所有股票的訊號 — 永遠從 data/cache/*.csv 即時重算，無 stale cache。
 
-    流程：
-    1. 分離「今日已快取」與「待掃描」兩群。
-    2. 批次用 yfinance 下載待掃描股票的價格（每批100支，約6分鐘）。
-    3. 用 ThreadPoolExecutor 並行做訊號分析（無 HTTP，約10分鐘）。
+    Single source of truth：data/cache/*.csv（cloud-sync 寫入）
+    Single compute path：analyze_one（cache-first，每檔 ~16ms）
+
+    過往的 _is_signal_scanned_today / _write_signal_cache 跨日 stale 機制已移除，
+    fetch_price 改為 cache-first 後，3700 檔並行 ~2-3 秒，沒必要靠跨日 skip-cache 加速。
+    watchlist start_price 在這裡注入，與 /signals/{code} 共用同一 compute path。
     """
     if clock is None:
         clock = date.today()
     now = datetime.combine(clock, datetime.min.time())
 
-    # ── Step 1: 分離快取與待掃描 ──────────────────────────────────────────
-    cached_rows: list[SignalScanRow] = []
-    to_scan: list[dict] = []
+    # watchlist：用於對裡面的股票傳 start_price，與 /signals/{code} 對齊
+    try:
+        from capystock import storage as _storage
+        wl = _storage.load_watchlist()
+    except Exception:
+        wl = {}
 
-    for entry in universe:
-        code = entry["code"]
-        if _is_signal_scanned_today(code, clock):
-            cache_file = _signal_cache_path(code)
-            try:
-                with open(cache_file) as f:
-                    c = json.load(f)
-                cached_rows.append(SignalScanRow(
-                    code=c["code"], name=c["name"],
-                    latest_price=c.get("latest_price"),
-                    has_accumulation=c["has_accumulation"],
-                    has_exit=c["has_exit"],
-                    has_stop_loss=c["has_stop_loss"],
-                    edinet_recent_count=c["edinet_recent_count"],
-                    score=c["score"],
-                    generated_at=now,
-                ))
-            except Exception:
-                to_scan.append(entry)  # 快取損壞，重新掃
-        else:
-            to_scan.append(entry)
-
-    # ── Step 2: 一次性 EDINET 查詢 ────────────────────────────────────────
+    # 一次性 EDINET 查詢
     edinet_by_code = _load_edinet_by_code()
 
-    # ── Step 3: yfinance 批次下載價格（主要速度提升點）─────────────────────
-    price_data: dict[str, Optional[pd.DataFrame]] = {}
-    if to_scan:
-        try:
-            from capystock import scraper as _scraper
-            codes_to_fetch = [e["code"] for e in to_scan]
-            price_data = _scraper.fetch_price_bulk(codes_to_fetch)
-        except Exception:
-            pass  # 全部 fallback 到 kabutan 單支爬取
-
-    # ── Step 4: 並行訊號分析 ──────────────────────────────────────────────
-    rows: list[SignalScanRow] = list(cached_rows)
+    rows: list[SignalScanRow] = []
     errors: list[dict] = []
-    completed = len(cached_rows)
+    completed = 0
     _lock = threading.Lock()
-
-    # snapshot 寫入序列化（避免並發寫同一檔案）
-    _snapshot_lock = threading.Lock()
+    _snapshot_lock = threading.Lock()  # snapshot 寫入序列化
 
     def _process_one(entry: dict) -> tuple[Optional[SignalScanRow], Optional[dict]]:
         code = entry["code"]
         name = entry["name"]
         try:
-            pre_price = price_data.get(code)  # None 表示 yfinance 失敗，fallback kabutan
-            result = analyze_one(code, name=name, price_df=pre_price)
+            wl_entry = wl.get(code) if isinstance(wl, dict) else None
+            start_price = wl_entry.get("start_price") if isinstance(wl_entry, dict) else None
+            result = analyze_one(code, name=name, start_price=start_price)
             events = edinet_by_code.get(str(code).zfill(4), [])
             score = compute_score(result, events, include_technical=include_technical)
 
@@ -196,10 +136,11 @@ def run_signals_scan(
                 score=score,
                 generated_at=now,
             )
-            _write_signal_cache(code, row, clock)
             return row, None
         except Exception as e:
             return None, {"code": code, "name": name, "error": str(e)}
+
+    to_scan = universe
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {executor.submit(_process_one, entry): entry for entry in to_scan}

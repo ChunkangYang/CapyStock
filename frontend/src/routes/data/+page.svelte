@@ -149,7 +149,13 @@
       const body = await r.json();
       if (!r.ok) throw new Error(body.detail || `HTTP ${r.status}`);
       cloudMsg = `✓ 從雲端同步 ${body.copied_count} 個檔案到本地 cache`
-        + (body.pulled?.branch ? `（branch=${body.pulled.branch}）` : '');
+        + (body.pulled?.branch ? `（branch=${body.pulled.branch}）` : '')
+        + (body.rescan?.rows ? `；重算 ${body.rescan.rows} 檔訊號完成` : '');
+      // 後端已自動重算訊號 → 清前端 signals 快取，下次開「投機訊號」會吃到最新結果
+      try {
+        const { clearAllSignalsCache } = await import('$lib/utils/signalsCache');
+        clearAllSignalsCache();
+      } catch { /* signalsCache 不存在就略過 */ }
       await loadCloudStatus();
       // 重新載入 overview 顯示新的 age
       const ov = await fetch(`${API}/data/overview`);

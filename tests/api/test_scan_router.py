@@ -76,18 +76,18 @@ def mock_dividend_snapshot():
     ]
 
 
-def test_get_signals_snapshot_not_found():
-    """無快照時回 404"""
+def test_get_signals_snapshot_historical_not_found():
+    """指定歷史日期但無對應 parquet 時回 404"""
     with patch("api.routers.scan.scan_service.load_latest_snapshot") as mock_load:
         mock_load.return_value = None
 
-        response = client.get("/api/v1/scan/signals")
+        response = client.get("/api/v1/scan/signals?date=2020-01-01")
         assert response.status_code == 404
         assert "No snapshot found" in response.json()["detail"]
 
 
-def test_get_signals_snapshot_success(mock_signals_snapshot):
-    """有快照時回正確資料"""
+def test_get_signals_snapshot_historical_success(mock_signals_snapshot):
+    """指定歷史日期且有對應 parquet 時，從 parquet 讀資料"""
     import pandas as pd
 
     df = pd.DataFrame([r.model_dump() for r in mock_signals_snapshot])
@@ -95,13 +95,33 @@ def test_get_signals_snapshot_success(mock_signals_snapshot):
     with patch("api.routers.scan.scan_service.load_latest_snapshot") as mock_load:
         mock_load.return_value = df
 
+        response = client.get("/api/v1/scan/signals?date=2026-04-25")
+        assert response.status_code == 200
+        body = response.json()
+        assert body["total"] == 2
+        assert len(body["data"]) == 2
+        assert body["data"][0]["code"] == "7203"
+        assert body["data"][0]["has_accumulation"] is True
+        assert body["data"][1]["score"] == -2
+
+
+def test_get_signals_snapshot_live_uses_in_memory(mock_signals_snapshot):
+    """預設（不指定 date）走即時計算路徑，不讀 parquet。"""
+    with patch("api.routers.scan.scan_service.load_latest_snapshot") as mock_load, patch(
+        "api.routers.scan._get_or_compute_live_signals"
+    ) as mock_live:
+        from datetime import datetime
+
+        mock_live.return_value = (mock_signals_snapshot, [], datetime.now())
+
         response = client.get("/api/v1/scan/signals")
         assert response.status_code == 200
-        data = response.json()
-        assert len(data) == 2
-        assert data[0]["code"] == "7203"
-        assert data[0]["has_accumulation"] is True
-        assert data[1]["score"] == -2
+        body = response.json()
+        assert body["total"] == 2
+        assert len(body["data"]) == 2
+        # 預設路徑不應該讀 parquet
+        mock_load.assert_not_called()
+        mock_live.assert_called_once()
 
 
 def test_get_dividend_snapshot_with_filter(mock_dividend_snapshot):

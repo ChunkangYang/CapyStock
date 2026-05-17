@@ -137,7 +137,7 @@ def test_run_signals_scan_error_tolerance():
         alerts=[],
     )
 
-    def side_effect(code):
+    def side_effect(code, *args, **kwargs):
         if code == "ERR":
             raise ValueError("Test error")
         return mock_result

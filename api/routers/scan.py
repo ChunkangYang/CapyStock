@@ -1,10 +1,12 @@
 import uuid
 from datetime import datetime
+from pathlib import Path
 from typing import Optional
 import threading
 
 from fastapi import APIRouter, HTTPException, Query
 
+from api.deps import DATA_DIR
 from api.schemas.scan import DividendScanRow, JobStatus, SignalScanRow, ScanRunRequest, SnapshotMeta
 from api.services import scan_service
 
@@ -13,6 +15,43 @@ router = APIRouter()
 # In-memory job registry
 jobs_registry: dict[str, JobStatus] = {}
 _registry_lock = threading.Lock()
+
+# In-memory live-scan cache（單一 source of truth = data/cache/*.csv）
+# key = CSV 目錄的最新 mtime；CSV 一變動就自動失效。
+_live_signals_lock = threading.Lock()
+_live_signals_state: dict = {"key": None, "rows": None, "errors": None, "at": None}
+
+
+def _csv_mtime_key() -> float:
+    """data/cache 內所有 .csv 的最新 mtime — 任一檔被寫入就會改變。"""
+    cache_dir: Path = DATA_DIR / "cache"
+    if not cache_dir.exists():
+        return 0.0
+    latest = 0.0
+    for p in cache_dir.glob("*.csv"):
+        try:
+            m = p.stat().st_mtime
+            if m > latest:
+                latest = m
+        except OSError:
+            pass
+    return latest
+
+
+def _get_or_compute_live_signals() -> tuple[list[SignalScanRow], list[dict], datetime]:
+    """即時計算全市場訊號；用 CSV mtime 當 cache key，CSV 變動自動失效。"""
+    current_key = _csv_mtime_key()
+    state = _live_signals_state
+    if state["key"] == current_key and state["rows"] is not None:
+        return state["rows"], state["errors"], state["at"]
+    with _live_signals_lock:
+        if _live_signals_state["key"] == current_key and _live_signals_state["rows"] is not None:
+            return _live_signals_state["rows"], _live_signals_state["errors"], _live_signals_state["at"]
+        universe = scan_service.load_universe()
+        rows, errors = scan_service.run_signals_scan(universe)
+        now = datetime.now()
+        _live_signals_state.update({"key": current_key, "rows": rows, "errors": errors, "at": now})
+        return rows, errors, now
 
 
 @router.get("/scan/snapshots")
@@ -24,13 +63,24 @@ def get_snapshots(kind: Optional[str] = None) -> list[SnapshotMeta]:
 
 @router.get("/scan/signals")
 def get_signals_snapshot(date: Optional[str] = None, limit: int = 50, offset: int = 0) -> dict:
-    """讀訊號快照（支持分頁，缺省最新）"""
+    """取得訊號列表。
+
+    - 不指定 date（預設）：**即時**從 data/cache/*.csv 算最新訊號，CSV 改動自動失效。
+    - 指定 date=YYYY-MM-DD：讀歷史 parquet 快照（用於回溯）。
+    """
+    if date is None:
+        # 即時計算路徑：唯一 source of truth = data/cache/*.csv
+        rows_all, _errors, computed_at = _get_or_compute_live_signals()
+        total = len(rows_all)
+        rows_page = rows_all[offset:offset + limit]
+        return {"data": rows_page, "total": total, "limit": limit, "offset": offset}
+
+    # 歷史快照路徑：僅當使用者明確要看某天 parquet
     df = scan_service.load_latest_snapshot("signals", date)
     if df is None:
         raise HTTPException(status_code=404, detail="No snapshot found")
 
     total = len(df)
-    # 分頁
     df_page = df.iloc[offset:offset + limit]
 
     rows = []

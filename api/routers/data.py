@@ -4,7 +4,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import uuid
-from datetime import date
+from datetime import date, datetime
 from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException
@@ -183,6 +183,7 @@ async def cloud_sync_status():
 
 class CloudSyncRequest(BaseModel):
     pull: bool = True  # True=從 GitHub 下載最新；False=只套用現有 cloud-cache 到 cache
+    rescan_after_sync: bool = True  # 同步完自動重算全市場訊號（建議開啟，避免 stale snapshot）
 
 
 def _parse_github_remote() -> tuple[str, str, str]:
@@ -325,12 +326,29 @@ async def cloud_sync(req: CloudSyncRequest):
         except Exception as e:
             skipped.append({"file": "edinet_reports.json", "error": str(e)})
 
+    # CSV 同步完成後，自動重算全市場訊號並寫 parquet —
+    # 「按 sync → 完成 sync + 重算 + 一致」單一原子操作，避免使用者再手動觸發 /scan/run。
+    scan_summary = None
+    if req.rescan_after_sync if hasattr(req, "rescan_after_sync") else True:
+        try:
+            from api.services import scan_service as _scan_service
+            universe = _scan_service.load_universe()
+            rows, errors = _scan_service.run_signals_scan(universe)
+            today_str = datetime.now().strftime("%Y-%m-%d")
+            _scan_service.write_snapshot("signals", rows, today_str)
+            if errors:
+                _scan_service.write_errors("signals", errors, today_str)
+            scan_summary = {"rows": len(rows), "errors": len(errors), "snapshot_date": today_str}
+        except Exception as e:
+            scan_summary = {"error": str(e)}
+
     return {
         "pulled": pulled_info,
         "copied_count": len(copied),
         "copied_sample": copied[:10],
         "skipped": skipped,
         "applied_to": str(local_dir),
+        "rescan": scan_summary,
     }
 
 
