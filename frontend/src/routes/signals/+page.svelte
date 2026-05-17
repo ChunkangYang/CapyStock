@@ -23,13 +23,11 @@
   let autoReloadInterval: number | null = null;
   let scanInProgress = false;
 
-  // 分頁參數
+  // 分頁參數（client-side：market tab 一次抓全部，過濾/排序/分頁都在前端）
   const LIMIT = 50;
-  let offset = 0;
-  let totalCount = 0;
-  let currentPageTotal = 0;
-  // 本次 session 的 canonical total（用來偵測快取 total 不一致）
-  let canonicalTotal = 0;
+  let currentPage = 1;
+  let totalCount = 0;          // 全部抓回來的筆數
+  let filteredTotal = 0;       // 經過過濾後的筆數（由 DataTable 回報）
 
   let _loadSeq = 0;
   let favoriteSignals: SignalScanRow[] = [];
@@ -80,20 +78,15 @@
 
       // 只在 market tab 自動重新整理
       if (activeTab === 'market') {
-        const pageKey = `${listCacheKey('market')}:${offset}`;
-        cacheClear(pageKey);
+        const key = listCacheKey('market');
+        cacheClear(key);
         try {
-          const resp = await api(`/scan/signals?limit=${LIMIT}&offset=${offset}`);
+          const resp = await api(`/scan/signals?limit=100000&offset=0`);
           if (_loadSeq > 0) {  // 避免第一次載入時覆蓋
-            if (canonicalTotal > 0 && resp.total !== canonicalTotal) {
-              clearAllSignalsCache();
-            }
-            canonicalTotal = resp.total;
-            cacheSet(pageKey, { rows: resp.data, total: resp.total });
+            cacheSet(key, { rows: resp.data, total: resp.total });
             data = resp.data;
             totalCount = resp.total;
-            currentPageTotal = resp.data.length;
-            cacheTs = cacheTimestamp(pageKey);
+            cacheTs = cacheTimestamp(key);
           }
         } catch {}
       }
@@ -120,37 +113,27 @@
     }
   });
 
-  async function loadData(forceRefresh = false, pageOffset = 0) {
+  async function loadData(forceRefresh = false) {
     const seq = ++_loadSeq;
     loading = true;
     error = '';
     noSnapshot = false;
-    offset = pageOffset;
 
     const key = listCacheKey(activeTab);
-    const pageKey = `${key}:${pageOffset}`;
 
     if (forceRefresh) {
       // 強制更新：清除所有訊號快取
       clearAllSignalsCache();
-      canonicalTotal = 0;
     } else if (activeTab === 'market') {
-      // Market tab 分頁快取（永遠優先用 cache，使用者按「全部更新」才重抓）
-      const cachedEntry = cacheGet<{ rows: SignalScanRow[]; total: number }>(pageKey);
+      // Market tab 全量快取（永遠優先用 cache，使用者按「全部更新」才重抓）
+      const cachedEntry = cacheGet<{ rows: SignalScanRow[]; total: number }>(key);
       if (cachedEntry && cachedEntry.rows && typeof cachedEntry.total === 'number') {
-        // 一致性檢查：若快取的 total 與本 session canonical 不符，視為過期快取
-        if (canonicalTotal > 0 && cachedEntry.total !== canonicalTotal) {
-          cacheClear(pageKey);
-          // 繼續往下呼叫 API
-        } else {
-          if (seq !== _loadSeq) return;
-          data = cachedEntry.rows;
-          totalCount = cachedEntry.total;
-          canonicalTotal = cachedEntry.total;
-          cacheTs = cacheTimestamp(pageKey);
-          loading = false;
-          return;
-        }
+        if (seq !== _loadSeq) return;
+        data = cachedEntry.rows;
+        totalCount = cachedEntry.total;
+        cacheTs = cacheTimestamp(key);
+        loading = false;
+        return;
       }
     }
 
@@ -158,17 +141,10 @@
       let result: SignalScanRow[] = [];
 
       if (activeTab === 'market') {
-        const resp = await api(`/scan/signals?limit=${LIMIT}&offset=${pageOffset}`);
+        const resp = await api(`/scan/signals?limit=100000&offset=0`);
         result = resp.data;
-        const newTotal: number = resp.total;
-        // 若 total 與本 session 已知值不同（掃描更新），清除所有舊快取
-        if (canonicalTotal > 0 && newTotal !== canonicalTotal) {
-          clearAllSignalsCache();
-        }
-        canonicalTotal = newTotal;
-        totalCount = newTotal;
-        currentPageTotal = result.length;
-        cacheSet(pageKey, { rows: result, total: newTotal });
+        totalCount = resp.total;
+        cacheSet(key, { rows: result, total: resp.total });
       } else {
         // watchlist / portfolio / favorites：cache 永遠優先，不打 API 比對
         if (!forceRefresh) {
@@ -202,7 +178,7 @@
       }
 
       if (seq !== _loadSeq) return;
-      cacheTs = cacheTimestamp(activeTab === 'market' ? pageKey : key);
+      cacheTs = cacheTimestamp(key);
 
       // market tab：favorite シグナル取得を await して table 表示前に揃える
       if (activeTab === 'market') {
@@ -229,33 +205,42 @@
   async function refreshAll() {
     refreshingAll = true;
     clearAllSignalsCache();
-    canonicalTotal = 0;
     totalCount = 0;
-    offset = 0;
-    await loadData(true, 0);
+    currentPage = 1;
+    await loadData(true);
     refreshingAll = false;
   }
 
   function goToPage(pageNum: unknown) {
     // 嚴格防護：只接受正整數，攔截 NaN / '...' / 字串 / 浮點數
     if (typeof pageNum !== 'number' || !Number.isInteger(pageNum) || pageNum < 1) return;
-    if (!Number.isFinite(totalCount) || totalCount <= 0) return;
-    const totalPages = Math.ceil(totalCount / LIMIT);
+    const total = filteredTotal > 0 ? filteredTotal : totalCount;
+    if (!Number.isFinite(total) || total <= 0) return;
+    const totalPages = Math.ceil(total / LIMIT);
     if (!Number.isFinite(totalPages) || totalPages < 1) return;
     if (pageNum > totalPages) return;
-    const newOffset = (pageNum - 1) * LIMIT;
-    if (!Number.isFinite(newOffset) || newOffset < 0) return;
-    loadData(false, newOffset);
+    currentPage = pageNum;
+    // 平滑滾回頂端方便看新分頁的列
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // 過濾條件變動時 filteredTotal 會由 DataTable 推回，若當前頁超出範圍要拉回最後一頁
+  $: {
+    const total = filteredTotal > 0 ? filteredTotal : totalCount;
+    if (total > 0) {
+      const totalPages = Math.max(1, Math.ceil(total / LIMIT));
+      if (currentPage > totalPages) currentPage = totalPages;
+    }
   }
 
   function getPageNumbers() {
-    // 防護：totalCount 未就緒時不產出任何頁碼
-    if (!Number.isFinite(totalCount) || totalCount <= 0) return [];
-    const totalPages = Math.ceil(totalCount / LIMIT);
+    const total = filteredTotal > 0 ? filteredTotal : totalCount;
+    // 防護：total 未就緒時不產出任何頁碼
+    if (!Number.isFinite(total) || total <= 0) return [];
+    const totalPages = Math.ceil(total / LIMIT);
     if (!Number.isFinite(totalPages) || totalPages < 1) return [];
     if (totalPages === 1) return [1];
 
-    const currentPage = Math.floor(offset / LIMIT) + 1;
     const pages: (number | string)[] = [];
 
     const range = 2; // 當前頁前後顯示多少頁
@@ -288,7 +273,7 @@
       const updated = toScanRow(result);
       data = data.map(row => row.code === code ? updated : row);
       // 更新 list 快取
-      const cacheKey = activeTab === 'market' ? `${listCacheKey(activeTab)}:${offset}` : listCacheKey(activeTab);
+      const cacheKey = listCacheKey(activeTab);
       if (activeTab === 'market') {
         cacheSet(cacheKey, { rows: data, total: totalCount });
       } else {
@@ -316,7 +301,8 @@
   function handleTabChange(tab: Tab) {
     if (tab === activeTab) return;
     activeTab = tab;
-    offset = 0;
+    currentPage = 1;
+    filteredTotal = 0;
     data = [];  // タブ切替時は前タブのデータを消去
     loadData();
   }
@@ -402,17 +388,15 @@
       onRowClick={handleRowClick}
       onRefreshRow={refreshRow}
       {refreshingCodes}
+      pageSize={activeTab === 'market' ? LIMIT : null}
+      {currentPage}
+      on:filteredTotal={(e) => (filteredTotal = e.detail)}
     />
 
-    {#if activeTab === 'market' && totalCount > LIMIT}
+    {#if activeTab === 'market' && (filteredTotal || totalCount) > LIMIT}
       <div class="pagination">
-        {#if Math.floor(offset / LIMIT) + 1 > 1}
-          <button
-            class="btn-page"
-            on:click={() => goToPage(Math.floor(offset / LIMIT))}
-          >
-            ← 上一頁
-          </button>
+        {#if currentPage > 1}
+          <button class="btn-page" on:click={() => goToPage(currentPage - 1)}>← 上一頁</button>
         {:else}
           <button class="btn-page" disabled>← 上一頁</button>
         {/if}
@@ -424,7 +408,7 @@
             {:else}
               <button
                 class="page-num"
-                class:active={Math.floor(offset / LIMIT) + 1 === page}
+                class:active={currentPage === page}
                 on:click={() => goToPage(page)}
               >
                 {page}
@@ -433,13 +417,8 @@
           {/each}
         </div>
 
-        {#if Math.floor(offset / LIMIT) + 1 < Math.ceil(totalCount / LIMIT)}
-          <button
-            class="btn-page"
-            on:click={() => goToPage(Math.floor(offset / LIMIT) + 2)}
-          >
-            下一頁 →
-          </button>
+        {#if currentPage < Math.ceil((filteredTotal || totalCount) / LIMIT)}
+          <button class="btn-page" on:click={() => goToPage(currentPage + 1)}>下一頁 →</button>
         {:else}
           <button class="btn-page" disabled>下一頁 →</button>
         {/if}

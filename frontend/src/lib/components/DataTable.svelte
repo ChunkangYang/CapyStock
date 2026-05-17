@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte';
   import FavoriteToggle from './FavoriteToggle.svelte';
   import { favorites } from '$lib/stores/favorites';
   import type { SignalScanRow } from '$lib/types';
@@ -8,6 +9,11 @@
   export let onRowClick: (code: string) => void = () => {};
   export let onRefreshRow: ((code: string) => void) | null = null;
   export let refreshingCodes: Set<string> = new Set();
+  // Client-side pagination (null = render all rows)
+  export let pageSize: number | null = null;
+  export let currentPage: number = 1;
+
+  const dispatch = createEventDispatcher<{ filteredTotal: number }>();
 
   type SortKey = 'favorite' | 'code' | 'name' | 'latest_price' | 'c1' | 'c2' | 'c3' | 'edinet_recent_count' | 'score';
   type SortOrder = 'asc' | 'desc';
@@ -60,6 +66,8 @@
     return true;
   });
 
+  $: dispatch('filteredTotal', filteredData.length);
+
   $: sortedData = [...filteredData].sort((a, b) => {
     const aVal = getSortValue(a, sortKey, $favorites as Record<string, { tags: string[] }>);
     const bVal = getSortValue(b, sortKey, $favorites as Record<string, { tags: string[] }>);
@@ -74,6 +82,10 @@
     const compare = an < bn ? -1 : an > bn ? 1 : 0;
     return sortOrder === 'asc' ? compare : -compare;
   });
+
+  $: pagedData = pageSize && pageSize > 0
+    ? sortedData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+    : sortedData;
 
   function toggleSort(key: SortKey) {
     if (sortKey === key) {
@@ -173,7 +185,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each sortedData as row (row.code)}
+      {#each pagedData as row (row.code)}
         <tr>
           <td>
             <FavoriteToggle code={row.code} name={row.name} tag="speculative" />
