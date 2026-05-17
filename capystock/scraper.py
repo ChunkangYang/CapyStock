@@ -225,11 +225,30 @@ def fetch_price_bulk(
 
 
 def fetch_price(code: str, days: int = 90) -> tuple[Optional[pd.DataFrame], str]:
+    # cache-first：與 fetch_margin / fetch_flow 對齊，避免每次都 HTTP 爬 kabutan
+    path = storage.cache_path(code, "price")
+    if path.exists():
+        try:
+            df = pd.read_csv(path)
+            if "date" in df.columns:
+                df["date"] = pd.to_datetime(df["date"])
+            if len(df) >= 5:
+                return df, "cache"
+        except Exception:
+            pass
     df = _fetch_price_kabutan(code)
     if df is not None and len(df) >= 5:
+        try:
+            df.to_csv(path, index=False)
+        except Exception:
+            pass
         return df, "kabutan"
     df = _fetch_price_yfinance(code, days=days)
     if df is not None:
+        try:
+            df.to_csv(path, index=False)
+        except Exception:
+            pass
         return df, "yfinance"
     return None, "none"
 
