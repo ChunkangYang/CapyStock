@@ -15,6 +15,11 @@
   let error = '';
   let cacheTs: number | null = null;
 
+  let addCode = '';
+  let addTag: 'speculative' | 'dividend' = 'speculative';
+  let addLoading = false;
+  let addMsg = '';
+
   function toScanRow(r: SignalResult): SignalScanRow {
     return {
       code: r.code,
@@ -58,6 +63,32 @@
     await loadData(true);
   }
 
+  async function handleAdd() {
+    const code = addCode.trim();
+    if (!code) return;
+    addLoading = true;
+    addMsg = '';
+    try {
+      await api('/favorites', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, tag: addTag }),
+      });
+      addMsg = `✓ 已加入我的最愛：${code}`;
+      addCode = '';
+      cacheClear(CACHE_KEY);
+      await loadData(true);
+    } catch (e) {
+      addMsg = `✗ ${e instanceof Error ? e.message : '新增失敗'}`;
+    } finally {
+      addLoading = false;
+    }
+  }
+
+  function onKeydown(e: KeyboardEvent) {
+    if (e.key === 'Enter') handleAdd();
+  }
+
   onMount(() => loadData());
 
   function handleRowClick(code: string) {
@@ -76,6 +107,29 @@
     </div>
   </div>
 
+  <section class="add-section">
+    <h2>新增我的最愛</h2>
+    <div class="add-form">
+      <input
+        class="inp"
+        bind:value={addCode}
+        placeholder="股票代號（e.g. 7203）"
+        on:keydown={onKeydown}
+      />
+      <select class="inp sel" bind:value={addTag}>
+        <option value="speculative">投機</option>
+        <option value="dividend">配息</option>
+      </select>
+      <button class="btn-add" on:click={handleAdd} disabled={addLoading}>
+        {addLoading ? '新增中…' : '＋ 加入最愛'}
+      </button>
+    </div>
+    <p class="hint">加入後可在此頁查看訊號與快速進出</p>
+    {#if addMsg}
+      <p class="msg" class:error-msg={addMsg.startsWith('✗')}>{addMsg}</p>
+    {/if}
+  </section>
+
   {#if loading}
     <LoadingSpinner />
   {:else if error}
@@ -92,6 +146,36 @@
     color: #4ade80;
     margin: 0 0 30px 0;
   }
+
+  .add-section {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .add-section h2 {
+    font-size: 16px;
+    color: #a1a1a1;
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .add-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .inp {
+    background: #0f0f0f; border: 1px solid #333; border-radius: 4px;
+    color: #e5e7eb; padding: 8px 12px; font-size: 14px; width: 200px;
+  }
+  .sel { width: auto; }
+  .inp:focus { outline: none; border-color: #4ade80; }
+  .btn-add {
+    background: #4ade80; color: #0f0f0f; border: none; border-radius: 4px;
+    padding: 8px 16px; font-weight: 600; cursor: pointer; font-size: 14px;
+  }
+  .btn-add:disabled { opacity: 0.5; cursor: not-allowed; }
+  .hint { color: #4b5563; font-size: 12px; margin: 6px 0 0 0; }
+  .msg { margin: 8px 0 0; font-size: 13px; color: #4ade80; }
+  .error-msg { color: #f87171; }
 
   .empty,
   .error {
