@@ -63,6 +63,37 @@ def _pct(a: float, b: float) -> float:
     return (a - b) / b
 
 
+def _check_accumulation(
+    snap: Snapshot,
+    flow_df: Optional[pd.DataFrame],
+    margin_df: Optional[pd.DataFrame],
+    alerts: list[dict],
+) -> None:
+    """吃貨訊號：不依賴 price_df，可在 early return 前執行。
+    flow_df 為週頻 JPX 資料（通常 1–3 筆），用實際可用筆數。
+    """
+    if flow_df is None or len(flow_df) < 1:
+        return
+    flow_df = flow_df.sort_values("date").reset_index(drop=True)
+    n = min(config.ACCUMULATION_INSTITUTIONAL_BUY_DAYS, len(flow_df))
+    last_n = flow_df.tail(n)
+    inst_buy = any(
+        col in flow_df.columns and (last_n[col] > 0).all()
+        for col in ("foreign_net", "institution_net")
+    )
+    margin_declining = False
+    if margin_df is not None and len(margin_df) >= 2:
+        margin_declining = bool(margin_df["margin_long"].diff().tail(1).iloc[0] < 0)
+    if inst_buy and margin_declining:
+        snap.accumulation_signal = True
+        alerts.append({
+            "code": snap.code, "name": snap.name,
+            "alert_type": "accumulation", "severity": "info",
+            "message": f"主力疑似吃貨：外資/法人連續 {n} 期買超，融資餘額同期下降",
+            "details": {},
+        })
+
+
 def _stop_loss_anchor(snap: Snapshot) -> tuple[float, str]:
     """選定停損錨點（價格、來源說明）。
 
@@ -110,6 +141,9 @@ def analyze(
                     f"風報比 1:{snap.risk_reward_ratio:.2f} < 1:{config.RISK_REWARD_MIN_RATIO:.0f} "
                     f"（心法建議跳過）"
                 )
+
+    # 吃貨訊號不依賴 price_df，先在 early return 前執行
+    _check_accumulation(snap, flow_df, margin_df, alerts)
 
     if price_df is None or len(price_df) == 0:
         snap.notes.append("無股價資料")
@@ -268,27 +302,6 @@ def analyze(
                 ),
                 "details": {"latest_vol": latest_vol, "avg_vol": avg_vol,
                             "day_change": day_change},
-            })
-
-    # --- 吃貨訊號 ---
-    if flow_df is not None and len(flow_df) >= config.ACCUMULATION_INSTITUTIONAL_BUY_DAYS:
-        flow_df = flow_df.sort_values("date").reset_index(drop=True)
-        n = config.ACCUMULATION_INSTITUTIONAL_BUY_DAYS
-        last_n = flow_df.tail(n)
-        inst_buy = any(
-            col in flow_df.columns and (last_n[col] > 0).all()
-            for col in ("foreign_net", "institution_net")
-        )
-        margin_declining = False
-        if margin_df is not None and len(margin_df) >= 2:
-            margin_declining = bool(margin_df["margin_long"].diff().tail(1).iloc[0] < 0)
-        if inst_buy and margin_declining:
-            snap.accumulation_signal = True
-            alerts.append({
-                "code": code, "name": name,
-                "alert_type": "accumulation", "severity": "info",
-                "message": f"主力疑似吃貨：外資/法人連續 {n} 日買超，融資餘額同期下降",
-                "details": {},
             })
 
     # --- 持倉出場彙整（三選二） ---
