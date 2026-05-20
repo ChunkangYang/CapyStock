@@ -13,7 +13,7 @@
   export let pageSize: number | null = null;
   export let currentPage: number = 1;
 
-  const dispatch = createEventDispatcher<{ filteredTotal: number }>();
+  const dispatch = createEventDispatcher<{ filteredTotal: number; pageReset: void }>();
 
   type SortKey = 'favorite' | 'code' | 'name' | 'latest_price' | 'c1' | 'c2' | 'c3' | 'edinet_recent_count' | 'score';
   type SortOrder = 'asc' | 'desc';
@@ -58,13 +58,21 @@
     ...data,
   ];
 
-  $: filteredData = mergedData.filter(row => {
-    if (filterAccumulation && !row.has_accumulation) return false;
-    if (filterExit && !row.has_exit) return false;
-    if (filterStopLoss && !row.has_stop_loss) return false;
-    if (minScore !== null && row.score < minScore) return false;
-    return true;
-  });
+  let prevFilterKey = '';
+  $: filteredData = (() => {
+    const newKey = `${filterAccumulation}|${filterExit}|${filterStopLoss}|${minScore}`;
+    if (newKey !== prevFilterKey) {
+      prevFilterKey = newKey;
+      dispatch('pageReset');
+    }
+    return mergedData.filter(row => {
+      if (filterAccumulation && !row.has_accumulation) return false;
+      if (filterExit && !row.has_exit) return false;
+      if (filterStopLoss && !row.has_stop_loss) return false;
+      if (minScore !== null && row.score < minScore) return false;
+      return true;
+    });
+  })();
 
   $: dispatch('filteredTotal', filteredData.length);
 
@@ -94,6 +102,7 @@
       sortKey = key;
       sortOrder = DEFAULT_ORDER[key];
     }
+    dispatch('pageReset');
   }
 
   function getIcon(alertType: string) {

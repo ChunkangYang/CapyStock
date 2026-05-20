@@ -391,6 +391,7 @@
       pageSize={activeTab === 'market' ? LIMIT : null}
       {currentPage}
       on:filteredTotal={(e) => (filteredTotal = e.detail)}
+      on:pageReset={() => { currentPage = 1; }}
     />
 
     {#if activeTab === 'market' && (filteredTotal || totalCount) > LIMIT}
