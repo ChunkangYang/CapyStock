@@ -72,7 +72,7 @@ def _check_accumulation(
     """吃貨訊號：不依賴 price_df，可在 early return 前執行。
     flow_df 為週頻 JPX 資料（通常 1–3 筆），用實際可用筆數。
     """
-    if flow_df is None or len(flow_df) < 1:
+    if flow_df is None or len(flow_df) < 2:
         return
     flow_df = flow_df.sort_values("date").reset_index(drop=True)
     n = min(config.ACCUMULATION_INSTITUTIONAL_BUY_DAYS, len(flow_df))
@@ -175,7 +175,8 @@ def analyze(
             snap.cond_price_rise = True
 
     # --- 條件 1: 外資/法人連續賣超 & 累計賣超 > 前10日買超 20% ---
-    if flow_df is not None and len(flow_df) >= config.INSTITUTIONAL_SELL_CONSECUTIVE_DAYS + 10:
+    need_rows = config.INSTITUTIONAL_SELL_CONSECUTIVE_DAYS + 10
+    if flow_df is not None and len(flow_df) >= need_rows:
         flow_df = flow_df.sort_values("date").reset_index(drop=True)
         days_n = config.INSTITUTIONAL_SELL_CONSECUTIVE_DAYS
         last_n = flow_df.tail(days_n)
@@ -197,7 +198,8 @@ def analyze(
 
         snap.flow_recent = last_n.get("foreign_net", last_n.get("institution_net", pd.Series([]))).tolist()
     else:
-        snap.notes.append("缺投資部門別資料，跳過條件 1")
+        have = len(flow_df) if flow_df is not None else 0
+        snap.notes.append(f"投資部門別資料筆數不足（需 {need_rows} 筆，現有 {have} 筆），跳過條件 1")
 
     # --- 條件 2: 融資残連續 3 週增加 & 本週增幅 > 8 週均值 2 倍 ---
     if margin_df is not None and len(margin_df) >= 9:

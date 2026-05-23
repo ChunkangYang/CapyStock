@@ -134,6 +134,9 @@
   }
 
   $: indSignals = (indBundle?.signals ?? []).slice(0, 15);
+  $: accumulationAlert = signal?.alerts.find(a => a.alert_type === 'accumulation');
+  $: stopLossAlert = signal?.alerts.find(a => a.alert_type === 'stop_loss');
+  $: exitAlert = signal?.alerts.find(a => a.alert_type === 'exit');
 
   function strengthColor(s: string): string {
     if (s === 'strong') return '#4ade80';
@@ -219,7 +222,7 @@
 
         {#if flows.length}
           <div class="chart-container">
-            <h3>法人買賣超</h3>
+            <h3>投資部門別買賣超</h3>
             <FlowBarChart {flows} />
           </div>
         {/if}
@@ -238,16 +241,30 @@
       </div>
 
       <div class="sidebar">
-        <ConditionGauge conditions={signal.conditions} />
+        <ConditionGauge conditions={signal.conditions} exitAlert={exitAlert} />
 
-        <div class="card">
+        <div class="card signal-card" class:active={signal.accumulation_signal}>
           <h4>吃貨訊號</h4>
-          <p>{signal.accumulation_signal ? '✓ 是' : '✗ 否'}</p>
+          <p class="signal-status" class:green={signal.accumulation_signal}>
+            {signal.accumulation_signal ? '✓ 是' : '✗ 否'}
+          </p>
+          {#if accumulationAlert}
+            <p class="signal-detail">{accumulationAlert.message}</p>
+          {:else}
+            <p class="signal-hint">判斷條件：外資或法人連續買超（≥2期），同期融資餘額下降</p>
+          {/if}
         </div>
 
-        <div class="card">
+        <div class="card signal-card" class:warn={signal.stop_loss_triggered}>
           <h4>停損狀態</h4>
-          <p>{signal.stop_loss_triggered ? '⚠ 已觸發' : '✓ 未觸發'}</p>
+          <p class="signal-status" class:red={signal.stop_loss_triggered}>
+            {signal.stop_loss_triggered ? '⚠ 已觸發' : '✓ 未觸發'}
+          </p>
+          {#if stopLossAlert}
+            <p class="signal-detail">{stopLossAlert.message}</p>
+          {:else}
+            <p class="signal-hint">判斷條件：連續 2 日收盤低於停損錨點（主力成本或起始價 ×95%）</p>
+          {/if}
         </div>
 
         <!-- 指標訊號卡片 -->
@@ -338,6 +355,15 @@
   .card { background: #1a1a1a; padding: 16px; border-radius: 8px; }
   .card h4 { color: #fff; margin: 0 0 8px 0; font-size: 13px; }
   .card p { color: #4ade80; margin: 0; }
+
+  .signal-card { border: 1px solid transparent; transition: border-color 0.2s; }
+  .signal-card.active { border-color: rgba(74, 222, 128, 0.3); }
+  .signal-card.warn { border-color: rgba(248, 113, 113, 0.3); }
+  .signal-status { font-size: 15px; font-weight: bold; margin: 0 0 8px 0 !important; }
+  .signal-status.green { color: #4ade80; }
+  .signal-status.red { color: #f87171; }
+  .signal-detail { font-size: 11px; color: #a1a1a1; margin: 0 !important; line-height: 1.5; }
+  .signal-hint { font-size: 11px; color: #555; margin: 0 !important; line-height: 1.5; font-style: italic; }
 
   .ind-signal-list { display: flex; flex-direction: column; gap: 6px; }
   .ind-sig-item { display: flex; gap: 6px; font-size: 12px; align-items: center; }

@@ -2,11 +2,18 @@
   import type { SignalConditions } from '$lib/types';
 
   export let conditions: SignalConditions;
+  export let exitAlert: { message: string } | undefined = undefined;
 
   const conditionLabels = {
     cond_inst_sell: '機構連售',
     cond_margin_surge: '融資暴增',
     cond_price_rise: '股價飆升',
+  };
+
+  const conditionTooltips = {
+    cond_inst_sell: '外資或法人連續 3 日賣超，且累計賣超量 ≥ 前 10 日買超量的 20%',
+    cond_margin_surge: '融資餘額連續 3 週增加，且本週增幅 ≥ 近 8 週均值的 2 倍',
+    cond_price_rise: '股價高於近 30 日低點 30% 以上（或已達目標價）',
   };
 
   $: matchedCount = conditions.matched ?? 0;
@@ -16,18 +23,19 @@
 <div class="gauge-card">
   <h4>三選二條件</h4>
   <div class="conditions">
-    <div class="condition" class:active={conditions.cond_inst_sell}>
-      <div class="light" class:on={conditions.cond_inst_sell} />
-      <span>{conditionLabels.cond_inst_sell}</span>
-    </div>
-    <div class="condition" class:active={conditions.cond_margin_surge}>
-      <div class="light" class:on={conditions.cond_margin_surge} />
-      <span>{conditionLabels.cond_margin_surge}</span>
-    </div>
-    <div class="condition" class:active={conditions.cond_price_rise}>
-      <div class="light" class:on={conditions.cond_price_rise} />
-      <span>{conditionLabels.cond_price_rise}</span>
-    </div>
+    {#each (['cond_inst_sell', 'cond_margin_surge', 'cond_price_rise'] as const) as key}
+      <div
+        class="condition"
+        class:active={conditions[key]}
+        title={conditionTooltips[key]}
+      >
+        <div class="light" class:on={conditions[key]} />
+        <div class="cond-text">
+          <span class="cond-label">{conditionLabels[key]}</span>
+          <span class="cond-hint">{conditionTooltips[key]}</span>
+        </div>
+      </div>
+    {/each}
   </div>
   <div class="status">
     <div class="counter">
@@ -42,6 +50,9 @@
       {/if}
     </p>
   </div>
+  {#if exitAlert}
+    <p class="exit-detail">{exitAlert.message}</p>
+  {/if}
 </div>
 
 <style>
@@ -91,9 +102,21 @@
     box-shadow: 0 0 4px rgba(248, 113, 113, 0.5);
   }
 
-  .condition span {
+  .cond-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .cond-label {
     font-size: 12px;
     color: #a1a1a1;
+  }
+
+  .cond-hint {
+    font-size: 10px;
+    color: #555;
+    line-height: 1.3;
   }
 
   .status {
@@ -131,5 +154,15 @@
   .alert-text.warning {
     color: #f87171;
     font-weight: bold;
+  }
+
+  .exit-detail {
+    font-size: 11px;
+    color: #f87171;
+    margin: 8px 0 0 0;
+    padding: 8px;
+    background: rgba(248, 113, 113, 0.05);
+    border-radius: 4px;
+    line-height: 1.5;
   }
 </style>
