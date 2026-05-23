@@ -16,6 +16,9 @@
     cond_price_rise: '股價高於近 30 日低點 30% 以上（或已達目標價）',
   };
 
+  type CondKey = 'cond_inst_sell' | 'cond_margin_surge' | 'cond_price_rise';
+  const condKeys: CondKey[] = ['cond_inst_sell', 'cond_margin_surge', 'cond_price_rise'];
+
   $: matchedCount = conditions.matched ?? 0;
   $: isMatched = matchedCount >= 2;
 </script>
@@ -23,7 +26,7 @@
 <div class="gauge-card">
   <h4>三選二條件</h4>
   <div class="conditions">
-    {#each (['cond_inst_sell', 'cond_margin_surge', 'cond_price_rise'] as const) as key}
+    {#each condKeys as key}
       <div
         class="condition"
         class:active={conditions[key]}

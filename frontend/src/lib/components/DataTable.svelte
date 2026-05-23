@@ -120,6 +120,15 @@
 </script>
 
 <div class="table-wrapper">
+  <details class="signal-legend">
+    <summary>訊號判斷條件說明</summary>
+    <div class="legend-grid">
+      <div><span class="dot blue">🔵</span><b>吃貨</b> — 外資或法人連續買超（≥2 期），同期融資餘額下降</div>
+      <div><span class="dot orange">🟠</span><b>出場</b> — 符合三選二中至少 2 項（法人連賣 3 日累計 ≥ 前 10 日買超 20% ／ 融資 3 週增加且本週幅度 ≥ 8 週均 2 倍 ／ 股價離近 30 日低點 +30%）</div>
+      <div><span class="dot red">🔴</span><b>停損</b> — 連續 2 日收盤低於停損錨點（主力成本或起始價 ×95%）</div>
+    </div>
+  </details>
+
   <div class="filters">
     <label>
       <input type="checkbox" bind:checked={filterAccumulation} />
@@ -162,19 +171,19 @@
             價格{#if sortKey === 'latest_price'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
-        <th>
+        <th title="外資或法人連續買超（≥2 期），同期融資餘額下降">
           <button class="sort-btn" class:active={sortKey === 'c1'} on:click={() => toggleSort('c1')}>
-            吃貨{#if sortKey === 'c1'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+            吃貨ⓘ{#if sortKey === 'c1'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
-        <th>
+        <th title="符合三選二出場條件中至少 2 項（法人連賣 / 融資暴增 / 股價飆升）">
           <button class="sort-btn" class:active={sortKey === 'c2'} on:click={() => toggleSort('c2')}>
-            融資{#if sortKey === 'c2'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+            出場ⓘ{#if sortKey === 'c2'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
-        <th>
+        <th title="連續 2 日收盤低於停損錨點（主力成本或起始價 ×95%）">
           <button class="sort-btn" class:active={sortKey === 'c3'} on:click={() => toggleSort('c3')}>
-            停損{#if sortKey === 'c3'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+            停損ⓘ{#if sortKey === 'c3'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
         <th>訊號</th>
@@ -202,9 +211,27 @@
           <td class="code clickable" on:click={() => onRowClick(row.code)}>{row.code}</td>
           <td class="clickable" on:click={() => onRowClick(row.code)}>{row.name}</td>
           <td class="price">{row.latest_price.toFixed(0)}</td>
-          <td class="indicator" class:active={row.has_accumulation}>🔵</td>
-          <td class="indicator" class:active={row.has_exit}>🟠</td>
-          <td class="indicator" class:active={row.has_stop_loss}>🔴</td>
+          <td
+            class="indicator"
+            class:active={row.has_accumulation}
+            title={row.has_accumulation
+              ? '✓ 觸發吃貨訊號：外資或法人連續買超（≥2 期），同期融資餘額下降'
+              : '✗ 未觸發吃貨訊號（判斷條件：外資/法人連續買超且融資餘額下降）'}
+          >🔵</td>
+          <td
+            class="indicator"
+            class:active={row.has_exit}
+            title={row.has_exit
+              ? '⚠ 觸發出場警告：符合三選二中至少 2 項條件'
+              : '✓ 未觸發出場警告（三選二條件未滿足）'}
+          >🟠</td>
+          <td
+            class="indicator"
+            class:active={row.has_stop_loss}
+            title={row.has_stop_loss
+              ? '🛑 停損已觸發：連續 2 日收盤低於停損錨點'
+              : '✓ 未觸發停損'}
+          >🔴</td>
           <td>
             {#if row.has_accumulation}
               💹
@@ -238,6 +265,45 @@
 <style>
   .table-wrapper {
     width: 100%;
+  }
+
+  .signal-legend {
+    background: #0a0a0a;
+    border: 1px solid #222;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  .signal-legend summary {
+    cursor: pointer;
+    color: #888;
+    user-select: none;
+  }
+
+  .signal-legend summary:hover {
+    color: #4ade80;
+  }
+
+  .legend-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #1a1a1a;
+    line-height: 1.6;
+  }
+
+  .legend-grid b {
+    color: #ccc;
+    margin: 0 4px;
+  }
+
+  .dot {
+    margin-right: 4px;
   }
 
   .filters {
