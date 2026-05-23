@@ -44,6 +44,7 @@
           data: flows.map((f) => f.foreign_net ?? 0),
           type: 'bar',
           stack: 'total',
+          barMaxWidth: 40,
           itemStyle: { color: '#60a5fa' },
         },
         {
@@ -51,6 +52,7 @@
           data: flows.map((f) => f.institution_net ?? 0),
           type: 'bar',
           stack: 'total',
+          barMaxWidth: 40,
           itemStyle: { color: '#4ade80' },
         },
         {
@@ -58,6 +60,7 @@
           data: flows.map((f) => f.individual_net ?? 0),
           type: 'bar',
           stack: 'total',
+          barMaxWidth: 40,
           itemStyle: { color: '#f59e0b' },
         },
       ],
