@@ -165,6 +165,27 @@ def advance_paper(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.post("/simulation/{sim_id}/open-position", response_model=Simulation)
+def open_position(
+    sim_id: str,
+    code: str,
+    name: str,
+    shares: int,
+    entry_price: float,
+    entry_date: Optional[date] = None,
+):
+    """手動進場：直接指定股數和成交價，跳過 candidate / entry_rule。"""
+    try:
+        sim = simulation_service.open_position(
+            sim_id, code, name, shares, entry_price, entry_date
+        )
+        return sim
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.post("/simulation/{sim_id}/close-position", response_model=Simulation)
 def close_position(
     sim_id: str,

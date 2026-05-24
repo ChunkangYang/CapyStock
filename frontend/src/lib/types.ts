@@ -180,6 +180,7 @@ export interface EntryRule {
 export interface ExitRule {
   use_exit_signal: boolean;
   use_stop_loss: boolean;
+  stop_loss_pct: number | null;
   take_profit_pct: number | null;
   max_hold_days: number | null;
   exit_price_basis: 'signal_close' | 'next_open';

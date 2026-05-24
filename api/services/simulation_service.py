@@ -179,6 +179,62 @@ class SimulationService:
 
         return sim
 
+    def open_position(
+        self,
+        sim_id: str,
+        code: str,
+        name: str,
+        shares: int,
+        entry_price: float,
+        entry_date: Optional[date] = None,
+    ) -> Simulation:
+        """手動進場（跳過 candidate / entry_rule）。
+
+        直接建立 Position、扣現金，並把 sim 標為 running（讓每日 advance 接手）。
+        """
+        from api.schemas.simulation import Position
+
+        sim = self.get(sim_id)
+        if sim is None:
+            raise ValueError(f"Simulation {sim_id} not found")
+
+        if shares <= 0:
+            raise ValueError("shares must be > 0")
+        if entry_price <= 0:
+            raise ValueError("entry_price must be > 0")
+
+        if entry_date is None:
+            entry_date = date.today()
+
+        cost = shares * entry_price * (
+            1 + sim.config.cost_model.commission_pct + sim.config.cost_model.slippage_pct
+        )
+        if cost > sim.state.cash:
+            raise ValueError(
+                f"Insufficient cash: need ¥{cost:,.0f}, available ¥{sim.state.cash:,.0f}"
+            )
+
+        sim.state.cash -= cost
+        sim.state.positions.append(
+            Position(
+                code=code,
+                name=name,
+                entry_date=entry_date,
+                entry_price=entry_price,
+                shares=shares,
+                cost_basis=cost,
+            )
+        )
+
+        if sim.state.cursor_date < entry_date:
+            sim.state.cursor_date = entry_date
+
+        if sim.status == "draft":
+            sim.status = "running"
+
+        self._save(sim)
+        return sim
+
     def close_position(
         self,
         sim_id: str,
@@ -357,6 +413,18 @@ def close_position(
 ) -> Simulation:
     """手動平倉。"""
     return _get_service().close_position(sim_id, code, exit_price, exit_date)
+
+
+def open_position(
+    sim_id: str,
+    code: str,
+    name: str,
+    shares: int,
+    entry_price: float,
+    entry_date: Optional[date] = None,
+) -> Simulation:
+    """手動進場。"""
+    return _get_service().open_position(sim_id, code, name, shares, entry_price, entry_date)
 
 
 def get_report(sim_id: str) -> SimulationReport:

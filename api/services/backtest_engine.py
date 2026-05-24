@@ -260,19 +260,13 @@ def run_one_day(
 
         latest_price = today_price.get("close")
 
-        # 檢查停損條件（最近 2 日跌破門檻，門檻從 config 讀取，預設 -5%）
+        # 停損：當日 close 跌破 entry × (1 - stop_loss_pct) 即觸發。
         has_stop_loss = False
-        if cfg.exit_rule.use_stop_loss:
+        if cfg.exit_rule.use_stop_loss and latest_price is not None:
             raw_sl = cfg.exit_rule.stop_loss_pct if cfg.exit_rule.stop_loss_pct is not None else 0.05
             sl_threshold = 1.0 - raw_sl
-            if latest_price is not None:
-                if latest_price <= pos.entry_price * sl_threshold:
-                    prev_date = today - timedelta(days=1)
-                    prev_price = price_cache.get(pos.code, {}).get(prev_date)
-                    if prev_price:
-                        prev_close = prev_price.get("close")
-                        if prev_close and prev_close <= pos.entry_price * sl_threshold:
-                            has_stop_loss = True
+            if latest_price <= pos.entry_price * sl_threshold:
+                has_stop_loss = True
 
         # 檢查訊號條件
         has_exit_signal = False
@@ -356,13 +350,18 @@ def close_position(
     exit_reason: str,
     cost_model,
 ) -> None:
-    """平倉一個部位。"""
+    """平倉一個部位。獲利時扣 capital gain tax（tax_pct）。"""
     proceed = pos.shares * exit_price
-    cost = proceed * (1 - cost_model.commission_pct - cost_model.slippage_pct)
-    state.cash += cost
+    net_proceed = proceed * (1 - cost_model.commission_pct - cost_model.slippage_pct)
+
+    gross_pnl = net_proceed - pos.cost_basis
+    tax = gross_pnl * cost_model.tax_pct if gross_pnl > 0 else 0.0
+    net_proceed -= tax
+
+    state.cash += net_proceed
 
     hold_days = (exit_date - pos.entry_date).days
-    pnl_jpy = cost - pos.cost_basis
+    pnl_jpy = net_proceed - pos.cost_basis
     pnl_pct = pnl_jpy / pos.cost_basis if pos.cost_basis != 0 else 0
 
     state.closed_trades.append(

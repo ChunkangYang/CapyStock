@@ -52,7 +52,8 @@
       <a href="/simulation/sweep" class="btn btn-sweep">
         <span class="sweep-icon">⚡</span>網格回測 Sweep
       </a>
-      <a href="/simulation/new" class="btn btn-primary">+ 新建模擬</a>
+      <a href="/simulation/new" class="btn btn-view">進階精靈</a>
+      <a href="/simulation/ledger/new" class="btn btn-primary">+ 建立帳本</a>
     </div>
   </div>
 
@@ -64,8 +65,8 @@
     <LoadingSpinner />
   {:else if simulations.length === 0}
     <div class="empty">
-      <p>模擬交易模型未找到</p>
-      <a href="/simulation/new" class="btn btn-primary">建立第一個模擬</a>
+      <p>還沒有任何模擬帳本</p>
+      <a href="/simulation/ledger/new" class="btn btn-primary">建立第一個帳本</a>
     </div>
   {:else}
     <div class="table-wrapper">

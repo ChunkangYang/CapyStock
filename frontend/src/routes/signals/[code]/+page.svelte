@@ -13,9 +13,72 @@
   import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
   import { cacheGet, cacheSet, cacheClear, cacheTimestamp, formatCacheAge } from '$lib/utils/signalsCache';
-  import type { SignalResult, PriceBar, FlowRow, MarginRow, EdinetEvent } from '$lib/types';
+  import type { SignalResult, PriceBar, FlowRow, MarginRow, EdinetEvent, Simulation } from '$lib/types';
 
   const code = $page.params.code;
+
+  // 進場到帳本
+  let showEntryModal = false;
+  let ledgers: Simulation[] = [];
+  let ledgersLoading = false;
+  let selectedLedgerId = '';
+  let entryShares: number = 100;
+  let entryPrice: number = 0;
+  let entryDate: string = new Date().toISOString().split('T')[0];
+  let entrySubmitting = false;
+  let entryMessage = '';
+  let entryError = '';
+
+  async function openEntryModal() {
+    if (!signal) return;
+    entryPrice = signal.latest_price ?? 0;
+    showEntryModal = true;
+    entryError = '';
+    entryMessage = '';
+    ledgersLoading = true;
+    try {
+      const all = await api<Simulation[]>(`/simulation`);
+      ledgers = all.filter(s => s.config.kind === 'paper' && s.status !== 'completed' && s.status !== 'failed');
+      if (ledgers.length > 0 && !selectedLedgerId) {
+        selectedLedgerId = ledgers[0].id;
+      }
+    } catch (e) {
+      entryError = e instanceof Error ? e.message : '讀取帳本失敗';
+    } finally {
+      ledgersLoading = false;
+    }
+  }
+
+  async function submitEntry() {
+    if (!signal || !selectedLedgerId) {
+      entryError = '請選擇帳本';
+      return;
+    }
+    if (entryShares <= 0 || entryPrice <= 0) {
+      entryError = '股數和價格必須 > 0';
+      return;
+    }
+    entrySubmitting = true;
+    entryError = '';
+    try {
+      const params = new URLSearchParams({
+        code: signal.code,
+        name: signal.name,
+        shares: String(entryShares),
+        entry_price: String(entryPrice),
+        entry_date: entryDate,
+      });
+      await api(`/simulation/${selectedLedgerId}/open-position?${params}`, {
+        method: 'POST',
+      });
+      entryMessage = `✓ 已加入帳本（${entryShares} 股 @ ¥${entryPrice}）`;
+      setTimeout(() => { showEntryModal = false; }, 1200);
+    } catch (e) {
+      entryError = e instanceof Error ? e.message : '進場失敗';
+    } finally {
+      entrySubmitting = false;
+    }
+  }
   let signal: SignalResult | null = null;
   let prices: PriceBar[] = [];
   let flows: FlowRow[] = [];
@@ -170,8 +233,60 @@
         >↻ 更新</button>
         <FavoriteToggle {code} name={signal.name} tag="speculative" />
         <a href="/compare?codes={code}" class="btn btn-secondary">對比模式</a>
+        <button class="btn btn-entry" on:click={openEntryModal}>📥 進場到帳本</button>
       </div>
     </div>
+
+    {#if showEntryModal}
+      <div class="modal-backdrop" on:click={() => (showEntryModal = false)} role="presentation">
+        <div class="modal" on:click|stopPropagation role="dialog" aria-modal="true">
+          <h3>進場 {signal.code} {signal.name}</h3>
+
+          {#if ledgersLoading}
+            <p>載入帳本中...</p>
+          {:else if ledgers.length === 0}
+            <p class="warn">
+              沒有可用的模擬帳本。
+              <a href="/simulation/ledger/new">先建立一個帳本 →</a>
+            </p>
+          {:else}
+            <div class="form-row">
+              <label>選擇帳本</label>
+              <select bind:value={selectedLedgerId}>
+                {#each ledgers as l}
+                  <option value={l.id}>{l.name}（現金 ¥{Math.round(l.state.cash).toLocaleString()}）</option>
+                {/each}
+              </select>
+            </div>
+            <div class="form-row">
+              <label>進場日</label>
+              <input type="date" bind:value={entryDate} />
+            </div>
+            <div class="form-row">
+              <label>股數</label>
+              <input type="number" bind:value={entryShares} min="1" step="100" />
+            </div>
+            <div class="form-row">
+              <label>成交價 (JPY)</label>
+              <input type="number" bind:value={entryPrice} min="0" step="1" />
+              <small>已預填當前價 ¥{signal.latest_price?.toFixed(0) ?? '?'}</small>
+            </div>
+            <div class="form-row">
+              <strong>預估成本：¥{Math.round(entryShares * entryPrice * 1.002).toLocaleString()}</strong>
+              <small>含 0.2% 手續費 + 滑價（實際以帳本設定為準）</small>
+            </div>
+            {#if entryError}<div class="msg-error">{entryError}</div>{/if}
+            {#if entryMessage}<div class="msg-ok">{entryMessage}</div>{/if}
+            <div class="modal-actions">
+              <button class="btn btn-secondary" on:click={() => (showEntryModal = false)}>取消</button>
+              <button class="btn btn-entry" on:click={submitEntry} disabled={entrySubmitting}>
+                {entrySubmitting ? '送出中...' : '確認進場'}
+              </button>
+            </div>
+          {/if}
+        </div>
+      </div>
+    {/if}
 
     <div class="content">
       <div class="charts">
@@ -379,6 +494,32 @@
   .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
   .btn-refresh.spinning { animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
+  .btn-entry { background: #4ade80; color: #0a0a0a; font-weight: 500; border: none; }
+  .btn-entry:hover:not(:disabled) { background: #3dd66f; }
+  .btn-entry:disabled { opacity: 0.5; cursor: wait; }
+
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    display: flex; align-items: center; justify-content: center; z-index: 1000;
+  }
+  .modal {
+    background: #1a1a1a; border: 1px solid #333; border-radius: 8px;
+    padding: 24px; width: 420px; max-width: 90vw;
+  }
+  .modal h3 { color: #4ade80; margin: 0 0 16px; font-size: 16px; }
+  .form-row { margin-bottom: 12px; }
+  .form-row label { display: block; color: #a1a1a1; font-size: 12px; margin-bottom: 4px; }
+  .form-row input, .form-row select {
+    width: 100%; padding: 7px 10px; background: #0a0a0a; color: #fff;
+    border: 1px solid #333; border-radius: 4px; font-size: 13px;
+  }
+  .form-row small { display: block; color: #666; font-size: 11px; margin-top: 4px; }
+  .form-row strong { color: #4ade80; font-size: 14px; display: block; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+  .msg-error { background: #7f1d1d; color: #fca5a5; padding: 8px; border-radius: 4px; font-size: 12px; margin: 8px 0; }
+  .msg-ok { background: #14532d; color: #bbf7d0; padding: 8px; border-radius: 4px; font-size: 12px; margin: 8px 0; }
+  .warn { color: #fbbf24; font-size: 13px; }
+  .warn a { color: #4ade80; }
 
   .toolbar {
     display: flex; gap: 10px; align-items: center; flex-wrap: wrap;

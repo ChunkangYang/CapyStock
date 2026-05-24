@@ -42,6 +42,39 @@ def base_config():
     )
 
 
+class TestManualOpenPosition:
+    """手動進場（open_position）測試。"""
+
+    def test_open_position_creates_position(self, sim_service, base_config):
+        sim = sim_service.create("Ledger", base_config)
+        result = sim_service.open_position(
+            sim.id, "7203", "Toyota", shares=30, entry_price=2500.0
+        )
+        assert len(result.state.positions) == 1
+        pos = result.state.positions[0]
+        assert pos.code == "7203"
+        assert pos.shares == 30
+        assert pos.entry_price == 2500.0
+        # cash should be reduced
+        assert result.state.cash < 100000.0
+        # draft → running
+        assert result.status == "running"
+
+    def test_open_position_insufficient_cash_raises(self, sim_service, base_config):
+        sim = sim_service.create("Ledger", base_config)
+        with pytest.raises(ValueError, match="Insufficient cash"):
+            sim_service.open_position(
+                sim.id, "7203", "Toyota", shares=10000, entry_price=2500.0
+            )
+
+    def test_open_position_zero_shares_raises(self, sim_service, base_config):
+        sim = sim_service.create("Ledger", base_config)
+        with pytest.raises(ValueError, match="shares must be > 0"):
+            sim_service.open_position(
+                sim.id, "7203", "Toyota", shares=0, entry_price=2500.0
+            )
+
+
 class TestSimulationServiceBasics:
     """基本 CRUD 操作測試。"""
 
