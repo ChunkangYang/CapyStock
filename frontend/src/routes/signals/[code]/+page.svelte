@@ -267,6 +267,50 @@
           {/if}
         </div>
 
+        {#if signal.trailing_stop_stage}
+          <div class="card signal-card" class:warn={signal.trailing_stop_triggered}>
+            <h4>移動停損（Chandelier）</h4>
+            <p class="trailing-stage">
+              <span class="stage-badge" class:s1={signal.trailing_stop_stage === 1} class:s2={signal.trailing_stop_stage === 2} class:s3={signal.trailing_stop_stage === 3}>
+                Stage {signal.trailing_stop_stage}
+              </span>
+              <span class="stage-name">
+                {#if signal.trailing_stop_stage === 1}初始停損{:else if signal.trailing_stop_stage === 2}保本{:else}最大化獲利{/if}
+              </span>
+            </p>
+            <p class="trailing-price" class:red={signal.trailing_stop_triggered}>
+              停損價：<b>{signal.trailing_stop_price?.toLocaleString(undefined, {maximumFractionDigits: 0})}</b>
+              {#if signal.trailing_stop_triggered}<span class="trigger-mark">⚠ 已觸發</span>{/if}
+            </p>
+            {#if signal.latest_price && signal.trailing_stop_price}
+              <p class="trailing-buffer">
+                當前 {signal.latest_price.toLocaleString(undefined, {maximumFractionDigits: 0})}
+                距停損 <b class:red={(signal.latest_price - signal.trailing_stop_price) / signal.trailing_stop_price < 0.02}>
+                  {(((signal.latest_price - signal.trailing_stop_price) / signal.trailing_stop_price) * 100).toFixed(1)}%
+                </b>
+              </p>
+            {/if}
+            {#if signal.atr_14}
+              <p class="signal-detail">ATR(14) = {signal.atr_14.toFixed(1)}</p>
+            {/if}
+            {#if signal.trailing_stop_anchor}
+              <p class="signal-hint">{signal.trailing_stop_anchor}</p>
+            {/if}
+          </div>
+        {/if}
+
+        {#if signal.exit_warnings && signal.exit_warnings.length}
+          <div class="card signal-card warn">
+            <h4>減碼警示</h4>
+            <ul class="warn-list">
+              {#each signal.exit_warnings as w}
+                <li>⚠ {w}</li>
+              {/each}
+            </ul>
+            <p class="signal-hint">這些是技術破位訊號，建議減碼觀察（不強制砍倉）</p>
+          </div>
+        {/if}
+
         <!-- 指標訊號卡片 -->
         {#if indSignals.length}
           <div class="card">
@@ -364,6 +408,22 @@
   .signal-status.red { color: #f87171; }
   .signal-detail { font-size: 11px; color: #a1a1a1; margin: 0 !important; line-height: 1.5; }
   .signal-hint { font-size: 11px; color: #555; margin: 0 !important; line-height: 1.5; font-style: italic; }
+
+  .trailing-stage { font-size: 13px; margin: 0 0 8px 0 !important; }
+  .stage-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 11px; margin-right: 6px; }
+  .stage-badge.s1 { background: rgba(248, 113, 113, 0.15); color: #f87171; }
+  .stage-badge.s2 { background: rgba(250, 204, 21, 0.15); color: #facc15; }
+  .stage-badge.s3 { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+  .stage-name { color: #ccc; font-size: 12px; }
+  .trailing-price { font-size: 13px; color: #ccc; margin: 0 0 4px 0 !important; }
+  .trailing-price b { color: #fff; }
+  .trailing-price.red b { color: #f87171; }
+  .trigger-mark { color: #f87171; margin-left: 8px; font-weight: bold; }
+  .trailing-buffer { font-size: 12px; color: #888; margin: 0 0 4px 0 !important; }
+  .trailing-buffer b { color: #4ade80; }
+  .trailing-buffer b.red { color: #f87171; }
+  .warn-list { margin: 0 0 8px 0; padding-left: 16px; color: #facc15; font-size: 12px; line-height: 1.6; }
+  .warn-list li { margin-bottom: 2px; }
 
   .ind-signal-list { display: flex; flex-direction: column; gap: 6px; }
   .ind-sig-item { display: flex; gap: 6px; font-size: 12px; align-items: center; }

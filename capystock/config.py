@@ -69,3 +69,41 @@ RISK_REWARD_MIN_RATIO = 3.0  # < 1:3 進場前提示
 
 # --- 吃貨訊號 ---
 ACCUMULATION_INSTITUTIONAL_BUY_DAYS = 5
+
+# --- 三階段移動停損（Chandelier Exit）---
+# Stage 1（profit < STAGE2）：max(進場×(1-STOP_LOSS_DROP_PCT), 進場 - INITIAL_STOP_ATR_MULT×ATR)
+# Stage 2（STAGE2 ≤ profit < STAGE3）：停損移到進場價（保本）
+# Stage 3（profit ≥ STAGE3）：Chandelier = max(近 CHANDELIER_HIGH_WINDOW 日 high) - CHANDELIER_ATR_MULT×ATR
+ATR_PERIOD = 14
+INITIAL_STOP_ATR_MULT = 3.0
+CHANDELIER_ATR_MULT = 2.5
+CHANDELIER_HIGH_WINDOW = 20
+TRAILING_STAGE2_THRESHOLD = 0.10  # +10% 進入保本
+TRAILING_STAGE3_THRESHOLD = 0.25  # +25% 啟動 Chandelier
+
+# --- 技術破位減碼警示 ---
+SMA_BREAK_PERIOD = 20  # 跌破 SMA20 且向下走平
+VOLUME_DRY_DAYS = 5
+VOLUME_DRY_RATIO = 0.5  # 連續 N 日量能 < 5 日均量 × 0.5
+
+# --- 出場策略 override 檔（Phase 2 動態調參）---
+EXIT_STRATEGY_OVERRIDE_PATH = DATA_DIR / "exit_strategy.json"
+
+
+def load_exit_strategy_override() -> dict:
+    """從 data/exit_strategy.json 讀使用者覆寫的出場參數。
+
+    回傳 dict，若檔案不存在或解析失敗則回空 dict（使用 config 預設）。
+    """
+    import json
+    if not EXIT_STRATEGY_OVERRIDE_PATH.exists():
+        return {}
+    try:
+        return json.loads(EXIT_STRATEGY_OVERRIDE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def get_exit_param(key: str, default):
+    """取出場參數：優先用 exit_strategy.json，否則用 config 預設。"""
+    return load_exit_strategy_override().get(key, default)

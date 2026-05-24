@@ -78,6 +78,14 @@ class SignalResult(BaseModel):
     conditions: SignalConditions
     stop_loss_triggered: bool
     accumulation_signal: bool
+    # 三階段移動停損
+    trailing_stop_stage: Optional[int] = None  # 1/2/3
+    trailing_stop_price: Optional[float] = None
+    trailing_stop_triggered: bool = False
+    trailing_stop_anchor: Optional[str] = None
+    atr_14: Optional[float] = None
+    # 技術破位減碼警示
+    exit_warnings: list[str] = Field(default_factory=list)
     flow_recent: list[float] = Field(default_factory=list)
     margin_trend_note: str = ""
     notes: list[str] = Field(default_factory=list)

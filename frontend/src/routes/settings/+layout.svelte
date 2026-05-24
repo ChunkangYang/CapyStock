@@ -16,6 +16,9 @@
       <a href="/settings/health" class:active={path.startsWith('/settings/health')}>
         健康
       </a>
+      <a href="/settings/exit-strategy" class:active={path.startsWith('/settings/exit-strategy')}>
+        出場策略
+      </a>
     </nav>
   </header>
 

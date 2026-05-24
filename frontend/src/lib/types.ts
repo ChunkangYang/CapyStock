@@ -53,10 +53,18 @@ export interface SignalResult {
   conditions: SignalConditions;
   stop_loss_triggered: boolean;
   accumulation_signal: boolean;
+  trailing_stop_stage: number | null;
+  trailing_stop_price: number | null;
+  trailing_stop_triggered: boolean;
+  trailing_stop_anchor: string | null;
+  atr_14: number | null;
+  exit_warnings: string[];
   flow_recent: number[];
   margin_trend_note: string;
   notes: string[];
   alerts: Alert[];
+  indicator_signals?: unknown[];
+  technical_score?: number;
 }
 
 export interface FundamentalReport {

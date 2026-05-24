@@ -52,6 +52,15 @@ class Snapshot:
     target_reached: bool = False
     accumulation_signal: bool = False
 
+    # 三階段移動停損（Chandelier Exit）
+    trailing_stop_stage: Optional[int] = None  # 1/2/3
+    trailing_stop_price: Optional[float] = None
+    trailing_stop_triggered: bool = False
+    trailing_stop_anchor: Optional[str] = None  # 描述：保本 / 進場 -3×ATR / 高點 -2.5×ATR
+    atr_14: Optional[float] = None
+    # 減碼警示（不強制砍倉）
+    exit_warnings: list[str] = field(default_factory=list)
+
     flow_recent: list[float] = field(default_factory=list)
     margin_trend_note: str = ""
     notes: list[str] = field(default_factory=list)
@@ -92,6 +101,139 @@ def _check_accumulation(
             "message": f"主力疑似吃貨：外資/法人連續 {n} 期買超，融資餘額同期下降",
             "details": {},
         })
+
+
+def _compute_atr(price_df: pd.DataFrame, period: int) -> Optional[float]:
+    """True Range 14 日均（Wilder ATR 簡化版用 SMA）。"""
+    if price_df is None or len(price_df) < period + 1:
+        return None
+    if not {"high", "low", "close"}.issubset(price_df.columns):
+        return None
+    high = price_df["high"]
+    low = price_df["low"]
+    prev_close = price_df["close"].shift(1)
+    tr = pd.concat([
+        high - low,
+        (high - prev_close).abs(),
+        (low - prev_close).abs(),
+    ], axis=1).max(axis=1)
+    atr = tr.rolling(period).mean().iloc[-1]
+    if pd.isna(atr):
+        return None
+    return float(atr)
+
+
+def _check_trailing_stop(
+    snap: Snapshot,
+    price_df: Optional[pd.DataFrame],
+    alerts: list[dict],
+) -> None:
+    """三階段移動停損：
+    Stage 1 (profit < STAGE2): max(進場×0.95, 進場 - 3×ATR)
+    Stage 2 (STAGE2 ≤ profit < STAGE3): 進場價（保本）
+    Stage 3 (profit ≥ STAGE3): 近 N 日最高 - 2.5×ATR (Chandelier Exit)
+
+    錨點 entry 優先用 master_cost，否則用 start_price。
+    """
+    if snap.latest_price is None or price_df is None or len(price_df) < 2:
+        return
+    entry = snap.master_cost if snap.master_cost else snap.start_price
+    if not entry or entry <= 0:
+        return
+
+    atr_period = config.get_exit_param("atr_period", config.ATR_PERIOD)
+    atr = _compute_atr(price_df, atr_period)
+    if atr is None or atr <= 0:
+        return
+    snap.atr_14 = atr
+
+    profit_pct = (snap.latest_price - entry) / entry
+    stage2 = config.get_exit_param("stage2_threshold_pct", config.TRAILING_STAGE2_THRESHOLD)
+    stage3 = config.get_exit_param("stage3_threshold_pct", config.TRAILING_STAGE3_THRESHOLD)
+    init_mult = config.get_exit_param("initial_stop_atr_mult", config.INITIAL_STOP_ATR_MULT)
+    ch_mult = config.get_exit_param("chandelier_atr_mult", config.CHANDELIER_ATR_MULT)
+    ch_window = config.get_exit_param("chandelier_high_window", config.CHANDELIER_HIGH_WINDOW)
+
+    if profit_pct < stage2:
+        stop_pct_price = entry * (1 - config.STOP_LOSS_DROP_PCT)
+        stop_atr_price = entry - init_mult * atr
+        stop_price = max(stop_pct_price, stop_atr_price)
+        stage = 1
+        anchor = f"進場 {entry:,.0f} - {init_mult}×ATR({atr_period})={atr:,.1f} 或 ×{1-config.STOP_LOSS_DROP_PCT}（取較高）"
+    elif profit_pct < stage3:
+        stop_price = entry
+        stage = 2
+        anchor = f"保本：進場 {entry:,.0f}（已獲利 {profit_pct*100:.1f}%）"
+    else:
+        recent_high = float(price_df["high"].tail(ch_window).max())
+        stop_price = recent_high - ch_mult * atr
+        stage = 3
+        anchor = f"Chandelier：近 {ch_window} 日高 {recent_high:,.0f} - {ch_mult}×ATR({atr_period})={atr:,.1f}"
+
+    snap.trailing_stop_stage = stage
+    snap.trailing_stop_price = float(stop_price)
+    snap.trailing_stop_anchor = anchor
+
+    if snap.latest_price < stop_price:
+        snap.trailing_stop_triggered = True
+        alerts.append({
+            "code": snap.code, "name": snap.name,
+            "alert_type": "stop_loss", "severity": "critical",
+            "message": (
+                f"移動停損觸發（Stage {stage}）：最新 {snap.latest_price:,.0f} < "
+                f"停損 {stop_price:,.0f}（{anchor}）"
+            ),
+            "details": {"stage": stage, "stop": stop_price, "latest": snap.latest_price,
+                        "anchor": anchor, "atr": atr},
+        })
+
+
+def _check_exit_warnings(
+    snap: Snapshot,
+    price_df: Optional[pd.DataFrame],
+    indicator_signals: Optional[list] = None,
+) -> None:
+    """技術破位減碼警示（不強制砍倉）：
+    1) 收盤跌破 SMA20 且 SMA20 近 5 日向下
+    2) MACD 死叉（從 indicator_signals 取，若有）
+    3) 連續 N 日成交量 < 5 日均量 × VOLUME_DRY_RATIO
+    """
+    if price_df is None or len(price_df) < 25 or snap.latest_price is None:
+        return
+    if "close" not in price_df.columns:
+        return
+
+    # 1) SMA20 跌破 + 走平/向下
+    sma_period = config.get_exit_param("sma_break_period", config.SMA_BREAK_PERIOD)
+    sma = price_df["close"].rolling(sma_period).mean()
+    if not pd.isna(sma.iloc[-1]) and not pd.isna(sma.iloc[-6]):
+        below_sma = snap.latest_price < float(sma.iloc[-1])
+        sma_falling = float(sma.iloc[-1]) <= float(sma.iloc[-6])
+        if below_sma and sma_falling:
+            snap.exit_warnings.append(
+                f"跌破 SMA{sma_period} 且均線走平/向下 → 中期趨勢轉弱"
+            )
+
+    # 2) 量能萎縮
+    if "volume" in price_df.columns and len(price_df) >= 10:
+        dry_days = config.get_exit_param("volume_dry_days", config.VOLUME_DRY_DAYS)
+        dry_ratio = config.get_exit_param("volume_dry_ratio", config.VOLUME_DRY_RATIO)
+        vol5_mean = float(price_df["volume"].tail(5).mean())
+        if vol5_mean > 0:
+            recent_vol = price_df["volume"].tail(dry_days)
+            dry_count = int((recent_vol < vol5_mean * dry_ratio).sum())
+            if dry_count >= dry_days:
+                snap.exit_warnings.append(
+                    f"連續 {dry_days} 日量能 < 5 日均量 ×{dry_ratio} → 失去動能"
+                )
+
+    # 3) MACD 死叉（從 indicator_signals 找）
+    if indicator_signals:
+        for s in indicator_signals[:5]:  # 看最近 5 個訊號
+            name = s.name if hasattr(s, "name") else s.get("name", "")
+            if name == "macd_dead_cross":
+                snap.exit_warnings.append("MACD 死叉 → 動能反轉")
+                break
 
 
 def _stop_loss_anchor(snap: Snapshot) -> tuple[float, str]:
@@ -221,6 +363,12 @@ def analyze(
                 )
     else:
         snap.notes.append("缺信用残資料，跳過條件 2")
+
+    # --- 三階段移動停損（Chandelier Exit）---
+    _check_trailing_stop(snap, price_df, alerts)
+
+    # --- 技術破位減碼警示 ---
+    _check_exit_warnings(snap, price_df, indicator_signals=None)
 
     # --- 價格停損（v2：錨點優先用主力成本/使用者停損價）---
     threshold, anchor_desc = _stop_loss_anchor(snap)
