@@ -16,6 +16,30 @@
   let noSnapshot = false;
   let cacheTs: number | null = null;
 
+  let syncing = false;
+  let syncResult: { ok: boolean; msg: string } | null = null;
+
+  async function handleSync() {
+    syncing = true;
+    syncResult = null;
+    try {
+      const res = await api<any>('/data/cloud-sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pull: true, rescan_after_sync: true }),
+      });
+      const files = res.copied_count ?? 0;
+      const scanRows = res.rescan?.rows ?? '?';
+      syncResult = { ok: true, msg: `已同步 ${files} 個檔案，重算 ${scanRows} 筆訊號` };
+      cacheClear(CACHE_KEY);
+      await loadData(true);
+    } catch (e) {
+      syncResult = { ok: false, msg: e instanceof Error ? e.message : '同步失敗' };
+    } finally {
+      syncing = false;
+    }
+  }
+
   async function loadOptional<T>(path: string, fallback: T): Promise<T> {
     try {
       return (await api<T>(path)) ?? fallback;
@@ -83,8 +107,17 @@
       <button class="btn-refresh" disabled={refreshing || loading} on:click={handleRefresh}>
         <span class:spinning={refreshing}>↻</span> 更新
       </button>
+      <button class="btn-sync" disabled={syncing} on:click={handleSync}>
+        <span class:spinning={syncing}>⬇</span> {syncing ? '同步中...' : '雲端同步'}
+      </button>
     </div>
   </div>
+
+  {#if syncResult}
+    <div class="sync-banner" class:sync-ok={syncResult.ok} class:sync-err={!syncResult.ok}>
+      {syncResult.ok ? '✅' : '❌'} {syncResult.msg}
+    </div>
+  {/if}
 
   {#if error}
     <div class="error-banner">{error}</div>
@@ -244,6 +277,18 @@
   }
   .btn-refresh:hover:not(:disabled) { color: #4ade80; border-color: #4ade80; }
   .btn-refresh:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-sync {
+    background: #052e16; border: 1px solid #4ade80; color: #4ade80;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+    display: inline-flex; align-items: center; gap: 6px; font-weight: 600;
+  }
+  .btn-sync:hover:not(:disabled) { background: #14532d; }
+  .btn-sync:disabled { opacity: 0.5; cursor: not-allowed; }
+  .sync-banner {
+    padding: 10px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 14px;
+  }
+  .sync-ok { background: #052e16; border: 1px solid #4ade80; color: #86efac; }
+  .sync-err { background: #7f1d1d; border: 1px solid #991b1b; color: #fecaca; }
   .spinning { animation: spin 0.7s linear infinite; display: inline-block; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
