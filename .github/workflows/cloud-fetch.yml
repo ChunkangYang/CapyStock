@@ -19,9 +19,9 @@ name: Cloud Fetch
         required: false
         default: ""
       kinds:
-        description: "margin / flow / price (comma combo)"
+        description: "margin / price (comma combo)；flow 為 JPX 估算無個股意義，不建議勾"
         required: false
-        default: "margin,flow,price"
+        default: "margin,price"
       edinet_days:
         description: "EDINET lookback days (0 = skip)"
         required: false
@@ -75,7 +75,7 @@ jobs:
         env:
           INPUT_MODE:       ${{ github.event.inputs.mode       || 'all' }}
           INPUT_CODES:      ${{ github.event.inputs.codes }}
-          INPUT_KINDS:      ${{ github.event.inputs.kinds      || 'margin,flow,price' }}
+          INPUT_KINDS:      ${{ github.event.inputs.kinds      || 'margin,price' }}
           INPUT_EDINET_DAYS: ${{ github.event.inputs.edinet_days || '3' }}
           INPUT_BATCH_SIZE: ${{ github.event.inputs.batch_size || '200' }}
           INPUT_OFFSET:     ${{ github.event.inputs.offset     || '0' }}
@@ -137,7 +137,7 @@ jobs:
         id: chain
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          INPUT_KINDS:      ${{ github.event.inputs.kinds      || 'margin,flow,price' }}
+          INPUT_KINDS:      ${{ github.event.inputs.kinds      || 'margin,price' }}
           INPUT_EDINET_DAYS: ${{ github.event.inputs.edinet_days || '3' }}
           INPUT_BATCH_SIZE: ${{ github.event.inputs.batch_size || '200' }}
           INPUT_TIME_LIMIT: ${{ github.event.inputs.time_limit || '1100' }}
