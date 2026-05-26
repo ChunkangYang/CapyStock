@@ -340,7 +340,7 @@ def fetch_margin(code: str) -> Optional[pd.DataFrame]:
     if cached is not None:
         latest = cached["week"].max()
         age_days = (pd.Timestamp.now() - latest).days
-        if age_days <= 14:
+        if age_days <= 8:
             return cached
 
     # 嘗試從 irbank.net 取得新資料
