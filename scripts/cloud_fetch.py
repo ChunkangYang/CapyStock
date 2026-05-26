@@ -31,35 +31,38 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from capystock import config  # noqa: E402
-from capystock.ingest.jpx_margin import JpxMarginSource  # noqa: E402
 
 # PoC 預設代碼：大型權值股 + 中型股，混合驗證
 POC_CODES = ["7203", "6758", "9984", "8035", "6367"]
 
 CLOUD_CACHE_DIR = ROOT / "data" / "cloud-cache"
 
-_JPX_MARGIN = JpxMarginSource()
-
 
 def fetch_margin(code: str) -> dict:
-    """從 JPX 週次 PDF 取得信用残（全市場一次下載，不逐股爬蟲）。"""
+    """從 irbank.net 爬取個股週頻信用残（一次回傳完整歷史，適合初始化與增量更新）。"""
     try:
-        df = _JPX_MARGIN.fetch(code)
-        if df.empty:
-            return {"ok": False, "source": "jpx_margin", "rows": 0, "error": "empty"}
-        out = CLOUD_CACHE_DIR / f"{code}_margin.csv"
-        # append 既有歷史，去重
         import pandas as pd
+        from capystock.scraper import _fetch_margin_irbank
+
+        fresh = _fetch_margin_irbank(code)
+        if fresh is None or fresh.empty:
+            return {"ok": False, "source": "irbank", "rows": 0, "error": "empty"}
+
+        out = CLOUD_CACHE_DIR / f"{code}_margin.csv"
         if out.exists():
             try:
                 existing = pd.read_csv(out)
-                df = pd.concat([existing, df], ignore_index=True).drop_duplicates("week", keep="last").sort_values("week")
+                existing["week"] = pd.to_datetime(existing["week"], format="mixed", errors="coerce")
+                existing = existing.dropna(subset=["week"])
+                combined = pd.concat([existing, fresh], ignore_index=True)
+                combined = combined.drop_duplicates(subset=["week"], keep="last").sort_values("week")
+                fresh = combined
             except Exception:
                 pass
-        df.to_csv(out, index=False)
-        return {"ok": True, "source": "jpx_margin", "rows": len(df), "path": str(out.relative_to(ROOT))}
+        fresh.to_csv(out, index=False)
+        return {"ok": True, "source": "irbank", "rows": len(fresh), "path": str(out.relative_to(ROOT))}
     except Exception as e:
-        return {"ok": False, "source": "jpx_margin", "rows": 0, "error": str(e)}
+        return {"ok": False, "source": "irbank", "rows": 0, "error": str(e)}
 
 
 def fetch_price(code: str) -> dict:
