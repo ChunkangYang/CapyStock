@@ -19,6 +19,11 @@ switch ($Command) {
         docker compose up -d
         Write-Host "[capystock] Done. Running at http://localhost:8000"
     }
+    "sync" {
+        Write-Host "[capystock] Pulling latest data from GitHub..."
+        git pull
+        Write-Host "[capystock] Done. Open http://localhost:8000 to see updated data."
+    }
     "restart" {
         Write-Host "[capystock] Restarting..."
         docker compose restart $SERVICE
@@ -33,7 +38,7 @@ switch ($Command) {
         docker compose logs -f $SERVICE
     }
     default {
-        Write-Host "Usage: .\start.ps1 {start|update|restart|stop|logs}"
+        Write-Host "Usage: .\start.ps1 {start|sync|update|restart|stop|logs}"
         exit 1
     }
 }
