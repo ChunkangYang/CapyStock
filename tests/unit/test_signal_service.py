@@ -35,30 +35,6 @@ class TestGetPriceHistory:
             assert result == []
 
 
-class TestGetFlowHistory:
-    """test get_flow_history()."""
-
-    def test_flow_with_data(self, mock_requests):
-        """成功取得投資部門別資料。"""
-        mock_df = pd.DataFrame({
-            "date": [datetime(2024, 1, 1), datetime(2024, 1, 2)],
-            "foreign_net": [100.0, 50.0],
-            "institution_net": [200.0, 150.0],
-            "individual_net": [-300.0, -200.0],
-        })
-
-        with patch("capystock.scraper.fetch_flow", return_value=mock_df):
-            result = signal_service.get_flow_history("7203", days=30)
-            assert len(result) == 2
-            assert result[0].foreign_net == 100.0
-            assert result[0].institution_net == 200.0
-
-    def test_flow_missing(self, mock_requests):
-        """無資料回傳空列表。"""
-        with patch("capystock.scraper.fetch_flow", return_value=None):
-            result = signal_service.get_flow_history("9999", days=30)
-            assert result == []
-
 
 class TestAnalyzeOne:
     """test analyze_one()。"""
@@ -76,8 +52,7 @@ class TestAnalyzeOne:
 
         with patch("capystock.scraper.fetch_name", return_value="トヨタ"), \
              patch("capystock.scraper.fetch_price", return_value=(mock_price, "kabutan")), \
-             patch("capystock.scraper.fetch_margin", return_value=None), \
-             patch("capystock.scraper.fetch_flow", return_value=None):
+             patch("capystock.scraper.fetch_margin", return_value=None):
             result = signal_service.analyze_one("7203", start_price=2500.0)
             assert isinstance(result, SignalResult)
             assert result.code == "7203"
@@ -88,8 +63,7 @@ class TestAnalyzeOne:
         """無股價資料仍回傳結果（但條件不符）。"""
         with patch("capystock.scraper.fetch_name", return_value="Unknown"), \
              patch("capystock.scraper.fetch_price", return_value=(None, "none")), \
-             patch("capystock.scraper.fetch_margin", return_value=None), \
-             patch("capystock.scraper.fetch_flow", return_value=None):
+             patch("capystock.scraper.fetch_margin", return_value=None):
             result = signal_service.analyze_one("9999", start_price=1000.0)
             assert isinstance(result, SignalResult)
             assert result.code == "9999"
@@ -124,7 +98,6 @@ class TestAnalyzeWatchlist:
         with patch("capystock.storage.load_watchlist", return_value=wl), \
              patch("capystock.scraper.fetch_name", return_value="Stock"), \
              patch("capystock.scraper.fetch_price", return_value=(mock_price, "kabutan")), \
-             patch("capystock.scraper.fetch_margin", return_value=None), \
-             patch("capystock.scraper.fetch_flow", return_value=None):
+             patch("capystock.scraper.fetch_margin", return_value=None):
             result = signal_service.analyze_watchlist()
             assert len(result) == 2

@@ -6,14 +6,13 @@
   import IndicatorOverlay from '$lib/components/IndicatorOverlay.svelte';
   import RSIPanel from '$lib/components/RSIPanel.svelte';
   import MACDPanel from '$lib/components/MACDPanel.svelte';
-  import FlowBarChart from '$lib/components/FlowBarChart.svelte';
   import MarginLineChart from '$lib/components/MarginLineChart.svelte';
   import SignalTimeline from '$lib/components/SignalTimeline.svelte';
   import ConditionGauge from '$lib/components/ConditionGauge.svelte';
   import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
   import { cacheGet, cacheSet, cacheClear, cacheTimestamp, formatCacheAge } from '$lib/utils/signalsCache';
-  import type { SignalResult, PriceBar, FlowRow, MarginRow, EdinetEvent, Simulation } from '$lib/types';
+  import type { SignalResult, PriceBar, MarginRow, EdinetEvent, Simulation } from '$lib/types';
 
   const code = $page.params.code;
 
@@ -81,7 +80,6 @@
   }
   let signal: SignalResult | null = null;
   let prices: PriceBar[] = [];
-  let flows: FlowRow[] = [];
   let margins: MarginRow[] = [];
   let edinet: EdinetEvent[] = [];
   let loading = true;
@@ -135,28 +133,25 @@
   type DetailBundle = {
     signal: SignalResult;
     prices: PriceBar[];
-    flows: FlowRow[];
     margins: MarginRow[];
     edinet: EdinetEvent[];
     indBundle: IndicatorBundle;
   };
 
   async function fetchAll(): Promise<DetailBundle> {
-    const [s, p, f, m, e, ind] = await Promise.all([
+    const [s, p, m, e, ind] = await Promise.all([
       api<SignalResult>(`/signals/${code}`),
       api<PriceBar[]>(`/signals/${code}/price?days=120`),
-      api<FlowRow[]>(`/signals/${code}/flow?days=60`),
       api<MarginRow[]>(`/signals/${code}/margin?weeks=20`),
       api<EdinetEvent[]>(`/signals/${code}/edinet?days=30`),
       api<IndicatorBundle>(`/indicators/${code}?days=120&include=sma_5,sma_20,sma_60,sma_120,ema_12,ema_26,rsi_14,macd,macd_signal,macd_hist,bb_upper,bb_mid,bb_lower`),
     ]);
-    return { signal: s, prices: p, flows: f, margins: m, edinet: e, indBundle: ind };
+    return { signal: s, prices: p, margins: m, edinet: e, indBundle: ind };
   }
 
   function applyBundle(b: DetailBundle) {
     signal = b.signal;
     prices = b.prices;
-    flows = b.flows;
     margins = b.margins;
     edinet = b.edinet;
     indBundle = b.indBundle;
@@ -197,7 +192,6 @@
   }
 
   $: indSignals = (indBundle?.signals ?? []).slice(0, 15);
-  $: accumulationAlert = signal?.alerts.find(a => a.alert_type === 'accumulation');
   $: stopLossAlert = signal?.alerts.find(a => a.alert_type === 'stop_loss');
   $: exitAlert = signal?.alerts.find(a => a.alert_type === 'exit');
 
@@ -335,13 +329,6 @@
           </div>
         {/if}
 
-        {#if flows.length}
-          <div class="chart-container">
-            <h3>投資部門別買賣超</h3>
-            <FlowBarChart {flows} />
-          </div>
-        {/if}
-
         {#if margins.length}
           <div class="chart-container">
             <h3>信用殘</h3>
@@ -357,18 +344,6 @@
 
       <div class="sidebar">
         <ConditionGauge conditions={signal.conditions} exitAlert={exitAlert} />
-
-        <div class="card signal-card" class:active={signal.accumulation_signal}>
-          <h4>吃貨訊號</h4>
-          <p class="signal-status" class:green={signal.accumulation_signal}>
-            {signal.accumulation_signal ? '✓ 是' : '✗ 否'}
-          </p>
-          {#if accumulationAlert}
-            <p class="signal-detail">{accumulationAlert.message}</p>
-          {:else}
-            <p class="signal-hint">判斷條件：外資或法人連續買超（≥2期），同期融資餘額下降</p>
-          {/if}
-        </div>
 
         <div class="card signal-card" class:warn={signal.stop_loss_triggered}>
           <h4>停損狀態</h4>

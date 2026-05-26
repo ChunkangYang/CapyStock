@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 class IngestionResult(BaseModel):
     code: str
-    kind: Literal["margin", "flow", "price"]
+    kind: Literal["margin", "price"]
     source: str
     rows_fetched: int
     date_range: Optional[tuple[date, date]] = None
@@ -23,7 +23,7 @@ class IngestRequest(BaseModel):
 
 
 class CacheStatus(BaseModel):
-    kind: Literal["margin", "flow", "price"]
+    kind: Literal["margin", "price"]
     last_updated: Optional[date] = None
     age_days: Optional[int] = None
     last_source: Optional[str] = None
@@ -35,13 +35,3 @@ class IngestStatusResponse(BaseModel):
     statuses: list[CacheStatus]
 
 
-class MarketFlowRow(BaseModel):
-    week: str
-    foreign_net: float
-    institution_net: Optional[float] = None
-    individual_net: Optional[float] = None
-    estimated: bool = False
-
-
-class JpxWeeklyRequest(BaseModel):
-    week: Optional[str] = None

@@ -22,13 +22,11 @@ def mock_signal_result():
         start_price=2400.0,
         price_vs_start_pct=0.04167,
         price_vs_recent_low_pct=0.05,
-        conditions=SignalConditions(cond_inst_sell=False, cond_margin_surge=False, cond_price_rise=True, matched=1),
+        conditions=SignalConditions(cond_margin_surge=False, cond_price_rise=True, matched=1),
         stop_loss_triggered=False,
-        accumulation_signal=True,
-        flow_recent=[100, 150, 200],
         margin_trend_note="無資料",
-        notes=["吃貨訊號成立"],
-        alerts=[Alert(alert_type="accumulation", severity="info", message="test", details={})],
+        notes=[],
+        alerts=[Alert(alert_type="exit", severity="warn", message="test", details={})],
     )
 
 
@@ -72,7 +70,7 @@ def test_run_signals_scan_basic(mock_signal_result, mock_fundamental_report):
         assert len(rows) == 2
         assert len(errors) == 0
         assert rows[0].code == "7203"
-        assert rows[0].has_accumulation is True
+        assert rows[0].has_accumulation is False
         assert isinstance(rows[0], SignalScanRow)
 
 
@@ -88,10 +86,8 @@ def test_run_signals_scan_with_edinet():
         start_price=None,
         price_vs_start_pct=None,
         price_vs_recent_low_pct=None,
-        conditions=SignalConditions(cond_inst_sell=False, cond_margin_surge=False, cond_price_rise=False, matched=0),
+        conditions=SignalConditions(cond_margin_surge=False, cond_price_rise=False, matched=0),
         stop_loss_triggered=False,
-        accumulation_signal=False,
-        flow_recent=[],
         margin_trend_note="無資料",
         notes=[],
         alerts=[],
@@ -128,10 +124,8 @@ def test_run_signals_scan_error_tolerance():
         start_price=None,
         price_vs_start_pct=None,
         price_vs_recent_low_pct=None,
-        conditions=SignalConditions(cond_inst_sell=False, cond_margin_surge=False, cond_price_rise=False, matched=0),
+        conditions=SignalConditions(cond_margin_surge=False, cond_price_rise=False, matched=0),
         stop_loss_triggered=False,
-        accumulation_signal=False,
-        flow_recent=[],
         margin_trend_note="無資料",
         notes=[],
         alerts=[],
@@ -320,10 +314,8 @@ def test_run_dividend_scan_no_report():
         start_price=None,
         price_vs_start_pct=None,
         price_vs_recent_low_pct=None,
-        conditions=SignalConditions(cond_inst_sell=False, cond_margin_surge=False, cond_price_rise=False, matched=0),
+        conditions=SignalConditions(cond_margin_surge=False, cond_price_rise=False, matched=0),
         stop_loss_triggered=False,
-        accumulation_signal=False,
-        flow_recent=[],
         margin_trend_note="無資料",
         notes=[],
         alerts=[],
@@ -356,10 +348,8 @@ def test_run_dividend_scan_yield_calculation():
         start_price=None,
         price_vs_start_pct=None,
         price_vs_recent_low_pct=None,
-        conditions=SignalConditions(cond_inst_sell=False, cond_margin_surge=False, cond_price_rise=False, matched=0),
+        conditions=SignalConditions(cond_margin_surge=False, cond_price_rise=False, matched=0),
         stop_loss_triggered=False,
-        accumulation_signal=False,
-        flow_recent=[],
         margin_trend_note="無資料",
         notes=[],
         alerts=[],

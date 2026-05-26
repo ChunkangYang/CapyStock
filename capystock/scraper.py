@@ -362,29 +362,6 @@ def fetch_margin(code: str) -> Optional[pd.DataFrame]:
     return cached
 
 
-# ---------- 投資部門別（個股每日） ----------
-
-def fetch_flow(code: str) -> Optional[pd.DataFrame]:
-    """個股每日法人/外資/個人買賣超。
-
-    日本公開免費資料不穩定提供此數據。本函數先嘗試讀本地手動 CSV
-    (data/cache/{code}_flow.csv)，若不存在回傳 None，analyzer 會跳過相關條件。
-    CSV 欄位：date,foreign_net,institution_net,individual_net （單位：千株）
-    """
-    path = storage.cache_path(code, "flow")
-    if not path.exists():
-        return None
-    try:
-        df = pd.read_csv(path)
-    except Exception:
-        return None
-    if "date" not in df.columns:
-        return None
-    df["date"] = pd.to_datetime(df["date"], format="mixed", errors="coerce")
-    df = df.dropna(subset=["date"])
-    return df.sort_values("date").reset_index(drop=True)
-
-
 # ---------- 股票名稱 ----------
 
 def fetch_name(code: str) -> Optional[str]:

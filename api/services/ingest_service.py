@@ -12,7 +12,6 @@ import pandas as pd
 from api.schemas.ingest import CacheStatus, IngestionResult, IngestStatusResponse
 from capystock import config
 from capystock.ingest.base import IngestionSource
-from capystock.ingest.jpx_flow import JpxFlowSource
 from capystock.ingest.manual_csv import ManualCsvSource
 from capystock.ingest.minkabu_margin import MinkabuMarginSource
 from capystock.ingest.yahoo_jp_margin import YahooJpMarginSource
@@ -98,44 +97,7 @@ class IngestService:
             error="; ".join(errors),
         )
 
-    def fetch_flow(self, code: str, force: bool = False) -> IngestionResult:
-        """從 JPX 下載投資部門別週報，估算個股 flow 並寫入 cache。"""
-        cache = _cache_path(code, "flow")
-        age = _cache_age(code, "flow")
-        if not force and age is not None and age.days < 1:
-            return IngestionResult(
-                code=code, kind="flow", source="cache",
-                rows_fetched=0, written_path=str(cache), ok=True,
-                error="cache still fresh",
-            )
-        try:
-            src = JpxFlowSource()
-            df = src.fetch(code)
-            if df.empty:
-                raise RuntimeError("JpxFlowSource 回傳空資料")
-            config.CACHE_DIR.mkdir(parents=True, exist_ok=True)
-            if cache.exists():
-                existing = pd.read_csv(cache)
-                df = pd.concat([existing, df], ignore_index=True)
-                date_col = "date" if "date" in df.columns else "week"
-                df = df.drop_duplicates(date_col, keep="last")
-            df.to_csv(cache, index=False)
-            meta = _load_meta()
-            meta[f"{code}_flow"] = {"last_source": "jpx_flow", "updated": str(date.today())}
-            _save_meta(meta)
-            return IngestionResult(
-                code=code, kind="flow", source="jpx_flow",
-                rows_fetched=len(df), written_path=str(cache), ok=True,
-            )
-        except Exception as e:
-            logger.warning(f"fetch_flow {code}: {e}")
-            return IngestionResult(
-                code=code, kind="flow", source="jpx_flow",
-                rows_fetched=0, ok=False,
-                error=str(e),
-            )
-
-    def import_manual(self, code: str, kind: Literal["margin", "flow"], file_content: bytes, filename: str = "") -> IngestionResult:
+    def import_manual(self, code: str, kind: Literal["margin"], file_content: bytes, filename: str = "") -> IngestionResult:
         """解析手動上傳的 CSV / XLSX，寫入 cache。"""
         src = ManualCsvSource(kind=kind)
         try:
@@ -158,7 +120,7 @@ class IngestService:
     def get_status(self, code: str) -> IngestStatusResponse:
         meta = _load_meta()
         statuses: list[CacheStatus] = []
-        for kind in ("margin", "flow", "price"):
+        for kind in ("margin", "price"):
             age = _cache_age(code, kind)
             key = f"{code}_{kind}"
             last_source = meta.get(key, {}).get("last_source")

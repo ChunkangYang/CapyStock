@@ -7,7 +7,7 @@ import pandas as pd
 from capystock import analyzer, edinet, scraper, storage
 from capystock.indicators import IndicatorSignal, PriceBar as IndicatorPriceBar, detect_signals
 from api.schemas.common import (
-    Alert, FlowRow, MarginRow, PriceBar, SignalConditions, SignalResult,
+    Alert, MarginRow, PriceBar, SignalConditions, SignalResult,
 )
 
 
@@ -36,29 +36,6 @@ def get_price_history(code: str, days: int = 90) -> list[PriceBar]:
     if len(bars) > days:
         bars = bars[-days:]
     return bars
-
-
-def get_flow_history(code: str, days: int = 30) -> list[FlowRow]:
-    """取得投資部門別買賣超歷史。"""
-    df = scraper.fetch_flow(code)
-    if df is None or df.empty:
-        return []
-
-    rows = []
-    for _, row in df.iterrows():
-        try:
-            rows.append(FlowRow(
-                date=pd.Timestamp(row["date"]).date(),
-                foreign_net=float(row.get("foreign_net")) if pd.notna(row.get("foreign_net")) else None,
-                institution_net=float(row.get("institution_net")) if pd.notna(row.get("institution_net")) else None,
-                individual_net=float(row.get("individual_net")) if pd.notna(row.get("individual_net")) else None,
-            ))
-        except (KeyError, ValueError, TypeError):
-            continue
-
-    if len(rows) > days:
-        rows = rows[-days:]
-    return rows
 
 
 def get_margin_history(code: str, weeks: int = 12) -> list[MarginRow]:
@@ -140,40 +117,31 @@ def analyze_one(
         name = scraper.fetch_name(code) or ""
 
     if price_df is None:
-        # 個股詳頁路徑：平行化爬蟲（price、margin、flow）
         from concurrent.futures import ThreadPoolExecutor
-        with ThreadPoolExecutor(max_workers=3) as executor:
+        with ThreadPoolExecutor(max_workers=2) as executor:
             price_future = executor.submit(scraper.fetch_price, code)
             margin_future = executor.submit(scraper.fetch_margin, code)
-            flow_future = executor.submit(scraper.fetch_flow, code)
             price_df, _ = price_future.result()
             margin_df = margin_future.result()
-            flow_df = flow_future.result()
     else:
-        # 批次掃描路徑：price 已預先下載，margin/flow 讀本地 CSV
         if isinstance(price_df, pd.DataFrame) and price_df.empty:
             price_df = None
         margin_df = scraper.fetch_margin(code)
-        flow_df = scraper.fetch_flow(code)
 
-    # 使用既有的 analyzer 邏輯
     if start_price is None:
-        # 若無 start_price，用最近 30 日低點 / 開盤價作為代理（測試用）
         if price_df is not None and len(price_df) > 0:
             start_price = float(price_df.iloc[-1]["close"])
         else:
             start_price = 0.0
 
     snap, alerts = analyzer.analyze(
-        code, name, start_price, price_df, margin_df, flow_df,
+        code, name, start_price, price_df, margin_df,
     )
 
-    # 轉換為 schema
     conditions = SignalConditions(
-        cond_inst_sell=snap.cond_inst_sell,
         cond_margin_surge=snap.cond_margin_surge,
         cond_price_rise=snap.cond_price_rise,
-        matched=sum([snap.cond_inst_sell, snap.cond_margin_surge, snap.cond_price_rise]),
+        matched=sum([snap.cond_margin_surge, snap.cond_price_rise]),
     )
 
     schema_alerts = [
@@ -222,14 +190,12 @@ def analyze_one(
         price_vs_recent_low_pct=snap.price_vs_recent_low_pct,
         conditions=conditions,
         stop_loss_triggered=snap.stop_loss_triggered,
-        accumulation_signal=snap.accumulation_signal,
         trailing_stop_stage=snap.trailing_stop_stage,
         trailing_stop_price=snap.trailing_stop_price,
         trailing_stop_triggered=snap.trailing_stop_triggered,
         trailing_stop_anchor=snap.trailing_stop_anchor,
         atr_14=snap.atr_14,
         exit_warnings=snap.exit_warnings,
-        flow_recent=snap.flow_recent,
         margin_trend_note=snap.margin_trend_note,
         notes=snap.notes,
         alerts=schema_alerts,

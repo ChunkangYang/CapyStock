@@ -7,13 +7,6 @@ export interface PriceBar {
   volume: number;
 }
 
-export interface FlowRow {
-  date: string;
-  foreign_net: number | null;
-  institution_net: number | null;
-  individual_net: number | null;
-}
-
 export interface MarginRow {
   week: string;
   margin_long: number;
@@ -29,14 +22,13 @@ export interface EdinetEvent {
 }
 
 export interface SignalConditions {
-  cond_inst_sell: boolean;
   cond_margin_surge: boolean;
   cond_price_rise: boolean;
   matched: number;
 }
 
 export interface Alert {
-  alert_type: 'exit' | 'stop_loss' | 'accumulation' | 'info';
+  alert_type: 'exit' | 'stop_loss' | 'info' | 'volume_stop';
   severity: 'info' | 'warn' | 'critical';
   message: string;
   details: Record<string, unknown>;
@@ -52,14 +44,12 @@ export interface SignalResult {
   price_vs_recent_low_pct: number | null;
   conditions: SignalConditions;
   stop_loss_triggered: boolean;
-  accumulation_signal: boolean;
   trailing_stop_stage: number | null;
   trailing_stop_price: number | null;
   trailing_stop_triggered: boolean;
   trailing_stop_anchor: string | null;
   atr_14: number | null;
   exit_warnings: string[];
-  flow_recent: number[];
   margin_trend_note: string;
   notes: string[];
   alerts: Alert[];

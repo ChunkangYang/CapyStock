@@ -40,8 +40,7 @@ class Snapshot:
     price_vs_master_cost_pct: Optional[float] = None
     risk_reward_ratio: Optional[float] = None  # 風報比（target/stop 都有時）
 
-    # 條件旗標（出場三選二）
-    cond_inst_sell: bool = False
+    # 條件旗標（出場三選二）— 條件1(法人連賣)已移除，改為二選一
     cond_margin_surge: bool = False
     cond_price_rise: bool = False
     # 個別觸發旗標
@@ -50,7 +49,6 @@ class Snapshot:
     time_stop_warned: bool = False
     volume_stop_warned: bool = False
     target_reached: bool = False
-    accumulation_signal: bool = False
 
     # 三階段移動停損（Chandelier Exit）
     trailing_stop_stage: Optional[int] = None  # 1/2/3
@@ -61,7 +59,6 @@ class Snapshot:
     # 減碼警示（不強制砍倉）
     exit_warnings: list[str] = field(default_factory=list)
 
-    flow_recent: list[float] = field(default_factory=list)
     margin_trend_note: str = ""
     notes: list[str] = field(default_factory=list)
 
@@ -70,37 +67,6 @@ def _pct(a: float, b: float) -> float:
     if b == 0:
         return 0.0
     return (a - b) / b
-
-
-def _check_accumulation(
-    snap: Snapshot,
-    flow_df: Optional[pd.DataFrame],
-    margin_df: Optional[pd.DataFrame],
-    alerts: list[dict],
-) -> None:
-    """吃貨訊號：不依賴 price_df，可在 early return 前執行。
-    flow_df 為週頻 JPX 資料（通常 1–3 筆），用實際可用筆數。
-    """
-    if flow_df is None or len(flow_df) < 2:
-        return
-    flow_df = flow_df.sort_values("date").reset_index(drop=True)
-    n = min(config.ACCUMULATION_INSTITUTIONAL_BUY_DAYS, len(flow_df))
-    last_n = flow_df.tail(n)
-    inst_buy = any(
-        col in flow_df.columns and (last_n[col] > 0).all()
-        for col in ("foreign_net", "institution_net")
-    )
-    margin_declining = False
-    if margin_df is not None and len(margin_df) >= 2:
-        margin_declining = bool(margin_df["margin_long"].diff().tail(1).iloc[0] < 0)
-    if inst_buy and margin_declining:
-        snap.accumulation_signal = True
-        alerts.append({
-            "code": snap.code, "name": snap.name,
-            "alert_type": "accumulation", "severity": "info",
-            "message": f"主力疑似吃貨：外資/法人連續 {n} 期買超，融資餘額同期下降",
-            "details": {},
-        })
 
 
 def _compute_atr(price_df: pd.DataFrame, period: int) -> Optional[float]:
@@ -256,7 +222,6 @@ def analyze(
     start_price: float,
     price_df: Optional[pd.DataFrame],
     margin_df: Optional[pd.DataFrame],
-    flow_df: Optional[pd.DataFrame],
     *,
     master_cost: Optional[float] = None,
     target_price: Optional[float] = None,
@@ -283,9 +248,6 @@ def analyze(
                     f"風報比 1:{snap.risk_reward_ratio:.2f} < 1:{config.RISK_REWARD_MIN_RATIO:.0f} "
                     f"（心法建議跳過）"
                 )
-
-    # 吃貨訊號不依賴 price_df，先在 early return 前執行
-    _check_accumulation(snap, flow_df, margin_df, alerts)
 
     if price_df is None or len(price_df) == 0:
         snap.notes.append("無股價資料")
@@ -315,33 +277,6 @@ def analyze(
     else:
         if snap.price_vs_recent_low_pct >= config.PRICE_RISE_FROM_RECENT_LOW:
             snap.cond_price_rise = True
-
-    # --- 條件 1: 外資/法人連續賣超 & 累計賣超 > 前10日買超 20% ---
-    need_rows = config.INSTITUTIONAL_SELL_CONSECUTIVE_DAYS + 10
-    if flow_df is not None and len(flow_df) >= need_rows:
-        flow_df = flow_df.sort_values("date").reset_index(drop=True)
-        days_n = config.INSTITUTIONAL_SELL_CONSECUTIVE_DAYS
-        last_n = flow_df.tail(days_n)
-        prior_10 = flow_df.iloc[-(days_n + 10):-days_n]
-
-        for col in ("foreign_net", "institution_net"):
-            if col not in flow_df.columns:
-                continue
-            if (last_n[col] < 0).all():
-                cum_sell = -last_n[col].sum()
-                prior_buy = prior_10[col][prior_10[col] > 0].sum()
-                if prior_buy > 0 and cum_sell / prior_buy >= config.INSTITUTIONAL_SELL_RATIO_OF_PRIOR_10D_BUY:
-                    snap.cond_inst_sell = True
-                    snap.notes.append(
-                        f"{col} 連續 {days_n} 日賣超，累計 {cum_sell:.0f} 千株"
-                        f"（前10日買超 {prior_buy:.0f} 千株的 {cum_sell/prior_buy*100:.0f}%）"
-                    )
-                    break
-
-        snap.flow_recent = last_n.get("foreign_net", last_n.get("institution_net", pd.Series([]))).tolist()
-    else:
-        have = len(flow_df) if flow_df is not None else 0
-        snap.notes.append(f"投資部門別資料筆數不足（需 {need_rows} 筆，現有 {have} 筆），跳過條件 1")
 
     # --- 條件 2: 融資残連續 3 週增加 & 本週增幅 > 8 週均值 2 倍 ---
     if margin_df is not None and len(margin_df) >= 9:
@@ -454,12 +389,10 @@ def analyze(
                             "day_change": day_change},
             })
 
-    # --- 持倉出場彙整（三選二） ---
-    matched = sum([snap.cond_inst_sell, snap.cond_margin_surge, snap.cond_price_rise])
-    if matched >= 2:
+    # --- 持倉出場彙整（二選一） ---
+    matched = sum([snap.cond_margin_surge, snap.cond_price_rise])
+    if matched >= 1:
         parts = []
-        if snap.cond_inst_sell:
-            parts.append("法人連賣")
         if snap.cond_margin_surge:
             parts.append(f"融資暴增（{snap.margin_trend_note}）")
         if snap.cond_price_rise:
@@ -470,7 +403,7 @@ def analyze(
         alerts.append({
             "code": code, "name": name,
             "alert_type": "exit", "severity": "warn",
-            "message": f"符合 {matched}/3 出場條件：" + "、".join(parts),
+            "message": f"符合出場條件：" + "、".join(parts),
             "details": {
                 "cond_inst_sell": snap.cond_inst_sell,
                 "cond_margin_surge": snap.cond_margin_surge,

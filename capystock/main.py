@@ -98,14 +98,12 @@ def cmd_check(args: argparse.Namespace) -> int:
 
         price_df, source = scraper.fetch_price(code)
         margin_df = scraper.fetch_margin(code)
-        flow_df = scraper.fetch_flow(code)
 
-        # 快取股價歷史（信用残 / flow 由使用者手動提供，不回寫）
         if price_df is not None:
             scraper.cache_save(code, "price", price_df)
 
         snap, alerts = analyzer.analyze(
-            code, name, entry["start_price"], price_df, margin_df, flow_df,
+            code, name, entry["start_price"], price_df, margin_df,
             master_cost=entry.get("master_cost"),
             target_price=entry.get("target_price"),
             stop_price=entry.get("stop_price"),
@@ -135,9 +133,6 @@ def cmd_check(args: argparse.Namespace) -> int:
                 anchors.append(f"RR 1:{snap.risk_reward_ratio:.2f}")
             if anchors:
                 print(f"  心法錨點：{' / '.join(anchors)}")
-        if snap.flow_recent:
-            flow_str = " / ".join(f"{v:+,.0f}" for v in snap.flow_recent)
-            print(f"  法人買賣超（近{len(snap.flow_recent)}日，千株）：{flow_str}")
         if snap.margin_trend_note:
             print(f"  信用残：{snap.margin_trend_note} ⚠️")
         for note in snap.notes:

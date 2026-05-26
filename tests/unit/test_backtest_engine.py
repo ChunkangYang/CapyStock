@@ -36,13 +36,11 @@ def mock_signal_service():
             name="test",
             latest_price=100.0,
             conditions=SignalConditions(
-                cond_inst_sell=False,
                 cond_margin_surge=False,
                 cond_price_rise=False,
                 matched=0,
             ),
             stop_loss_triggered=False,
-            accumulation_signal=True,
         )
 
     service.analyze_one.side_effect = analyze_one_side_effect

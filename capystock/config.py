@@ -35,9 +35,6 @@ REQUEST_TIMEOUT = 15
 USER_AGENT = "CapyStock/0.1 (+personal portfolio tracker)"
 
 # --- 持倉出場條件 ---
-INSTITUTIONAL_SELL_CONSECUTIVE_DAYS = 3
-INSTITUTIONAL_SELL_RATIO_OF_PRIOR_10D_BUY = 0.20
-
 MARGIN_INCREASE_CONSECUTIVE_WEEKS = 3
 MARGIN_INCREASE_VS_8W_MEAN = 2.0
 
@@ -66,9 +63,6 @@ VOLUME_SPIKE_PRICE_FLAT_PCT = 0.01  # 漲幅 < +1% 視為不漲
 
 # --- 風報比（第十一篇）---
 RISK_REWARD_MIN_RATIO = 3.0  # < 1:3 進場前提示
-
-# --- 吃貨訊號 ---
-ACCUMULATION_INSTITUTIONAL_BUY_DAYS = 5
 
 # --- 三階段移動停損（Chandelier Exit）---
 # Stage 1（profit < STAGE2）：max(進場×(1-STOP_LOSS_DROP_PCT), 進場 - INITIAL_STOP_ATR_MULT×ATR)

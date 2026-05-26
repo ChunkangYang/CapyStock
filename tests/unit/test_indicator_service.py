@@ -120,12 +120,9 @@ class TestSignalResultIndicators:
         mock_snap.latest_date = None
         mock_snap.price_vs_start_pct = 0.0
         mock_snap.price_vs_recent_low_pct = 0.0
-        mock_snap.cond_inst_sell = False
         mock_snap.cond_margin_surge = False
         mock_snap.cond_price_rise = False
         mock_snap.stop_loss_triggered = False
-        mock_snap.accumulation_signal = False
-        mock_snap.flow_recent = []
         mock_snap.margin_trend_note = ""
         mock_snap.notes = []
 
@@ -133,7 +130,6 @@ class TestSignalResultIndicators:
              patch("api.services.signal_service.analyzer") as mock_analyzer:
             mock_scraper.fetch_price.return_value = (df, None)
             mock_scraper.fetch_margin.return_value = None
-            mock_scraper.fetch_flow.return_value = None
             mock_scraper.fetch_name.return_value = "Toyota"
             mock_analyzer.analyze.return_value = (mock_snap, [])
 

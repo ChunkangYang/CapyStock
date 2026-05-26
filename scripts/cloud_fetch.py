@@ -31,7 +31,6 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from capystock import config  # noqa: E402
-from capystock.ingest.jpx_flow import JpxFlowSource  # noqa: E402
 from capystock.ingest.jpx_margin import JpxMarginSource  # noqa: E402
 
 # PoC 預設代碼：大型權值股 + 中型股，混合驗證
@@ -121,37 +120,6 @@ def fetch_edinet(days: int = 7, codes: list[str] | None = None) -> dict:
         return {"ok": False, "source": "edinet", "rows": 0, "error": str(e)}
 
 
-def fetch_flow(code: str) -> dict:
-    """JPX flow 每次只回當週一筆；append 到既有 cloud-cache CSV 並去重，雲端自己累積歷史。"""
-    import pandas as pd
-
-    try:
-        df = JpxFlowSource().fetch(code)
-        if df.empty:
-            return {"ok": False, "source": "jpx_flow", "rows": 0, "error": "empty"}
-        out = CLOUD_CACHE_DIR / f"{code}_flow.csv"
-        appended = False
-        if out.exists():
-            try:
-                existing = pd.read_csv(out)
-                df_merged = pd.concat([existing, df], ignore_index=True)
-                date_col = "date" if "date" in df_merged.columns else ("week" if "week" in df_merged.columns else None)
-                if date_col:
-                    df_merged = df_merged.drop_duplicates(date_col, keep="last").sort_values(date_col)
-                df = df_merged
-                appended = True
-            except Exception:
-                pass  # 既有 CSV 壞了就直接覆寫
-        df.to_csv(out, index=False)
-        return {
-            "ok": True, "source": "jpx_flow", "rows": len(df),
-            "path": str(out.relative_to(ROOT)),
-            "appended": appended,
-        }
-    except Exception as e:
-        return {"ok": False, "source": "jpx_flow", "rows": 0, "error": str(e)}
-
-
 def load_watchlist_codes() -> list[str]:
     p = ROOT / "data" / "watchlist.json"
     if not p.exists():
@@ -239,8 +207,6 @@ def main():
             try:
                 if kind == "margin":
                     r = fetch_margin(code)
-                elif kind == "flow":
-                    r = fetch_flow(code)
                 elif kind == "price":
                     r = fetch_price(code)
                 else:

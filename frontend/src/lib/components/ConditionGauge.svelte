@@ -5,26 +5,24 @@
   export let exitAlert: { message: string } | undefined = undefined;
 
   const conditionLabels = {
-    cond_inst_sell: '機構連售',
     cond_margin_surge: '融資暴增',
     cond_price_rise: '股價飆升',
   };
 
   const conditionTooltips = {
-    cond_inst_sell: '外資或法人連續 3 日賣超，且累計賣超量 ≥ 前 10 日買超量的 20%',
     cond_margin_surge: '融資餘額連續 3 週增加，且本週增幅 ≥ 近 8 週均值的 2 倍',
     cond_price_rise: '股價高於近 30 日低點 30% 以上（或已達目標價）',
   };
 
-  type CondKey = 'cond_inst_sell' | 'cond_margin_surge' | 'cond_price_rise';
-  const condKeys: CondKey[] = ['cond_inst_sell', 'cond_margin_surge', 'cond_price_rise'];
+  type CondKey = 'cond_margin_surge' | 'cond_price_rise';
+  const condKeys: CondKey[] = ['cond_margin_surge', 'cond_price_rise'];
 
   $: matchedCount = conditions.matched ?? 0;
-  $: isMatched = matchedCount >= 2;
+  $: isMatched = matchedCount >= 1;
 </script>
 
 <div class="gauge-card">
-  <h4>三選二條件</h4>
+  <h4>出場條件</h4>
   <div class="conditions">
     {#each condKeys as key}
       <div
@@ -43,7 +41,7 @@
   <div class="status">
     <div class="counter">
       <span class="number">{matchedCount}</span>
-      <span class="label">/ 3</span>
+      <span class="label">/ 2</span>
     </div>
     <p class="alert-text" class:warning={isMatched}>
       {#if isMatched}

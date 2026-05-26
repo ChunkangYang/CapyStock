@@ -21,16 +21,13 @@ class TestSignalsEndpoints:
             price_vs_start_pct=0.0417,
             price_vs_recent_low_pct=0.05,
             conditions=SignalConditions(
-                cond_inst_sell=False,
                 cond_margin_surge=False,
                 cond_price_rise=True,
                 matched=1,
             ),
             stop_loss_triggered=False,
-            accumulation_signal=False,
-            flow_recent=[100.0, 50.0],
             margin_trend_note="",
-            notes=["缺投資部門別資料"],
+            notes=[],
             alerts=[],
         )
 
@@ -73,18 +70,6 @@ class TestSignalsEndpoints:
             data = response.json()
             assert len(data) == 2
             assert data[0]["close"] == 101.0
-
-    def test_get_flow_history(self, test_client, mock_requests):
-        """取得投資部門別資料。"""
-        from api.schemas.common import FlowRow
-        mock_flows = [
-            FlowRow(date=date(2024, 1, 1), foreign_net=100.0, institution_net=200.0, individual_net=-300.0),
-        ]
-        with patch("api.services.signal_service.get_flow_history", return_value=mock_flows):
-            response = test_client.get("/api/v1/signals/7203/flow?days=30")
-            assert response.status_code == 200
-            data = response.json()
-            assert len(data) == 1
 
     def test_get_margin_history(self, test_client, mock_requests):
         """取得信用殘歷史。"""

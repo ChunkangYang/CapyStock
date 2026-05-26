@@ -2,7 +2,7 @@
 from fastapi import APIRouter, HTTPException
 
 from api.schemas.common import (
-    FlowRow, MarginRow, PriceBar, SignalResult,
+    MarginRow, PriceBar, SignalResult,
 )
 from capystock import storage
 
@@ -36,12 +36,6 @@ def get_signal(code: str) -> SignalResult:
 def get_price_history(code: str, days: int = 90) -> list[PriceBar]:
     """取得股價 K 線（可指定天數）。"""
     return signal_service.get_price_history(code, days)
-
-
-@router.get("/signals/{code}/flow")
-def get_flow_history(code: str, days: int = 30) -> list[FlowRow]:
-    """取得投資部門別買賣超（可指定天數）。"""
-    return signal_service.get_flow_history(code, days)
 
 
 @router.get("/signals/{code}/margin")

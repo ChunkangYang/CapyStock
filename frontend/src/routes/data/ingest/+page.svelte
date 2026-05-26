@@ -27,9 +27,8 @@
   let selectedKinds: string[] = ['margin'];
   const kindOptions = [
     { value: 'margin', label: '信用残' },
-    { value: 'flow',   label: '投資部門別' },
   ];
-  const kindLabel: Record<string, string> = { margin: '信用残', flow: '投資部門別' };
+  const kindLabel: Record<string, string> = { margin: '信用残' };
 
   // 抓取狀態
   let running = false;

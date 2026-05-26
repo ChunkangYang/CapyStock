@@ -28,7 +28,6 @@ class CacheOverviewRow(BaseModel):
     name: str
     price_age_days: Optional[int] = None
     margin_age_days: Optional[int] = None
-    flow_age_days: Optional[int] = None
     fundamental_age_days: Optional[int] = None
 
 
@@ -76,7 +75,6 @@ async def data_overview(scope: str = "watchlist"):
             code=code, name=name,
             price_age_days=age("price"),
             margin_age_days=age("margin"),
-            flow_age_days=age("flow"),
             fundamental_age_days=age("fundamental"),
         ))
     return rows
@@ -105,8 +103,6 @@ async def _run_batch(job_id: str, tasks: list[tuple[str, str]]):
         try:
             if kind == "margin":
                 result = _svc.fetch_margin(code, force=True)
-            elif kind == "flow":
-                result = _svc.fetch_flow(code, force=True)
             else:
                 result = None
 
