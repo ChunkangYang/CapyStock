@@ -256,27 +256,110 @@ def fetch_price(code: str, days: int = 90) -> tuple[Optional[pd.DataFrame], str]
 
 # ---------- 信用残 ----------
 
+def _fetch_margin_irbank(code: str) -> Optional[pd.DataFrame]:
+    """從 irbank.net 爬取週頻信用残（免費公開，不需登入）。
+
+    URL: https://irbank.net/{CODE}/margin
+    欄位：日付, 買い残高（含増減）, 一般/制度, 売り残高（含増減）, 一般/制度, 倍率, 逆日歩
+    數值單位為「株」，轉換為千株後回傳。
+    """
+    url = f"https://irbank.net/{code}/margin"
+    html = _get(url)
+    if not html:
+        return None
+    soup = BeautifulSoup(html, "lxml")
+    table = soup.find("table")
+    if not table:
+        return None
+
+    rows: list[dict] = []
+    current_year = datetime.now().year
+
+    for tr in table.select("tr"):
+        tds = [td.get_text(strip=True) for td in tr.find_all(["th", "td"])]
+        if not tds:
+            continue
+        # 年份行：僅包含 4 位數年份
+        if len(tds) >= 1 and re.match(r"^\d{4}$", tds[0]):
+            current_year = int(tds[0])
+            continue
+        # 資料行：日付格式 MM/DD
+        if not re.match(r"^\d{2}/\d{2}$", tds[0]):
+            continue
+        mm, dd = map(int, tds[0].split("/"))
+        try:
+            dt = datetime(current_year, mm, dd)
+        except ValueError:
+            continue
+
+        # 買い残高欄位可能含増減（如 "14,302,200+905,600"）→ 取第一個數字
+        long_raw = re.split(r"[+\-]", tds[1])[0] if len(tds) > 1 else ""
+        short_raw = re.split(r"[+\-]", tds[3])[0] if len(tds) > 3 else ""
+        ratio_raw = tds[5] if len(tds) > 5 else ""
+
+        long_ = _to_num(long_raw)
+        short = _to_num(short_raw)
+        ratio = _to_num(ratio_raw)
+        if long_ is None:
+            continue
+        rows.append({
+            "week": dt,
+            "margin_long": long_ / 1000.0,
+            "margin_short": short / 1000.0 if short is not None else None,
+            "ratio": ratio,
+        })
+
+    if not rows:
+        return None
+    df = pd.DataFrame(rows).drop_duplicates(subset=["week"]).sort_values("week")
+    return df.reset_index(drop=True)
+
+
 def fetch_margin(code: str) -> Optional[pd.DataFrame]:
     """週度信用残（融資/融券/倍率）。
 
-    kabutan 免費 tier 不穩定提供個股信用残歷史。本函數：
     1. 先讀本地 CSV `data/cache/{code}_margin.csv`
-       （欄位：week,margin_long,margin_short,ratio）
-    2. 若無則回傳 None，analyzer 會跳過條件 2。
+    2. 若 CSV 不存在或最新資料超過 14 天，改從 Yahoo Finance Japan 爬取並更新 CSV
+    3. 若兩者都失敗回傳 None，analyzer 會跳過條件 2。
     """
     path = storage.cache_path(code, "margin")
-    if not path.exists():
-        return None
-    try:
-        df = pd.read_csv(path)
-    except Exception:
-        return None
-    if "week" not in df.columns or "margin_long" not in df.columns:
-        return None
-    # format='mixed' 兼容 JPX ingester 的 'YYYY-MM-DD' 與舊 yahoo/minkabu 的 'YYYY/M/D'
-    df["week"] = pd.to_datetime(df["week"], format="mixed", errors="coerce")
-    df = df.dropna(subset=["week"])
-    return df.sort_values("week").reset_index(drop=True)
+    cached: Optional[pd.DataFrame] = None
+
+    if path.exists():
+        try:
+            df = pd.read_csv(path)
+            if "week" in df.columns and "margin_long" in df.columns:
+                df["week"] = pd.to_datetime(df["week"], format="mixed", errors="coerce")
+                df = df.dropna(subset=["week"]).sort_values("week").reset_index(drop=True)
+                if len(df) >= 1:
+                    cached = df
+        except Exception:
+            pass
+
+    # 若快取存在且最新資料在 14 天內，直接回傳
+    if cached is not None:
+        latest = cached["week"].max()
+        age_days = (pd.Timestamp.now() - latest).days
+        if age_days <= 14:
+            return cached
+
+    # 嘗試從 irbank.net 取得新資料
+    fresh = _fetch_margin_irbank(code)
+    if fresh is not None:
+        if cached is not None:
+            # 合併：保留舊資料，以 Yahoo 新資料覆蓋/補充
+            combined = pd.concat([cached, fresh], ignore_index=True)
+            combined = combined.drop_duplicates(subset=["week"], keep="last")
+            combined = combined.sort_values("week").reset_index(drop=True)
+        else:
+            combined = fresh
+        try:
+            combined.to_csv(path, index=False)
+        except Exception:
+            pass
+        return combined
+
+    return cached
 
 
 # ---------- 投資部門別（個股每日） ----------
