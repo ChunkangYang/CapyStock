@@ -405,7 +405,6 @@ def analyze(
             "alert_type": "exit", "severity": "warn",
             "message": f"符合出場條件：" + "、".join(parts),
             "details": {
-                "cond_inst_sell": snap.cond_inst_sell,
                 "cond_margin_surge": snap.cond_margin_surge,
                 "cond_price_rise": snap.cond_price_rise,
             },

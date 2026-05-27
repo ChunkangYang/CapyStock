@@ -148,23 +148,31 @@ def cmd_check(args: argparse.Namespace) -> int:
             storage.append_log(code, name, "edinet_5pct", "info", msg)
 
         # 表格列
+        signal_col = ""
+        if snap.stop_loss_triggered:
+            signal_col = "🛑"
+        elif snap.trailing_stop_triggered:
+            signal_col = "🔻"
+        elif snap.target_reached:
+            signal_col = "🎯"
+        elif snap.last_step_break:
+            signal_col = "⚡"
         table_rows.append([
             code,
             (name or "")[:10],
             _fmt_num(snap.latest_price),
             _fmt_pct(snap.price_vs_start_pct),
             _fmt_pct(snap.price_vs_recent_low_pct),
-            "✓" if snap.cond_inst_sell else "",
             "✓" if snap.cond_margin_surge else "",
             "✓" if snap.cond_price_rise else "",
-            "🛑" if snap.stop_loss_triggered else ("📥" if snap.accumulation_signal else ""),
+            signal_col,
         ])
 
     print()
     print(tabulate(
         table_rows,
         headers=["Code", "Name", "Close", "vs起始", "vs低點",
-                 "C1賣", "C2融", "C3漲", "訊號"],
+                 "C2融", "C3漲", "訊號"],
         tablefmt="github",
     ))
     return 0
