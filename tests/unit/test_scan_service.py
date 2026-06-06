@@ -94,13 +94,16 @@ def test_run_signals_scan_with_edinet():
     )
 
     with patch("api.services.scan_service.analyze_one") as mock_analyze, patch(
-        "api.services.scan_service.get_edinet_events"
+        "api.services.scan_service._load_edinet_by_code"
     ) as mock_edinet:
         mock_analyze.return_value = mock_result
-        mock_edinet.return_value = [
-            {"sec_code": "7203", "doc_type_code": "350"},
-            {"sec_code": "7203", "doc_type_code": "350"},
-        ]
+        # run_signals_scan 用一次性 _load_edinet_by_code 建 code→events 快篩表（key 為 zfill(4)）
+        mock_edinet.return_value = {
+            "7203": [
+                {"doc_type_code": "350"},
+                {"doc_type_code": "350"},
+            ]
+        }
 
         rows, errors = scan_service.run_signals_scan(universe)
 
@@ -376,3 +379,52 @@ def test_run_dividend_scan_yield_calculation():
         assert len(rows) == 1
         assert rows[0].code == "7203"
         assert rows[0].pass_count == 2
+
+
+def _mk_rows(n, has_exit):
+    return [
+        SignalScanRow(
+            code=f"{i:04d}", name=f"S{i}", latest_price=1000.0,
+            has_accumulation=False, has_exit=has_exit, has_stop_loss=False,
+            edinet_recent_count=0, score=0, generated_at=date(2026, 6, 6).isoformat(),
+        )
+        for i in range(n)
+    ]
+
+
+def test_write_snapshot_guard_rejects_degraded_full_scan(tmp_path):
+    """degraded 防呆：既有好快照有出貨，新的完整掃描卻 has_exit 全 0 → 拒絕覆寫"""
+    with patch("api.services.scan_service.SCAN_SNAPSHOTS_DIR", tmp_path):
+        # 前一日好快照：有出貨
+        good = _mk_rows(scan_service.GUARD_MIN_ROWS, has_exit=True)
+        scan_service.write_snapshot("signals", good, "2026-06-05", guard=True)
+
+        # 今日完整掃描但全 0（壞結果）
+        bad = _mk_rows(scan_service.GUARD_MIN_ROWS, has_exit=False)
+        ret = scan_service.write_snapshot("signals", bad, "2026-06-06", guard=True)
+
+        # 今日壞快照不應被寫出，回傳的是既有好快照路徑
+        assert not (tmp_path / "signals_2026-06-06.parquet").exists()
+        assert ret == tmp_path / "signals_2026-06-05.parquet"
+        # 壞結果留證
+        assert (tmp_path / "_rejected_signals_2026-06-06.parquet").exists()
+
+
+def test_write_snapshot_guard_allows_when_no_prior_signals(tmp_path):
+    """無既有出貨快照時，不擋（避免冷啟動/真的市場平靜被誤擋）"""
+    with patch("api.services.scan_service.SCAN_SNAPSHOTS_DIR", tmp_path):
+        bad = _mk_rows(scan_service.GUARD_MIN_ROWS, has_exit=False)
+        ret = scan_service.write_snapshot("signals", bad, "2026-06-06", guard=True)
+        assert ret == tmp_path / "signals_2026-06-06.parquet"
+        assert ret.exists()
+
+
+def test_write_snapshot_guard_off_by_default(tmp_path):
+    """guard 預設關閉：partial / 一般寫入照常覆寫"""
+    with patch("api.services.scan_service.SCAN_SNAPSHOTS_DIR", tmp_path):
+        good = _mk_rows(scan_service.GUARD_MIN_ROWS, has_exit=True)
+        scan_service.write_snapshot("signals", good, "2026-06-05", guard=True)
+        bad = _mk_rows(scan_service.GUARD_MIN_ROWS, has_exit=False)
+        ret = scan_service.write_snapshot("signals", bad, "2026-06-06")  # guard 預設 False
+        assert ret == tmp_path / "signals_2026-06-06.parquet"
+        assert ret.exists()

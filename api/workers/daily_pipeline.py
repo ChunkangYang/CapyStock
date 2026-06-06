@@ -31,7 +31,7 @@ def _run_signals_scan(today: _date) -> int:
     except Exception:
         return 0
     rows, errors = scan_service.run_signals_scan(universe, clock=today)
-    scan_service.write_snapshot("signals", rows, today.strftime("%Y-%m-%d"))
+    scan_service.write_snapshot("signals", rows, today.strftime("%Y-%m-%d"), guard=True)
     if errors:
         scan_service.write_errors("signals", errors, today.strftime("%Y-%m-%d"))
     return len(rows)

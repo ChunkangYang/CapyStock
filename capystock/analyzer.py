@@ -228,7 +228,12 @@ def analyze(
     stop_price: Optional[float] = None,
     last_step_price: Optional[float] = None,
     added_date: Optional[str] = None,
+    holdings_context: bool = True,
 ) -> tuple[Snapshot, list[dict]]:
+    """holdings_context=False（全市場掃描）：跳過所有「需進場價/主力成本錨點」的
+    持倉專屬檢查（移動停損 / 價格停損 / 最後一階 / 時間停損）。這些訊號在沒有
+    進場價的全市場視角下結構性恆不觸發，計算它們只是浪費且語意誤導。
+    出場條件、量能停損（爆量不漲）、技術破位警示不依賴進場價，兩種視角都評估。"""
     snap = Snapshot(
         code=code, name=name, start_price=float(start_price),
         master_cost=master_cost, target_price=target_price,
@@ -299,70 +304,72 @@ def analyze(
     else:
         snap.notes.append("缺信用残資料，跳過條件 2")
 
-    # --- 三階段移動停損（Chandelier Exit）---
-    _check_trailing_stop(snap, price_df, alerts)
-
-    # --- 技術破位減碼警示 ---
+    # --- 技術破位減碼警示（市場通用，不需進場價）---
     _check_exit_warnings(snap, price_df, indicator_signals=None)
 
-    # --- 價格停損（v2：錨點優先用主力成本/使用者停損價）---
-    threshold, anchor_desc = _stop_loss_anchor(snap)
-    tail = price_df.tail(config.STOP_LOSS_CONSECUTIVE_DAYS)
-    if len(tail) >= config.STOP_LOSS_CONSECUTIVE_DAYS and (tail["close"] < threshold).all():
-        snap.stop_loss_triggered = True
-        alerts.append({
-            "code": code, "name": name,
-            "alert_type": "stop_loss", "severity": "critical",
-            "message": (
-                f"停損觸發：連續 {config.STOP_LOSS_CONSECUTIVE_DAYS} 日收盤 "
-                f"{snap.latest_price:,.0f} 低於 {threshold:,.0f}"
-                f"（錨點：{anchor_desc}）"
-            ),
-            "details": {"threshold": threshold, "latest": snap.latest_price,
-                        "anchor": anchor_desc},
-        })
+    # === 以下為「持倉專屬」訊號：需進場價/主力成本錨點，全市場掃描（holdings_context=False）跳過 ===
+    if holdings_context:
+        # --- 三階段移動停損（Chandelier Exit）---
+        _check_trailing_stop(snap, price_df, alerts)
 
-    # --- 最後一階失守（第七篇）---
-    if snap.last_step_price is not None:
-        last_step_threshold = snap.last_step_price * (1 - config.LAST_STEP_BREAK_PCT)
-        ls_tail = price_df.tail(config.STOP_LOSS_CONSECUTIVE_DAYS)
-        if len(ls_tail) >= config.STOP_LOSS_CONSECUTIVE_DAYS and (ls_tail["close"] < last_step_threshold).all():
-            snap.last_step_break = True
+        # --- 價格停損（v2：錨點優先用主力成本/使用者停損價）---
+        threshold, anchor_desc = _stop_loss_anchor(snap)
+        tail = price_df.tail(config.STOP_LOSS_CONSECUTIVE_DAYS)
+        if len(tail) >= config.STOP_LOSS_CONSECUTIVE_DAYS and (tail["close"] < threshold).all():
+            snap.stop_loss_triggered = True
             alerts.append({
                 "code": code, "name": name,
-                "alert_type": "last_step_break", "severity": "warn",
+                "alert_type": "stop_loss", "severity": "critical",
                 "message": (
-                    f"最後一階失守：跌破 {snap.last_step_price:,.0f} ×"
-                    f"(1-{config.LAST_STEP_BREAK_PCT*100:.0f}%)={last_step_threshold:,.0f}"
-                    f" 連 {config.STOP_LOSS_CONSECUTIVE_DAYS} 日"
+                    f"停損觸發：連續 {config.STOP_LOSS_CONSECUTIVE_DAYS} 日收盤 "
+                    f"{snap.latest_price:,.0f} 低於 {threshold:,.0f}"
+                    f"（錨點：{anchor_desc}）"
                 ),
-                "details": {"last_step": snap.last_step_price,
-                            "threshold": last_step_threshold},
+                "details": {"threshold": threshold, "latest": snap.latest_price,
+                            "anchor": anchor_desc},
             })
 
-    # --- 時間停損（第九篇）---
-    # 加入觀察 ≥ TIME_STOP_DAYS 個交易日，且最新價在成本帶 ±TIME_STOP_RANGE_PCT 內
-    if snap.added_date and snap.master_cost:
-        try:
-            added = datetime.strptime(snap.added_date, "%Y-%m-%d")
-            held_days = (datetime.now() - added).days
-        except ValueError:
-            held_days = 0
-        if held_days >= config.TIME_STOP_DAYS:
-            within_range = abs(_pct(snap.latest_price, snap.master_cost)) <= config.TIME_STOP_RANGE_PCT
-            if within_range:
-                snap.time_stop_warned = True
+        # --- 最後一階失守（第七篇）---
+        if snap.last_step_price is not None:
+            last_step_threshold = snap.last_step_price * (1 - config.LAST_STEP_BREAK_PCT)
+            ls_tail = price_df.tail(config.STOP_LOSS_CONSECUTIVE_DAYS)
+            if len(ls_tail) >= config.STOP_LOSS_CONSECUTIVE_DAYS and (ls_tail["close"] < last_step_threshold).all():
+                snap.last_step_break = True
                 alerts.append({
                     "code": code, "name": name,
-                    "alert_type": "time_stop", "severity": "warn",
+                    "alert_type": "last_step_break", "severity": "warn",
                     "message": (
-                        f"時間停損警告：進場 {held_days} 日，股價仍在主力成本 "
-                        f"{snap.master_cost:,.0f} ±{config.TIME_STOP_RANGE_PCT*100:.0f}% 內盤整 "
-                        f"→ 考慮減碼一半"
+                        f"最後一階失守：跌破 {snap.last_step_price:,.0f} ×"
+                        f"(1-{config.LAST_STEP_BREAK_PCT*100:.0f}%)={last_step_threshold:,.0f}"
+                        f" 連 {config.STOP_LOSS_CONSECUTIVE_DAYS} 日"
                     ),
-                    "details": {"held_days": held_days,
-                                "master_cost": snap.master_cost},
+                    "details": {"last_step": snap.last_step_price,
+                                "threshold": last_step_threshold},
                 })
+
+        # --- 時間停損（第九篇）---
+        # 加入觀察 ≥ TIME_STOP_DAYS 個交易日，且最新價在成本帶 ±TIME_STOP_RANGE_PCT 內
+        if snap.added_date and snap.master_cost:
+            try:
+                added = datetime.strptime(snap.added_date, "%Y-%m-%d")
+                held_days = (datetime.now() - added).days
+            except ValueError:
+                held_days = 0
+            if held_days >= config.TIME_STOP_DAYS:
+                within_range = abs(_pct(snap.latest_price, snap.master_cost)) <= config.TIME_STOP_RANGE_PCT
+                if within_range:
+                    snap.time_stop_warned = True
+                    alerts.append({
+                        "code": code, "name": name,
+                        "alert_type": "time_stop", "severity": "warn",
+                        "message": (
+                            f"時間停損警告：進場 {held_days} 日，股價仍在主力成本 "
+                            f"{snap.master_cost:,.0f} ±{config.TIME_STOP_RANGE_PCT*100:.0f}% 內盤整 "
+                            f"→ 考慮減碼一半"
+                        ),
+                        "details": {"held_days": held_days,
+                                    "master_cost": snap.master_cost},
+                    })
 
     # --- 量能停損（第九篇：爆量不漲）---
     if "volume" in price_df.columns and len(price_df) >= 6:

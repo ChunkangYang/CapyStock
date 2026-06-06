@@ -91,7 +91,7 @@ def _handler_scan_signals():
     universe = scan_service.load_universe("data/universe.csv")
     rows, errors = scan_service.run_signals_scan(universe)
     today_str = datetime.now().strftime("%Y-%m-%d")
-    scan_service.write_snapshot("signals", rows, today_str)
+    scan_service.write_snapshot("signals", rows, today_str, guard=True)
     if errors:
         scan_service.write_errors("signals", errors, today_str)
     return {"rows": len(rows), "errors": len(errors)}
@@ -151,7 +151,7 @@ def _handler_weekly_universe_scan():
         rows, errors = scan_service.run_signals_scan(universe)
         today_str = datetime.now().strftime("%Y-%m-%d")
 
-        scan_service.write_snapshot("signals", rows, today_str)
+        scan_service.write_snapshot("signals", rows, today_str, guard=True)
         if errors:
             scan_service.write_errors("signals", errors, today_str)
 

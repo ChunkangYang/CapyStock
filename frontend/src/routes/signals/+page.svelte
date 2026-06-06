@@ -389,6 +389,7 @@
       onRefreshRow={refreshRow}
       {refreshingCodes}
       pageSize={activeTab === 'market' ? LIMIT : null}
+      showStopLoss={activeTab !== 'market'}
       {currentPage}
       on:filteredTotal={(e) => (filteredTotal = e.detail)}
       on:pageReset={() => { currentPage = 1; }}

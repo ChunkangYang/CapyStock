@@ -194,7 +194,7 @@ def _background_scan(job_id: str, req: ScanRunRequest):
                 progress_callback=lambda curr: _update_progress(job_id, curr),
                 snapshot_callback=lambda r, e: scan_service.write_snapshot("signals", r, today_str)
             )
-            scan_service.write_snapshot("signals", rows, today_str)
+            scan_service.write_snapshot("signals", rows, today_str, guard=True)
             if errors:
                 scan_service.write_errors("signals", errors, today_str)
         elif req.kind == "dividend":
@@ -258,7 +258,7 @@ def run_scan(req: ScanRunRequest, async_mode: bool = Query(True)) -> JobStatus:
             if req.kind == "signals":
                 include_technical = req.include_technical if hasattr(req, "include_technical") else True
                 rows, errors = scan_service.run_signals_scan(universe, include_technical=include_technical)
-                scan_service.write_snapshot("signals", rows, today_str)
+                scan_service.write_snapshot("signals", rows, today_str, guard=True)
                 if errors:
                     scan_service.write_errors("signals", errors, today_str)
             elif req.kind == "dividend":

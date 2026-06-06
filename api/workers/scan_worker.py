@@ -26,8 +26,10 @@ def main():
         else:  # dividend
             rows, errors = scan_service.run_dividend_scan(universe)
 
-        # 寫快照
-        snapshot_path = scan_service.write_snapshot(args.kind, rows, today_str)
+        # 寫快照（signals 開 degraded 防呆）
+        snapshot_path = scan_service.write_snapshot(
+            args.kind, rows, today_str, guard=(args.kind == "signals")
+        )
         print(f"✓ 寫入快照：{snapshot_path}（{len(rows)} 筆）")
 
         # 寫失敗紀錄

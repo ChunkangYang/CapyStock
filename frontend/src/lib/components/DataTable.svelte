@@ -12,6 +12,9 @@
   // Client-side pagination (null = render all rows)
   export let pageSize: number | null = null;
   export let currentPage: number = 1;
+  // 停損是「持倉專屬」訊號（需進場價/主力成本錨點），全市場視角沒有錨點、恆不觸發。
+  // 全市場應傳 showStopLoss=false 隱藏此欄；持倉/追蹤/最愛視角才顯示。
+  export let showStopLoss: boolean = true;
 
   const dispatch = createEventDispatcher<{ filteredTotal: number; pageReset: void }>();
 
@@ -125,7 +128,9 @@
     <div class="legend-grid">
       <div><span class="dot blue">🔵</span><b>吃貨</b> — 外資或法人連續買超（≥2 期），同期融資餘額下降</div>
       <div><span class="dot orange">🟠</span><b>出場</b> — 符合三選二中至少 2 項（法人連賣 3 日累計 ≥ 前 10 日買超 20% ／ 融資 3 週增加且本週幅度 ≥ 8 週均 2 倍 ／ 股價離近 30 日低點 +30%）</div>
-      <div><span class="dot red">🔴</span><b>停損</b> — 連續 2 日收盤低於停損錨點（主力成本或起始價 ×95%）</div>
+      {#if showStopLoss}
+        <div><span class="dot red">🔴</span><b>停損</b> — 連續 2 日收盤低於停損錨點（主力成本或起始價 ×95%）</div>
+      {/if}
     </div>
   </details>
 
@@ -138,10 +143,12 @@
       <input type="checkbox" bind:checked={filterExit} />
       只看出場
     </label>
-    <label>
-      <input type="checkbox" bind:checked={filterStopLoss} />
-      只看停損
-    </label>
+    {#if showStopLoss}
+      <label>
+        <input type="checkbox" bind:checked={filterStopLoss} />
+        只看停損
+      </label>
+    {/if}
     <label>
       最低 score:
       <input type="number" bind:value={minScore} placeholder="不限" />
@@ -181,11 +188,13 @@
             出場ⓘ{#if sortKey === 'c2'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
-        <th title="連續 2 日收盤低於停損錨點（主力成本或起始價 ×95%）">
-          <button class="sort-btn" class:active={sortKey === 'c3'} on:click={() => toggleSort('c3')}>
-            停損ⓘ{#if sortKey === 'c3'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
-          </button>
-        </th>
+        {#if showStopLoss}
+          <th title="連續 2 日收盤低於停損錨點（主力成本或起始價 ×95%）">
+            <button class="sort-btn" class:active={sortKey === 'c3'} on:click={() => toggleSort('c3')}>
+              停損ⓘ{#if sortKey === 'c3'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
+            </button>
+          </th>
+        {/if}
         <th>訊號</th>
         <th>
           <button class="sort-btn" class:active={sortKey === 'edinet_recent_count'} on:click={() => toggleSort('edinet_recent_count')}>
@@ -225,19 +234,21 @@
               ? '⚠ 觸發出場警告：符合三選二中至少 2 項條件'
               : '✓ 未觸發出場警告（三選二條件未滿足）'}
           >🟠</td>
-          <td
-            class="indicator"
-            class:active={row.has_stop_loss}
-            title={row.has_stop_loss
-              ? '🛑 停損已觸發：連續 2 日收盤低於停損錨點'
-              : '✓ 未觸發停損'}
-          >🔴</td>
+          {#if showStopLoss}
+            <td
+              class="indicator"
+              class:active={row.has_stop_loss}
+              title={row.has_stop_loss
+                ? '🛑 停損已觸發：連續 2 日收盤低於停損錨點'
+                : '✓ 未觸發停損'}
+            >🔴</td>
+          {/if}
           <td>
             {#if row.has_accumulation}
               💹
             {:else if row.has_exit}
               🔔
-            {:else if row.has_stop_loss}
+            {:else if showStopLoss && row.has_stop_loss}
               🛑
             {/if}
           </td>

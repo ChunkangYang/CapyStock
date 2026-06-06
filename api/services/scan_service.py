@@ -1,5 +1,6 @@
 import csv
 import json
+import logging
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime
@@ -13,8 +14,18 @@ from api.schemas.scan import DividendScanRow, SignalScanRow
 from api.services.dividend_service import get_fundamental_report
 from api.services.signal_service import analyze_one, get_edinet_events
 
+logger = logging.getLogger(__name__)
+
 SCAN_SNAPSHOTS_DIR = DATA_DIR / "scan_snapshots"
 CACHE_DIR = DATA_DIR / "cache"
+
+# 全市場掃描序列化 — 防止兩個掃描（cloud-sync 重算 / 排程 / 手動 /scan/run）同時
+# 對同一份每日 parquet 交錯寫入，產生半套結果。跨程序（cloud_fetch.py）不在此鎖範圍，
+# 由 write_snapshot 的 degraded 防呆補上。
+_scan_lock = threading.Lock()
+
+# write_snapshot degraded 防呆門檻：rows >= 此值才視為「完整全市場掃描」。
+GUARD_MIN_ROWS = 1000
 
 
 def snapshot_path(kind: str, date_str: str) -> Path:
@@ -142,28 +153,30 @@ def run_signals_scan(
 
     to_scan = universe
 
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(_process_one, entry): entry for entry in to_scan}
-        for future in as_completed(futures):
-            row, err = future.result()
-            with _lock:
-                if row:
-                    rows.append(row)
-                if err:
-                    errors.append(err)
-                completed += 1
-                curr = completed
+    # 序列化：同一程序內不允許兩個全市場掃描交錯寫同一份每日 parquet
+    with _scan_lock:
+        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+            futures = {executor.submit(_process_one, entry): entry for entry in to_scan}
+            for future in as_completed(futures):
+                row, err = future.result()
+                with _lock:
+                    if row:
+                        rows.append(row)
+                    if err:
+                        errors.append(err)
+                    completed += 1
+                    curr = completed
 
-            if progress_callback:
-                progress_callback(curr)
+                if progress_callback:
+                    progress_callback(curr)
 
-            # 每完成 50 支更新一次快照
-            if curr % 50 == 0 and snapshot_callback:
-                with _snapshot_lock:
-                    with _lock:
-                        snap_rows = list(rows)
-                        snap_errs = list(errors)
-                    snapshot_callback(snap_rows, snap_errs)
+                # 每完成 50 支更新一次快照
+                if curr % 50 == 0 and snapshot_callback:
+                    with _snapshot_lock:
+                        with _lock:
+                            snap_rows = list(rows)
+                            snap_errs = list(errors)
+                        snapshot_callback(snap_rows, snap_errs)
 
     # 最終進度
     if progress_callback:
@@ -266,15 +279,47 @@ def run_dividend_scan(universe: list[dict], clock: Optional[date] = None, progre
     return rows, errors
 
 
-def write_snapshot(kind: str, rows: list[SignalScanRow | DividendScanRow], date_str: str) -> Path:
-    """寫 parquet 快照（存在則覆寫）"""
+def _signal_exit_total(df: Optional[pd.DataFrame]) -> int:
+    if df is None or "has_exit" not in df.columns or df.empty:
+        return 0
+    return int(df["has_exit"].fillna(False).astype(bool).sum())
+
+
+def write_snapshot(
+    kind: str,
+    rows: list[SignalScanRow | DividendScanRow],
+    date_str: str,
+    guard: bool = False,
+) -> Path:
+    """寫 parquet 快照（存在則覆寫）。
+
+    guard=True（給「最終」全市場 signals 寫入用）：degraded 防呆——
+    若這次是完整全市場掃描（rows >= GUARD_MIN_ROWS）但 has_exit 全 0，
+    且既有最新快照原本有出貨訊號（>0），判定為壞掉的掃描結果：
+    **不覆寫好快照**，改寫 `_rejected_{kind}_{date}.parquet` 留證並記 warning。
+    回傳「實際保留的快照路徑」（既有好快照），讓上游不會把壞資料當成功。
+
+    partial / streaming 寫入（snapshot_callback）請用 guard=False，避免進度中途被擋。
+    """
     SCAN_SNAPSHOTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    # 轉換為 DataFrame
-    df_dict = [r.model_dump() for r in rows]
-    df = pd.DataFrame(df_dict)
-
+    df = pd.DataFrame([r.model_dump() for r in rows])
     path = snapshot_path(kind, date_str)
+
+    if guard and kind == "signals" and len(df) >= GUARD_MIN_ROWS and _signal_exit_total(df) == 0:
+        prev = load_latest_snapshot("signals")
+        prev_exit = _signal_exit_total(prev)
+        if prev_exit > 0:
+            rejected = SCAN_SNAPSHOTS_DIR / f"_rejected_{kind}_{date_str}.parquet"
+            df.to_parquet(rejected, index=False)
+            logger.warning(
+                "write_snapshot degraded：完整掃描 %d 檔但 has_exit 全 0（既有快照有 %d 檔出貨），"
+                "拒絕覆寫，壞結果存 %s",
+                len(df), prev_exit, rejected.name,
+            )
+            # 保留既有好快照，不覆寫
+            return load_latest_snapshot_path("signals") or path
+
     df.to_parquet(path, index=False)
     return path
 
@@ -293,15 +338,20 @@ def write_errors(kind: str, errors: list[dict], date_str: str) -> None:
         writer.writerows(errors)
 
 
+def load_latest_snapshot_path(kind: str) -> Optional[Path]:
+    """回傳最新一份（依檔名日期排序）快照的路徑，無則 None。
+    `_rejected_` / `_errors_` 等底線前綴檔不會被 `{kind}_*` 命中。"""
+    SCAN_SNAPSHOTS_DIR.mkdir(parents=True, exist_ok=True)
+    parquets = sorted(SCAN_SNAPSHOTS_DIR.glob(f"{kind}_*.parquet"), reverse=True)
+    return parquets[0] if parquets else None
+
+
 def load_latest_snapshot(kind: str, date_str: Optional[str] = None) -> Optional[pd.DataFrame]:
     """讀取最新（或指定日期）快照"""
     if date_str is None:
-        # 找最新的快照
-        SCAN_SNAPSHOTS_DIR.mkdir(parents=True, exist_ok=True)
-        parquets = sorted(SCAN_SNAPSHOTS_DIR.glob(f"{kind}_*.parquet"), reverse=True)
-        if not parquets:
+        path = load_latest_snapshot_path(kind)
+        if path is None:
             return None
-        path = parquets[0]
     else:
         path = snapshot_path(kind, date_str)
 

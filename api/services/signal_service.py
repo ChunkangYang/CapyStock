@@ -128,6 +128,9 @@ def analyze_one(
             price_df = None
         margin_df = scraper.fetch_margin(code)
 
+    # 有傳入真實 start_price → 持倉/追蹤視角（停損等持倉專屬訊號適用）；
+    # 沒傳入（全市場掃描）→ 用最新價當佔位，holdings_context=False 跳過持倉專屬訊號。
+    holdings_context = start_price is not None
     if start_price is None:
         if price_df is not None and len(price_df) > 0:
             start_price = float(price_df.iloc[-1]["close"])
@@ -136,6 +139,7 @@ def analyze_one(
 
     snap, alerts = analyzer.analyze(
         code, name, start_price, price_df, margin_df,
+        holdings_context=holdings_context,
     )
 
     conditions = SignalConditions(

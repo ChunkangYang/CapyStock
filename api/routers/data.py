@@ -333,7 +333,7 @@ async def cloud_sync(req: CloudSyncRequest):
             rows, errors = _scan_service.run_signals_scan(universe)
             now = datetime.now()
             today_str = now.strftime("%Y-%m-%d")
-            _scan_service.write_snapshot("signals", rows, today_str)
+            _scan_service.write_snapshot("signals", rows, today_str, guard=True)
             if errors:
                 _scan_service.write_errors("signals", errors, today_str)
             # 把結果塞進 in-mem cache：下次 /scan/signals 即時回，不再花 60 秒重算
