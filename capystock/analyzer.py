@@ -49,6 +49,9 @@ class Snapshot:
     time_stop_warned: bool = False
     volume_stop_warned: bool = False
     target_reached: bool = False
+    # 吃貨（籌碼沉澱）— 用真實個股資料（信用残+股價+量能）重定義
+    accumulation_signal: bool = False
+    accumulation_note: str = ""
 
     # 三階段移動停損（Chandelier Exit）
     trailing_stop_stage: Optional[int] = None  # 1/2/3
@@ -67,6 +70,63 @@ def _pct(a: float, b: float) -> float:
     if b == 0:
         return 0.0
     return (a - b) / b
+
+
+def _check_accumulation(
+    snap: Snapshot,
+    margin_df: Optional[pd.DataFrame],
+    price_df: Optional[pd.DataFrame],
+    alerts: list[dict],
+) -> None:
+    """吃貨訊號（籌碼沉澱）— 全用真實個股資料，市場通用（不需進場價）。
+
+    三要素同時成立才算：
+      1) 信用残：margin_long 連續 ACCUM_MARGIN_DECLINE_WEEKS 週下降（浮額釋出/沉澱）
+      2) 股價：最新收盤相對 ACCUM_PRICE_HOLD_LOOKBACK_DAYS 日前 >= ACCUM_PRICE_HOLD_MIN_PCT（撐住/上漲）
+      3) 量能：近 5 日均量 >= 過去 20 日均量 × ACCUM_VOLUME_RATIO（承接量未崩）
+    任一資料不足則不成立（保守，不誤報）。
+    """
+    weeks = config.ACCUM_MARGIN_DECLINE_WEEKS
+    if margin_df is None or len(margin_df) < weeks + 1:
+        return
+    m = margin_df.sort_values("week").reset_index(drop=True)
+    diffs = m["margin_long"].diff().tail(weeks)
+    if not (diffs < 0).all():
+        return
+
+    lookback = config.ACCUM_PRICE_HOLD_LOOKBACK_DAYS
+    if price_df is None or len(price_df) < lookback + 1 or "close" not in price_df.columns:
+        return
+    closes = price_df.sort_values("date")["close"].reset_index(drop=True)
+    latest_close = float(closes.iloc[-1])
+    past_close = float(closes.iloc[-(lookback + 1)])
+    if past_close <= 0:
+        return
+    price_change = (latest_close - past_close) / past_close
+    if price_change < config.ACCUM_PRICE_HOLD_MIN_PCT:
+        return
+
+    if "volume" in price_df.columns and len(price_df) >= 20:
+        vols = price_df.sort_values("date")["volume"]
+        v5 = float(vols.tail(5).mean())
+        v20 = float(vols.tail(20).mean())
+        if v20 > 0 and v5 < v20 * config.ACCUM_VOLUME_RATIO:
+            return
+
+    margin_now = float(m["margin_long"].iloc[-1])
+    margin_prev = float(m["margin_long"].iloc[-(weeks + 1)])
+    drop_pct = (margin_prev - margin_now) / margin_prev if margin_prev else 0.0
+    snap.accumulation_signal = True
+    snap.accumulation_note = (
+        f"融資餘額連 {weeks} 週下降（-{drop_pct*100:.1f}%）+ 股價同期 {price_change*100:+.1f}%（撐住）+ 量能維持"
+    )
+    alerts.append({
+        "code": snap.code, "name": snap.name,
+        "alert_type": "accumulation", "severity": "info",
+        "message": f"主力疑似吃貨：{snap.accumulation_note}",
+        "details": {"margin_drop_pct": drop_pct, "price_change_pct": price_change,
+                    "lookback_days": lookback},
+    })
 
 
 def _compute_atr(price_df: pd.DataFrame, period: int) -> Optional[float]:
@@ -303,6 +363,9 @@ def analyze(
                 )
     else:
         snap.notes.append("缺信用残資料，跳過條件 2")
+
+    # --- 吃貨訊號（籌碼沉澱，市場通用，不需進場價）---
+    _check_accumulation(snap, margin_df, price_df, alerts)
 
     # --- 技術破位減碼警示（市場通用，不需進場價）---
     _check_exit_warnings(snap, price_df, indicator_signals=None)

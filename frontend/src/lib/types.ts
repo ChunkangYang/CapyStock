@@ -44,6 +44,8 @@ export interface SignalResult {
   price_vs_recent_low_pct: number | null;
   conditions: SignalConditions;
   stop_loss_triggered: boolean;
+  accumulation_signal: boolean;
+  accumulation_note: string;
   trailing_stop_stage: number | null;
   trailing_stop_price: number | null;
   trailing_stop_triggered: boolean;

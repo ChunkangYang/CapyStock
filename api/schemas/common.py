@@ -51,7 +51,10 @@ class SignalConditions(BaseModel):
 
 class Alert(BaseModel):
     """警示訊息。"""
-    alert_type: Literal["exit", "stop_loss", "info", "volume_stop"]
+    alert_type: Literal[
+        "exit", "stop_loss", "info", "volume_stop",
+        "accumulation", "time_stop", "last_step_break",
+    ]
     severity: Literal["info", "warn", "critical"]
     message: str
     details: dict = Field(default_factory=dict)
@@ -68,6 +71,9 @@ class SignalResult(BaseModel):
     price_vs_recent_low_pct: Optional[float] = None
     conditions: SignalConditions
     stop_loss_triggered: bool
+    # 吃貨（籌碼沉澱）：信用残下降 + 股價撐住 + 量能維持
+    accumulation_signal: bool = False
+    accumulation_note: str = ""
     # 三階段移動停損
     trailing_stop_stage: Optional[int] = None  # 1/2/3
     trailing_stop_price: Optional[float] = None

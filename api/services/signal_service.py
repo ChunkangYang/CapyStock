@@ -194,6 +194,8 @@ def analyze_one(
         price_vs_recent_low_pct=snap.price_vs_recent_low_pct,
         conditions=conditions,
         stop_loss_triggered=snap.stop_loss_triggered,
+        accumulation_signal=snap.accumulation_signal,
+        accumulation_note=snap.accumulation_note,
         trailing_stop_stage=snap.trailing_stop_stage,
         trailing_stop_price=snap.trailing_stop_price,
         trailing_stop_triggered=snap.trailing_stop_triggered,

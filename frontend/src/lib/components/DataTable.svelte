@@ -126,8 +126,8 @@
   <details class="signal-legend">
     <summary>訊號判斷條件說明</summary>
     <div class="legend-grid">
-      <div><span class="dot blue">🔵</span><b>吃貨</b> — 外資或法人連續買超（≥2 期），同期融資餘額下降</div>
-      <div><span class="dot orange">🟠</span><b>出場</b> — 符合三選二中至少 2 項（法人連賣 3 日累計 ≥ 前 10 日買超 20% ／ 融資 3 週增加且本週幅度 ≥ 8 週均 2 倍 ／ 股價離近 30 日低點 +30%）</div>
+      <div><span class="dot blue">🔵</span><b>吃貨</b> — 籌碼沉澱：融資餘額連 3 週下降 + 股價同期撐住/上漲 + 量能維持（全用真實個股資料）</div>
+      <div><span class="dot orange">🟠</span><b>出場</b> — 二選一：融資 3 週增加且本週幅度 ≥ 8 週均 2 倍 ／ 股價離近 30 日低點 +30%</div>
       {#if showStopLoss}
         <div><span class="dot red">🔴</span><b>停損</b> — 連續 2 日收盤低於停損錨點（主力成本或起始價 ×95%）</div>
       {/if}
@@ -178,12 +178,12 @@
             價格{#if sortKey === 'latest_price'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
-        <th title="外資或法人連續買超（≥2 期），同期融資餘額下降">
+        <th title="籌碼沉澱：融資餘額連 3 週下降 + 股價同期撐住/上漲 + 量能維持">
           <button class="sort-btn" class:active={sortKey === 'c1'} on:click={() => toggleSort('c1')}>
             吃貨ⓘ{#if sortKey === 'c1'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </th>
-        <th title="符合三選二出場條件中至少 2 項（法人連賣 / 融資暴增 / 股價飆升）">
+        <th title="二選一：融資 3 週暴增 ／ 股價離近 30 日低點 +30%">
           <button class="sort-btn" class:active={sortKey === 'c2'} on:click={() => toggleSort('c2')}>
             出場ⓘ{#if sortKey === 'c2'}&nbsp;{sortOrder === 'asc' ? '▲' : '▼'}{/if}
           </button>
@@ -224,8 +224,8 @@
             class="indicator"
             class:active={row.has_accumulation}
             title={row.has_accumulation
-              ? '✓ 觸發吃貨訊號：外資或法人連續買超（≥2 期），同期融資餘額下降'
-              : '✗ 未觸發吃貨訊號（判斷條件：外資/法人連續買超且融資餘額下降）'}
+              ? '✓ 觸發吃貨訊號（籌碼沉澱）：融資餘額連 3 週下降 + 股價同期撐住/上漲 + 量能維持'
+              : '✗ 未觸發吃貨訊號（融資下降 + 股價撐住 + 量能維持 三者須同時成立）'}
           >🔵</td>
           <td
             class="indicator"

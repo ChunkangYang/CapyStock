@@ -61,6 +61,15 @@ TIME_STOP_RANGE_PCT = 0.03  # 相對成本帶 ±3% 內視為盤整
 VOLUME_SPIKE_MULTIPLE = 3.0  # vs 近 5 日均量
 VOLUME_SPIKE_PRICE_FLAT_PCT = 0.01  # 漲幅 < +1% 視為不漲
 
+# --- 吃貨訊號（籌碼沉澱）---
+# 原定義依賴「外資/法人連買」flow 資料，但該資料源是全市場數字蓋到每檔（非個股），
+# 已棄用。改用「真實個股」三要素近似主力吸籌：信用残(融資餘額)下降 + 股價撐住 + 量能維持。
+# 邏輯：融資餘額連續下降代表散戶浮額釋出/沉澱，同期股價不跌且量能未崩 → 籌碼被強手承接。
+ACCUM_MARGIN_DECLINE_WEEKS = 3        # 融資餘額(margin_long)連續下降週數
+ACCUM_PRICE_HOLD_LOOKBACK_DAYS = 15   # 股價撐住的回看交易日（約 3 週）
+ACCUM_PRICE_HOLD_MIN_PCT = 0.0        # 最新價相對 lookback 前須 >= 此漲幅（0 = 未跌即可）
+ACCUM_VOLUME_RATIO = 0.8             # 近 5 日均量 >= 過去 20 日均量 × 此比率（量能未崩）
+
 # --- 風報比（第十一篇）---
 RISK_REWARD_MIN_RATIO = 3.0  # < 1:3 進場前提示
 
