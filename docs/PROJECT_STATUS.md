@@ -56,8 +56,14 @@
   - ✅ 投機訊號頁四個群組（2026-05-11）
   - ✅ 投機訊號頁 bug 修復（2026-05-11）
   - ✅ 投機訊號頁分頁實作（2026-05-11）
+  - ✅ 全市場三訊號修復 #1/#2/#3（2026-06-06）
+  - **🔜 明天繼續：P0 每日不變式健康檢查**（見 [DEV_PROCESS_IMPROVEMENTS.md](DEV_PROCESS_IMPROVEMENTS.md) 第三節）
+    - 斷言：完整全市場掃描 `rows>=3000` 時 `has_exit` 不可為 0；訊號旗標不可全市場同值；latest_price 覆蓋率 >95%；cache 最新交易日距今 < N 營業日
+    - 違反就用既有通知通道告警（Email/LINE）→ 終結「壞掉沒人發現」
+    - 之後接 P1：資料新鮮度可見化 + 單一原子同步鏈
   - 修復 BUG-001（toast 動畫 + channel dot 更新）
-  - 評估是否規劃後續功能
+  - 既有紅測試另案：backtest 日期 off-by-one ×3 / favorites tags / indicator mock spec
+  - 清理：`DELETE_baseline_check/`（對照用 worktree leftover，可手動刪）
 
 ## 已完成 Sprint（詳細實作紀錄請見對應 detail design）
 
