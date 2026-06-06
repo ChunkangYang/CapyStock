@@ -1,7 +1,17 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-05-11（投機訊號頁分頁實作完成：50 筆/頁 + localStorage 快取 + totalCount 持久化）
+2026-06-06（全市場三訊號修復：快照硬化 #3 + 停損分層 #2 + 吃貨用真實個股資料重定義 #1）
+
+## 2026-06-06 全市場訊號修復（三件）
+- 背景：抓最新資料後全市場看不到任何吃貨/出貨/停損訊號。根因見
+  [SIGNAL_NO_HIT_AUDIT.md](SIGNAL_NO_HIT_AUDIT.md) / [SIGNAL_NO_HIT_RETRO.md](SIGNAL_NO_HIT_RETRO.md)
+- ✅ **#3 快照硬化**：`write_snapshot(guard=True)` degraded 防呆（完整掃描但 has_exit 全 0 且既有快照有訊號 → 拒絕覆寫、存 `_rejected_`）+ `_scan_lock` 掃描序列化。所有最終 signals 寫入點都開 guard。
+- ✅ **#2 停損分層**：`analyzer.analyze(holdings_context=)`，全市場掃描跳過持倉專屬訊號（移動/價格/最後一階/時間停損）；前端 `DataTable showStopLoss` 全市場隱藏停損欄。
+- ✅ **#1 吃貨重定義**：原依賴的 flow 資料是「全市場數字蓋到每檔」（estimated=True、各檔相同）→ 改用真實個股資料：信用残(融資)連 3 週下降 + 股價撐住 + 量能維持。`_check_accumulation`。
+- 結果：2026-06-06 快照 exit=291 / 吃貨=116 / 停損=0（各檔吃貨不同，真實個股訊號）。
+- 流程改善建議見 [DEV_PROCESS_IMPROVEMENTS.md](DEV_PROCESS_IMPROVEMENTS.md)（P0 每日不變式健康檢查待做）。
+- 既有紅測試（與本次無關，baseline 0096dfe5 即紅）：backtest 日期 off-by-one ×3、favorites tags、indicator mock spec — 待另案處理。
 
 ## 目前待做（下一步）
 - ✅ **Milestone 3：Web UI（FastAPI + SvelteKit）** — 全部完成（S1–S8）— 詳見 [MILESTONE_03.md](MILESTONE_03.md)
