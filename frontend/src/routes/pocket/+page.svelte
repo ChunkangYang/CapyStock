@@ -2,6 +2,8 @@
   import { onMount } from 'svelte';
   import { api } from '$lib/api';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
+  import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
+  import { loadFavorites } from '$lib/stores/favorites';
 
   interface Gate1 { passed: boolean; lead_filer: string | null; filing_count: number; dates: string[]; doc_types: string[]; }
   interface Gate2 { passed: boolean; master_cost: number | null; latest_price: number | null; premium_pct: number | null; }
@@ -30,7 +32,10 @@
     }
   }
 
-  onMount(() => load());
+  onMount(() => {
+    loadFavorites();
+    load();
+  });
 
   const pct = (v: number | null | undefined) => (v == null ? '—' : `${(v * 100).toFixed(1)}%`);
   const num = (v: number | null | undefined) => (v == null ? '—' : v.toLocaleString());
@@ -126,7 +131,7 @@
           <tbody>
             {#each data.pocket as r}
               <tr>
-                <td class="code">{r.code}</td>
+                <td class="code"><FavoriteToggle code={r.code} name={r.name} />{r.code}</td>
                 <td>{r.name}</td>
                 <td class="filer">{r.gate1.lead_filer ?? '—'}<span class="cnt">×{r.gate1.filing_count}</span></td>
                 <td>{num(r.gate2.master_cost)}</td>
@@ -164,7 +169,7 @@
           <tbody>
             {#each data.near_miss.slice(0, 20) as r}
               <tr>
-                <td class="code">{r.code}</td><td>{r.name}</td>
+                <td class="code"><FavoriteToggle code={r.code} name={r.name} />{r.code}</td><td>{r.name}</td>
                 <td>{r.gate1.passed ? '✓' : '✗'}</td>
                 <td>{r.gate2.passed ? '✓' : '✗'}</td>
                 <td>{r.gate3.passed ? '✓' : '✗'}</td>
@@ -200,7 +205,8 @@
   table { width: 100%; border-collapse: collapse; font-size: .85rem; }
   th, td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid #334155; }
   th { color: #94a3b8; font-weight: 600; }
-  .code { font-family: monospace; font-weight: 600; }
+  .code { font-family: monospace; font-weight: 600; white-space: nowrap; }
+  .code :global(.favorite-btn) { font-size: 16px; padding: 0 .35rem 0 0; vertical-align: middle; }
   .filer { max-width: 220px; }
   .cnt { color: #fbbf24; margin-left: .4rem; font-weight: 600; }
   /* 溢價配色：負＝便宜(綠)、零＝持平(灰)、正＝偏貴(橙)、無資料(暗灰) */
