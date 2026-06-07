@@ -27,6 +27,13 @@
 - 流程改善建議見 [DEV_PROCESS_IMPROVEMENTS.md](DEV_PROCESS_IMPROVEMENTS.md)（P0 每日不變式健康檢查待做）。
 - 既有紅測試（與本次無關，baseline 0096dfe5 即紅）：backtest 日期 off-by-one ×3、favorites tags、indicator mock spec — 待另案處理。
 
+## 2026-06-07 模擬交易大改（IMP-002，已完成）
+- 移除回測：`backtest_engine` / `simulation_service` / `strategy_sweep_service` / `routers.simulation` / `routers.sweep` / `schemas.simulation` / `schemas.sweep` / `workers.paper_worker` / 前端 `routes/simulation` 全部以 `DELETE_` prefix 移除。
+- 新跟單帳本：`api/services/ledger_service.py`（帳本=資料夾、交易為主體）+ `routers/ledger.py`（`/ledgers` CRUD + 加入交易 + 推進）+ 前端 `/ledger`（列表/詳情）。
+- 出場：棘輪式移動停損（只升不降，以進場後最高收盤為錨；當日收盤跌破停損線出場）。`advance_trade` 7 tests passed。
+- 加入交易：`/pocket` 點「模擬交易」→ popup（選/建帳本 + 購入價預設現價可改 + 股數必填 + 移動停損 N%）；`/signals/[code]` 進場也改接帳本。
+- 排程 `paper_advance` → `ledger_advance`（每日 7:00 推進）。詳見 [IMPROVE.md](IMPROVE.md) IMP-002。
+
 ## 目前待做（下一步）
 - ✅ **Milestone 3：Web UI（FastAPI + SvelteKit）** — 全部完成（S1–S8）— 詳見 [MILESTONE_03.md](MILESTONE_03.md)
 - ✅ **Milestone 4：自動化、排程、通知** — 全部完成（S9–S13）— 詳見 [MILESTONE_04.md](MILESTONE_04.md)
