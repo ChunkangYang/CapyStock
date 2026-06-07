@@ -24,6 +24,11 @@
         </a>
       </li>
       <li>
+        <a href="/pocket" class:active={currentPath.startsWith('/pocket')}>
+          三盤口袋名單
+        </a>
+      </li>
+      <li>
         <a href="/compare" class:active={currentPath.startsWith('/compare')}>
           投機對比
         </a>
