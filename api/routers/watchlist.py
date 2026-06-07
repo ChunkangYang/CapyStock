@@ -15,6 +15,8 @@ class WatchlistAddRequest(BaseModel):
     """加入追蹤請求。start_price 若未提供則由後端從 price cache 取最新收盤價，仍無則為 0。"""
     code: str
     start_price: Optional[float] = None
+    name: Optional[str] = None        # 呼叫端已知名稱時帶入，省一次 HTTP 爬名稱
+    master_cost: Optional[float] = None  # 主力成本（三盤口袋名單帶入）→ 停損錨定用
 
 
 @router.get("/watchlist")
@@ -52,8 +54,8 @@ def add_watchlist(req: WatchlistAddRequest) -> WatchlistEntry:
     """加入追蹤股票。start_price 自動解析：provided > cache 最新收盤 > 0。"""
     code = req.code
     start_price = _resolve_start_price(code, req.start_price)
-    name = scraper.fetch_name(code) or ""
-    storage.add_watch(code, start_price, name)
+    name = req.name or scraper.fetch_name(code) or ""
+    storage.add_watch(code, start_price, name, master_cost=req.master_cost)
     return WatchlistEntry(
         code=code,
         name=name,

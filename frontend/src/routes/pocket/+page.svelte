@@ -14,6 +14,8 @@
   let loading = true;
   let refreshing = false;
   let error: string | null = null;
+  // 每檔的「加入追蹤」狀態：'idle' | 'loading' | 'done' | 'error'
+  let watchState: Record<string, string> = {};
 
   async function load(refresh = false) {
     if (refresh) refreshing = true; else loading = true;
@@ -35,6 +37,39 @@
   function barWidth(n: number, total: number): string {
     if (!total) return '0%';
     return `${Math.max(4, Math.round((n / total) * 100))}%`;
+  }
+
+  // 溢價配色：負（現價低於主力成本＝便宜）綠、零（等於成本）灰、正（高於成本＝偏貴/接近追高）橙
+  function premiumClass(v: number | null | undefined): string {
+    if (v == null) return 'prem-na';
+    if (v < 0) return 'prem-neg';
+    if (v > 0) return 'prem-pos';
+    return 'prem-zero';
+  }
+
+  async function addToWatch(r: PocketRow) {
+    watchState[r.code] = 'loading';
+    watchState = { ...watchState };
+    try {
+      await api('/watchlist', {
+        method: 'POST',
+        body: JSON.stringify({
+          code: r.code,
+          name: r.name,
+          start_price: r.gate2.latest_price,
+          master_cost: r.gate2.master_cost,
+        }),
+      });
+      watchState[r.code] = 'done';
+    } catch (e) {
+      watchState[r.code] = 'error';
+    }
+    watchState = { ...watchState };
+  }
+
+  function toSimulation(r: PocketRow) {
+    // 模擬交易頁之後會大改；先帶 code 過去，前向相容 prefill
+    window.location.href = `/simulation/new?code=${encodeURIComponent(r.code)}&name=${encodeURIComponent(r.name)}`;
   }
 </script>
 
@@ -85,6 +120,7 @@
               <th>① 主力申報人 / 次數</th>
               <th>② 主力成本</th><th>現價</th><th>溢價</th>
               <th>③ 融資趨勢（{data.pocket[0].gate3.weeks}週）</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -95,8 +131,24 @@
                 <td class="filer">{r.gate1.lead_filer ?? '—'}<span class="cnt">×{r.gate1.filing_count}</span></td>
                 <td>{num(r.gate2.master_cost)}</td>
                 <td>{num(r.gate2.latest_price)}</td>
-                <td class:good={(r.gate2.premium_pct ?? 1) <= 0.05}>{pct(r.gate2.premium_pct)}</td>
-                <td class="good">↓ {pct(r.gate3.drop_pct)}</td>
+                <td class={premiumClass(r.gate2.premium_pct)}>{pct(r.gate2.premium_pct)}</td>
+                <td class="prem-neg">↓ {pct(r.gate3.drop_pct)}</td>
+                <td class="actions">
+                  <button
+                    class="btn-watch"
+                    title="加入追蹤清單（帶入主力成本）"
+                    disabled={watchState[r.code] === 'loading' || watchState[r.code] === 'done'}
+                    on:click={() => addToWatch(r)}
+                  >
+                    {#if watchState[r.code] === 'done'}✓ 已追蹤
+                    {:else if watchState[r.code] === 'loading'}追蹤中…
+                    {:else if watchState[r.code] === 'error'}✗ 重試
+                    {:else}＋ 追蹤{/if}
+                  </button>
+                  <button class="btn-sim" title="用此檔開新模擬交易" on:click={() => toSimulation(r)}>
+                    模擬交易
+                  </button>
+                </td>
               </tr>
             {/each}
           </tbody>
@@ -151,6 +203,15 @@
   .code { font-family: monospace; font-weight: 600; }
   .filer { max-width: 220px; }
   .cnt { color: #fbbf24; margin-left: .4rem; font-weight: 600; }
-  td.good { color: #34d399; }
+  /* 溢價配色：負＝便宜(綠)、零＝持平(灰)、正＝偏貴(橙)、無資料(暗灰) */
+  td.prem-neg { color: #34d399; font-weight: 600; }
+  td.prem-zero { color: #cbd5e1; }
+  td.prem-pos { color: #fb923c; font-weight: 600; }
+  td.prem-na { color: #64748b; }
+  .actions { white-space: nowrap; }
+  .actions button { font-size: .78rem; padding: .3rem .55rem; border: 0; border-radius: 5px; cursor: pointer; margin-right: .35rem; }
+  .actions button:disabled { opacity: .6; cursor: default; }
+  .btn-watch { background: #0e7490; color: #fff; }
+  .btn-sim { background: #6d28d9; color: #fff; }
   .dim { opacity: .8; }
 </style>
