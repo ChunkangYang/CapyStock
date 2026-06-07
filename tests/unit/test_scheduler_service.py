@@ -34,7 +34,7 @@ def svc(isolated_paths):
 def test_default_jobs_loaded(svc):
     jobs = svc.list_jobs()
     ids = {j.id for j in jobs}
-    assert {"scan_signals", "scan_dividend", "paper_advance", "daily_pipeline", "healthcheck_ping"}.issubset(ids)
+    assert {"scan_signals", "scan_dividend", "ledger_advance", "daily_pipeline", "healthcheck_ping"}.issubset(ids)
 
 
 def test_trigger_now_success(svc, monkeypatch):
@@ -144,11 +144,11 @@ def test_list_runs_filter(svc):
     svc._jobs["scan_signals"] = svc._jobs["scan_signals"].model_copy(
         update={"handler": "_thp_filter:ok"}
     )
-    svc._jobs["paper_advance"] = svc._jobs["paper_advance"].model_copy(
+    svc._jobs["ledger_advance"] = svc._jobs["ledger_advance"].model_copy(
         update={"handler": "_thp_filter:fail"}
     )
     svc.trigger_now("scan_signals")
-    svc.trigger_now("paper_advance")
+    svc.trigger_now("ledger_advance")
 
     success_runs = svc.list_runs(status="success")
     failed_runs = svc.list_runs(status="failed")

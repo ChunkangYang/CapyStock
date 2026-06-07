@@ -54,10 +54,10 @@ DEFAULT_JOBS: list[JobDef] = [
         timeout_seconds=1800,
     ),
     JobDef(
-        id="paper_advance",
-        name="paper trading 每日推進",
+        id="ledger_advance",
+        name="跟單帳本每日推進（棘輪移動停損出場）",
         cron="0 7 * * 1-5",
-        handler="api.services.scheduler_service:_handler_paper_advance",
+        handler="api.services.scheduler_service:_handler_ledger_advance",
         timeout_seconds=1800,
     ),
     JobDef(
@@ -115,32 +115,11 @@ def _handler_scan_dividend():
     return {"rows": len(rows), "errors": len(errors)}
 
 
-def _handler_paper_advance():
-    from datetime import date
-    from api.services import simulation_service, signal_service
-
-    today = date.today()
-    advanced = 0
-    for sim in simulation_service.list_all():
-        if sim.config.kind != "paper" or sim.status == "draft":
-            continue
-        if sim.state.cursor_date >= today:
-            continue
-        try:
-            price_cache: dict = {}
-            for cand in sim.config.candidates:
-                try:
-                    prices = signal_service.get_price_history(cand.code, days=365)
-                    price_cache[cand.code] = {
-                        p.date: {"open": p.open, "close": p.close} for p in prices
-                    }
-                except Exception:
-                    pass
-            simulation_service.advance_paper(sim.id, today, signal_service, price_cache)
-            advanced += 1
-        except Exception:
-            continue
-    return {"advanced": advanced}
+def _handler_ledger_advance():
+    """跟單帳本每日推進：對所有 open 交易套用棘輪式移動停損出場。"""
+    from api.services import ledger_service
+    r = ledger_service.advance_all()
+    return {"advanced": r.advanced_trades, "closed": r.closed_trades}
 
 
 def _handler_edinet_daily_backfill():

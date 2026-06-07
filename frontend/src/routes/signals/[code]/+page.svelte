@@ -12,13 +12,16 @@
   import FavoriteToggle from '$lib/components/FavoriteToggle.svelte';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
   import { cacheGet, cacheSet, cacheClear, cacheTimestamp, formatCacheAge } from '$lib/utils/signalsCache';
-  import type { SignalResult, PriceBar, MarginRow, EdinetEvent, Simulation } from '$lib/types';
+  import type { SignalResult, PriceBar, MarginRow, EdinetEvent } from '$lib/types';
+
+  interface LedgerSummary { id: string; name: string; trade_count: number; }
 
   const code = $page.params.code;
 
   // 進場到帳本
   let showEntryModal = false;
-  let ledgers: Simulation[] = [];
+  let ledgers: LedgerSummary[] = [];
+  let entryStopPct = 10;  // 移動停損 N%
   let ledgersLoading = false;
   let selectedLedgerId = '';
   let entryShares: number = 100;
@@ -36,8 +39,7 @@
     entryMessage = '';
     ledgersLoading = true;
     try {
-      const all = await api<Simulation[]>(`/simulation`);
-      ledgers = all.filter(s => s.config.kind === 'paper' && s.status !== 'completed' && s.status !== 'failed');
+      ledgers = await api<LedgerSummary[]>(`/ledgers`);
       if (ledgers.length > 0 && !selectedLedgerId) {
         selectedLedgerId = ledgers[0].id;
       }
@@ -60,15 +62,16 @@
     entrySubmitting = true;
     entryError = '';
     try {
-      const params = new URLSearchParams({
-        code: signal.code,
-        name: signal.name,
-        shares: String(entryShares),
-        entry_price: String(entryPrice),
-        entry_date: entryDate,
-      });
-      await api(`/simulation/${selectedLedgerId}/open-position?${params}`, {
+      await api(`/ledgers/${selectedLedgerId}/trades`, {
         method: 'POST',
+        body: JSON.stringify({
+          code: signal.code,
+          name: signal.name,
+          shares: entryShares,
+          entry_price: entryPrice,
+          entry_date: entryDate,
+          stop_pct: entryStopPct / 100,
+        }),
       });
       entryMessage = `✓ 已加入帳本（${entryShares} 股 @ ¥${entryPrice}）`;
       setTimeout(() => { showEntryModal = false; }, 1200);
@@ -241,14 +244,14 @@
           {:else if ledgers.length === 0}
             <p class="warn">
               沒有可用的模擬帳本。
-              <a href="/simulation/ledger/new">先建立一個帳本 →</a>
+              <a href="/ledger">先建立一個帳本 →</a>
             </p>
           {:else}
             <div class="form-row">
               <label>選擇帳本</label>
               <select bind:value={selectedLedgerId}>
                 {#each ledgers as l}
-                  <option value={l.id}>{l.name}（現金 ¥{Math.round(l.state.cash).toLocaleString()}）</option>
+                  <option value={l.id}>{l.name}（{l.trade_count} 筆）</option>
                 {/each}
               </select>
             </div>
@@ -266,8 +269,12 @@
               <small>已預填當前價 ¥{signal.latest_price?.toFixed(0) ?? '?'}</small>
             </div>
             <div class="form-row">
-              <strong>預估成本：¥{Math.round(entryShares * entryPrice * 1.002).toLocaleString()}</strong>
-              <small>含 0.2% 手續費 + 滑價（實際以帳本設定為準）</small>
+              <label>移動停損 N%</label>
+              <input type="number" bind:value={entryStopPct} min="0.5" step="0.5" />
+              <small>隔日收盤跌破 high_water×(1−N%) 出場，停損只升不降</small>
+            </div>
+            <div class="form-row">
+              <strong>預估成本：¥{Math.round(entryShares * entryPrice).toLocaleString()}</strong>
             </div>
             {#if entryError}<div class="msg-error">{entryError}</div>{/if}
             {#if entryMessage}<div class="msg-ok">{entryMessage}</div>{/if}

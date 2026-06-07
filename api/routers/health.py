@@ -68,17 +68,19 @@ def _freshness() -> DataFreshness:
             elif kind == "dividend" and (div_latest is None or d > div_latest):
                 div_latest = d
 
+    # 跟單帳本（ledger）持有中交易的最舊推進日，作為「模擬資料新鮮度」指標
     paper_oldest: Optional[date] = None
     try:
-        from api.services import simulation_service
-        for sim in simulation_service.list_all():
-            if sim.config.kind != "paper" or sim.status == "draft":
+        from api.services import ledger_service
+        for s in ledger_service.list_ledgers():
+            lg = ledger_service.get_ledger(s.id)
+            if lg is None:
                 continue
-            cur = sim.state.cursor_date
-            if cur is None:
-                continue
-            if paper_oldest is None or cur < paper_oldest:
-                paper_oldest = cur
+            for t in lg.trades:
+                if t.status != "open" or t.last_advanced_date is None:
+                    continue
+                if paper_oldest is None or t.last_advanced_date < paper_oldest:
+                    paper_oldest = t.last_advanced_date
     except Exception:
         pass
 

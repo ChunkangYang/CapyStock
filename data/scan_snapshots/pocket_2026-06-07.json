@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-06-07T13:40:57",
+ "generated_at": "2026-06-07T14:31:35",
  "params": {
   "min_filings": 2,
   "window_days": 60,
@@ -8,10 +8,10 @@
   "as_of": null
  },
  "funnel": {
-  "candidates": 638,
-  "gate1_continuity": 172,
-  "gate2_cost": 132,
-  "gate3_margin": 24
+  "candidates": 816,
+  "gate1_continuity": 253,
+  "gate2_cost": 198,
+  "gate3_margin": 25
  },
  "pocket": [
   {
@@ -35,107 +35,115 @@
    "gate2": {
     "passed": true,
     "master_cost": 119.0,
-    "latest_price": 16.0,
-    "premium_pct": -0.865546218487395
+    "latest_price": 13.0,
+    "premium_pct": -0.8907563025210085
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 1.0,
+    "drop_pct": 0.9753296469587409,
     "series": [
+     235.1,
      227.3,
      45.1,
-     5.8,
-     0.0
+     5.8
     ]
    }
   },
   {
-   "code": "7922",
-   "name": "三光産業",
+   "code": "1976",
+   "name": "明星工業",
    "in_pocket": true,
    "gates_passed": 3,
    "gate1": {
     "passed": true,
-    "lead_filer": "株式会社バロン",
-    "filing_count": 3,
+    "lead_filer": "ＮＩＰＰＯＮ　ＡＣＴＩＶＥ　ＶＡＬＵＥ　ＦＵＮＤ　ＰＬＣ",
+    "filing_count": 2,
     "dates": [
-     "2026-04-16",
-     "2026-04-27",
-     "2026-04-27"
+     "2026-04-08",
+     "2026-06-05"
     ],
     "doc_types": [
      "350",
-     "360",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 717.0,
-    "latest_price": 719.0,
-    "premium_pct": 0.002789400278940028
+    "master_cost": 1800.0,
+    "latest_price": 1687.0,
+    "premium_pct": -0.06277777777777778
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.8639846743295019,
+    "drop_pct": 0.7700348432055749,
     "series": [
-     52.2,
-     10.7,
-     10.5,
-     7.1
+     86.1,
+     71.4,
+     28.5,
+     19.8
     ]
    }
   },
   {
-   "code": "4556",
-   "name": "カイノス",
+   "code": "7501",
+   "name": "ティムコ",
    "in_pocket": true,
    "gates_passed": 3,
    "gate1": {
     "passed": true,
-    "lead_filer": "旭化成セラピューティクス株式会社",
-    "filing_count": 2,
+    "lead_filer": "株式会社キャピタルギャラリー",
+    "filing_count": 7,
     "dates": [
-     "2026-04-07",
-     "2026-04-07"
+     "2026-04-09",
+     "2026-04-09",
+     "2026-04-30",
+     "2026-04-30",
+     "2026-05-29",
+     "2026-06-02",
+     "2026-06-03"
     ],
     "doc_types": [
      "350",
+     "360",
+     "350",
+     "360",
+     "350",
+     "360",
      "360"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 2267.0,
-    "latest_price": 2272.0,
-    "premium_pct": 0.0022055580061755625
+    "master_cost": 1913.5714285714287,
+    "latest_price": 1748.0,
+    "premium_pct": -0.0865248226950355
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.6875,
+    "drop_pct": 0.7639155470249519,
     "series": [
-     1.6,
-     1.4,
-     1.2,
-     0.5
+     52.1,
+     45.4,
+     16.2,
+     12.3
     ]
    }
   },
   {
-   "code": "9338",
-   "name": "ＩＮＦＯＲＩＣＨ",
+   "code": "4973",
+   "name": "日本高純度化学",
    "in_pocket": true,
    "gates_passed": 3,
    "gate1": {
     "passed": true,
-    "lead_filer": "株式会社ＢＣＪー１０２",
+    "lead_filer": "ひびき・パース・アドバイザーズ・エスピーシー",
     "filing_count": 2,
     "dates": [
-     "2026-04-07",
-     "2026-04-07"
+     "2026-06-02",
+     "2026-06-04"
     ],
     "doc_types": [
      "350",
@@ -144,55 +152,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 4520.0,
-    "latest_price": 4535.0,
-    "premium_pct": 0.00331858407079646
+    "master_cost": 5560.0,
+    "latest_price": 5450.0,
+    "premium_pct": -0.019784172661870502
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.6153846153846154,
+    "drop_pct": 0.4207407407407407,
     "series": [
-     5.2,
-     3.6,
-     3.0,
-     2.0
-    ]
-   }
-  },
-  {
-   "code": "4452",
-   "name": "花王",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "野村證券株式会社",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-06",
-     "2026-04-21"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 6033.0,
-    "latest_price": 5955.0,
-    "premium_pct": -0.012928891098955743
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.3891250183203869,
-    "series": [
-     682.3,
-     603.0,
-     489.5,
-     416.8
+     67.5,
+     49.5,
+     39.8,
+     39.1
     ]
    }
   },
@@ -219,18 +191,92 @@
    "gate2": {
     "passed": true,
     "master_cost": 233.33333333333334,
-    "latest_price": 149.0,
-    "premium_pct": -0.36142857142857143
+    "latest_price": 136.0,
+    "premium_pct": -0.41714285714285715
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.36437569765587624,
+    "drop_pct": 0.31468828411503574,
     "series": [
+     2590.5,
      2508.4,
      2461.0,
-     1775.3,
-     1594.4
+     1775.3
+    ]
+   }
+  },
+  {
+   "code": "6544",
+   "name": "Ｊエレベータ",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1696.5,
+    "latest_price": 1696.5,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.2771929824561404,
+    "series": [
+     342.0,
+     333.9,
+     270.4,
+     247.2
+    ]
+   }
+  },
+  {
+   "code": "9270",
+   "name": "バリュエンス",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＳＦプロパティマネジメント株式会社",
+    "filing_count": 3,
+    "dates": [
+     "2026-05-01",
+     "2026-05-01",
+     "2026-05-01"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2329.0,
+    "latest_price": 2422.0,
+    "premium_pct": 0.0399313009875483
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.2295349469676366,
+    "series": [
+     367.7,
+     356.5,
+     305.8,
+     283.3
     ]
    }
   },
@@ -255,36 +301,38 @@
    "gate2": {
     "passed": true,
     "master_cost": 1112.5,
-    "latest_price": 1060.0,
-    "premium_pct": -0.04719101123595506
+    "latest_price": 1054.0,
+    "premium_pct": -0.052584269662921346
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.3402386849808602,
+    "drop_pct": 0.22877254729432467,
     "series": [
+     454.6,
      444.1,
      358.8,
-     350.6,
-     293.0
+     350.6
     ]
    }
   },
   {
-   "code": "4883",
-   "name": "モダリス",
+   "code": "4840",
+   "name": "トライアイズ",
    "in_pocket": true,
    "gates_passed": 3,
    "gate1": {
     "passed": true,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 3,
+    "lead_filer": "南　壮栄",
+    "filing_count": 4,
     "dates": [
-     "2026-04-15",
-     "2026-04-24",
+     "2026-05-01",
+     "2026-05-01",
+     "2026-05-01",
      "2026-05-01"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350"
@@ -292,19 +340,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 59.666666666666664,
-    "latest_price": 56.0,
-    "premium_pct": -0.06145251396648041
+    "master_cost": 765.0,
+    "latest_price": 800.0,
+    "premium_pct": 0.0457516339869281
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.2312399044876747,
+    "drop_pct": 0.20146601510439802,
     "series": [
-     11391.2,
-     10901.1,
-     10075.2,
-     8757.1
+     450.2,
+     375.6,
+     367.6,
+     359.5
     ]
    }
   },
@@ -329,18 +377,304 @@
    "gate2": {
     "passed": true,
     "master_cost": 541.5,
-    "latest_price": 434.0,
-    "premium_pct": -0.19852262234533702
+    "latest_price": 343.0,
+    "premium_pct": -0.36657433056325023
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.22837643678160927,
+    "drop_pct": 0.1879293424926398,
     "series": [
+     2853.2,
      2784.0,
      2336.5,
-     2317.0,
-     2148.2
+     2317.0
+    ]
+   }
+  },
+  {
+   "code": "4596",
+   "name": "窪田製薬ＨＤ",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "filing_count": 5,
+    "dates": [
+     "2026-04-06",
+     "2026-04-15",
+     "2026-04-23",
+     "2026-05-01",
+     "2026-06-01"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 88.2,
+    "latest_price": 63.0,
+    "premium_pct": -0.28571428571428575
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.17528480961665502,
+    "series": [
+     6205.9,
+     5923.7,
+     5319.6,
+     5118.1
+    ]
+   }
+  },
+  {
+   "code": "6563",
+   "name": "みらいワークス",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "岡本　祥治",
+    "filing_count": 4,
+    "dates": [
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "360",
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 484.0,
+    "latest_price": 484.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.15230460921843691,
+    "series": [
+     99.8,
+     93.6,
+     85.4,
+     84.6
+    ]
+   }
+  },
+  {
+   "code": "1434",
+   "name": "ＪＥＳＣＯ",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "京セラコミュニケーションシステム株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-23",
+     "2026-04-28"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2320.5,
+    "latest_price": 2034.0,
+    "premium_pct": -0.12346477052359406
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.1510903426791277,
+    "series": [
+     192.6,
+     170.3,
+     170.2,
+     163.5
+    ]
+   }
+  },
+  {
+   "code": "3667",
+   "name": "ｅｎｉｓｈ",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "filing_count": 4,
+    "dates": [
+     "2026-04-10",
+     "2026-04-22",
+     "2026-05-01",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 48.75,
+    "latest_price": 32.0,
+    "premium_pct": -0.3435897435897436
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.11268588441439623,
+    "series": [
+     6448.9,
+     6218.5,
+     6216.7,
+     5722.2
+    ]
+   }
+  },
+  {
+   "code": "5341",
+   "name": "アサヒエイト",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "filing_count": 4,
+    "dates": [
+     "2026-04-10",
+     "2026-04-13",
+     "2026-04-30",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 291.25,
+    "latest_price": 198.0,
+    "premium_pct": -0.3201716738197425
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.10735636001328476,
+    "series": [
+     1204.4,
+     1177.6,
+     1115.9,
+     1075.1
+    ]
+   }
+  },
+  {
+   "code": "4881",
+   "name": "ファンペップ",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "グロース・キャピタル株式会社",
+    "filing_count": 10,
+    "dates": [
+     "2026-04-08",
+     "2026-04-15",
+     "2026-04-23",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 63.1,
+    "latest_price": 57.0,
+    "premium_pct": -0.09667194928684629
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.10411230560484291,
+    "series": [
+     5748.6,
+     5314.7,
+     5187.6,
+     5150.1
+    ]
+   }
+  },
+  {
+   "code": "4617",
+   "name": "中国塗料",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "キャピタル・リサーチ・アンド・マネージメント・カンパニー",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-22",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3255.0,
+    "latest_price": 3210.0,
+    "premium_pct": -0.013824884792626729
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.1033689056287926,
+    "series": [
+     477.9,
+     459.5,
+     454.4,
+     428.5
     ]
    }
   },
@@ -365,318 +699,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 253.5,
-    "latest_price": 229.0,
-    "premium_pct": -0.09664694280078895
+    "latest_price": 153.0,
+    "premium_pct": -0.39644970414201186
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.22389895595823825,
+    "drop_pct": 0.10171503174885756,
     "series": [
+     3370.2,
+     3345.8,
      3333.2,
-     3027.4,
-     2907.4,
-     2586.9
+     3027.4
     ]
    }
   },
   {
-   "code": "9830",
-   "name": "トラスコ中山",
+   "code": "3727",
+   "name": "アプリックス",
    "in_pocket": true,
    "gates_passed": 3,
    "gate1": {
     "passed": true,
-    "lead_filer": "みずほ証券株式会社",
+    "lead_filer": "川口　英幸",
     "filing_count": 2,
     "dates": [
-     "2026-04-07",
-     "2026-04-22"
+     "2026-04-08",
+     "2026-04-15"
     ],
     "doc_types": [
      "350",
-     "350"
+     "360"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 2345.0,
-    "latest_price": 2264.0,
-    "premium_pct": -0.034541577825159916
+    "master_cost": 183.5,
+    "latest_price": 141.0,
+    "premium_pct": -0.23160762942779292
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.2233727810650887,
+    "drop_pct": 0.08263818039968795,
     "series": [
-     135.2,
-     116.4,
-     108.2,
-     105.0
-    ]
-   }
-  },
-  {
-   "code": "5341",
-   "name": "アサヒエイト",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 3,
-    "dates": [
-     "2026-04-10",
-     "2026-04-13",
-     "2026-04-30"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 325.0,
-    "latest_price": 242.0,
-    "premium_pct": -0.2553846153846154
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.2042289402173912,
-    "series": [
-     1177.6,
-     1115.9,
-     1075.1,
-     937.1
-    ]
-   }
-  },
-  {
-   "code": "6670",
-   "name": "ＭＣＪ",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "ＢＣＰＥ　Ｍｅｔａ　Ｃａｙｍａｎ，　Ｌ．Ｐ．",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-14",
-     "2026-04-14"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 2184.0,
-    "latest_price": 2188.0,
-    "premium_pct": 0.0018315018315018315
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.20197044334975375,
-    "series": [
-     20.3,
-     19.1,
-     18.9,
-     16.2
-    ]
-   }
-  },
-  {
-   "code": "4596",
-   "name": "窪田製薬ＨＤ",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 4,
-    "dates": [
-     "2026-04-06",
-     "2026-04-15",
-     "2026-04-23",
-     "2026-05-01"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 95.75,
-    "latest_price": 67.0,
-    "premium_pct": -0.3002610966057441
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.1643567364991474,
-    "series": [
-     5923.7,
-     5319.6,
-     5118.1,
-     4950.1
-    ]
-   }
-  },
-  {
-   "code": "6161",
-   "name": "エスティック",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "株式会社フラクタル・ビジネス",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-07",
-     "2026-04-30"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1015.5,
-    "latest_price": 1015.0,
-    "premium_pct": -0.0004923682914820286
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.13307666555071979,
-    "series": [
-     1194.8,
-     1174.1,
-     1051.1,
-     1035.8
-    ]
-   }
-  },
-  {
-   "code": "6786",
-   "name": "ＲＶＨ",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "株式会社ＳＢＩ証券",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-06",
-     "2026-04-21"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 53.5,
-    "latest_price": 51.0,
-    "premium_pct": -0.04672897196261682
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.13261581656527846,
-    "series": [
-     1068.5,
-     996.2,
-     938.1,
-     926.8
-    ]
-   }
-  },
-  {
-   "code": "6731",
-   "name": "ピクセラ",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 5,
-    "dates": [
-     "2026-04-07",
-     "2026-04-13",
-     "2026-04-13",
-     "2026-04-13",
-     "2026-04-20"
-    ],
-    "doc_types": [
-     "350",
-     "360",
-     "360",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 198.2,
-    "latest_price": 146.0,
-    "premium_pct": -0.2633703329969727
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.1214201647704983,
-    "series": [
-     509.8,
-     464.8,
-     457.6,
-     447.9
-    ]
-   }
-  },
-  {
-   "code": "3034",
-   "name": "クオールＨＤ",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "ＷＩＬＬ　ＦＩＥＬＤ　ＣＡＰＩＴＡＬ　ＰＴＥ　ＬＴＤ",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-22",
-     "2026-04-24"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1789.5,
-    "latest_price": 1789.0,
-    "premium_pct": -0.0002794076557697681
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.11335254562920268,
-    "series": [
-     104.1,
-     97.0,
-     94.3,
-     92.3
+     1666.3,
+     1647.3,
+     1606.3,
+     1528.6
     ]
    }
   },
@@ -703,105 +773,33 @@
    "gate2": {
     "passed": true,
     "master_cost": 1302.3333333333333,
-    "latest_price": 1027.0,
-    "premium_pct": -0.21141540824161756
+    "latest_price": 930.0,
+    "premium_pct": -0.28589710775531096
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.08088788562829195,
+    "drop_pct": 0.06233243967828422,
     "series": [
+     1342.8,
      1329.0,
      1320.8,
-     1259.1,
-     1221.5
+     1259.1
     ]
    }
   },
   {
-   "code": "4884",
-   "name": "クリングルファーマ",
+   "code": "9048",
+   "name": "名古屋鉄道",
    "in_pocket": true,
    "gates_passed": 3,
    "gate1": {
     "passed": true,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-08",
-     "2026-04-09"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 455.0,
-    "latest_price": 411.0,
-    "premium_pct": -0.0967032967032967
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.08010519582059851,
-    "series": [
-     1406.9,
-     1390.4,
-     1334.6,
-     1294.2
-    ]
-   }
-  },
-  {
-   "code": "3727",
-   "name": "アプリックス",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "川口　英幸",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-08",
-     "2026-04-15"
-    ],
-    "doc_types": [
-     "350",
-     "360"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 183.5,
-    "latest_price": 148.0,
-    "premium_pct": -0.19346049046321526
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.07855278334243906,
-    "series": [
-     1647.3,
-     1606.3,
-     1528.6,
-     1517.9
-    ]
-   }
-  },
-  {
-   "code": "6555",
-   "name": "ＭＳコンサル",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "光通信株式会社",
+    "lead_filer": "野村證券株式会社",
     "filing_count": 2,
     "dates": [
      "2026-04-07",
-     "2026-04-28"
+     "2026-04-22"
     ],
     "doc_types": [
      "350",
@@ -810,19 +808,95 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 449.0,
-    "latest_price": 460.0,
-    "premium_pct": 0.024498886414253896
+    "master_cost": 1769.5,
+    "latest_price": 1823.0,
+    "premium_pct": 0.030234529528115287
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.047882136279926234,
+    "drop_pct": 0.056273613044342724,
     "series": [
-     108.6,
-     107.4,
-     104.2,
-     103.4
+     502.9,
+     489.0,
+     483.3,
+     474.6
+    ]
+   }
+  },
+  {
+   "code": "4583",
+   "name": "カイオム",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "グロース・キャピタル株式会社",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-06",
+     "2026-04-21",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 93.33333333333333,
+    "latest_price": 75.0,
+    "premium_pct": -0.1964285714285714
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.0460947904426165,
+    "series": [
+     6382.5,
+     6335.0,
+     6306.5,
+     6088.3
+    ]
+   }
+  },
+  {
+   "code": "8473",
+   "name": "ＳＢＩホールディングス",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＳＢＩホールディングス株式会社",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-13",
+     "2026-04-17",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3033.6666666666665,
+    "latest_price": 2894.0,
+    "premium_pct": -0.04603889682452473
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.03245840639263294,
+    "series": [
+     7471.1,
+     7470.4,
+     7295.7,
+     7228.6
     ]
    }
   },
@@ -834,14 +908,16 @@
    "gate1": {
     "passed": true,
     "lead_filer": "マッコーリー　バンク　リミテッド",
-    "filing_count": 4,
+    "filing_count": 5,
     "dates": [
      "2026-04-07",
      "2026-04-20",
      "2026-04-23",
-     "2026-04-24"
+     "2026-04-24",
+     "2026-06-03"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350",
@@ -850,9 +926,9 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 199.0,
-    "latest_price": 160.0,
-    "premium_pct": -0.19597989949748743
+    "master_cost": 188.6,
+    "latest_price": 149.0,
+    "premium_pct": -0.2099681866383881
    },
    "gate3": {
     "passed": true,
@@ -867,20 +943,22 @@
    }
   },
   {
-   "code": "5129",
-   "name": "ＦＩＸＥＲ",
+   "code": "3823",
+   "name": "ＷＨＤＣ",
    "in_pocket": true,
    "gates_passed": 3,
    "gate1": {
     "passed": true,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 3,
+    "lead_filer": "Ｌｏｎｇ　Ｃｏｒｒｉｄｏｒ　Ａｓｓｅｔ　Ｍａｎａｇｅｍｅｎｔ　Ｌｉｍｉｔｅｄ",
+    "filing_count": 4,
     "dates": [
-     "2026-04-14",
-     "2026-04-16",
-     "2026-04-20"
+     "2026-04-15",
+     "2026-04-21",
+     "2026-04-28",
+     "2026-04-30"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350"
@@ -888,19 +966,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 441.0,
-    "latest_price": 291.0,
-    "premium_pct": -0.3401360544217687
+    "master_cost": 45.75,
+    "latest_price": 32.0,
+    "premium_pct": -0.3005464480874317
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.019677760169043965,
+    "drop_pct": 0.024143568002586747,
     "series": [
-     757.2,
-     749.2,
-     745.4,
-     742.3
+     11133.4,
+     11038.3,
+     10906.0,
+     10864.6
     ]
    }
   }
@@ -914,101 +992,33 @@
    "gate1": {
     "passed": true,
     "lead_filer": "株式会社みずほ銀行",
-    "filing_count": 2,
+    "filing_count": 3,
     "dates": [
      "2026-04-07",
-     "2026-04-22"
+     "2026-04-22",
+     "2026-06-05"
     ],
     "doc_types": [
+     "350",
      "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 4297.5,
+    "master_cost": 4256.666666666667,
     "latest_price": 4175.0,
-    "premium_pct": -0.028504944735311226
+    "premium_pct": -0.01918559122944408
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     79.6,
      79.3,
      82.9,
-     73.1,
-     53.4
-    ]
-   }
-  },
-  {
-   "code": "1420",
-   "name": "サンヨーホームズ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": false,
-    "lead_filer": "マッコーリー　バンク　リミテッド",
-    "filing_count": 1,
-    "dates": [
-     "2026-04-09"
-    ],
-    "doc_types": [
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 662.0,
-    "latest_price": 622.0,
-    "premium_pct": -0.06042296072507553
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.12838515546639917,
-    "series": [
-     199.4,
-     183.9,
-     176.9,
-     173.8
-    ]
-   }
-  },
-  {
-   "code": "1434",
-   "name": "ＪＥＳＣＯ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "京セラコミュニケーションシステム株式会社",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-23",
-     "2026-04-28"
-    ],
-    "doc_types": [
-     "350",
-     "360"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 2320.5,
-    "latest_price": 2034.0,
-    "premium_pct": -0.12346477052359406
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     170.3,
-     170.2,
-     163.5,
-     175.9
+     73.1
     ]
    }
   },
@@ -1041,10 +1051,10 @@
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     3955.9,
      3997.7,
      4602.7,
-     3754.2,
-     3693.2
+     3754.2
     ]
    }
   },
@@ -1085,36 +1095,74 @@
    }
   },
   {
-   "code": "1976",
-   "name": "明星工業",
+   "code": "1783",
+   "name": "ｆａｎｔａｓｉｓｔａ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": false,
-    "lead_filer": "ＮＩＰＰＯＮ　ＡＣＴＩＶＥ　ＶＡＬＵＥ　ＦＵＮＤ　ＰＬＣ",
-    "filing_count": 1,
+    "passed": true,
+    "lead_filer": "Ｍａｘｉｍｕｓ合同会社",
+    "filing_count": 2,
     "dates": [
-     "2026-04-08"
+     "2026-06-01",
+     "2026-06-05"
     ],
     "doc_types": [
-     "350"
+     "350",
+     "360"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 1913.0,
-    "latest_price": 1687.0,
-    "premium_pct": -0.11813904861474124
+    "master_cost": 56.5,
+    "latest_price": 57.0,
+    "premium_pct": 0.008849557522123894
    },
    "gate3": {
-    "passed": true,
+    "passed": false,
     "weeks": 3,
-    "drop_pct": 0.7717086834733894,
+    "drop_pct": null,
     "series": [
-     71.4,
-     28.5,
-     19.8,
-     16.3
+     3497.0,
+     3428.8,
+     3512.6,
+     3495.5
+    ]
+   }
+  },
+  {
+   "code": "1909",
+   "name": "日本ドライケミカル",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ニューバーガー・バーマン株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-01",
+     "2026-06-01"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3750.0,
+    "latest_price": 3735.0,
+    "premium_pct": -0.004
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     157.0,
+     162.0,
+     156.0,
+     220.3
     ]
    }
   },
@@ -1179,12 +1227,12 @@
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.2609185686108762,
+    "drop_pct": 0.26001968780762197,
     "series": [
+     711.1,
      709.8,
      700.4,
-     526.2,
-     524.6
+     526.2
     ]
    }
   },
@@ -1219,10 +1267,44 @@
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1273.3,
      1366.4,
      1539.5,
-     1354.5,
-     1273.7
+     1354.5
+    ]
+   }
+  },
+  {
+   "code": "2341",
+   "name": "アルバイトタイムス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "光通信株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-08"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 211.0,
+    "latest_price": 155.0,
+    "premium_pct": -0.26540284360189575
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.08601553829078802,
+    "series": [
+     360.4,
+     349.4,
+     340.3,
+     329.4
     ]
    }
   },
@@ -1257,10 +1339,44 @@
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1894.7,
      1517.2,
      1529.3,
-     1541.0,
-     1792.8
+     1541.0
+    ]
+   }
+  },
+  {
+   "code": "2432",
+   "name": "ディー・エヌ・エー",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-06"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2633.0,
+    "latest_price": 2678.0,
+    "premium_pct": 0.017090770983668818
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.2672907318582701,
+    "series": [
+     3877.8,
+     3703.6,
+     3186.7,
+     2841.3
     ]
    }
   },
@@ -1285,18 +1401,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 349.5,
-    "latest_price": 318.0,
-    "premium_pct": -0.09012875536480687
+    "latest_price": 361.0,
+    "premium_pct": 0.032904148783977114
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     632.8,
      606.7,
      697.8,
-     674.0,
-     679.6
+     674.0
     ]
    }
   },
@@ -1319,18 +1435,228 @@
    "gate2": {
     "passed": true,
     "master_cost": 202.0,
-    "latest_price": 200.0,
-    "premium_pct": -0.009900990099009901
+    "latest_price": 184.0,
+    "premium_pct": -0.0891089108910891
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.17575600930472993,
+    "drop_pct": 0.19697843385999314,
     "series": [
+     867.1,
      773.8,
      731.4,
-     696.3,
-     637.8
+     696.3
+    ]
+   }
+  },
+  {
+   "code": "2475",
+   "name": "ＷＤＢホールディングス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "中野　敏光",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-01",
+     "2026-06-01"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1818.0,
+    "latest_price": 1735.0,
+    "premium_pct": -0.04565456545654566
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     42.2,
+     42.7,
+     68.1,
+     87.3
+    ]
+   }
+  },
+  {
+   "code": "2480",
+   "name": "システム・ロケーション",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "光通信株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-21"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1700.0,
+    "latest_price": 1696.0,
+    "premium_pct": -0.002352941176470588
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.1818181818181817,
+    "series": [
+     6.6,
+     5.9,
+     5.8,
+     5.4
+    ]
+   }
+  },
+  {
+   "code": "2501",
+   "name": "サッポロＨＤ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-21",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1716.5,
+    "latest_price": 1599.0,
+    "premium_pct": -0.06845324788814448
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     185.4,
+     158.4,
+     217.6,
+     189.0
+    ]
+   }
+  },
+  {
+   "code": "2503",
+   "name": "キリンホールディングス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-21"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2579.0,
+    "latest_price": 2629.0,
+    "premium_pct": 0.019387359441644048
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.2784090909090909,
+    "series": [
+     352.0,
+     333.9,
+     325.8,
+     254.0
+    ]
+   }
+  },
+  {
+   "code": "2579",
+   "name": "コカＢＪＨ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "日本コカ・コーラ株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-01",
+     "2026-06-01"
+    ],
+    "doc_types": [
+     "360",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3553.0,
+    "latest_price": 3519.0,
+    "premium_pct": -0.009569377990430622
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     238.3,
+     283.4,
+     298.1,
+     268.4
+    ]
+   }
+  },
+  {
+   "code": "2586",
+   "name": "フルッタフルッタ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "長澤　誠",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 93.0,
+    "latest_price": 93.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.1878425794215267,
+    "series": [
+     10545.0,
+     10210.3,
+     8783.5,
+     8564.2
     ]
    }
   },
@@ -1363,10 +1689,10 @@
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     4514.4,
      4507.6,
      4468.2,
-     4478.6,
-     4486.7
+     4478.6
     ]
    }
   },
@@ -1415,32 +1741,70 @@
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "ＳＩＣＥＮＥＲＧＹ　ＳＩＮＧＡＰＯＲＥ　ＰＴＥ．　ＬＴＤ．",
-    "filing_count": 2,
+    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "filing_count": 4,
     "dates": [
-     "2026-04-09",
-     "2026-04-10"
+     "2026-04-16",
+     "2026-04-28",
+     "2026-06-01",
+     "2026-06-05"
     ],
     "doc_types": [
      "350",
-     "360"
+     "350",
+     "350",
+     "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 129.0,
-    "latest_price": 111.0,
-    "premium_pct": -0.13953488372093023
+    "master_cost": 118.25,
+    "latest_price": 117.0,
+    "premium_pct": -0.010570824524312896
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     746.7,
      769.8,
      736.4,
-     805.0,
-     829.6
+     805.0
+    ]
+   }
+  },
+  {
+   "code": "2884",
+   "name": "ヨシムラＨＤ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-06"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 931.0,
+    "latest_price": 644.0,
+    "premium_pct": -0.3082706766917293
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.039231841805044916,
+    "series": [
+     1577.8,
+     1576.9,
+     1574.3,
+     1515.9
     ]
    }
   },
@@ -1465,32 +1829,32 @@
    "gate2": {
     "passed": true,
     "master_cost": 331.0,
-    "latest_price": 304.0,
-    "premium_pct": -0.08157099697885196
+    "latest_price": 305.0,
+    "premium_pct": -0.07854984894259819
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     18420.4,
      18419.3,
      18419.3,
-     18414.2,
-     18415.2
+     18414.2
     ]
    }
   },
   {
-   "code": "3010",
-   "name": "ポラリスＨＤ",
+   "code": "2975",
+   "name": "スターマイカ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": false,
-    "lead_filer": "ＳＡＯ　ＩＩＩ　ＧＰ　Ｌｔｄ．",
+    "lead_filer": "水永　政志",
     "filing_count": 1,
     "dates": [
-     "2026-04-30"
+     "2026-06-05"
     ],
     "doc_types": [
      "350"
@@ -1498,19 +1862,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 176.0,
-    "latest_price": 171.0,
-    "premium_pct": -0.028409090909090908
+    "master_cost": 1482.0,
+    "latest_price": 1482.0,
+    "premium_pct": 0.0
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.04687099803636973,
+    "drop_pct": 0.22946806142888942,
     "series": [
-     1171.3,
-     1158.9,
-     1125.7,
-     1116.4
+     449.3,
+     371.3,
+     348.1,
+     346.2
     ]
    }
   },
@@ -1535,18 +1899,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 660.5,
-    "latest_price": 639.0,
-    "premium_pct": -0.03255109765329296
+    "latest_price": 633.0,
+    "premium_pct": -0.041635124905374715
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     324.2,
      358.3,
      361.6,
-     392.8,
-     408.2
+     392.8
+    ]
+   }
+  },
+  {
+   "code": "3034",
+   "name": "クオールＨＤ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＷＩＬＬ　ＦＩＥＬＤ　ＣＡＰＩＴＡＬ　ＰＴＥ　ＬＴＤ",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-22",
+     "2026-04-24"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1789.5,
+    "latest_price": 1865.0,
+    "premium_pct": 0.04219055602123498
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     100.5,
+     104.1,
+     97.0,
+     94.3
     ]
    }
   },
@@ -1557,32 +1957,34 @@
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "株式会社Ｂｌｕｅ　ｌａｇｏｏｎ",
-    "filing_count": 2,
+    "lead_filer": "山下　卓宏",
+    "filing_count": 3,
     "dates": [
-     "2026-04-27",
-     "2026-04-28"
+     "2026-06-04",
+     "2026-06-04",
+     "2026-06-04"
     ],
     "doc_types": [
-     "350",
+     "360",
+     "360",
      "360"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 1084.0,
-    "latest_price": 1051.0,
-    "premium_pct": -0.03044280442804428
+    "master_cost": 1000.0,
+    "latest_price": 1008.0,
+    "premium_pct": 0.008
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     2845.2,
      2867.5,
      2885.7,
-     2822.4,
-     2863.2
+     2822.4
     ]
    }
   },
@@ -1594,31 +1996,123 @@
    "gate1": {
     "passed": true,
     "lead_filer": "野村證券株式会社",
-    "filing_count": 2,
+    "filing_count": 3,
     "dates": [
      "2026-04-06",
-     "2026-04-21"
+     "2026-04-21",
+     "2026-06-04"
     ],
     "doc_types": [
+     "350",
      "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 2505.0,
-    "latest_price": 2139.5,
-    "premium_pct": -0.14590818363273453
+    "master_cost": 2402.0,
+    "latest_price": 2239.5,
+    "premium_pct": -0.0676519567027477
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     104.4,
      115.3,
      96.3,
-     113.7,
-     153.3
+     113.7
+    ]
+   }
+  },
+  {
+   "code": "3121",
+   "name": "マーチャント",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社ぽると",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-13",
+     "2026-06-01",
+     "2026-06-02"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 226.33333333333334,
+    "latest_price": 224.0,
+    "premium_pct": -0.010309278350515505
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1309.4,
+     1334.1,
+     1356.3,
+     1379.0
+    ]
+   }
+  },
+  {
+   "code": "3134",
+   "name": "Ｈａｍｅｅ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＦＭＲ　ＬＬＣ",
+    "filing_count": 10,
+    "dates": [
+     "2026-04-22",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 417.9,
+    "latest_price": 406.0,
+    "premium_pct": -0.028475711892797267
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     296.4,
+     305.7,
+     272.0,
+     258.5
     ]
    }
   },
@@ -1643,52 +2137,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 695.0,
-    "latest_price": 664.0,
-    "premium_pct": -0.04460431654676259
+    "latest_price": 650.0,
+    "premium_pct": -0.06474820143884892
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     323.3,
      321.4,
      340.1,
-     335.3,
-     336.9
-    ]
-   }
-  },
-  {
-   "code": "3182",
-   "name": "オイシックス・ラ・大地",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": false,
-    "lead_filer": "グランサム、マヨ、ヴァン　オッテルロー　アンド　カンパニー　エルエルシー",
-    "filing_count": 1,
-    "dates": [
-     "2026-04-08"
-    ],
-    "doc_types": [
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1480.0,
-    "latest_price": 1394.0,
-    "premium_pct": -0.05810810810810811
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.12104107870805886,
-    "series": [
-     318.9,
-     295.3,
-     291.9,
-     280.3
+     335.3
     ]
    }
   },
@@ -1700,31 +2160,33 @@
    "gate1": {
     "passed": true,
     "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 2,
+    "filing_count": 3,
     "dates": [
      "2026-04-06",
-     "2026-04-30"
+     "2026-04-30",
+     "2026-06-04"
     ],
     "doc_types": [
+     "350",
      "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 168.0,
-    "latest_price": 123.0,
-    "premium_pct": -0.26785714285714285
+    "master_cost": 148.66666666666666,
+    "latest_price": 116.0,
+    "premium_pct": -0.21973094170403581
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     739.4,
      746.4,
      761.9,
-     752.5,
-     756.4
+     752.5
     ]
    }
   },
@@ -1747,18 +2209,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1636.0,
-    "latest_price": 1580.0,
-    "premium_pct": -0.034229828850855744
+    "latest_price": 1613.0,
+    "premium_pct": -0.014058679706601468
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.13807210432114547,
+    "drop_pct": 0.1414403778040141,
     "series": [
+     423.5,
      391.1,
      364.0,
-     363.6,
-     337.1
+     363.6
     ]
    }
   },
@@ -1783,18 +2245,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 2460.5,
-    "latest_price": 2123.0,
-    "premium_pct": -0.13716724243040032
+    "latest_price": 2158.0,
+    "premium_pct": -0.122942491363544
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     98.4,
      100.6,
      111.6,
-     128.0,
-     130.8
+     128.0
+    ]
+   }
+  },
+  {
+   "code": "3294",
+   "name": "イーグランド",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "江口　久",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-01",
+     "2026-06-01"
+    ],
+    "doc_types": [
+     "360",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 4825.0,
+    "latest_price": 4830.0,
+    "premium_pct": 0.0010362694300518134
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1.5,
+     1.1,
+     1.0,
+     1.2
     ]
    }
   },
@@ -1817,52 +2315,56 @@
    "gate2": {
     "passed": true,
     "master_cost": 2520.0,
-    "latest_price": 2299.0,
-    "premium_pct": -0.08769841269841269
+    "latest_price": 2171.0,
+    "premium_pct": -0.1384920634920635
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.06644790812141102,
+    "drop_pct": 0.05960805661404458,
     "series": [
+     367.4,
      365.7,
      362.9,
-     345.5,
-     341.4
+     345.5
     ]
    }
   },
   {
-   "code": "3302",
-   "name": "帝国繊維",
+   "code": "3326",
+   "name": "ランシステム",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": false,
-    "lead_filer": "ＮＩＰＰＯＮ　ＡＣＴＩＶＥ　ＶＡＬＵＥ　ＦＵＮＤ　ＰＬＣ",
-    "filing_count": 1,
+    "passed": true,
+    "lead_filer": "ＧＡＵＤＩ株式会社",
+    "filing_count": 3,
     "dates": [
-     "2026-04-08"
+     "2026-06-02",
+     "2026-06-02",
+     "2026-06-05"
     ],
     "doc_types": [
-     "350"
+     "350",
+     "350",
+     "360"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 3015.0,
-    "latest_price": 3045.0,
-    "premium_pct": 0.009950248756218905
+    "master_cost": 593.0,
+    "latest_price": 579.0,
+    "premium_pct": -0.023608768971332208
    },
    "gate3": {
-    "passed": true,
+    "passed": false,
     "weeks": 3,
-    "drop_pct": 0.1530944625407166,
+    "drop_pct": null,
     "series": [
-     30.7,
-     30.2,
-     28.4,
-     26.0
+     56.1,
+     57.9,
+     44.7,
+     45.0
     ]
    }
   },
@@ -1889,18 +2391,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 326.3333333333333,
-    "latest_price": 292.0,
-    "premium_pct": -0.10520939734422875
+    "latest_price": 250.0,
+    "premium_pct": -0.23391215526046982
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     46245.4,
      47105.3,
      44445.3,
-     44591.5,
-     48806.5
+     44591.5
     ]
    }
   },
@@ -1925,18 +2427,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1631.0,
-    "latest_price": 1597.5,
-    "premium_pct": -0.020539546290619253
+    "latest_price": 1610.5,
+    "premium_pct": -0.012568976088289392
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     223.5,
      231.0,
      202.8,
-     209.8,
-     212.2
+     209.8
     ]
    }
   },
@@ -1961,18 +2463,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 3710.0,
-    "latest_price": 3405.0,
-    "premium_pct": -0.08221024258760108
+    "latest_price": 3560.0,
+    "premium_pct": -0.04043126684636118
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     219.7,
      211.9,
      199.1,
-     211.2,
-     214.4
+     211.2
+    ]
+   }
+  },
+  {
+   "code": "3491",
+   "name": "ＧＡテクノ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "樋口　龍",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-03",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1470.5,
+    "latest_price": 1503.0,
+    "premium_pct": 0.022101326079564772
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1652.3,
+     1663.6,
+     1668.5,
+     1707.3
     ]
    }
   },
@@ -1997,18 +2535,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 4445.0,
-    "latest_price": 4190.0,
-    "premium_pct": -0.05736782902137233
+    "latest_price": 4105.0,
+    "premium_pct": -0.0764904386951631
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     575.6,
      601.8,
      570.0,
-     558.5,
-     572.5
+     558.5
     ]
    }
   },
@@ -2020,31 +2558,139 @@
    "gate1": {
     "passed": true,
     "lead_filer": "野村證券株式会社",
-    "filing_count": 2,
+    "filing_count": 3,
     "dates": [
      "2026-04-06",
-     "2026-04-21"
+     "2026-04-21",
+     "2026-06-04"
     ],
     "doc_types": [
+     "350",
      "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 6670.0,
+    "master_cost": 6296.666666666667,
     "latest_price": 5730.0,
-    "premium_pct": -0.1409295352323838
+    "premium_pct": -0.08999470619375335
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1838.6,
      1849.1,
      1915.1,
-     1924.9,
-     1873.2
+     1924.9
+    ]
+   }
+  },
+  {
+   "code": "3549",
+   "name": "クスリアオキ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "合同会社ＨＯＮＪＩＮ",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-08"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3905.0,
+    "latest_price": 3550.0,
+    "premium_pct": -0.09090909090909091
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.2916666666666667,
+    "series": [
+     67.2,
+     54.7,
+     54.2,
+     47.6
+    ]
+   }
+  },
+  {
+   "code": "3562",
+   "name": "Ｎｏ．１",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "グロースパートナーズ株式会社",
+    "filing_count": 3,
+    "dates": [
+     "2026-06-02",
+     "2026-06-03",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "360",
+     "360",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1457.0,
+    "latest_price": 1476.0,
+    "premium_pct": 0.013040494166094716
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     249.5,
+     248.3,
+     251.9,
+     256.4
+    ]
+   }
+  },
+  {
+   "code": "3563",
+   "name": "Ｆ＆ＬＣ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 9841.0,
+    "latest_price": 10015.0,
+    "premium_pct": 0.017681129966466824
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.1483050847457627,
+    "series": [
+     472.0,
+     465.8,
+     422.1,
+     402.0
     ]
    }
   },
@@ -2069,34 +2715,34 @@
    "gate2": {
     "passed": true,
     "master_cost": 83.5,
-    "latest_price": 51.0,
-    "premium_pct": -0.38922155688622756
+    "latest_price": 70.0,
+    "premium_pct": -0.16167664670658682
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     2524.4,
      2487.9,
      2526.3,
-     2343.8,
-     1886.5
+     2343.8
     ]
    }
   },
   {
-   "code": "3667",
-   "name": "ｅｎｉｓｈ",
+   "code": "3659",
+   "name": "ネクソン",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "lead_filer": "ＮＸＣ　Ｃｏｒｐｏｒａｔｉｏｎ",
     "filing_count": 3,
     "dates": [
-     "2026-04-10",
-     "2026-04-22",
-     "2026-05-01"
+     "2026-06-03",
+     "2026-06-03",
+     "2026-06-04"
     ],
     "doc_types": [
      "350",
@@ -2106,19 +2752,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 53.333333333333336,
-    "latest_price": 33.0,
-    "premium_pct": -0.38125000000000003
+    "master_cost": 2296.8333333333335,
+    "latest_price": 2244.5,
+    "premium_pct": -0.02278499383208772
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
-     6216.7,
-     5722.2,
-     5543.2,
-     6211.7
+     85.6,
+     89.1,
+     177.4,
+     214.8
     ]
    }
   },
@@ -2157,30 +2803,152 @@
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     5053.0,
      4760.9,
      5059.0,
-     4379.1,
-     4257.9
+     4379.1
     ]
    }
   },
   {
-   "code": "3823",
-   "name": "ＷＨＤＣ",
+   "code": "3762",
+   "name": "テクマトリックス",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "Ｌｏｎｇ　Ｃｏｒｒｉｄｏｒ　Ａｓｓｅｔ　Ｍａｎａｇｅｍｅｎｔ　Ｌｉｍｉｔｅｄ",
-    "filing_count": 4,
+    "lead_filer": "三井住友トラスト・アセットマネジメント株式会社",
+    "filing_count": 2,
     "dates": [
-     "2026-04-15",
-     "2026-04-21",
-     "2026-04-28",
-     "2026-04-30"
+     "2026-04-06",
+     "2026-06-04"
     ],
     "doc_types": [
      "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1832.5,
+    "latest_price": 1879.0,
+    "premium_pct": 0.025375170532060027
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     561.0,
+     608.9,
+     642.7,
+     642.4
+    ]
+   }
+  },
+  {
+   "code": "3763",
+   "name": "プロシップ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社プロシップ",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-01",
+     "2026-06-01"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1640.0,
+    "latest_price": 1652.0,
+    "premium_pct": 0.007317073170731708
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     75.3,
+     71.6,
+     78.0,
+     66.7
+    ]
+   }
+  },
+  {
+   "code": "3803",
+   "name": "イメージ情報開発",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社ＪＢＦアドバイザリー",
+    "filing_count": 10,
+    "dates": [
+     "2026-03-13",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-08"
+    ],
+    "doc_types": [
+     "350",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 565.4,
+    "latest_price": 591.0,
+    "premium_pct": 0.045277679518924696
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     275.1,
+     278.6,
+     292.2,
+     262.0
+    ]
+   }
+  },
+  {
+   "code": "3810",
+   "name": "ＣＳＨＤ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "安達　礼",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-06",
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
      "350",
      "350",
      "350"
@@ -2188,19 +2956,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 45.75,
-    "latest_price": 37.0,
-    "premium_pct": -0.1912568306010929
+    "master_cost": 200.33333333333334,
+    "latest_price": 180.0,
+    "premium_pct": -0.10149750415973383
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
-     11038.3,
-     10906.0,
-     10864.6,
-     11230.0
+     5058.6,
+     5151.1,
+     7482.2,
+     8110.9
     ]
    }
   },
@@ -2225,18 +2993,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 223.5,
-    "latest_price": 200.0,
-    "premium_pct": -0.10514541387024609
+    "latest_price": 166.0,
+    "premium_pct": -0.25727069351230425
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     4326.5,
      4361.8,
      4266.1,
-     3676.1,
-     3860.8
+     3676.1
     ]
    }
   },
@@ -2259,18 +3027,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 932.0,
-    "latest_price": 875.0,
-    "premium_pct": -0.0611587982832618
+    "latest_price": 901.0,
+    "premium_pct": -0.033261802575107295
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.22722722722722724,
+    "drop_pct": 0.334749362786746,
     "series": [
+     117.7,
      99.9,
      80.0,
-     78.3,
-     77.2
+     78.3
     ]
    }
   },
@@ -2299,18 +3067,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1510.0,
-    "latest_price": 1314.0,
-    "premium_pct": -0.12980132450331125
+    "latest_price": 1323.0,
+    "premium_pct": -0.123841059602649
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     557.2,
      569.5,
      570.9,
-     573.9,
-     580.2
+     573.9
     ]
    }
   },
@@ -2337,18 +3105,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 1548.3333333333333,
-    "latest_price": 1560.0,
-    "premium_pct": 0.007534983853606078
+    "latest_price": 1558.0,
+    "premium_pct": 0.006243272335845044
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     50.1,
      49.4,
      49.2,
-     50.0,
-     48.8
+     50.0
+    ]
+   }
+  },
+  {
+   "code": "3936",
+   "name": "グローバルウェイ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "マイルストーン・キャピタル・マネジメント株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-05-01",
+     "2026-06-01"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": false,
+    "master_cost": 172.0,
+    "latest_price": 184.0,
+    "premium_pct": 0.06976744186046512
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.12329657521965222,
+    "series": [
+     4461.6,
+     4125.9,
+     4049.3,
+     3911.5
     ]
    }
   },
@@ -2373,32 +3177,32 @@
    "gate2": {
     "passed": true,
     "master_cost": 3165.0,
-    "latest_price": 2745.0,
-    "premium_pct": -0.13270142180094788
+    "latest_price": 2873.0,
+    "premium_pct": -0.09225908372827804
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1632.3,
      1652.6,
      1653.1,
-     1731.9,
-     1694.2
+     1731.9
     ]
    }
   },
   {
-   "code": "3994",
-   "name": "マネーフォワード",
+   "code": "4022",
+   "name": "ラサ工業",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": false,
-    "lead_filer": "野村證券株式会社",
+    "lead_filer": "ゴールドマン・サックス・インターナショナル",
     "filing_count": 1,
     "dates": [
-     "2026-04-22"
+     "2026-06-05"
     ],
     "doc_types": [
      "350"
@@ -2406,19 +3210,55 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 5600.0,
-    "latest_price": 4427.0,
-    "premium_pct": -0.20946428571428571
+    "master_cost": 2303.0,
+    "latest_price": 2303.0,
+    "premium_pct": 0.0
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.0485380116959065,
+    "drop_pct": 0.08676328502415462,
     "series": [
-     171.0,
-     169.3,
-     167.2,
-     162.7
+     1552.5,
+     1448.2,
+     1419.1,
+     1417.8
+    ]
+   }
+  },
+  {
+   "code": "4056",
+   "name": "ニューラルグループ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "重松　路威",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-03",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 222.5,
+    "latest_price": 233.0,
+    "premium_pct": 0.04719101123595506
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     706.3,
+     688.4,
+     640.6,
+     654.4
     ]
    }
   },
@@ -2449,18 +3289,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1154.4,
-    "latest_price": 1040.0,
-    "premium_pct": -0.09909909909909917
+    "latest_price": 1085.0,
+    "premium_pct": -0.06011781011781019
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     549.9,
+     560.1,
      556.1,
-     567.3,
-     571.8,
-     613.9
+     571.8
     ]
    }
   },
@@ -2491,18 +3331,86 @@
    "gate2": {
     "passed": false,
     "master_cost": 2223.9,
-    "latest_price": 2613.0,
-    "premium_pct": 0.17496290300822873
+    "latest_price": 2459.0,
+    "premium_pct": 0.10571518503529831
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.07561070182241178,
+    "drop_pct": 0.20222982669168776,
     "series": [
+     905.9,
+     823.5,
      773.7,
-     722.7,
-     716.1,
-     715.2
+     722.7
+    ]
+   }
+  },
+  {
+   "code": "4092",
+   "name": "日本化学工業",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 5190.0,
+    "latest_price": 5130.0,
+    "premium_pct": -0.011560693641618497
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.33305578684429643,
+    "series": [
+     240.2,
+     229.9,
+     182.6,
+     160.2
+    ]
+   }
+  },
+  {
+   "code": "4098",
+   "name": "チタン工業",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "株式会社　東芝",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-07"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1075.0,
+    "latest_price": 1118.0,
+    "premium_pct": 0.04
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.10390624999999998,
+    "series": [
+     128.0,
+     123.9,
+     118.0,
+     114.7
     ]
    }
   },
@@ -2527,18 +3435,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 2295.5,
-    "latest_price": 2256.0,
-    "premium_pct": -0.017207580047919842
+    "latest_price": 2307.0,
+    "premium_pct": 0.005009801786103245
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1890.5,
+     1890.2,
      1890.6,
-     1894.5,
-     1895.7,
-     1900.7
+     1894.5
     ]
    }
   },
@@ -2563,68 +3471,32 @@
    "gate2": {
     "passed": true,
     "master_cost": 5690.0,
-    "latest_price": 5720.0,
-    "premium_pct": 0.005272407732864675
+    "latest_price": 5100.0,
+    "premium_pct": -0.10369068541300527
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     62.7,
      61.9,
      66.0,
-     64.5,
-     61.8
+     64.5
     ]
    }
   },
   {
-   "code": "4175",
-   "name": "ｃｏｌｙ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "中島　杏奈",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-17",
-     "2026-04-20"
-    ],
-    "doc_types": [
-     "350",
-     "360"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 2052.0,
-    "latest_price": 2146.0,
-    "premium_pct": 0.04580896686159844
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     187.3,
-     209.5,
-     190.7,
-     189.8
-    ]
-   }
-  },
-  {
-   "code": "4258",
-   "name": "網屋",
+   "code": "4180",
+   "name": "Ａｐｐｉｅｒ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": false,
-    "lead_filer": "石田　晃太",
+    "lead_filer": "ブラックロック・ジャパン株式会社",
     "filing_count": 1,
     "dates": [
-     "2026-04-16"
+     "2026-04-17"
     ],
     "doc_types": [
      "350"
@@ -2632,19 +3504,55 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 2929.0,
-    "latest_price": 3060.0,
-    "premium_pct": 0.044725162171389554
+    "master_cost": 966.0,
+    "latest_price": 954.0,
+    "premium_pct": -0.012422360248447204
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.37349397590361444,
+    "drop_pct": 0.19154455021927472,
     "series": [
-     157.7,
-     141.6,
-     136.0,
-     98.8
+     3739.6,
+     3546.9,
+     3137.1,
+     3023.3
+    ]
+   }
+  },
+  {
+   "code": "4212",
+   "name": "積水樹脂",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＮＩＰＰＯＮ　ＡＣＴＩＶＥ　ＶＡＬＵＥ　ＦＵＮＤ　ＰＬＣ",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-08",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2177.0,
+    "latest_price": 2131.0,
+    "premium_pct": -0.021129995406522738
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     30.7,
+     30.4,
+     32.2,
+     40.1
     ]
    }
   },
@@ -2671,18 +3579,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1964.0,
-    "latest_price": 1647.0,
-    "premium_pct": -0.1614052953156823
+    "latest_price": 1721.0,
+    "premium_pct": -0.12372708757637474
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     60.8,
      65.4,
      68.5,
-     67.5,
-     66.5
+     67.5
     ]
    }
   },
@@ -2705,18 +3613,130 @@
    "gate2": {
     "passed": true,
     "master_cost": 3075.0,
-    "latest_price": 3036.0,
-    "premium_pct": -0.012682926829268294
+    "latest_price": 3089.0,
+    "premium_pct": 0.0045528455284552845
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.11350419987077318,
+    "drop_pct": 0.09805597094637905,
     "series": [
+     468.1,
      464.3,
      443.5,
-     422.2,
-     411.6
+     422.2
+    ]
+   }
+  },
+  {
+   "code": "4345",
+   "name": "シーティーエス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 815.0,
+    "latest_price": 815.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     76.5,
+     120.3,
+     115.8,
+     121.2
+    ]
+   }
+  },
+  {
+   "code": "4361",
+   "name": "川口化学工業",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "正喜商事株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-01",
+     "2026-06-01"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1428.0,
+    "latest_price": 1420.0,
+    "premium_pct": -0.0056022408963585435
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     84.0,
+     83.5,
+     84.9,
+     85.5
+    ]
+   }
+  },
+  {
+   "code": "4379",
+   "name": "Ｐｈｏｔｏｓｙｎｔｈ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "フィデリティ投信株式会社",
+    "filing_count": 4,
+    "dates": [
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "360",
+     "360",
+     "360",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 417.0,
+    "latest_price": 417.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     645.2,
+     675.6,
+     763.0,
+     755.9
     ]
    }
   },
@@ -2739,8 +3759,8 @@
    "gate2": {
     "passed": true,
     "master_cost": 1886.0,
-    "latest_price": 1891.0,
-    "premium_pct": 0.002651113467656416
+    "latest_price": 1890.0,
+    "premium_pct": 0.0021208907741251328
    },
    "gate3": {
     "passed": true,
@@ -2755,36 +3775,74 @@
    }
   },
   {
-   "code": "4385",
-   "name": "メルカリ",
+   "code": "4396",
+   "name": "システムサポ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": false,
-    "lead_filer": "三井住友トラスト・アセットマネジメント株式会社",
-    "filing_count": 1,
+    "passed": true,
+    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "filing_count": 2,
     "dates": [
-     "2026-04-21"
+     "2026-06-05",
+     "2026-06-05"
     ],
     "doc_types": [
+     "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 4108.0,
-    "latest_price": 4101.0,
-    "premium_pct": -0.0017039922103213243
+    "master_cost": 1018.0,
+    "latest_price": 1018.0,
+    "premium_pct": 0.0
    },
    "gate3": {
-    "passed": true,
+    "passed": false,
     "weeks": 3,
-    "drop_pct": 0.20419446102733144,
+    "drop_pct": null,
     "series": [
-     3852.7,
-     3836.0,
-     3823.8,
-     3066.0
+     108.6,
+     116.7,
+     130.6,
+     130.5
+    ]
+   }
+  },
+  {
+   "code": "4448",
+   "name": "ｋｕｂｅｌｌ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社Ｆｕｎ＆Ｃｒｅａｔｉｖｅ",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-02",
+     "2026-06-02"
+    ],
+    "doc_types": [
+     "360",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 321.0,
+    "latest_price": 311.0,
+    "premium_pct": -0.03115264797507788
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     831.6,
+     777.0,
+     798.7,
+     823.4
     ]
    }
   },
@@ -2807,18 +3865,90 @@
    "gate2": {
     "passed": true,
     "master_cost": 1112.0,
-    "latest_price": 1110.0,
-    "premium_pct": -0.0017985611510791368
+    "latest_price": 1166.0,
+    "premium_pct": 0.048561151079136694
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.1395242031781024,
+    "drop_pct": 0.1409989160343533,
     "series": [
+     1199.3,
+     1193.9,
      1088.7,
-     1030.2,
-     1004.1,
-     936.8
+     1030.2
+    ]
+   }
+  },
+  {
+   "code": "4452",
+   "name": "花王",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "三井住友トラスト・アセットマネジメント株式会社",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-06",
+     "2026-04-21",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 5971.0,
+    "latest_price": 5915.0,
+    "premium_pct": -0.009378663540445486
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     657.5,
+     682.3,
+     603.0,
+     489.5
+    ]
+   }
+  },
+  {
+   "code": "4478",
+   "name": "フリー",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "みずほ証券株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2160.0,
+    "latest_price": 2160.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.07745961820851677,
+    "series": [
+     544.8,
+     511.0,
+     510.7,
+     502.6
     ]
    }
   },
@@ -2877,18 +4007,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 3475.0,
-    "latest_price": 3520.0,
-    "premium_pct": 0.012949640287769784
+    "latest_price": 3190.0,
+    "premium_pct": -0.08201438848920864
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.4760869565217391,
+    "drop_pct": 0.46496815286624205,
     "series": [
+     47.1,
      46.0,
      45.9,
-     25.2,
-     24.1
+     25.2
+    ]
+   }
+  },
+  {
+   "code": "4556",
+   "name": "カイノス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "旭化成セラピューティクス株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-07",
+     "2026-04-07"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2267.0,
+    "latest_price": 2268.0,
+    "premium_pct": 0.0004411116012351125
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1.5,
+     1.6,
+     1.4,
+     1.2
     ]
    }
   },
@@ -2917,18 +4083,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 28.25,
-    "latest_price": 21.0,
-    "premium_pct": -0.25663716814159293
+    "latest_price": 20.0,
+    "premium_pct": -0.2920353982300885
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     20477.3,
      25979.7,
      20418.7,
-     18807.9,
-     19516.2
+     18807.9
     ]
    }
   },
@@ -2953,18 +4119,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 408.5,
-    "latest_price": 424.0,
-    "premium_pct": 0.037943696450428395
+    "latest_price": 423.0,
+    "premium_pct": 0.03549571603427173
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1847.8,
      1862.0,
      1930.2,
-     1927.2,
-     2030.8
+     1927.2
     ]
    }
   },
@@ -2991,54 +4157,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 100.33333333333333,
-    "latest_price": 83.0,
-    "premium_pct": -0.17275747508305644
+    "latest_price": 75.0,
+    "premium_pct": -0.25249169435215946
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     6171.8,
      5996.5,
      6055.6,
-     6008.0,
-     5847.1
-    ]
-   }
-  },
-  {
-   "code": "4583",
-   "name": "カイオム",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "グロース・キャピタル株式会社",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-06",
-     "2026-04-21"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 102.5,
-    "latest_price": 90.0,
-    "premium_pct": -0.12195121951219512
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     6335.0,
-     6306.5,
-     6088.3,
-     6365.3
+     6008.0
     ]
    }
   },
@@ -3050,67 +4180,35 @@
    "gate1": {
     "passed": true,
     "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 3,
+    "filing_count": 4,
     "dates": [
      "2026-04-06",
      "2026-04-21",
-     "2026-04-24"
+     "2026-04-24",
+     "2026-06-03"
     ],
     "doc_types": [
      "350",
      "350",
-     "360"
+     "360",
+     "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 86.33333333333333,
-    "latest_price": 72.0,
-    "premium_pct": -0.16602316602316597
+    "master_cost": 81.5,
+    "latest_price": 66.0,
+    "premium_pct": -0.1901840490797546
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     9242.5,
      9207.0,
      9401.9,
-     9038.8,
-     8961.7
-    ]
-   }
-  },
-  {
-   "code": "4617",
-   "name": "中国塗料",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": false,
-    "lead_filer": "キャピタル・リサーチ・アンド・マネージメント・カンパニー",
-    "filing_count": 1,
-    "dates": [
-     "2026-04-22"
-    ],
-    "doc_types": [
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 3300.0,
-    "latest_price": 3460.0,
-    "premium_pct": 0.048484848484848485
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.1247007616974973,
-    "series": [
-     459.5,
-     454.4,
-     428.5,
-     402.2
+     9038.8
     ]
    }
   },
@@ -3135,18 +4233,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1216.5,
-    "latest_price": 1025.0,
-    "premium_pct": -0.15741882449650638
+    "latest_price": 1058.0,
+    "premium_pct": -0.1302918207973695
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     2585.8,
      2639.0,
      2709.4,
-     3682.0,
-     3682.6
+     3682.0
     ]
    }
   },
@@ -3171,18 +4269,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 4779.5,
-    "latest_price": 4871.0,
-    "premium_pct": 0.019144261952087037
+    "latest_price": 4999.0,
+    "premium_pct": 0.04592530599435087
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     59.0,
+     65.9,
      75.4,
-     74.2,
-     73.2,
-     73.3
+     74.2
     ]
    }
   },
@@ -3215,88 +4313,156 @@
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1.3,
      1.4,
      0.6,
-     0.6,
-     0.9
+     0.6
     ]
    }
   },
   {
-   "code": "4840",
-   "name": "トライアイズ",
+   "code": "4754",
+   "name": "トスネット",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "南　壮栄",
-    "filing_count": 4,
+    "lead_filer": "株式会社トスネット",
+    "filing_count": 2,
     "dates": [
-     "2026-05-01",
-     "2026-05-01",
-     "2026-05-01",
-     "2026-05-01"
+     "2026-06-02",
+     "2026-06-05"
     ],
     "doc_types": [
      "350",
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": false,
-    "master_cost": 765.0,
-    "latest_price": 816.0,
-    "premium_pct": 0.06666666666666667
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.13285410010649634,
-    "series": [
-     375.6,
-     367.6,
-     359.5,
-     325.7
-    ]
-   }
-  },
-  {
-   "code": "4881",
-   "name": "ファンペップ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "グロース・キャピタル株式会社",
-    "filing_count": 3,
-    "dates": [
-     "2026-04-08",
-     "2026-04-15",
-     "2026-04-23"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350"
+     "360"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 77.33333333333333,
-    "latest_price": 61.0,
-    "premium_pct": -0.2112068965517241
+    "master_cost": 1506.0,
+    "latest_price": 1522.0,
+    "premium_pct": 0.010624169986719787
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
-     5314.7,
-     5187.6,
-     5150.1,
-     5167.9
+     3.9,
+     3.5,
+     3.6,
+     6.5
+    ]
+   }
+  },
+  {
+   "code": "4883",
+   "name": "モダリス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-15",
+     "2026-04-24",
+     "2026-05-01"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 59.666666666666664,
+    "latest_price": 38.0,
+    "premium_pct": -0.3631284916201117
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     10974.9,
+     11391.2,
+     10901.1,
+     10075.2
+    ]
+   }
+  },
+  {
+   "code": "4884",
+   "name": "クリングルファーマ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-08",
+     "2026-04-09",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 416.0,
+    "latest_price": 338.0,
+    "premium_pct": -0.1875
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1439.2,
+     1472.6,
+     1406.9,
+     1390.4
+    ]
+   }
+  },
+  {
+   "code": "4892",
+   "name": "サイフューズ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "ＳＢＩ　Ｖｅｎｔｕｒｅｓ　Ｔｗｏ株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-27"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 710.0,
+    "latest_price": 579.0,
+    "premium_pct": -0.18450704225352113
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.02798708288482239,
+    "series": [
+     929.0,
+     909.9,
+     907.2,
+     903.0
     ]
    }
   },
@@ -3319,18 +4485,52 @@
    "gate2": {
     "passed": true,
     "master_cost": 740.0,
-    "latest_price": 701.0,
-    "premium_pct": -0.052702702702702706
+    "latest_price": 695.0,
+    "premium_pct": -0.060810810810810814
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.17526132404181188,
+    "drop_pct": 0.1691456243514356,
     "series": [
+     289.1,
      287.0,
      270.1,
-     240.2,
-     236.7
+     240.2
+    ]
+   }
+  },
+  {
+   "code": "4902",
+   "name": "コニカミノルタ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "エフィッシモ　キャピタル　マネージメント　ピーティーイー　エルティーディー（Ｅｆｆｉｓｓｉｍｏ　Ｃａｐｉｔａｌ　Ｍａｎａｇｅｍｅｎｔ　Ｐｔｅ　Ｌｔｄ）",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-02"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 596.7999877929688,
+    "latest_price": 621.0,
+    "premium_pct": 0.04054961913877634
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.2589276881986349,
+    "series": [
+     4043.6,
+     4016.9,
+     3281.8,
+     2996.6
     ]
    }
   },
@@ -3355,18 +4555,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 3284.5,
-    "latest_price": 2556.5,
-    "premium_pct": -0.22164713046125742
+    "latest_price": 2620.5,
+    "premium_pct": -0.20216166844268535
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     976.8,
      977.1,
      1080.9,
-     1309.7,
-     1405.4
+     1309.7
     ]
    }
   },
@@ -3391,18 +4591,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1177.0,
-    "latest_price": 1133.0,
-    "premium_pct": -0.037383177570093455
+    "latest_price": 1100.0,
+    "premium_pct": -0.06542056074766354
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     38.8,
      39.5,
      40.2,
-     40.9,
-     42.5
+     40.9
     ]
    }
   },
@@ -3427,18 +4627,126 @@
    "gate2": {
     "passed": true,
     "master_cost": 293.0,
-    "latest_price": 238.0,
-    "premium_pct": -0.18771331058020477
+    "latest_price": 223.0,
+    "premium_pct": -0.23890784982935154
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     3198.0,
      3370.8,
      3337.4,
-     3332.4,
-     3465.9
+     3332.4
+    ]
+   }
+  },
+  {
+   "code": "5038",
+   "name": "ｅＷｅＬＬ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "中野　剛人",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-08"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2145.0,
+    "latest_price": 1827.0,
+    "premium_pct": -0.14825174825174825
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.24099541584806802,
+    "series": [
+     152.7,
+     151.4,
+     125.6,
+     115.9
+    ]
+   }
+  },
+  {
+   "code": "5121",
+   "name": "藤倉コンポジット",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ひびき・パース・アドバイザーズ・エスピーシー",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-15",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2538.0,
+    "latest_price": 2567.0,
+    "premium_pct": 0.011426319936958234
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     528.6,
+     512.5,
+     457.7,
+     466.8
+    ]
+   }
+  },
+  {
+   "code": "5129",
+   "name": "ＦＩＸＥＲ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-14",
+     "2026-04-16",
+     "2026-04-20"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 441.0,
+    "latest_price": 265.0,
+    "premium_pct": -0.39909297052154197
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     760.4,
+     752.8,
+     757.2,
+     749.2
     ]
    }
   },
@@ -3461,18 +4769,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 543.0,
-    "latest_price": 475.0,
-    "premium_pct": -0.1252302025782689
+    "latest_price": 539.0,
+    "premium_pct": -0.007366482504604052
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.24544179523141657,
+    "drop_pct": 0.19508867667121416,
     "series": [
+     73.3,
      71.3,
      62.8,
-     59.0,
-     53.8
+     59.0
     ]
    }
   },
@@ -3495,18 +4803,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 3095.0,
-    "latest_price": 2578.0,
-    "premium_pct": -0.16704361873990306
+    "latest_price": 2566.0,
+    "premium_pct": -0.17092084006462036
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.4002647003214218,
+    "drop_pct": 0.39955930958501656,
     "series": [
+     544.6,
      528.9,
      524.4,
-     327.0,
-     317.2
+     327.0
     ]
    }
   },
@@ -3529,18 +4837,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 167.0,
-    "latest_price": 130.0,
-    "premium_pct": -0.2215568862275449
+    "latest_price": 124.0,
+    "premium_pct": -0.25748502994011974
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.19195691826630765,
+    "drop_pct": 0.16995428377920757,
     "series": [
+     2362.4,
      2302.6,
      2235.2,
-     1960.9,
-     1860.6
+     1960.9
     ]
    }
   },
@@ -3565,18 +4873,18 @@
    "gate2": {
     "passed": false,
     "master_cost": 3584.5,
-    "latest_price": 4176.0,
-    "premium_pct": 0.1650160412888827
+    "latest_price": 4353.0,
+    "premium_pct": 0.21439531315385688
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.25851083196795915,
+    "drop_pct": 0.18903422325748073,
     "series": [
+     558.1,
      549.3,
      483.2,
-     452.6,
-     407.3
+     452.6
     ]
    }
   },
@@ -3599,18 +4907,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 2691.0,
-    "latest_price": 2162.0,
-    "premium_pct": -0.19658119658119658
+    "latest_price": 1871.0,
+    "premium_pct": -0.3047194351542178
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.05196825890773291,
+    "drop_pct": 0.09113675423520742,
     "series": [
+     2036.5,
      1928.1,
      1893.7,
-     1850.9,
-     1827.9
+     1850.9
     ]
    }
   },
@@ -3635,18 +4943,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 4332.5,
-    "latest_price": 4060.0,
-    "premium_pct": -0.06289671090594345
+    "latest_price": 3360.0,
+    "premium_pct": -0.224466243508367
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     108.6,
      108.4,
      109.5,
-     115.6,
-     116.1
+     115.6
     ]
    }
   },
@@ -3671,18 +4979,88 @@
    "gate2": {
     "passed": true,
     "master_cost": 1041.0,
-    "latest_price": 896.0,
-    "premium_pct": -0.13928914505283382
+    "latest_price": 880.0,
+    "premium_pct": -0.15465898174831894
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     205.8,
      208.0,
      211.2,
-     203.4,
-     202.0
+     203.4
+    ]
+   }
+  },
+  {
+   "code": "5301",
+   "name": "東海カーボン",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "野村アセットマネジメント株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1882.0,
+    "latest_price": 1882.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.39401880684445817,
+    "series": [
+     648.7,
+     572.3,
+     407.7,
+     393.1
+    ]
+   }
+  },
+  {
+   "code": "5331",
+   "name": "ノリタケ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社ストラテジックキャピタル",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-24",
+     "2026-06-01"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3857.5,
+    "latest_price": 3950.0,
+    "premium_pct": 0.023979261179520414
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     186.5,
+     285.0,
+     206.7,
+     119.3
     ]
    }
   },
@@ -3707,18 +5085,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1091.0,
-    "latest_price": 1014.0,
-    "premium_pct": -0.07057745187901009
+    "latest_price": 1130.0,
+    "premium_pct": 0.035747021081576534
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
-     617.6,
-     604.3,
-     610.4,
-     586.0
+     624.9,
+     601.6,
+     597.9,
+     617.6
     ]
    }
   },
@@ -3749,18 +5127,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 591.4199951171875,
-    "latest_price": 556.2999877929688,
-    "premium_pct": -0.05938251600245578
+    "latest_price": 545.5999755859375,
+    "premium_pct": -0.077474586435264
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     35414.6,
      35771.7,
      40309.6,
-     42450.4,
-     41698.7
+     42450.4
+    ]
+   }
+  },
+  {
+   "code": "5444",
+   "name": "大和工業",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＪＰモルガン・アセット・マネジメント株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-20",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 11932.5,
+    "latest_price": 11640.0,
+    "premium_pct": -0.02451288497800126
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     60.4,
+     57.2,
+     55.4,
+     60.3
     ]
    }
   },
@@ -3783,18 +5197,132 @@
    "gate2": {
     "passed": true,
     "master_cost": 943.0,
-    "latest_price": 667.0,
-    "premium_pct": -0.2926829268292683
+    "latest_price": 643.0,
+    "premium_pct": -0.3181336161187699
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.051637279596977434,
+    "drop_pct": 0.1096849474912486,
     "series": [
+     85.7,
      79.4,
      76.8,
-     76.3,
-     75.3
+     76.3
+    ]
+   }
+  },
+  {
+   "code": "5644",
+   "name": "メタルアート",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社ＭＩ２",
+    "filing_count": 5,
+    "dates": [
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "360",
+     "360",
+     "360",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 7626.0,
+    "latest_price": 7650.0,
+    "premium_pct": 0.003147128245476003
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     70.5,
+     71.1,
+     74.1,
+     39.0
+    ]
+   }
+  },
+  {
+   "code": "5706",
+   "name": "三井金属",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-06",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": false,
+    "master_cost": 39005.0,
+    "latest_price": 44810.0,
+    "premium_pct": 0.1488270734521215
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.10339506172839517,
+    "series": [
+     583.2,
+     569.5,
+     554.9,
+     522.9
+    ]
+   }
+  },
+  {
+   "code": "5711",
+   "name": "三菱マテリアル",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "シルチェスター・インターナショナル・インベスターズ・エルエルピー",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-16",
+     "2026-06-02"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 5412.0,
+    "latest_price": 4945.0,
+    "premium_pct": -0.08628972653362897
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1181.6,
+     1201.2,
+     1282.5,
+     1391.7
     ]
    }
   },
@@ -3806,31 +5334,33 @@
    "gate1": {
     "passed": true,
     "lead_filer": "野村證券株式会社",
-    "filing_count": 2,
+    "filing_count": 3,
     "dates": [
      "2026-04-06",
-     "2026-04-20"
+     "2026-04-20",
+     "2026-06-04"
     ],
     "doc_types": [
+     "350",
      "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 2693.0,
-    "latest_price": 2430.0,
-    "premium_pct": -0.09766060155959896
+    "master_cost": 2767.0,
+    "latest_price": 2890.0,
+    "premium_pct": 0.044452475605348755
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1389.4,
      1373.9,
      1393.9,
-     1423.7,
-     1133.5
+     1423.7
     ]
    }
   },
@@ -3857,18 +5387,58 @@
    "gate2": {
     "passed": true,
     "master_cost": 808.0,
-    "latest_price": 703.0,
-    "premium_pct": -0.12995049504950495
+    "latest_price": 698.0,
+    "premium_pct": -0.13613861386138615
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     496.2,
      496.9,
      496.6,
-     480.2,
-     481.2
+     480.2
+    ]
+   }
+  },
+  {
+   "code": "5821",
+   "name": "平河ヒューテック",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＡＸＩＵＭ　ＣＡＰＩＴＡＬ　ＰＴＥ．ＬＴＤ．",
+    "filing_count": 4,
+    "dates": [
+     "2026-04-07",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "360",
+     "360",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3986.25,
+    "latest_price": 4015.0,
+    "premium_pct": 0.007212292254625274
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     300.8,
+     302.0,
+     362.3,
+     348.9
     ]
    }
   },
@@ -3893,18 +5463,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 2736.5,
-    "latest_price": 2346.0,
-    "premium_pct": -0.14270052987392653
+    "latest_price": 2237.0,
+    "premium_pct": -0.18253243193860771
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     628.7,
      660.3,
      608.3,
-     608.4,
-     625.1
+     608.4
     ]
    }
   },
@@ -3929,18 +5499,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 3797.5,
-    "latest_price": 3425.0,
-    "premium_pct": -0.09809084924292298
+    "latest_price": 3200.0,
+    "premium_pct": -0.15734035549703754
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     813.0,
      922.7,
      820.4,
-     881.7,
-     902.5
+     881.7
     ]
    }
   },
@@ -3969,54 +5539,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 2537.0,
-    "latest_price": 2248.0,
-    "premium_pct": -0.11391407173827355
+    "latest_price": 2157.0,
+    "premium_pct": -0.1497832085139929
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     100.2,
      97.0,
      87.3,
-     92.8,
-     92.4
-    ]
-   }
-  },
-  {
-   "code": "5981",
-   "name": "東京製綱",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "野村證券株式会社",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-06",
-     "2026-04-20"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1868.0,
-    "latest_price": 1838.0,
-    "premium_pct": -0.016059957173447537
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     231.1,
-     291.4,
-     268.7,
-     262.9
+     92.8
     ]
    }
   },
@@ -4041,18 +5575,88 @@
    "gate2": {
     "passed": true,
     "master_cost": 1635.0,
-    "latest_price": 1537.0,
-    "premium_pct": -0.0599388379204893
+    "latest_price": 1561.0,
+    "premium_pct": -0.04525993883792049
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     148.5,
      179.9,
      170.1,
-     171.8,
-     161.2
+     171.8
+    ]
+   }
+  },
+  {
+   "code": "6016",
+   "name": "ジャパンエン",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＪＰモルガン・アセット・マネジメント株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-20",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 10010.0,
+    "latest_price": 8230.0,
+    "premium_pct": -0.17782217782217782
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     283.8,
+     281.9,
+     294.8,
+     269.2
+    ]
+   }
+  },
+  {
+   "code": "6049",
+   "name": "イトクロ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "株式会社ＳＢＩ証券",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-21"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 281.0,
+    "latest_price": 253.0,
+    "premium_pct": -0.099644128113879
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.05464190981432357,
+    "series": [
+     565.5,
+     556.3,
+     546.0,
+     534.6
     ]
    }
   },
@@ -4079,18 +5683,52 @@
    "gate2": {
     "passed": true,
     "master_cost": 352.0,
-    "latest_price": 343.0,
-    "premium_pct": -0.02556818181818182
+    "latest_price": 350.0,
+    "premium_pct": -0.005681818181818182
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     59.8,
      62.6,
      67.0,
-     67.3,
-     67.9
+     67.3
+    ]
+   }
+  },
+  {
+   "code": "6083",
+   "name": "ＥＲＩホールディングス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "光通信株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1303.0,
+    "latest_price": 1342.0,
+    "premium_pct": 0.029930928626247123
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.3326790971540726,
+    "series": [
+     305.7,
+     275.7,
+     224.7,
+     204.0
     ]
    }
   },
@@ -4102,13 +5740,15 @@
    "gate1": {
     "passed": true,
     "lead_filer": "株式会社シグマクシス・ホールディングス",
-    "filing_count": 3,
+    "filing_count": 4,
     "dates": [
      "2026-04-13",
      "2026-04-22",
-     "2026-04-27"
+     "2026-04-27",
+     "2026-06-05"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350"
@@ -4116,19 +5756,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 645.6666666666666,
-    "latest_price": 554.0,
-    "premium_pct": -0.1419721218378936
+    "master_cost": 619.0,
+    "latest_price": 539.0,
+    "premium_pct": -0.12924071082390953
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     951.4,
      916.8,
      1142.6,
-     1157.2,
-     1190.3
+     1157.2
     ]
    }
   },
@@ -4153,18 +5793,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1159.0,
-    "latest_price": 1027.0,
-    "premium_pct": -0.11389128559102675
+    "latest_price": 1017.0,
+    "premium_pct": -0.12251941328731665
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     71.0,
      72.5,
      112.7,
-     116.0,
-     117.8
+     116.0
     ]
    }
   },
@@ -4189,32 +5829,68 @@
    "gate2": {
     "passed": true,
     "master_cost": 301.0,
-    "latest_price": 241.0,
-    "premium_pct": -0.19933554817275748
+    "latest_price": 169.0,
+    "premium_pct": -0.43853820598006643
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     44.7,
      41.8,
      45.5,
-     48.4,
-     22.7
+     48.4
     ]
    }
   },
   {
-   "code": "6181",
-   "name": "タメニー",
+   "code": "6161",
+   "name": "エスティック",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社フラクタル・ビジネス",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-07",
+     "2026-04-30"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1015.5,
+    "latest_price": 1032.0,
+    "premium_pct": 0.01624815361890694
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1152.2,
+     1194.8,
+     1174.1,
+     1051.1
+    ]
+   }
+  },
+  {
+   "code": "6171",
+   "name": "土木管理総合試験所",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": false,
-    "lead_filer": "佐藤　茂",
+    "lead_filer": "下平　雄二",
     "filing_count": 1,
     "dates": [
-     "2026-04-07"
+     "2026-06-01"
     ],
     "doc_types": [
      "350"
@@ -4222,19 +5898,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 102.0,
-    "latest_price": 79.0,
-    "premium_pct": -0.22549019607843138
+    "master_cost": 385.0,
+    "latest_price": 392.0,
+    "premium_pct": 0.01818181818181818
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.1288034674488857,
+    "drop_pct": 0.052132701421800945,
     "series": [
-     2284.1,
-     2159.8,
-     1996.0,
-     1989.9
+     316.5,
+     315.9,
+     307.1,
+     300.0
     ]
    }
   },
@@ -4245,11 +5921,117 @@
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "モルガン・スタンレーＭＵＦＧ証券株式会社",
+    "lead_filer": "ユービーエス・エイ・ジー（銀行）",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-07",
+     "2026-04-22",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1114.6666666666667,
+    "latest_price": 1112.0,
+    "premium_pct": -0.0023923444976077235
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     20.2,
+     23.4,
+     17.2,
+     11.1
+    ]
+   }
+  },
+  {
+   "code": "6240",
+   "name": "ヤマシンフィルタ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "アセットマネジメントＯｎｅ株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 535.0,
+    "latest_price": 535.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.2942897593204341,
+    "series": [
+     1059.5,
+     972.2,
+     882.3,
+     747.7
+    ]
+   }
+  },
+  {
+   "code": "6254",
+   "name": "野村マイクロ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 4455.0,
+    "latest_price": 4325.0,
+    "premium_pct": -0.029180695847362513
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.1735987427972761,
+    "series": [
+     1909.0,
+     1905.0,
+     1618.4,
+     1577.6
+    ]
+   }
+  },
+  {
+   "code": "6269",
+   "name": "三井海洋開発",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＪＰモルガン・アセット・マネジメント株式会社",
     "filing_count": 2,
     "dates": [
-     "2026-04-06",
-     "2026-04-21"
+     "2026-04-20",
+     "2026-06-03"
     ],
     "doc_types": [
      "350",
@@ -4258,19 +6040,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 1116.0,
-    "latest_price": 1111.0,
-    "premium_pct": -0.004480286738351254
+    "master_cost": 11590.0,
+    "latest_price": 10530.0,
+    "premium_pct": -0.091458153580673
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
-     23.4,
-     17.2,
-     11.1,
-     11.1
+     1560.8,
+     1625.8,
+     1794.0,
+     1717.2
     ]
    }
   },
@@ -4295,52 +6077,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 2207.0,
-    "latest_price": 2200.0,
-    "premium_pct": -0.0031717263253285004
+    "latest_price": 2038.0,
+    "premium_pct": -0.07657453556864521
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     5467.4,
      5469.2,
      5594.9,
-     5017.4,
-     4983.2
-    ]
-   }
-  },
-  {
-   "code": "6378",
-   "name": "木村化工機",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": false,
-    "lead_filer": "三井住友信託銀行株式会社",
-    "filing_count": 1,
-    "dates": [
-     "2026-04-06"
-    ],
-    "doc_types": [
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1358.0,
-    "latest_price": 1216.0,
-    "premium_pct": -0.10456553755522828
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.1622094719439852,
-    "series": [
-     1028.3,
-     896.9,
-     880.9,
-     861.5
+     5017.4
     ]
    }
   },
@@ -4365,18 +6113,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 3135.0,
-    "latest_price": 2887.0,
-    "premium_pct": -0.07910685805422647
+    "latest_price": 2696.0,
+    "premium_pct": -0.14003189792663476
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     391.0,
+     390.6,
      423.0,
-     391.4,
-     361.2,
-     362.2
+     391400.0
+    ]
+   }
+  },
+  {
+   "code": "6555",
+   "name": "ＭＳコンサル",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "光通信株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-07",
+     "2026-04-28"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 449.0,
+    "latest_price": 441.0,
+    "premium_pct": -0.017817371937639197
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     104.0,
+     110.4,
+     108.6,
+     107400.0
     ]
    }
   },
@@ -4388,14 +6172,16 @@
    "gate1": {
     "passed": true,
     "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 4,
+    "filing_count": 5,
     "dates": [
      "2026-04-06",
      "2026-04-07",
      "2026-04-14",
-     "2026-04-24"
+     "2026-04-24",
+     "2026-06-01"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350",
@@ -4404,19 +6190,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 53.25,
-    "latest_price": 31.0,
-    "premium_pct": -0.41784037558685444
+    "master_cost": 48.4,
+    "latest_price": 29.0,
+    "premium_pct": -0.40082644628099173
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     4777.5,
      4657.6,
      4588.4,
-     4815.4,
-     5042.4
+     4815.4
     ]
    }
   },
@@ -4441,52 +6227,54 @@
    "gate2": {
     "passed": false,
     "master_cost": 2792.0,
-    "latest_price": 3165.0,
-    "premium_pct": 0.13359598853868196
+    "latest_price": 3225.0,
+    "premium_pct": 0.15508595988538681
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.5353881278538812,
+    "drop_pct": 0.5011185682326622,
     "series": [
+     89.4,
      87.6,
      51.1,
-     44.6,
-     40.7
+     44.6
     ]
    }
   },
   {
-   "code": "6674",
-   "name": "ＧＳユアサ",
+   "code": "6670",
+   "name": "ＭＣＪ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": false,
-    "lead_filer": "三井住友信託銀行株式会社",
-    "filing_count": 1,
+    "passed": true,
+    "lead_filer": "ＢＣＰＥ　Ｍｅｔａ　Ｃａｙｍａｎ，　Ｌ．Ｐ．",
+    "filing_count": 2,
     "dates": [
-     "2026-04-06"
+     "2026-04-14",
+     "2026-04-14"
     ],
     "doc_types": [
+     "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 5977.0,
-    "latest_price": 6212.0,
-    "premium_pct": 0.0393173833026602
+    "master_cost": 2184.0,
+    "latest_price": 2184.0,
+    "premium_pct": 0.0
    },
    "gate3": {
-    "passed": true,
+    "passed": false,
     "weeks": 3,
-    "drop_pct": 0.20885963351716783,
+    "drop_pct": null,
     "series": [
-     562.1,
-     490.3,
-     463.8,
-     444.7
+     22.7,
+     21.2,
+     23.4,
+     27.4
     ]
    }
   },
@@ -4498,31 +6286,123 @@
    "gate1": {
     "passed": true,
     "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 2,
+    "filing_count": 3,
     "dates": [
      "2026-04-15",
-     "2026-04-24"
+     "2026-04-24",
+     "2026-06-04"
     ],
     "doc_types": [
+     "350",
      "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 556.5,
-    "latest_price": 455.0,
-    "premium_pct": -0.18238993710691823
+    "master_cost": 527.0,
+    "latest_price": 489.0,
+    "premium_pct": -0.07210626185958255
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     879.4,
+     844.0,
      835.1,
-     815.6,
-     785.7,
-     801.6
+     815600.0
+    ]
+   }
+  },
+  {
+   "code": "6728",
+   "name": "アルバック",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "フィデリティ投信株式会社",
+    "filing_count": 8,
+    "dates": [
+     "2026-06-04",
+     "2026-06-04",
+     "2026-06-04",
+     "2026-06-04",
+     "2026-06-04",
+     "2026-06-04",
+     "2026-06-04",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 9080.0,
+    "latest_price": 8956.0,
+    "premium_pct": -0.013656387665198238
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     103.8,
+     107.8,
+     121.4,
+     136.8
+    ]
+   }
+  },
+  {
+   "code": "6731",
+   "name": "ピクセラ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "filing_count": 5,
+    "dates": [
+     "2026-04-07",
+     "2026-04-13",
+     "2026-04-13",
+     "2026-04-13",
+     "2026-04-20"
+    ],
+    "doc_types": [
+     "350",
+     "360",
+     "360",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 198.2,
+    "latest_price": 138.0,
+    "premium_pct": -0.30373360242179614
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     468.7,
+     480.7,
+     509.8,
+     464800.0
     ]
    }
   },
@@ -4545,32 +6425,32 @@
    "gate2": {
     "passed": true,
     "master_cost": 637.0,
-    "latest_price": 633.7000122070312,
-    "premium_pct": -0.005180514588647959
+    "latest_price": 665.5999755859375,
+    "premium_pct": 0.04489792085704474
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.2430240696223717,
+    "drop_pct": 0.2779095689950841,
     "series": [
+     6997.6,
      6572.6,
      5783.7,
-     5052.9,
-     4975.3
+     5052.9
     ]
    }
   },
   {
-   "code": "6788",
-   "name": "日本トリム",
+   "code": "6762",
+   "name": "ＴＤＫ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": false,
-    "lead_filer": "光通信株式会社",
+    "lead_filer": "ＴＤＫ株式会社",
     "filing_count": 1,
     "dates": [
-     "2026-05-01"
+     "2026-06-03"
     ],
     "doc_types": [
      "350"
@@ -4578,95 +6458,161 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 4260.0,
-    "latest_price": 4170.0,
-    "premium_pct": -0.02112676056338028
+    "master_cost": 3950.0,
+    "latest_price": 4082.0,
+    "premium_pct": 0.033417721518987344
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.0927152317880795,
+    "drop_pct": 0.22000232315019164,
     "series": [
-     15.1,
-     14.1,
-     13.9,
-     13.7
+     3443.6,
+     2958.8,
+     2832.2,
+     2686.0
     ]
    }
   },
   {
-   "code": "6798",
-   "name": "ＳＭＫ",
+   "code": "6770",
+   "name": "アルプスアルパイン",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "ｆｕｎｄｎｏｔｅ株式会社",
+    "lead_filer": "株式会社エスグラントコーポレーション",
     "filing_count": 2,
     "dates": [
-     "2026-04-22",
-     "2026-04-23"
+     "2026-04-09",
+     "2026-06-04"
     ],
     "doc_types": [
      "350",
-     "360"
+     "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 3325.0,
-    "latest_price": 3485.0,
-    "premium_pct": 0.0481203007518797
+    "master_cost": 2189.5,
+    "latest_price": 2095.5,
+    "premium_pct": -0.04293217629595798
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
-     41.7,
-     42.6,
-     44.4,
-     44.8
+     151.9,
+     228.8,
+     175.0,
+     179.3
     ]
    }
   },
   {
-   "code": "6838",
-   "name": "多摩川ホールディングス",
+   "code": "6786",
+   "name": "ＲＶＨ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "ＣＡＮＴＯＲ　ＦＩＴＺＧＥＲＡＬＤ　ＥＵＲＯＰＥ",
-    "filing_count": 4,
+    "lead_filer": "株式会社ＳＢＩ証券",
+    "filing_count": 2,
     "dates": [
-     "2026-04-07",
-     "2026-04-14",
-     "2026-04-21",
+     "2026-04-06",
      "2026-04-21"
     ],
     "doc_types": [
-     "350",
-     "350",
      "350",
      "350"
     ]
    },
    "gate2": {
+    "passed": true,
+    "master_cost": 53.5,
+    "latest_price": 51.0,
+    "premium_pct": -0.04672897196261682
+   },
+   "gate3": {
     "passed": false,
-    "master_cost": 1560.75,
-    "latest_price": 2255.0,
-    "premium_pct": 0.4448181963799455
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1223.2,
+     1029.7,
+     1068.5,
+     996200.0
+    ]
+   }
+  },
+  {
+   "code": "6807",
+   "name": "日本航空電子工業",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "シンプレクス・アセット・マネジメント株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2447.0,
+    "latest_price": 2447.0,
+    "premium_pct": 0.0
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.1533792650918635,
+    "drop_pct": 0.2935034802784223,
     "series": [
-     1219.2,
-     1116.2,
-     1051.1,
-     1032.2
+     86.2,
+     70.1,
+     63.1,
+     60.9
+    ]
+   }
+  },
+  {
+   "code": "6810",
+   "name": "マクセル",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "グランサム、マヨ、ヴァン　オッテルロー　アンド　カンパニー　エルエルシー",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-08",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2147.0,
+    "latest_price": 2086.0,
+    "premium_pct": -0.02841173730787145
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     237.4,
+     321.5,
+     369.7,
+     389.2
     ]
    }
   },
@@ -4691,18 +6637,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 425.0,
-    "latest_price": 425.0,
-    "premium_pct": 0.0
+    "latest_price": 417.0,
+    "premium_pct": -0.018823529411764704
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     319.6,
+     318.2,
      315.5,
-     317.7,
-     321.3,
-     322.6
+     317700.0
     ]
    }
   },
@@ -4714,31 +6660,33 @@
    "gate1": {
     "passed": true,
     "lead_filer": "モルガン・スタンレーＭＵＦＧ証券株式会社",
-    "filing_count": 2,
+    "filing_count": 3,
     "dates": [
      "2026-04-06",
-     "2026-04-21"
+     "2026-04-21",
+     "2026-06-04"
     ],
     "doc_types": [
+     "350",
      "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 1154.5,
-    "latest_price": 945.0,
-    "premium_pct": -0.18146383715894326
+    "master_cost": 1075.3333333333333,
+    "latest_price": 932.0,
+    "premium_pct": -0.13329200247985115
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     313.0,
+     310.8,
      308.6,
-     318.9,
-     352.0,
-     350.7
+     318900.0
     ]
    }
   },
@@ -4761,18 +6709,126 @@
    "gate2": {
     "passed": true,
     "master_cost": 5623.0,
-    "latest_price": 5016.0,
-    "premium_pct": -0.1079494931531211
+    "latest_price": 4287.0,
+    "premium_pct": -0.2375955895429486
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.09867966151921236,
+    "drop_pct": 0.1260661403341894,
     "series": [
+     6307.8,
      6074.2,
      5958.0,
-     5512.6,
-     5474.8
+     5512.6
+    ]
+   }
+  },
+  {
+   "code": "7012",
+   "name": "川崎重工業",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＦＭＲ　ＬＬＣ",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-22",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3007.0,
+    "latest_price": 2913.0,
+    "premium_pct": -0.03126039241769205
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     17996.9,
+     17297.5,
+     16557.8,
+     17138.0
+    ]
+   }
+  },
+  {
+   "code": "7013",
+   "name": "ＩＨＩ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "キャピタル・リサーチ・アンド・マネージメント・カンパニー",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-23",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2823.75,
+    "latest_price": 2620.5,
+    "premium_pct": -0.07197875166002655
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     21619.3,
+     22425.6,
+     26705.2,
+     24770.6
+    ]
+   }
+  },
+  {
+   "code": "7014",
+   "name": "名村造船所",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＪＰモルガン・アセット・マネジメント株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-20",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3815.0,
+    "latest_price": 3700.0,
+    "premium_pct": -0.03014416775884666
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1951.1,
+     2118.4,
+     2060.1,
+     1786000.0
     ]
    }
   },
@@ -4797,18 +6853,56 @@
    "gate2": {
     "passed": true,
     "master_cost": 399.0,
-    "latest_price": 385.0,
-    "premium_pct": -0.03508771929824561
+    "latest_price": 391.0,
+    "premium_pct": -0.020050125313283207
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     420.3,
      410.7,
      398.9,
-     399.1,
-     411.9
+     399.1
+    ]
+   }
+  },
+  {
+   "code": "7057",
+   "name": "エヌ・シー・エヌ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "田鎖　郁夫",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-21",
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "360",
+     "360",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 917.0,
+    "latest_price": 899.0,
+    "premium_pct": -0.019629225736095966
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     73.1,
+     71.6,
+     72.6,
+     78800.0
     ]
    }
   },
@@ -4833,18 +6927,52 @@
    "gate2": {
     "passed": true,
     "master_cost": 881.0,
-    "latest_price": 805.0,
-    "premium_pct": -0.08626560726447219
+    "latest_price": 825.0,
+    "premium_pct": -0.06356413166855845
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     129.8,
+     132.5,
      132.0,
-     134.6,
-     128.8,
-     126.0
+     134600.0
+    ]
+   }
+  },
+  {
+   "code": "7067",
+   "name": "ブランドＴ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "株式会社ＥＰＡＲＫ",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-01"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 986.0,
+    "latest_price": 1032.0,
+    "premium_pct": 0.04665314401622718
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.09649122807017543,
+    "series": [
+     57.0,
+     56.8,
+     55.8,
+     51.5
     ]
    }
   },
@@ -4885,42 +7013,6 @@
    }
   },
   {
-   "code": "7089",
-   "name": "フォースタートアップス",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "楽天証券株式会社",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-07",
-     "2026-04-22"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": false,
-    "master_cost": 1203.5,
-    "latest_price": 1585.0,
-    "premium_pct": 0.3169921063564603
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.3024981449418749,
-    "series": [
-     404.3,
-     356.6,
-     317.3,
-     282.0
-    ]
-   }
-  },
-  {
    "code": "7093",
    "name": "アディッシュ",
    "in_pocket": false,
@@ -4943,18 +7035,52 @@
    "gate2": {
     "passed": true,
     "master_cost": 544.0,
-    "latest_price": 500.0,
-    "premium_pct": -0.08088235294117647
+    "latest_price": 503.0,
+    "premium_pct": -0.07536764705882353
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     177.3,
      175.8,
      173.4,
-     180.5,
-     193.9
+     180.5
+    ]
+   }
+  },
+  {
+   "code": "7095",
+   "name": "マクビープラ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-07"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1329.0,
+    "latest_price": 1180.0,
+    "premium_pct": -0.11211437170805116
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.08060385496697663,
+    "series": [
+     741.9,
+     711.2,
+     695.8,
+     682.1
     ]
    }
   },
@@ -4979,18 +7105,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1566.5,
-    "latest_price": 1560.0,
-    "premium_pct": -0.004149377593360996
+    "latest_price": 1600.0,
+    "premium_pct": 0.02138525375039898
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     52.6,
      51.7,
      54.4,
-     53.4,
-     53.5
+     53.4
     ]
    }
   },
@@ -5015,18 +7141,88 @@
    "gate2": {
     "passed": true,
     "master_cost": 2181.5,
-    "latest_price": 1814.0,
-    "premium_pct": -0.16846206738482694
+    "latest_price": 1718.0,
+    "premium_pct": -0.21246848498739399
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     286.6,
      280.2,
      327.4,
-     311.9,
-     326.1
+     311.9
+    ]
+   }
+  },
+  {
+   "code": "7172",
+   "name": "ＪＩＡ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社ジャパンインベストメントアドバイザー",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-07",
+     "2026-04-27"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2004.0,
+    "latest_price": 2033.0,
+    "premium_pct": 0.014471057884231538
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1857.3,
+     1724.5,
+     1624.5,
+     1639.9
+    ]
+   }
+  },
+  {
+   "code": "7187",
+   "name": "ジェイリース",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-07"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1298.0,
+    "latest_price": 1272.0,
+    "premium_pct": -0.020030816640986132
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.18399482312338225,
+    "series": [
+     463.6,
+     424.3,
+     388.3,
+     378.3
     ]
    }
   },
@@ -5051,8 +7247,8 @@
    "gate2": {
     "passed": true,
     "master_cost": 3351.5,
-    "latest_price": 3013.0,
-    "premium_pct": -0.10099955243920633
+    "latest_price": 2853.5,
+    "premium_pct": -0.1485901834999254
    },
    "gate3": {
     "passed": false,
@@ -5063,6 +7259,42 @@
      18233.4,
      18334.7,
      16714.9
+    ]
+   }
+  },
+  {
+   "code": "7220",
+   "name": "武蔵精密工業",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "三井住友トラスト・アセットマネジメント株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-21",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": false,
+    "master_cost": 6307.5,
+    "latest_price": 8340.0,
+    "premium_pct": 0.3222354340071344
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.3591160220994476,
+    "series": [
+     144.8,
+     101.4,
+     98.0,
+     92.8
     ]
    }
   },
@@ -5085,18 +7317,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 404.0,
-    "latest_price": 325.0,
-    "premium_pct": -0.19554455445544555
+    "latest_price": 351.0,
+    "premium_pct": -0.1311881188118812
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.3096432930964329,
+    "drop_pct": 0.2517956362650765,
     "series": [
+     737.9,
      737.3,
      623.9,
-     552.1,
-     509.0
+     552.1
+    ]
+   }
+  },
+  {
+   "code": "7264",
+   "name": "ムロコーポレーション",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "有限会社インテレクチュアル",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-04",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1272.0,
+    "latest_price": 1272.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     39.4,
+     39.3,
+     60.7,
+     54.5
     ]
    }
   },
@@ -5123,18 +7391,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 641.3333333333334,
-    "latest_price": 638.0,
-    "premium_pct": -0.005197505197505256
+    "latest_price": 630.0,
+    "premium_pct": -0.017671517671517728
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     2059.4,
      1996.4,
      1959.1,
-     2222.4,
-     2848.8
+     2222.4
     ]
    }
   },
@@ -5167,10 +7435,10 @@
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     3.4,
+     3.3,
      1.5,
-     2.3,
-     1.8,
-     3.1
+     2.3
     ]
    }
   },
@@ -5195,18 +7463,88 @@
    "gate2": {
     "passed": true,
     "master_cost": 1535.5,
-    "latest_price": 1235.0,
-    "premium_pct": -0.19570172582220774
+    "latest_price": 1165.0,
+    "premium_pct": -0.24128948225333768
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     593.3,
      551.8,
      528.8,
-     546.1,
-     522.7
+     546.1
+    ]
+   }
+  },
+  {
+   "code": "7426",
+   "name": "山大",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "株式会社ＳＢＩ証券",
+    "filing_count": 1,
+    "dates": [
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 604.0,
+    "latest_price": 603.0,
+    "premium_pct": -0.0016556291390728477
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.22983870967741932,
+    "series": [
+     24.8,
+     21.6,
+     20.0,
+     19.1
+    ]
+   }
+  },
+  {
+   "code": "7476",
+   "name": "アズワン",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2142.5,
+    "latest_price": 2142.5,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     71.3,
+     66.0,
+     74.9,
+     64.1
     ]
    }
   },
@@ -5229,58 +7567,88 @@
    "gate2": {
     "passed": true,
     "master_cost": 1895.0,
-    "latest_price": 1821.0,
-    "premium_pct": -0.03905013192612137
+    "latest_price": 1827.0,
+    "premium_pct": -0.035883905013192614
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.029087261785356124,
+    "drop_pct": 0.1049773755656108,
     "series": [
+     110.5,
      99.7,
      99.3,
-     98.9,
-     96.8
+     98.9
     ]
    }
   },
   {
-   "code": "7501",
-   "name": "ティムコ",
+   "code": "7516",
+   "name": "コーナン商事",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": true,
-    "lead_filer": "株式会社キャピタルギャラリー",
-    "filing_count": 4,
+    "passed": false,
+    "lead_filer": "コーナン商事株式会社",
+    "filing_count": 1,
     "dates": [
-     "2026-04-09",
-     "2026-04-09",
-     "2026-04-30",
-     "2026-04-30"
+     "2026-04-06"
     ],
     "doc_types": [
-     "350",
-     "360",
-     "350",
-     "360"
+     "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 2018.5,
-    "latest_price": 1404.0,
-    "premium_pct": -0.3044339856328957
+    "master_cost": 4425.0,
+    "latest_price": 4050.0,
+    "premium_pct": -0.0847457627118644
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.18851823118696673,
+    "series": [
+     128.9,
+     114.0,
+     110.2,
+     104.6
+    ]
+   }
+  },
+  {
+   "code": "7531",
+   "name": "清和中央ＨＤ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "エスケー興産株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-03",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "360",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1350.0,
+    "latest_price": 1350.0,
+    "premium_pct": 0.0
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
-     45.4,
-     16.2,
-     12.3,
-     39.9
+     14.2,
+     13.8,
+     15.0,
+     12.7
     ]
    }
   },
@@ -5305,18 +7673,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 104.5,
-    "latest_price": 88.0,
-    "premium_pct": -0.15789473684210525
+    "latest_price": 86.0,
+    "premium_pct": -0.17703349282296652
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1366.7,
      1414.3,
      1465.1,
-     1416.1,
-     1247.2
+     1416.1
     ]
    }
   },
@@ -5339,18 +7707,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 5100.0,
-    "latest_price": 5190.0,
-    "premium_pct": 0.01764705882352941
+    "latest_price": 5110.0,
+    "premium_pct": 0.00196078431372549
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.22807017543859653,
+    "drop_pct": 0.17450958158521374,
     "series": [
+     881.9,
      866.4,
      795.0,
-     728.0,
-     668.8
+     728.0
     ]
    }
   },
@@ -5362,13 +7730,15 @@
    "gate1": {
     "passed": true,
     "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 3,
+    "filing_count": 4,
     "dates": [
      "2026-04-07",
      "2026-04-22",
-     "2026-04-30"
+     "2026-04-30",
+     "2026-06-02"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350"
@@ -5376,19 +7746,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 99.66666666666667,
-    "latest_price": 70.0,
-    "premium_pct": -0.2976588628762542
+    "master_cost": 91.5,
+    "latest_price": 67.0,
+    "premium_pct": -0.2677595628415301
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     3451.0,
      3418.7,
      3470.7,
-     3422.3,
-     3451.6
+     3422.3
     ]
    }
   },
@@ -5411,18 +7781,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 122.0,
-    "latest_price": 96.0,
-    "premium_pct": -0.21311475409836064
+    "latest_price": 97.0,
+    "premium_pct": -0.20491803278688525
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.15915566886622676,
+    "drop_pct": 0.19778253394617726,
     "series": [
+     2850.1,
      2667.2,
      2531.7,
-     2286.4,
-     2242.7
+     2286.4
+    ]
+   }
+  },
+  {
+   "code": "7637",
+   "name": "白銅",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "山田　のどか",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-03",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "360",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3530.0,
+    "latest_price": 3595.0,
+    "premium_pct": 0.018413597733711047
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     46.6,
+     48.7,
+     87.6,
+     84.2
     ]
    }
   },
@@ -5434,13 +7840,15 @@
    "gate1": {
     "passed": true,
     "lead_filer": "株式会社ミダスキャピタル",
-    "filing_count": 3,
+    "filing_count": 4,
     "dates": [
      "2026-04-15",
      "2026-04-15",
-     "2026-04-15"
+     "2026-04-15",
+     "2026-06-02"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350"
@@ -5448,19 +7856,19 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 3645.0,
-    "latest_price": 3755.0,
-    "premium_pct": 0.03017832647462277
+    "master_cost": 3713.75,
+    "latest_price": 3745.0,
+    "premium_pct": 0.00841467519353753
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     241.3,
      233.6,
      378.5,
-     380.0,
-     374.2
+     380.0
     ]
    }
   },
@@ -5489,18 +7897,56 @@
    "gate2": {
     "passed": true,
     "master_cost": 2000.25,
-    "latest_price": 1912.5,
-    "premium_pct": -0.043869516310461196
+    "latest_price": 1964.5,
+    "premium_pct": -0.017872765904261966
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     365.2,
      275.8,
      212.9,
-     255.8,
-     333.5
+     255.8
+    ]
+   }
+  },
+  {
+   "code": "7762",
+   "name": "シチズン時計",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "フィデリティ投信株式会社",
+    "filing_count": 3,
+    "dates": [
+     "2026-06-04",
+     "2026-06-04",
+     "2026-06-04"
+    ],
+    "doc_types": [
+     "360",
+     "360",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2256.0,
+    "latest_price": 2247.0,
+    "premium_pct": -0.003989361702127659
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     159.6,
+     170.0,
+     137.6,
+     117.2
     ]
    }
   },
@@ -5525,18 +7971,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 3590.0,
-    "latest_price": 3625.0,
-    "premium_pct": 0.009749303621169917
+    "latest_price": 3665.0,
+    "premium_pct": 0.020891364902506964
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     74.2,
      80.3,
      82.8,
-     83.8,
-     82.8
+     83.8
     ]
    }
   },
@@ -5561,18 +8007,56 @@
    "gate2": {
     "passed": true,
     "master_cost": 517.0,
-    "latest_price": 446.0,
-    "premium_pct": -0.13733075435203096
+    "latest_price": 465.0,
+    "premium_pct": -0.10058027079303675
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     13955.7,
      13963.5,
      13587.6,
-     13657.4,
-     13121.4
+     13657.4
+    ]
+   }
+  },
+  {
+   "code": "7821",
+   "name": "前田工繊",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "filing_count": 3,
+    "dates": [
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1781.0,
+    "latest_price": 1781.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     72.9,
+     67.0,
+     82.9,
+     107.5
     ]
    }
   },
@@ -5597,18 +8081,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 87.5,
-    "latest_price": 77.0,
-    "premium_pct": -0.12
+    "latest_price": 74.0,
+    "premium_pct": -0.15428571428571428
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     850.4,
      848.6,
      896.8,
-     892.8,
-     904.5
+     892.8
     ]
    }
   },
@@ -5633,18 +8117,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1115.5,
-    "latest_price": 1094.0,
-    "premium_pct": -0.01927386822052891
+    "latest_price": 1080.0,
+    "premium_pct": -0.03182429403854774
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     551.4,
      560.8,
      564.9,
-     561.5,
-     564.1
+     561.5
     ]
    }
   },
@@ -5669,18 +8153,92 @@
    "gate2": {
     "passed": true,
     "master_cost": 1131.0,
-    "latest_price": 909.0,
-    "premium_pct": -0.1962864721485411
+    "latest_price": 809.0,
+    "premium_pct": -0.28470380194518125
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     61.9,
+     60.1,
      64.2,
-     69.3,
-     56.3,
-     55.0
+     69300.0
+    ]
+   }
+  },
+  {
+   "code": "7922",
+   "name": "三光産業",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社バロン",
+    "filing_count": 3,
+    "dates": [
+     "2026-04-16",
+     "2026-04-27",
+     "2026-04-27"
+    ],
+    "doc_types": [
+     "350",
+     "360",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 717.0,
+    "latest_price": 719.0,
+    "premium_pct": 0.002789400278940028
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     151.5,
+     95.3,
+     52.2,
+     10700.0
+    ]
+   }
+  },
+  {
+   "code": "7936",
+   "name": "アシックス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＪＰモルガン・アセット・マネジメント株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-20",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 4555.5,
+    "latest_price": 4414.0,
+    "premium_pct": -0.031061354406761058
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     702.6,
+     800.4,
+     1102.7,
+     1055.3
     ]
    }
   },
@@ -5711,18 +8269,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 2015.1,
-    "latest_price": 1925.5,
-    "premium_pct": -0.044464294575951524
+    "latest_price": 1865.5,
+    "premium_pct": -0.07423949183663338
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     7807.0,
      7335.4,
      6910.2,
-     7308.8,
-     7326.8
+     7308.8
     ]
    }
   },
@@ -5745,18 +8303,52 @@
    "gate2": {
     "passed": true,
     "master_cost": 3860.0,
-    "latest_price": 3635.0,
-    "premium_pct": -0.05829015544041451
+    "latest_price": 3700.0,
+    "premium_pct": -0.04145077720207254
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.4394160583941606,
+    "drop_pct": 0.07122093023255813,
     "series": [
+     68.8,
      68.5,
      67.4,
-     63.9,
-     38.4
+     63.9
+    ]
+   }
+  },
+  {
+   "code": "8089",
+   "name": "ナイス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "株式会社みずほ銀行",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-07"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 2100.0,
+    "latest_price": 1841.0,
+    "premium_pct": -0.12333333333333334
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.06007067137809185,
+    "series": [
+     56.6,
+     56.2,
+     54.5,
+     53.2
     ]
    }
   },
@@ -5783,18 +8375,128 @@
    "gate2": {
     "passed": true,
     "master_cost": 2523.0,
-    "latest_price": 2140.0,
-    "premium_pct": -0.15180340864050734
+    "latest_price": 2201.0,
+    "premium_pct": -0.12762584225128815
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     147.8,
      152.0,
      166.1,
-     195.5,
-     196.2
+     195.5
+    ]
+   }
+  },
+  {
+   "code": "8105",
+   "name": "ＢＴＣＪＰＮ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "バックト・オプコ・ホールディングス・エルエルシー",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 246.0,
+    "latest_price": 246.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     8071.6,
+     8017.7,
+     7303.5,
+     6951000.0
+    ]
+   }
+  },
+  {
+   "code": "8136",
+   "name": "サンリオ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＪＰモルガン・アセット・マネジメント株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-20",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 977.25,
+    "latest_price": 916.4000244140624,
+    "premium_pct": -0.06226653935629329
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     46657.1,
+     43896.0,
+     43952.8,
+     43864.0
+    ]
+   }
+  },
+  {
+   "code": "8141",
+   "name": "新光商事",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社シティインデックスファースト",
+    "filing_count": 3,
+    "dates": [
+     "2026-06-01",
+     "2026-06-02",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1579.3333333333333,
+    "latest_price": 1583.0,
+    "premium_pct": 0.002321654706627317
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     143.8,
+     96.2,
+     87.6,
+     108.2
     ]
    }
   },
@@ -5827,10 +8529,10 @@
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     976.3,
+     975.2,
      953.3,
-     935.3,
-     951.0,
-     921.1
+     935300.0
     ]
    }
   },
@@ -5853,18 +8555,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 1979.5,
-    "latest_price": 1965.5,
-    "premium_pct": -0.007072493053801465
+    "latest_price": 2017.0,
+    "premium_pct": 0.018944177822682495
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.2210403855742065,
+    "drop_pct": 0.21057226764028894,
     "series": [
+     1259.9,
      1203.4,
      1043.6,
-     994.6,
-     937.4
+     994.6
     ]
    }
   },
@@ -5889,104 +8591,32 @@
    "gate2": {
     "passed": true,
     "master_cost": 1925.0,
-    "latest_price": 1400.0,
-    "premium_pct": -0.2727272727272727
+    "latest_price": 1538.0,
+    "premium_pct": -0.20103896103896104
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     66.7,
      70.6,
      92.7,
-     95.8,
-     119.3
+     95.8
     ]
    }
   },
   {
-   "code": "8254",
-   "name": "さいか屋",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-10",
-     "2026-04-20"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 265.5,
-    "latest_price": 211.0,
-    "premium_pct": -0.20527306967984935
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     439.6,
-     445.9,
-     449.3,
-     447.2
-    ]
-   }
-  },
-  {
-   "code": "8473",
-   "name": "ＳＢＩホールディングス",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "ＳＢＩホールディングス株式会社",
-    "filing_count": 2,
-    "dates": [
-     "2026-04-13",
-     "2026-04-17"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 3103.5,
-    "latest_price": 2978.5,
-    "premium_pct": -0.040277106492669565
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     7470.4,
-     7295.7,
-     7228.6,
-     8054.6
-    ]
-   }
-  },
-  {
-   "code": "8511",
-   "name": "日本証券金融",
+   "code": "8289",
+   "name": "Ｏｌｙｍｐｉｃグループ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": false,
-    "lead_filer": "日本証券金融株式会社",
+    "lead_filer": "株式会社カネヨシ",
     "filing_count": 1,
     "dates": [
-     "2026-04-20"
+     "2026-06-03"
     ],
     "doc_types": [
      "350"
@@ -5994,19 +8624,207 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 2245.0,
-    "latest_price": 2293.0,
-    "premium_pct": 0.021380846325167038
+    "master_cost": 968.0,
+    "latest_price": 979.0,
+    "premium_pct": 0.011363636363636364
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.21100362756952845,
+    "drop_pct": 0.2916666666666667,
     "series": [
-     165.4,
-     152.9,
-     133.3,
-     130.5
+     98.4,
+     92.3,
+     69.8,
+     69.7
+    ]
+   }
+  },
+  {
+   "code": "8306",
+   "name": "三菱ＵＦＪ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社三菱ＵＦＪフィナンシャル・グループ",
+    "filing_count": 42,
+    "dates": [
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-06",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-20",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-04-28",
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": false,
+    "master_cost": 2897.690476190476,
+    "latest_price": 3214.0,
+    "premium_pct": 0.1091591826002646
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.20306603773584908,
+    "series": [
+     36888.0,
+     36784.6,
+     35141.4,
+     29397.3
+    ]
+   }
+  },
+  {
+   "code": "8345",
+   "name": "岩手銀行",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-22",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1900.5,
+    "latest_price": 1893.0,
+    "premium_pct": -0.003946329913180742
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     663.2,
+     722.0,
+     802.1,
+     770.5
+    ]
+   }
+  },
+  {
+   "code": "8395",
+   "name": "佐賀銀行",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "野村證券株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-07",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 5105.0,
+    "latest_price": 5250.0,
+    "premium_pct": 0.02840352595494613
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     504.1,
+     508.7,
+     550.9,
+     541.4
     ]
    }
   },
@@ -6016,31 +8834,35 @@
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": false,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 1,
+    "passed": true,
+    "lead_filer": "日本アジア投資株式会社",
+    "filing_count": 3,
     "dates": [
-     "2026-04-20"
+     "2026-06-04",
+     "2026-06-04",
+     "2026-06-05"
     ],
     "doc_types": [
+     "350",
+     "360",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 151.0,
-    "latest_price": 144.0,
-    "premium_pct": -0.046357615894039736
+    "master_cost": 138.66666666666666,
+    "latest_price": 138.0,
+    "premium_pct": -0.0048076923076922394
    },
    "gate3": {
-    "passed": true,
+    "passed": false,
     "weeks": 3,
-    "drop_pct": 0.14378042638912208,
+    "drop_pct": null,
     "series": [
+     2453.7,
+     2474.1,
      2382.8,
-     2327.6,
-     2195.3,
-     2040.2
+     2327600.0
     ]
    }
   },
@@ -6067,54 +8889,52 @@
    "gate2": {
     "passed": true,
     "master_cost": 2247.5,
-    "latest_price": 2253.0,
-    "premium_pct": 0.002447163515016685
+    "latest_price": 2223.0,
+    "premium_pct": -0.010901001112347052
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     581.2,
      577.6,
      583.0,
-     572.7,
-     578.9
+     572.7
     ]
    }
   },
   {
-   "code": "8742",
-   "name": "小林洋行",
+   "code": "8739",
+   "name": "スパークス・グループ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": true,
-    "lead_filer": "株式会社ＮＳＨＤ",
-    "filing_count": 2,
+    "passed": false,
+    "lead_filer": "Ｍ＆Ｇインベストメント・マネジメント・リミテッド",
+    "filing_count": 1,
     "dates": [
-     "2026-04-07",
-     "2026-04-07"
+     "2026-06-05"
     ],
     "doc_types": [
-     "350",
-     "360"
+     "350"
     ]
    },
    "gate2": {
-    "passed": false,
-    "master_cost": 524.0,
-    "latest_price": 562.0,
-    "premium_pct": 0.07251908396946564
+    "passed": true,
+    "master_cost": 2146.0,
+    "latest_price": 2146.0,
+    "premium_pct": 0.0
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.008826774549466633,
+    "drop_pct": 0.4811656005685856,
     "series": [
-     271.9,
-     271.7,
-     271.4,
-     269.5
+     140.7,
+     136.0,
+     77.0,
+     73.0
     ]
    }
   },
@@ -6126,50 +8946,58 @@
    "gate1": {
     "passed": true,
     "lead_filer": "Ｓｅａｃａｓｔｌｅ　Ｓｉｎｇａｐｏｒｅ　Ｐｔｅ．Ｌｔｄ",
-    "filing_count": 4,
+    "filing_count": 8,
     "dates": [
      "2026-04-07",
      "2026-04-23",
      "2026-04-27",
-     "2026-04-27"
+     "2026-04-27",
+     "2026-06-02",
+     "2026-06-02",
+     "2026-06-02",
+     "2026-06-02"
     ],
     "doc_types": [
      "350",
      "350",
+     "360",
+     "350",
+     "360",
+     "360",
      "360",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 204.75,
-    "latest_price": 119.0,
-    "premium_pct": -0.4188034188034188
+    "master_cost": 162.875,
+    "latest_price": 109.0,
+    "premium_pct": -0.33077513430544897
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1438.7,
+     1538.2,
      1683.9,
-     1735.9,
-     1815.2,
-     2015.0
+     1735900.0
     ]
    }
   },
   {
-   "code": "9048",
-   "name": "名古屋鉄道",
+   "code": "8818",
+   "name": "京阪神ビルディング",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "野村證券株式会社",
+    "lead_filer": "株式会社ストラテジックキャピタル",
     "filing_count": 2,
     "dates": [
-     "2026-04-07",
-     "2026-04-22"
+     "2026-04-30",
+     "2026-06-02"
     ],
     "doc_types": [
      "350",
@@ -6178,155 +9006,101 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 1769.5,
-    "latest_price": 1813.5,
-    "premium_pct": 0.02486578129415089
+    "master_cost": 2044.0,
+    "latest_price": 2074.0,
+    "premium_pct": 0.014677103718199608
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
-     489.0,
-     483.3,
-     474.6,
-     592.0
+     102.2,
+     111.3,
+     104.6,
+     102.8
     ]
    }
   },
   {
-   "code": "9069",
-   "name": "センコーＨＤ",
+   "code": "8914",
+   "name": "エリアリンク",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": false,
-    "lead_filer": "野村證券株式会社",
-    "filing_count": 1,
+    "passed": true,
+    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "filing_count": 7,
     "dates": [
-     "2026-04-07"
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05"
     ],
     "doc_types": [
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 1872.5,
-    "latest_price": 1904.5,
-    "premium_pct": 0.017089452603471295
+    "master_cost": 894.0,
+    "latest_price": 894.0,
+    "premium_pct": 0.0
    },
    "gate3": {
-    "passed": true,
+    "passed": false,
     "weeks": 3,
-    "drop_pct": 0.2934397163120567,
+    "drop_pct": null,
     "series": [
-     112.8,
-     108.6,
-     100.8,
-     79.7
+     823.9,
+     879.0,
+     913.7,
+     944600.0
     ]
    }
   },
   {
-   "code": "9107",
-   "name": "川崎汽船",
+   "code": "9166",
+   "name": "ＧＥＮＤＡ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": false,
-    "lead_filer": "野村證券株式会社",
-    "filing_count": 1,
+    "passed": true,
+    "lead_filer": "株式会社ミダスキャピタル",
+    "filing_count": 2,
     "dates": [
-     "2026-04-07"
+     "2026-06-02",
+     "2026-06-02"
     ],
     "doc_types": [
-     "350"
+     "350",
+     "360"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 2750.0,
-    "latest_price": 2518.0,
-    "premium_pct": -0.08436363636363636
+    "master_cost": 622.0,
+    "latest_price": 641.0,
+    "premium_pct": 0.03054662379421222
    },
    "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.08734073160706946,
-    "series": [
-     2433.0,
-     2319.7,
-     2262.1,
-     2220.5
-    ]
-   }
-  },
-  {
-   "code": "9115",
-   "name": "明海グループ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
     "passed": false,
-    "lead_filer": "ゼナーアセットマネジメントエルエルピー",
-    "filing_count": 1,
-    "dates": [
-     "2026-04-13"
-    ],
-    "doc_types": [
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1290.0,
-    "latest_price": 1161.0,
-    "premium_pct": -0.1
-   },
-   "gate3": {
-    "passed": true,
     "weeks": 3,
-    "drop_pct": 0.021812656242341064,
+    "drop_pct": null,
     "series": [
-     2040.1,
-     2015.6,
-     2007.0,
-     1995.6
-    ]
-   }
-  },
-  {
-   "code": "9127",
-   "name": "玉井商船",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": false,
-    "lead_filer": "三井住友海上火災保険株式会社",
-    "filing_count": 1,
-    "dates": [
-     "2026-04-06"
-    ],
-    "doc_types": [
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 2906.0,
-    "latest_price": 2944.0,
-    "premium_pct": 0.01307639366827254
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.3100558659217877,
-    "series": [
-     35.8,
-     27.3,
-     25.6,
-     24.7
+     8660.9,
+     8678.8,
+     9311.6,
+     9288.4
     ]
    }
   },
@@ -6349,18 +9123,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 2585.0,
-    "latest_price": 2691.5,
-    "premium_pct": 0.041199226305609286
+    "latest_price": 2689.5,
+    "premium_pct": 0.04042553191489362
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.2526969597907812,
+    "drop_pct": 0.18460487253192592,
     "series": [
+     4244.2,
      3976.7,
      3567.3,
-     3460.7,
-     2971.8
+     3460.7
     ]
    }
   },
@@ -6385,90 +9159,166 @@
    "gate2": {
     "passed": true,
     "master_cost": 404.5,
-    "latest_price": 320.0,
-    "premium_pct": -0.2088998763906057
+    "latest_price": 306.0,
+    "premium_pct": -0.24351050679851668
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1161.0,
      1206.1,
      1174.8,
-     1128.2,
-     1146.2
+     1128.2
     ]
    }
   },
   {
-   "code": "9270",
-   "name": "バリュエンス",
+   "code": "9331",
+   "name": "キャスター",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "ＳＦプロパティマネジメント株式会社",
-    "filing_count": 3,
+    "lead_filer": "株式会社Ｗｉｚ",
+    "filing_count": 2,
     "dates": [
-     "2026-05-01",
-     "2026-05-01",
-     "2026-05-01"
+     "2026-06-03",
+     "2026-06-04"
     ],
     "doc_types": [
-     "350",
      "350",
      "360"
     ]
    },
    "gate2": {
-    "passed": false,
-    "master_cost": 2329.0,
-    "latest_price": 2495.0,
-    "premium_pct": 0.07127522541863461
+    "passed": true,
+    "master_cost": 1047.5,
+    "latest_price": 890.0,
+    "premium_pct": -0.15035799522673032
    },
    "gate3": {
-    "passed": true,
+    "passed": false,
     "weeks": 3,
-    "drop_pct": 0.3119214586255259,
+    "drop_pct": null,
     "series": [
-     356.5,
-     305.8,
-     283.3,
-     245.3
+     60.3,
+     60.4,
+     66.4,
+     70.4
     ]
    }
   },
   {
-   "code": "9307",
-   "name": "杉村倉庫",
+   "code": "9338",
+   "name": "ＩＮＦＯＲＩＣＨ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": false,
-    "lead_filer": "野村證券株式会社",
-    "filing_count": 1,
+    "passed": true,
+    "lead_filer": "株式会社ＢＣＪー１０２",
+    "filing_count": 2,
     "dates": [
-     "2026-04-08"
+     "2026-04-07",
+     "2026-04-07"
     ],
     "doc_types": [
+     "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 1066.0,
-    "latest_price": 1024.0,
-    "premium_pct": -0.039399624765478425
+    "master_cost": 4520.0,
+    "latest_price": 4535.0,
+    "premium_pct": 0.00331858407079646
    },
    "gate3": {
-    "passed": true,
+    "passed": false,
     "weeks": 3,
-    "drop_pct": 0.09239472030169697,
+    "drop_pct": null,
     "series": [
-     159.1,
-     152.8,
-     147.7,
-     144.4
+     4.9,
+     5.2,
+     3.6,
+     3.0
+    ]
+   }
+  },
+  {
+   "code": "9362",
+   "name": "兵機海運",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "有限会社山広運輸興業",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-16",
+     "2026-04-24"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3700.0,
+    "latest_price": 3615.0,
+    "premium_pct": -0.022972972972972974
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1.5,
+     1.4,
+     1.4,
+     1300.0
+    ]
+   }
+  },
+  {
+   "code": "9425",
+   "name": "ＲｅＹｕｕ　Ｊａｐａｎ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｓｅａｃａｓｔｌｅ　Ｓｉｎｇａｐｏｒｅ　Ｐｔｅ．Ｌｔｄ",
+    "filing_count": 4,
+    "dates": [
+     "2026-06-01",
+     "2026-06-01",
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "360",
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 186.0,
+    "latest_price": 182.0,
+    "premium_pct": -0.021505376344086023
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1548.9,
+     1587.6,
+     1555.8,
+     1521.2
     ]
    }
   },
@@ -6493,18 +9343,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 39040.0,
-    "latest_price": 36940.0,
-    "premium_pct": -0.053790983606557374
+    "latest_price": 36890.0,
+    "premium_pct": -0.05507172131147541
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     278.5,
      314.0,
      327.6,
-     328.7,
-     322.7
+     328.7
     ]
    }
   },
@@ -6529,18 +9379,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 711.0,
-    "latest_price": 693.0,
-    "premium_pct": -0.02531645569620253
+    "latest_price": 734.0,
+    "premium_pct": 0.03234880450070324
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     511.9,
+     514.8,
      513.5,
-     510.0,
-     515.1,
-     515.3
+     510000.0
     ]
    }
   },
@@ -6565,18 +9415,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 502.0,
-    "latest_price": 473.0,
-    "premium_pct": -0.05776892430278884
+    "latest_price": 474.0,
+    "premium_pct": -0.055776892430278883
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     4.9,
+     7.3,
      6.1,
-     6.8,
-     6.9,
-     6.8
+     6800.0
     ]
    }
   },
@@ -6601,18 +9451,18 @@
    "gate2": {
     "passed": true,
     "master_cost": 2502.75,
-    "latest_price": 2329.0,
-    "premium_pct": -0.06942363400259714
+    "latest_price": 2334.5,
+    "premium_pct": -0.06722605134352212
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     1682.2,
      1667.2,
      1588.2,
-     1648.8,
-     1524.6
+     1648.8
     ]
    }
   },
@@ -6637,18 +9487,52 @@
    "gate2": {
     "passed": false,
     "master_cost": 669.0,
-    "latest_price": 848.0,
-    "premium_pct": 0.26756352765321373
+    "latest_price": 1141.0,
+    "premium_pct": 0.7055306427503737
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.3507764583061464,
+    "drop_pct": 0.34434372283621006,
     "series": [
+     1610.6,
      1532.6,
      1457.9,
-     1056.0,
-     995.0
+     1056.0
+    ]
+   }
+  },
+  {
+   "code": "9561",
+   "name": "グラッドキューブ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "金島弘樹",
+    "filing_count": 1,
+    "dates": [
+     "2026-04-17"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 454.0,
+    "latest_price": 436.0,
+    "premium_pct": -0.039647577092511016
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.489800493162968,
+    "series": [
+     446.1,
+     418.3,
+     231.1,
+     227.6
     ]
    }
   },
@@ -6673,18 +9557,54 @@
    "gate2": {
     "passed": true,
     "master_cost": 713.0,
-    "latest_price": 716.0,
-    "premium_pct": 0.004207573632538569
+    "latest_price": 720.0,
+    "premium_pct": 0.009817671809256662
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
+     75.8,
      78.1,
      79.5,
-     78.0,
-     80.0
+     78.0
+    ]
+   }
+  },
+  {
+   "code": "9702",
+   "name": "アイ・エス・ビー",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "ＡＸＩＵＭ　ＣＡＰＩＴＡＬ　ＰＴＥ．ＬＴＤ．",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-22",
+     "2026-06-03"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": false,
+    "master_cost": 2197.0,
+    "latest_price": 2358.0,
+    "premium_pct": 0.07328174783796086
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.05419450631031911,
+    "series": [
+     269.4,
+     262.7,
+     255.7,
+     254.8
     ]
    }
   },
@@ -6707,86 +9627,134 @@
    "gate2": {
     "passed": true,
     "master_cost": 4045.0,
-    "latest_price": 4210.0,
-    "premium_pct": 0.0407911001236094
+    "latest_price": 3905.0,
+    "premium_pct": -0.034610630407911
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.21889400921658986,
+    "drop_pct": 0.24242424242424246,
     "series": [
+     46.2,
      43.4,
      37.1,
-     35.0,
-     33.9
+     35.0
     ]
    }
   },
   {
-   "code": "9816",
-   "name": "ストライダーズ",
+   "code": "9830",
+   "name": "トラスコ中山",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": false,
-    "lead_filer": "成成株式会社",
-    "filing_count": 1,
+    "passed": true,
+    "lead_filer": "みずほ証券株式会社",
+    "filing_count": 2,
     "dates": [
+     "2026-04-07",
      "2026-04-22"
     ],
     "doc_types": [
+     "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 325.0,
-    "latest_price": 301.0,
-    "premium_pct": -0.07384615384615385
+    "master_cost": 2345.0,
+    "latest_price": 2198.0,
+    "premium_pct": -0.0626865671641791
    },
    "gate3": {
-    "passed": true,
+    "passed": false,
     "weeks": 3,
-    "drop_pct": 0.17800762112139354,
+    "drop_pct": null,
     "series": [
-     734.8,
-     620.2,
-     614.8,
-     604.0
+     126.9,
+     135.2,
+     116.4,
+     108.2
     ]
    }
   },
   {
-   "code": "9843",
-   "name": "ニトリホールディングス",
+   "code": "9878",
+   "name": "セキド",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
-    "passed": false,
-    "lead_filer": "野村アセットマネジメント株式会社",
-    "filing_count": 1,
+    "passed": true,
+    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "filing_count": 2,
     "dates": [
-     "2026-04-21"
+     "2026-04-07",
+     "2026-06-02"
     ],
     "doc_types": [
+     "350",
      "350"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 2443.0,
-    "latest_price": 2475.0,
-    "premium_pct": 0.013098649201801064
+    "master_cost": 464.0,
+    "latest_price": 447.0,
+    "premium_pct": -0.036637931034482756
    },
    "gate3": {
-    "passed": true,
+    "passed": false,
     "weeks": 3,
-    "drop_pct": 0.48671043574945727,
+    "drop_pct": null,
     "series": [
-     3777.4,
-     2726.1,
-     2273.0,
-     1938.9
+     105.3,
+     103.6,
+     104.9,
+     101900.0
+    ]
+   }
+  },
+  {
+   "code": "9890",
+   "name": "マキヤ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社マキリ",
+    "filing_count": 6,
+    "dates": [
+     "2026-06-02",
+     "2026-06-02",
+     "2026-06-02",
+     "2026-06-02",
+     "2026-06-02",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1408.5,
+    "latest_price": 1391.0,
+    "premium_pct": -0.012424565140220093
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     143.8,
+     143.2,
+     143.3,
+     146000.0
     ]
    }
   },
@@ -6817,8 +9785,8 @@
    "gate2": {
     "passed": true,
     "master_cost": 963.0,
-    "latest_price": 964.0,
-    "premium_pct": 0.0010384215991692627
+    "latest_price": 972.0,
+    "premium_pct": 0.009345794392523364
    },
    "gate3": {
     "passed": false,
@@ -6827,8 +9795,84 @@
     "series": [
      1.4,
      1.4,
-     0.8,
-     0.8
+     1.4,
+     1400.0
+    ]
+   }
+  },
+  {
+   "code": "9960",
+   "name": "東テク",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "filing_count": 4,
+    "dates": [
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3720.0,
+    "latest_price": 3720.0,
+    "premium_pct": 0.0
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     35.7,
+     35.7,
+     56.9,
+     67.7
+    ]
+   }
+  },
+  {
+   "code": "9989",
+   "name": "サンドラッグ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "オービス・インベストメント・マネジメント・リミテッド",
+    "filing_count": 2,
+    "dates": [
+     "2026-04-07",
+     "2026-06-05"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 3871.0,
+    "latest_price": 3780.0,
+    "premium_pct": -0.023508137432188065
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     107.2,
+     106.0,
+     103.3,
+     106.5
     ]
    }
   }

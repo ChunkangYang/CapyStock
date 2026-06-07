@@ -9,7 +9,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from api.routers import (
-    analytics, compare, data, dividend, exit_strategy, favorites, health, indicators, ingest, ledger, meta, notify, pocket, portfolio, scan, scheduler, signals, simulation, sweep, watchlist,
+    analytics, compare, data, dividend, exit_strategy, favorites, health, indicators, ingest, ledger, meta, notify, pocket, portfolio, scan, scheduler, signals, watchlist,
 )
 from api.services import scheduler_service as scheduler_service_module
 
@@ -52,7 +52,6 @@ app.include_router(signals.router, prefix="/api/v1", tags=["signals"])
 app.include_router(dividend.router, prefix="/api/v1", tags=["dividend"])
 app.include_router(scan.router, prefix="/api/v1", tags=["scan"])
 app.include_router(favorites.router, prefix="/api/v1", tags=["favorites"])
-app.include_router(simulation.router, prefix="/api/v1", tags=["simulation"])
 app.include_router(notify.router, prefix="/api/v1", tags=["notify"])
 app.include_router(scheduler.router, prefix="/api/v1", tags=["scheduler"])
 app.include_router(health.router, prefix="/api/v1", tags=["health"])
@@ -60,7 +59,6 @@ app.include_router(indicators.router, prefix="/api/v1", tags=["indicators"])
 app.include_router(compare.router, prefix="/api/v1", tags=["compare"])
 app.include_router(ingest.router, prefix="/api/v1", tags=["ingest"])
 app.include_router(analytics.router, prefix="/api/v1", tags=["analytics"])
-app.include_router(sweep.router, prefix="/api/v1", tags=["sweep"])
 app.include_router(data.router, prefix="/api/v1", tags=["data"])
 app.include_router(portfolio.router, prefix="/api/v1", tags=["portfolio"])
 app.include_router(exit_strategy.router, prefix="/api/v1", tags=["exit_strategy"])

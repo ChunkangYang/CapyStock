@@ -10,7 +10,7 @@
 | No. | 描述 | 來源 | 優先度 | 狀態 | 完成日期 |
 |-----|------|------|--------|------|----------|
 | IMP-001 | 新增 `/watchlist` 獨立頁面：目前追蹤清單僅能透過 CLI 操作，期望在前端提供完整管理 UI，含股票列表顯示、新增（代碼 + 起始價）、刪除功能。後端 API（GET / POST / DELETE `/api/v1/watchlist`）已存在。 | Non-Designed | 高 | 🚧 已實裝，⬜ 待驗收 | 2026-05-05 |
-| IMP-002 | 模擬交易大改：移除回測、改純「跟單帳本 + 移動式停利」，從 /pocket 用 popup 確認購入成本加入。詳見下方專節。 | 使用者 2026-06-07 | 高 | ⬜ 待實裝 | — |
+| IMP-002 | 模擬交易大改：移除回測、改純「跟單帳本 + 棘輪移動停損」，從 /pocket 用 popup 確認購入成本加入。詳見下方專節。 | 使用者 2026-06-07 | 高 | ✅ 已完成 | 2026-06-07 |
 
 ---
 
@@ -68,9 +68,11 @@
 - **取消固定停利 M**：popup 只填單一「移動停損 N%」，停利由同一條棘輪線升過進場價後自然形成。（使用者選 a，2026-06-07）
 
 ### 實裝狀態
-- ⬜ ① popup + 帳本 CRUD（新增/刪除帳本、加入交易）
-- ⬜ ② 棘輪式移動停損每日出場
-- ⬜ ③ 完全移除回測
+- ✅ ① popup + 帳本 CRUD：後端 `api/services/ledger_service.py` + `routers/ledger.py`；前端 `/ledger`（列表/詳情）+ /pocket popup + /signals 個股頁進場改接帳本。
+- ✅ ② 棘輪式移動停損每日出場：`ledger_service.advance_trade`（7 tests），排程 job `ledger_advance`（每日 7:00）取代舊 `paper_advance`。
+- ✅ ③ 完全移除回測：以 `DELETE_` prefix 移除 `backtest_engine` / `simulation_service` / `strategy_sweep_service` / `routers.simulation` / `routers.sweep` / `schemas.simulation` / `schemas.sweep` / `workers.paper_worker` / 前端 `routes/simulation`（移出 routes 成 `src/DELETE_simulation_routes`）+ 對應測試。main.py 取消註冊；health/scheduler 改接 ledger。
+
+**狀態：✅ 已完成（2026-06-07）**。表格列狀態同步更新為 ✅。
 
 ### 實裝註記
 - 目前 /pocket 的「模擬交易」按鈕（`toSimulation`，導向 `/simulation/new`）為過渡實作，本案落地時改為 popup。
