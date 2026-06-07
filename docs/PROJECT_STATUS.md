@@ -1,7 +1,21 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-06-06（全市場三訊號修復：快照硬化 #3 + 停損分層 #2 + 吃貨用真實個股資料重定義 #1）
+2026-06-07（每日三盤濾網選股上線：EDINET 連續性 + 主力成本 + 信用残籌碼集中 → 口袋名單 + /pocket 頁）
+
+## 2026-06-07 每日三盤濾網選股（舅舅心法第二篇）
+- 三盤（三關全過進口袋名單），全用「真實個股資料」（非全市場攤平 flow）：
+  - 第一盤 連續性：同一 EDINET 申報人窗口內重複申報 ≥ N 次（`pocket_filter.gate1_continuity`）
+  - 第二盤 成本：主力成本＝申報日鄰近收盤均價，現價 ≤ +5%（`gate2_cost`）
+  - 第三盤 籌碼集中：信用残 margin_long 連續 N 週下降（`gate3_margin`）
+- 新增（全為新檔，未動既有掃描/快照/analyzer）：
+  - `capystock/pocket_filter.py`（純函式三盤 + `evaluate_stock`）
+  - `api/services/pocket_service.py`（讀 EDINET daily + 個股 CSV，全市場掃描 + JSON 快照）
+  - `api/routers/pocket.py`（GET/POST `/api/v1/pocket`）
+  - `frontend/src/routes/pocket/+page.svelte`（漏斗 + 口袋名單 + 差一關觀察名單）
+  - `tests/unit/test_pocket_filter.py`（12 passed）
+- 掃描結果（2026-06-07 快照）：候選 638 → 第一盤 172 → +第二盤 132 → 口袋名單 24 檔。
+- 對映決策與不確定（EDINET「連續」近似、主力成本近似、極端負溢價待查、daily 快取窗口）見 [NOTES.md](NOTES.md)。
 
 ## 2026-06-06 全市場訊號修復（三件）
 - 背景：抓最新資料後全市場看不到任何吃貨/出貨/停損訊號。根因見

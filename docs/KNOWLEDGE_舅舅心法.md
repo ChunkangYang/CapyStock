@@ -272,13 +272,23 @@
 | 量能停損 | 爆量不漲 → 警告 | `config.py VOLUME_SPIKE_*`, `analyzer.py` |
 | 抱單第四條（最後一階） | watchlist 可填 `last_step_price`（手動） | `storage.py`, `analyzer.py` |
 
+### v3 新增（2026-06-07，每日三盤濾網選股）
+| 心法概念 | CapyStock 對應 | 實作位置 |
+|---------|---------------|---------|
+| 三盤濾網選股（第二篇） | 全市場跑三盤、三關全過進「口袋名單」+ 前端漏斗 | `capystock/pocket_filter.py`, `api/services/pocket_service.py`, `routers/pocket.py`, `/pocket` |
+| 第一盤 連續性 | 同一 EDINET 申報人在窗口內重複申報（350/360）≥ N 次 | `pocket_filter.gate1_continuity`（`config.POCKET_GATE1_*`） |
+| 第二盤 成本 | 主力成本＝各申報日鄰近收盤均價；現價 ≤ +5% | `pocket_filter.gate2_cost`（`config.POCKET_GATE2_COST_TOLERANCE_PCT`） |
+| 第三盤 戶數/籌碼集中 | 信用残（融資 margin_long）連續 N 週下降 | `pocket_filter.gate3_margin`（`config.POCKET_GATE3_MARGIN_DECLINE_WEEKS`） |
+
+說明：三盤輸入皆為「單一個股」真實資料（EDINET 申報 / 個股 price+margin CSV），非全市場攤平假 flow。
+對映決策與不確定見 [NOTES.md](NOTES.md)。
+
 ### 待實作（未來 milestone）
 | 心法概念 | 規劃 |
 |---------|------|
 | 主力成本階梯（自動推算） | 從 EDINET 變更報告書（350/360）逐次申報均價建構 |
 | 加碼三條件評估器 | 需 N225 月線資料 + 已 add 的 entry_price → `analyzer.evaluate_add_on()` |
 | 大盤濾網 wiring | N225 / TOPIX 日線爬取 + 20 日 SMA 判定 → market_risk_off 旗標 |
-| 三盤濾網選股 | 批次掃描所有 EDINET 5% 申報股票 |
 | 紀律檢查表（每日 SOP） | `check` 末尾顯示提醒 |
 | 連續虧損冷卻 | log.csv 統計 → 連 3 次警示後建議停手 |
 | 部位 sizing 建議 | watchlist 加 `account_size` → 自動計算 2–5% 建議部位 |
