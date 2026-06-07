@@ -170,11 +170,32 @@ def snapshot_path(date_str: str) -> Path:
     return SCAN_SNAPSHOTS_DIR / f"pocket_{date_str}.json"
 
 
-def write_snapshot(result: dict, date_str: Optional[str] = None) -> Path:
+def write_snapshot(result: dict, date_str: Optional[str] = None, guard: bool = True) -> Path:
+    """寫入口袋名單快照。
+
+    guard=True（預設）：degraded 防呆 — 若本次掃描 candidates==0（候選池全空，
+    通常代表 EDINET daily 快取缺檔／資料源異常），且既有最新快照原本有候選，
+    則「拒絕覆寫」、改存 `_rejected_pocket_*.json` 供查，避免一鍵把好的名單清空。
+    """
     SCAN_SNAPSHOTS_DIR.mkdir(parents=True, exist_ok=True)
     if date_str is None:
         date_str = datetime.now().strftime("%Y-%m-%d")
     path = snapshot_path(date_str)
+
+    if guard and (result.get("funnel", {}).get("candidates", 0) == 0):
+        prev = latest_snapshot()
+        if prev and prev.get("funnel", {}).get("candidates", 0) > 0:
+            rejected = SCAN_SNAPSHOTS_DIR / f"_rejected_pocket_{date_str}.json"
+            with open(rejected, "w", encoding="utf-8") as f:
+                json.dump(result, f, ensure_ascii=False, indent=1)
+            logger.warning(
+                "pocket 掃描 candidates=0（疑似 EDINET daily 快取缺檔）→ 拒絕覆寫既有快照，"
+                "改存 %s", rejected.name,
+            )
+            # 回傳既有快照路徑，呼叫端 GET 仍會讀到原本有資料的名單
+            existing = sorted(glob.glob(str(SCAN_SNAPSHOTS_DIR / "pocket_*.json")))
+            return Path(existing[-1]) if existing else path
+
     with open(path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=1)
     return path

@@ -131,3 +131,21 @@ def test_two_stocks_distinct_inputs_distinct_results():
     assert a.in_pocket is True
     assert b.in_pocket is False
     assert b.passed_gate2 is False
+
+
+# ---------------- 快照 degraded 防呆 ----------------
+def test_write_snapshot_guard_rejects_empty_overwrite(tmp_path, monkeypatch):
+    """候選=0 的空掃描不可覆寫既有非空快照（避免一鍵清空畫面）。"""
+    from api.services import pocket_service as ps
+    monkeypatch.setattr(ps, "SCAN_SNAPSHOTS_DIR", tmp_path)
+
+    good = {"funnel": {"candidates": 638, "gate3_margin": 24}, "pocket": [{"code": "7922"}], "near_miss": []}
+    ps.write_snapshot(good, date_str="2026-06-07")
+    assert ps.latest_snapshot()["funnel"]["candidates"] == 638
+
+    empty = {"funnel": {"candidates": 0, "gate3_margin": 0}, "pocket": [], "near_miss": []}
+    ps.write_snapshot(empty, date_str="2026-06-08")  # guard 應拒絕覆寫
+
+    # 既有好快照仍在，且被擋的空結果存成 _rejected_
+    assert ps.latest_snapshot()["funnel"]["candidates"] == 638
+    assert (tmp_path / "_rejected_pocket_2026-06-08.json").exists()

@@ -21,6 +21,11 @@ def get_pocket_list(refresh: bool = Query(False, description="True 則略過快�
             return snap
     result = pocket_service.scan_pocket_list()
     pocket_service.write_snapshot(result)
+    # 空掃描（候選=0，疑似 EDINET daily 快取缺檔）→ 回退到既有好快照，不讓畫面被清空
+    if result.get("funnel", {}).get("candidates", 0) == 0:
+        prev = pocket_service.latest_snapshot()
+        if prev is not None and prev.get("funnel", {}).get("candidates", 0) > 0:
+            return prev
     return result
 
 
