@@ -72,9 +72,74 @@
     watchState = { ...watchState };
   }
 
-  function toSimulation(r: PocketRow) {
-    // 模擬交易頁之後會大改；先帶 code 過去，前向相容 prefill
-    window.location.href = `/simulation/new?code=${encodeURIComponent(r.code)}&name=${encodeURIComponent(r.name)}`;
+  // ── 加入模擬交易（跟單帳本）popup ──
+  interface LedgerSummary { id: string; name: string; trade_count: number; }
+  let simOpen = false;
+  let simRow: PocketRow | null = null;
+  let ledgers: LedgerSummary[] = [];
+  let simLedgerId = '';
+  let simNewLedger = '';
+  let simEntryPrice = 0;
+  let simShares: number | null = null;
+  let simStopPct = 10;        // 移動停損 N%，預設 10
+  let simSaving = false;
+  let simMsg = '';
+
+  async function openSim(r: PocketRow) {
+    simRow = r;
+    simEntryPrice = r.gate2.latest_price ?? 0;  // 預設帶現價，可改
+    simShares = null;
+    simStopPct = 10;
+    simNewLedger = '';
+    simMsg = '';
+    simOpen = true;
+    try {
+      ledgers = await api<LedgerSummary[]>('/ledgers');
+      simLedgerId = ledgers.length ? ledgers[0].id : '';
+    } catch {
+      ledgers = [];
+      simLedgerId = '';
+    }
+  }
+
+  function closeSim() {
+    simOpen = false;
+    simRow = null;
+  }
+
+  async function confirmSim() {
+    if (!simRow) return;
+    if (!simShares || simShares <= 0) { simMsg = '請輸入購入股數'; return; }
+    if (!simEntryPrice || simEntryPrice <= 0) { simMsg = '購入時價需大於 0'; return; }
+    simSaving = true;
+    simMsg = '';
+    try {
+      let ledgerId = simLedgerId;
+      // 沒有選帳本或要新建 → 先建帳本
+      if (!ledgerId || simNewLedger.trim()) {
+        const created = await api<{ id: string }>('/ledgers', {
+          method: 'POST',
+          body: JSON.stringify({ name: simNewLedger.trim() || '我的帳本' }),
+        });
+        ledgerId = created.id;
+      }
+      await api(`/ledgers/${ledgerId}/trades`, {
+        method: 'POST',
+        body: JSON.stringify({
+          code: simRow.code,
+          name: simRow.name,
+          entry_price: simEntryPrice,
+          shares: simShares,
+          stop_pct: simStopPct / 100,
+        }),
+      });
+      simMsg = '✓ 已加入帳本';
+      setTimeout(closeSim, 700);
+    } catch (e) {
+      simMsg = e instanceof Error ? e.message : '加入失敗';
+    } finally {
+      simSaving = false;
+    }
   }
 </script>
 
@@ -150,7 +215,7 @@
                     {:else if watchState[r.code] === 'error'}✗ 重試
                     {:else}＋ 追蹤{/if}
                   </button>
-                  <button class="btn-sim" title="用此檔開新模擬交易" on:click={() => toSimulation(r)}>
+                  <button class="btn-sim" title="加入模擬交易帳本" on:click={() => openSim(r)}>
                     模擬交易
                   </button>
                 </td>
@@ -181,6 +246,47 @@
     {/if}
   {/if}
 </div>
+
+{#if simOpen && simRow}
+  <div class="modal-backdrop" on:click={closeSim} on:keydown={() => {}} role="presentation">
+    <div class="modal" on:click|stopPropagation on:keydown={() => {}} role="dialog">
+      <h3>加入模擬交易帳本</h3>
+      <p class="modal-stock">{simRow.code} {simRow.name}</p>
+
+      <label>帳本
+        <select bind:value={simLedgerId} disabled={!!simNewLedger.trim()}>
+          {#if ledgers.length === 0}
+            <option value="">（尚無帳本，將自動新建）</option>
+          {/if}
+          {#each ledgers as lg}
+            <option value={lg.id}>{lg.name}（{lg.trade_count} 筆）</option>
+          {/each}
+        </select>
+      </label>
+      <label>或新建帳本
+        <input type="text" placeholder="輸入新帳本名稱（留空則用現有）" bind:value={simNewLedger} />
+      </label>
+
+      <label>購入時價（預設現價，可改）
+        <input type="number" step="0.1" bind:value={simEntryPrice} />
+      </label>
+      <label>購入股數
+        <input type="number" step="1" min="1" placeholder="必填" bind:value={simShares} />
+      </label>
+      <label>移動停損 N%（隔日收盤跌破 high_water×(1−N%) 出場，停損只升不降）
+        <input type="number" step="0.5" min="0.5" bind:value={simStopPct} />
+      </label>
+
+      {#if simMsg}<p class="modal-msg">{simMsg}</p>{/if}
+      <div class="modal-actions">
+        <button class="btn-cancel" on:click={closeSim} disabled={simSaving}>取消</button>
+        <button class="btn-confirm" on:click={confirmSim} disabled={simSaving}>
+          {simSaving ? '加入中…' : '確認加入'}
+        </button>
+      </div>
+    </div>
+  </div>
+{/if}
 
 <style>
   .page { padding: 1.5rem; max-width: 1100px; }
@@ -220,4 +326,18 @@
   .btn-watch { background: #0e7490; color: #fff; }
   .btn-sim { background: #6d28d9; color: #fff; }
   .dim { opacity: .8; }
+
+  /* popup */
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 50; }
+  .modal { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 1.4rem; width: 380px; max-width: 92vw; }
+  .modal h3 { margin: 0 0 .3rem; font-size: 1.1rem; }
+  .modal-stock { margin: 0 0 1rem; color: #93c5fd; font-family: monospace; font-weight: 600; }
+  .modal label { display: block; font-size: .8rem; color: #cbd5e1; margin-bottom: .7rem; }
+  .modal input, .modal select { width: 100%; margin-top: .25rem; padding: .4rem .5rem; background: #0f172a; color: #e2e8f0; border: 1px solid #475569; border-radius: 5px; box-sizing: border-box; }
+  .modal-msg { font-size: .8rem; color: #fbbf24; margin: .2rem 0 .6rem; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .4rem; }
+  .modal-actions button { padding: .45rem .9rem; border: 0; border-radius: 6px; cursor: pointer; font-size: .85rem; }
+  .btn-cancel { background: #475569; color: #fff; }
+  .btn-confirm { background: #15803d; color: #fff; }
+  .modal-actions button:disabled { opacity: .6; cursor: default; }
 </style>
