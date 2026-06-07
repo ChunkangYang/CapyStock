@@ -60,8 +60,8 @@
       </li>
       <li>
         <a
-          href="/simulation"
-          class:active={currentPath.startsWith('/simulation')}
+          href="/ledger"
+          class:active={currentPath.startsWith('/ledger')}
         >
           模擬交易
         </a>
