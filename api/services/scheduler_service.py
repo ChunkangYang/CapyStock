@@ -75,6 +75,13 @@ DEFAULT_JOBS: list[JobDef] = [
         timeout_seconds=10800,  # 3 小時上限
     ),
     JobDef(
+        id="edinet_daily_backfill",
+        name="每日 EDINET 全市場申報回補（三盤第一盤輸入）+ 重算口袋名單",
+        cron="30 5 * * *",
+        handler="api.services.scheduler_service:_handler_edinet_daily_backfill",
+        timeout_seconds=3600,
+    ),
+    JobDef(
         id="healthcheck_ping",
         name="健康檢查 ping",
         cron="*/30 * * * *",
@@ -134,6 +141,24 @@ def _handler_paper_advance():
         except Exception:
             continue
     return {"advanced": advanced}
+
+
+def _handler_edinet_daily_backfill():
+    """回補全市場 EDINET 每日申報 → 重算三盤口袋名單快照。
+
+    解決 daily 快取（gitignore + named volume）不會隨同步進容器的缺口：
+    排程在容器內執行，直接寫進 volume。
+    """
+    from capystock import edinet
+    from api.services import pocket_service
+
+    backfill = edinet.backfill_daily(days=7, refetch_recent=3)
+    result = {"backfill": backfill}
+    if backfill.get("ok"):
+        scan = pocket_service.scan_pocket_list()
+        pocket_service.write_snapshot(scan, guard=True)
+        result["pocket_funnel"] = scan.get("funnel", {})
+    return result
 
 
 def _handler_weekly_universe_scan():

@@ -20,12 +20,13 @@ from typing import Optional
 
 import pandas as pd
 
-from capystock import config, pocket_filter, storage
+from capystock import config, edinet, pocket_filter, storage
 from api.deps import DATA_DIR
 
 logger = logging.getLogger(__name__)
 
-EDINET_DAILY_DIR = config.EDINET_CACHE_DIR / "daily"
+# 單一來源：與 edinet.backfill_daily 寫入的目錄一致（避免兩處各自定義路徑而 diverge）
+EDINET_DAILY_DIR = edinet.DAILY_DIR
 SCAN_SNAPSHOTS_DIR = DATA_DIR / "scan_snapshots"
 
 

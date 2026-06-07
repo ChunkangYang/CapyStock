@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import csv
 import io
+import json
 import time
 import zipfile
 from datetime import date, datetime, timedelta
@@ -32,6 +33,7 @@ import requests
 from . import config
 
 _API_BASE = "https://api.edinet-fsa.go.jp/api/v2"
+DAILY_DIR = config.EDINET_CACHE_DIR / "daily"  # 全市場每日申報快取（三盤第一盤輸入來源）
 _DOC_TYPE_LARGE_HOLDING = {"350", "360"}  # 大量保有 / 変更報告書
 _EDINET_CODE_LIST_URL = (
     "https://disclosure2dl.edinet-fsa.go.jp/searchdocument/codelist/Edinetcode.zip"
@@ -176,6 +178,55 @@ def fetch_since(days: int = 7, codes: Optional[set[str]] = None) -> list[dict]:
     # 新到舊
     results.sort(key=lambda x: x["submit_date"], reverse=True)
     return results
+
+
+def daily_cache_path(d: date) -> "object":
+    return DAILY_DIR / f"{d.strftime('%Y-%m-%d')}.json"
+
+
+def backfill_daily(days: int = 7, refetch_recent: int = 3) -> dict:
+    """回補「全市場」EDINET 每日大量保有/変更報告書到 `data/cache/edinet/daily/`。
+
+    這是三盤濾網第一盤的輸入來源（candidates 由此而來）。供排程每日呼叫，
+    寫進容器的 named volume → 解決「git pull / 重建不會帶 daily 快取」的缺口。
+
+    參數：
+      days：回看最近 N 個日曆日。
+      refetch_recent：最近 N 日即使檔案已存在也重抓（晚報的変更報告會補進近幾日）。
+
+    防呆：
+      - 無 EDINET_API_KEY → 直接回報，不動既有檔。
+      - 某日 API 回空但既有檔已有內容 → 視為暫時失敗，**不用空蓋掉**既有檔。
+    """
+    if not config.EDINET_API_KEY:
+        return {"ok": False, "error": "EDINET_API_KEY 未設定", "days_fetched": 0, "reports_written": 0}
+
+    DAILY_DIR.mkdir(parents=True, exist_ok=True)
+    today = date.today()
+    days_fetched = 0
+    reports_written = 0
+    skipped = 0
+    for i in range(days):
+        d = today - timedelta(days=i)
+        path = daily_cache_path(d)
+        if path.exists() and i >= refetch_recent:
+            skipped += 1
+            continue
+        reports = list_reports(d)
+        if not reports and path.exists():
+            # API 暫時失敗 / 限流；保留既有內容，不覆寫
+            skipped += 1
+            continue
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(reports, f, ensure_ascii=False)
+        days_fetched += 1
+        reports_written += len(reports)
+    return {
+        "ok": True,
+        "days_fetched": days_fetched,
+        "reports_written": reports_written,
+        "skipped": skipped,
+    }
 
 
 def format_report(r: dict) -> str:

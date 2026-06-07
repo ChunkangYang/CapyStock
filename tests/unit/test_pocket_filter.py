@@ -149,3 +149,29 @@ def test_write_snapshot_guard_rejects_empty_overwrite(tmp_path, monkeypatch):
     # 既有好快照仍在，且被擋的空結果存成 _rejected_
     assert ps.latest_snapshot()["funnel"]["candidates"] == 638
     assert (tmp_path / "_rejected_pocket_2026-06-08.json").exists()
+
+
+# ---------------- EDINET daily 回補防呆 ----------------
+def test_backfill_daily_no_api_key_does_not_touch_files(tmp_path, monkeypatch):
+    from capystock import edinet, config
+    monkeypatch.setattr(config, "EDINET_API_KEY", "")
+    monkeypatch.setattr(edinet, "DAILY_DIR", tmp_path)
+    r = edinet.backfill_daily(days=3)
+    assert r["ok"] is False
+    assert r["days_fetched"] == 0
+
+
+def test_backfill_daily_empty_api_does_not_overwrite_existing(tmp_path, monkeypatch):
+    """API 回空（暫時失敗）時，不可用空 [] 蓋掉既有有內容的檔。"""
+    import json
+    from datetime import date
+    from capystock import edinet, config
+    monkeypatch.setattr(config, "EDINET_API_KEY", "dummy")
+    monkeypatch.setattr(edinet, "DAILY_DIR", tmp_path)
+    # 預先放一個今天、有內容的既有檔
+    today_path = tmp_path / f"{date.today().strftime('%Y-%m-%d')}.json"
+    today_path.write_text(json.dumps([{"sec_code": "7203", "filer_name": "X", "doc_type_code": "350", "submit_date": "2026-06-07"}]), encoding="utf-8")
+    monkeypatch.setattr(edinet, "list_reports", lambda d: [])  # 模擬 API 回空
+    edinet.backfill_daily(days=1, refetch_recent=1)
+    # 既有內容仍在（沒被空蓋掉）
+    assert json.loads(today_path.read_text(encoding="utf-8"))[0]["sec_code"] == "7203"
