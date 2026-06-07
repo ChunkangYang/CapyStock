@@ -73,6 +73,16 @@ ACCUM_VOLUME_RATIO = 0.8             # 近 5 日均量 >= 過去 20 日均量 ×
 # --- 風報比（第十一篇）---
 RISK_REWARD_MIN_RATIO = 3.0  # < 1:3 進場前提示
 
+# --- 每日三盤濾網選股（第二篇 / 第十四節「三盤濾網選股」日本對映）---
+# 第一盤 連續性：同一 EDINET 申報人（5% rule）在窗口內重複申報（350/360）視為主力連續建倉。
+#   日股無「券商分點」，以同一申報人重複出現在大量保有/変更報告書近似「同一分點連續買超」。
+POCKET_GATE1_MIN_FILINGS = 2          # 同一申報人在窗口內最少申報次數
+POCKET_GATE1_WINDOW_DAYS = 60         # EDINET 回看窗口（日曆日）
+# 第二盤 成本：主力成本以「申報日當天/鄰近收盤均價」近似，現價不可高於主力成本 +5%。
+POCKET_GATE2_COST_TOLERANCE_PCT = 0.05  # 現價 <= 主力成本 ×(1+此值) 才過關
+# 第三盤 戶數/籌碼集中：信用残(融資 margin_long)連續下降代表浮額釋出、籌碼集中。
+POCKET_GATE3_MARGIN_DECLINE_WEEKS = 3   # 融資餘額連續下降週數
+
 # --- 三階段移動停損（Chandelier Exit）---
 # Stage 1（profit < STAGE2）：max(進場×(1-STOP_LOSS_DROP_PCT), 進場 - INITIAL_STOP_ATR_MULT×ATR)
 # Stage 2（STAGE2 ≤ profit < STAGE3）：停損移到進場價（保本）
