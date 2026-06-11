@@ -1,7 +1,7 @@
 {
-  "started_utc": "2026-06-11T04:14:13.319054+00:00",
+  "started_utc": "2026-06-11T04:21:33.841152+00:00",
   "codes_total": 200,
-  "batch_offset": 2800,
+  "batch_offset": 3000,
   "universe_total": 3747,
   "kinds": [
     "margin",
@@ -9,47 +9,65 @@
   ],
   "results": [
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 98,
-      "path": "data/cloud-cache/4880_margin.csv",
-      "code": "4880",
+      "rows": 0,
+      "error": "empty",
+      "code": "6229",
       "kind": "margin",
-      "elapsed_sec": 1.45
+      "elapsed_sec": 1.43
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/4880_price.csv",
-      "code": "4880",
+      "path": "data/cloud-cache/6229_price.csv",
+      "code": "6229",
       "kind": "price",
-      "elapsed_sec": 0.79
+      "elapsed_sec": 0.48
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4885_margin.csv",
-      "code": "4885",
+      "rows": 0,
+      "error": "empty",
+      "code": "6230",
       "kind": "margin",
-      "elapsed_sec": 0.87
+      "elapsed_sec": 1.44
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/4885_price.csv",
-      "code": "4885",
+      "path": "data/cloud-cache/6230_price.csv",
+      "code": "6230",
       "kind": "price",
-      "elapsed_sec": 0.12
+      "elapsed_sec": 0.11
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6231",
+      "kind": "margin",
+      "elapsed_sec": 1.97
     },
     {
       "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6231_price.csv",
+      "code": "6231",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
       "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4918_margin.csv",
-      "code": "4918",
+      "rows": 0,
+      "error": "empty",
+      "code": "6233",
       "kind": "margin",
       "elapsed_sec": 1.79
     },
@@ -57,1727 +75,17 @@
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/4918_price.csv",
-      "code": "4918",
-      "kind": "price",
-      "elapsed_sec": 0.23
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4920_margin.csv",
-      "code": "4920",
-      "kind": "margin",
-      "elapsed_sec": 2.07
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4920_price.csv",
-      "code": "4920",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4925_margin.csv",
-      "code": "4925",
-      "kind": "margin",
-      "elapsed_sec": 1.77
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4925_price.csv",
-      "code": "4925",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4926_margin.csv",
-      "code": "4926",
-      "kind": "margin",
-      "elapsed_sec": 1.87
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 119,
-      "path": "data/cloud-cache/4926_price.csv",
-      "code": "4926",
-      "kind": "price",
-      "elapsed_sec": 0.14
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 71,
-      "path": "data/cloud-cache/4929_margin.csv",
-      "code": "4929",
-      "kind": "margin",
-      "elapsed_sec": 1.91
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4929_price.csv",
-      "code": "4929",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4932_margin.csv",
-      "code": "4932",
-      "kind": "margin",
-      "elapsed_sec": 2.03
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4932_price.csv",
-      "code": "4932",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 100,
-      "path": "data/cloud-cache/4935_margin.csv",
-      "code": "4935",
-      "kind": "margin",
-      "elapsed_sec": 1.51
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4935_price.csv",
-      "code": "4935",
-      "kind": "price",
-      "elapsed_sec": 0.12
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 82,
-      "path": "data/cloud-cache/4936_margin.csv",
-      "code": "4936",
-      "kind": "margin",
-      "elapsed_sec": 1.81
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4936_price.csv",
-      "code": "4936",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 76,
-      "path": "data/cloud-cache/4960_margin.csv",
-      "code": "4960",
-      "kind": "margin",
-      "elapsed_sec": 1.89
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4960_price.csv",
-      "code": "4960",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4966_margin.csv",
-      "code": "4966",
-      "kind": "margin",
-      "elapsed_sec": 1.8
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4966_price.csv",
-      "code": "4966",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4970_margin.csv",
-      "code": "4970",
-      "kind": "margin",
-      "elapsed_sec": 1.78
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4970_price.csv",
-      "code": "4970",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4972_margin.csv",
-      "code": "4972",
-      "kind": "margin",
-      "elapsed_sec": 1.82
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4972_price.csv",
-      "code": "4972",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4976_margin.csv",
-      "code": "4976",
-      "kind": "margin",
-      "elapsed_sec": 1.86
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4976_price.csv",
-      "code": "4976",
-      "kind": "price",
-      "elapsed_sec": 0.2
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 72,
-      "path": "data/cloud-cache/4977_margin.csv",
-      "code": "4977",
-      "kind": "margin",
-      "elapsed_sec": 1.86
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4977_price.csv",
-      "code": "4977",
-      "kind": "price",
-      "elapsed_sec": 0.14
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4979_margin.csv",
-      "code": "4979",
-      "kind": "margin",
-      "elapsed_sec": 2.28
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4979_price.csv",
-      "code": "4979",
-      "kind": "price",
-      "elapsed_sec": 0.13
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4990_margin.csv",
-      "code": "4990",
-      "kind": "margin",
-      "elapsed_sec": 1.51
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4990_price.csv",
-      "code": "4990",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4992_margin.csv",
-      "code": "4992",
-      "kind": "margin",
-      "elapsed_sec": 1.76
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4992_price.csv",
-      "code": "4992",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/4994_margin.csv",
-      "code": "4994",
-      "kind": "margin",
-      "elapsed_sec": 1.81
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4994_price.csv",
-      "code": "4994",
-      "kind": "price",
-      "elapsed_sec": 0.2
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 61,
-      "path": "data/cloud-cache/4998_margin.csv",
-      "code": "4998",
-      "kind": "margin",
-      "elapsed_sec": 1.81
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/4998_price.csv",
-      "code": "4998",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 61,
-      "path": "data/cloud-cache/5010_margin.csv",
-      "code": "5010",
-      "kind": "margin",
-      "elapsed_sec": 2.14
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5010_price.csv",
-      "code": "5010",
-      "kind": "price",
-      "elapsed_sec": 0.13
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5013_margin.csv",
-      "code": "5013",
-      "kind": "margin",
-      "elapsed_sec": 1.96
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5013_price.csv",
-      "code": "5013",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5015_margin.csv",
-      "code": "5015",
-      "kind": "margin",
-      "elapsed_sec": 1.53
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5015_price.csv",
-      "code": "5015",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 68,
-      "path": "data/cloud-cache/5018_margin.csv",
-      "code": "5018",
-      "kind": "margin",
-      "elapsed_sec": 1.79
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5018_price.csv",
-      "code": "5018",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 59,
-      "path": "data/cloud-cache/5071_margin.csv",
-      "code": "5071",
-      "kind": "margin",
-      "elapsed_sec": 1.83
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5071_price.csv",
-      "code": "5071",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5078_margin.csv",
-      "code": "5078",
-      "kind": "margin",
-      "elapsed_sec": 2.02
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 119,
-      "path": "data/cloud-cache/5078_price.csv",
-      "code": "5078",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5079_margin.csv",
-      "code": "5079",
-      "kind": "margin",
-      "elapsed_sec": 1.7
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5079_price.csv",
-      "code": "5079",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5103_margin.csv",
-      "code": "5103",
-      "kind": "margin",
-      "elapsed_sec": 1.94
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5103_price.csv",
-      "code": "5103",
+      "path": "data/cloud-cache/6233_price.csv",
+      "code": "6233",
       "kind": "price",
       "elapsed_sec": 0.09
     },
     {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5133_margin.csv",
-      "code": "5133",
-      "kind": "margin",
-      "elapsed_sec": 2.1
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5133_price.csv",
-      "code": "5133",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5161_margin.csv",
-      "code": "5161",
-      "kind": "margin",
-      "elapsed_sec": 1.79
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5161_price.csv",
-      "code": "5161",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5162_margin.csv",
-      "code": "5162",
-      "kind": "margin",
-      "elapsed_sec": 1.68
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5162_price.csv",
-      "code": "5162",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5184_margin.csv",
-      "code": "5184",
-      "kind": "margin",
-      "elapsed_sec": 1.84
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5184_price.csv",
-      "code": "5184",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5187_margin.csv",
-      "code": "5187",
-      "kind": "margin",
-      "elapsed_sec": 1.87
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5187_price.csv",
-      "code": "5187",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5189_margin.csv",
-      "code": "5189",
-      "kind": "margin",
-      "elapsed_sec": 1.92
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5189_price.csv",
-      "code": "5189",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5194_margin.csv",
-      "code": "5194",
-      "kind": "margin",
-      "elapsed_sec": 1.63
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5194_price.csv",
-      "code": "5194",
-      "kind": "price",
-      "elapsed_sec": 0.25
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5199_margin.csv",
-      "code": "5199",
-      "kind": "margin",
-      "elapsed_sec": 1.82
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5199_price.csv",
-      "code": "5199",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 67,
-      "path": "data/cloud-cache/5204_margin.csv",
-      "code": "5204",
-      "kind": "margin",
-      "elapsed_sec": 2.05
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5204_price.csv",
-      "code": "5204",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 61,
-      "path": "data/cloud-cache/5210_margin.csv",
-      "code": "5210",
-      "kind": "margin",
-      "elapsed_sec": 1.94
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5210_price.csv",
-      "code": "5210",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5216_margin.csv",
-      "code": "5216",
-      "kind": "margin",
-      "elapsed_sec": 1.75
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5216_price.csv",
-      "code": "5216",
-      "kind": "price",
-      "elapsed_sec": 0.09
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5218_margin.csv",
-      "code": "5218",
-      "kind": "margin",
-      "elapsed_sec": 1.9
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5218_price.csv",
-      "code": "5218",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 264,
-      "path": "data/cloud-cache/5237_margin.csv",
-      "code": "5237",
-      "kind": "margin",
-      "elapsed_sec": 1.79
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5237_price.csv",
-      "code": "5237",
-      "kind": "price",
-      "elapsed_sec": 0.26
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5250_margin.csv",
-      "code": "5250",
-      "kind": "margin",
-      "elapsed_sec": 1.94
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5250_price.csv",
-      "code": "5250",
-      "kind": "price",
-      "elapsed_sec": 0.12
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5257_margin.csv",
-      "code": "5257",
-      "kind": "margin",
-      "elapsed_sec": 1.83
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5257_price.csv",
-      "code": "5257",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5268_margin.csv",
-      "code": "5268",
-      "kind": "margin",
-      "elapsed_sec": 1.54
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5268_price.csv",
-      "code": "5268",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5271_margin.csv",
-      "code": "5271",
-      "kind": "margin",
-      "elapsed_sec": 1.88
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5271_price.csv",
-      "code": "5271",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5273_margin.csv",
-      "code": "5273",
-      "kind": "margin",
-      "elapsed_sec": 1.88
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5273_price.csv",
-      "code": "5273",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5279_margin.csv",
-      "code": "5279",
-      "kind": "margin",
-      "elapsed_sec": 2.02
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5279_price.csv",
-      "code": "5279",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5280_margin.csv",
-      "code": "5280",
-      "kind": "margin",
-      "elapsed_sec": 1.76
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5280_price.csv",
-      "code": "5280",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5282_margin.csv",
-      "code": "5282",
-      "kind": "margin",
-      "elapsed_sec": 1.84
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5282_price.csv",
-      "code": "5282",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5283_margin.csv",
-      "code": "5283",
-      "kind": "margin",
-      "elapsed_sec": 1.82
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5283_price.csv",
-      "code": "5283",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5284_margin.csv",
-      "code": "5284",
-      "kind": "margin",
-      "elapsed_sec": 1.84
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5284_price.csv",
-      "code": "5284",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 58,
-      "path": "data/cloud-cache/5285_margin.csv",
-      "code": "5285",
-      "kind": "margin",
-      "elapsed_sec": 1.92
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5285_price.csv",
-      "code": "5285",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5287_margin.csv",
-      "code": "5287",
-      "kind": "margin",
-      "elapsed_sec": 1.84
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5287_price.csv",
-      "code": "5287",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5290_margin.csv",
-      "code": "5290",
-      "kind": "margin",
-      "elapsed_sec": 1.58
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5290_price.csv",
-      "code": "5290",
-      "kind": "price",
-      "elapsed_sec": 0.12
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 64,
-      "path": "data/cloud-cache/5304_margin.csv",
-      "code": "5304",
-      "kind": "margin",
-      "elapsed_sec": 1.9
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5304_price.csv",
-      "code": "5304",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5337_margin.csv",
-      "code": "5337",
-      "kind": "margin",
-      "elapsed_sec": 1.77
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5337_price.csv",
-      "code": "5337",
-      "kind": "price",
-      "elapsed_sec": 0.14
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 73,
-      "path": "data/cloud-cache/5341_margin.csv",
-      "code": "5341",
-      "kind": "margin",
-      "elapsed_sec": 1.87
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5341_price.csv",
-      "code": "5341",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5355_margin.csv",
-      "code": "5355",
-      "kind": "margin",
-      "elapsed_sec": 2.13
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5355_price.csv",
-      "code": "5355",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5356_margin.csv",
-      "code": "5356",
-      "kind": "margin",
-      "elapsed_sec": 1.58
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5356_price.csv",
-      "code": "5356",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5363_margin.csv",
-      "code": "5363",
-      "kind": "margin",
-      "elapsed_sec": 1.9
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5363_price.csv",
-      "code": "5363",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 57,
-      "path": "data/cloud-cache/5367_margin.csv",
-      "code": "5367",
-      "kind": "margin",
-      "elapsed_sec": 2.11
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5367_price.csv",
-      "code": "5367",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5368_margin.csv",
-      "code": "5368",
-      "kind": "margin",
-      "elapsed_sec": 1.6
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5368_price.csv",
-      "code": "5368",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5380_margin.csv",
-      "code": "5380",
-      "kind": "margin",
-      "elapsed_sec": 2.22
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 119,
-      "path": "data/cloud-cache/5380_price.csv",
-      "code": "5380",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 121,
-      "path": "data/cloud-cache/5381_margin.csv",
-      "code": "5381",
-      "kind": "margin",
-      "elapsed_sec": 1.83
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5381_price.csv",
-      "code": "5381",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5388_margin.csv",
-      "code": "5388",
-      "kind": "margin",
-      "elapsed_sec": 1.67
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5388_price.csv",
-      "code": "5388",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5391_margin.csv",
-      "code": "5391",
-      "kind": "margin",
-      "elapsed_sec": 1.76
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5391_price.csv",
-      "code": "5391",
-      "kind": "price",
-      "elapsed_sec": 0.12
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5446_margin.csv",
-      "code": "5446",
-      "kind": "margin",
-      "elapsed_sec": 2.15
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5446_price.csv",
-      "code": "5446",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 139,
-      "path": "data/cloud-cache/5449_margin.csv",
-      "code": "5449",
-      "kind": "margin",
-      "elapsed_sec": 1.88
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5449_price.csv",
-      "code": "5449",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5458_margin.csv",
-      "code": "5458",
-      "kind": "margin",
-      "elapsed_sec": 1.6
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 119,
-      "path": "data/cloud-cache/5458_price.csv",
-      "code": "5458",
-      "kind": "price",
-      "elapsed_sec": 0.12
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5464_margin.csv",
-      "code": "5464",
-      "kind": "margin",
-      "elapsed_sec": 1.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5464_price.csv",
-      "code": "5464",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5484_margin.csv",
-      "code": "5484",
-      "kind": "margin",
-      "elapsed_sec": 2.13
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5484_price.csv",
-      "code": "5484",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 164,
-      "path": "data/cloud-cache/5491_margin.csv",
-      "code": "5491",
-      "kind": "margin",
-      "elapsed_sec": 2.02
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5491_price.csv",
-      "code": "5491",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5533_margin.csv",
-      "code": "5533",
-      "kind": "margin",
-      "elapsed_sec": 1.56
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 119,
-      "path": "data/cloud-cache/5533_price.csv",
-      "code": "5533",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5542_margin.csv",
-      "code": "5542",
-      "kind": "margin",
-      "elapsed_sec": 1.71
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5542_price.csv",
-      "code": "5542",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5571_margin.csv",
-      "code": "5571",
-      "kind": "margin",
-      "elapsed_sec": 2.03
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5571_price.csv",
-      "code": "5571",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5576_margin.csv",
-      "code": "5576",
-      "kind": "margin",
-      "elapsed_sec": 1.66
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5576_price.csv",
-      "code": "5576",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 93,
-      "path": "data/cloud-cache/5589_margin.csv",
-      "code": "5589",
-      "kind": "margin",
-      "elapsed_sec": 1.92
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5589_price.csv",
-      "code": "5589",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 133,
-      "path": "data/cloud-cache/5603_margin.csv",
-      "code": "5603",
-      "kind": "margin",
-      "elapsed_sec": 2.04
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5603_price.csv",
-      "code": "5603",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5609_margin.csv",
-      "code": "5609",
-      "kind": "margin",
-      "elapsed_sec": 1.88
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5609_price.csv",
-      "code": "5609",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5612_margin.csv",
-      "code": "5612",
-      "kind": "margin",
-      "elapsed_sec": 1.82
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5612_price.csv",
-      "code": "5612",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5644_margin.csv",
-      "code": "5644",
-      "kind": "margin",
-      "elapsed_sec": 1.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5644_price.csv",
-      "code": "5644",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5658_margin.csv",
-      "code": "5658",
-      "kind": "margin",
-      "elapsed_sec": 2.04
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5658_price.csv",
-      "code": "5658",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 148,
-      "path": "data/cloud-cache/5660_margin.csv",
-      "code": "5660",
-      "kind": "margin",
-      "elapsed_sec": 1.78
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5660_price.csv",
-      "code": "5660",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5695_margin.csv",
-      "code": "5695",
-      "kind": "margin",
-      "elapsed_sec": 1.76
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5695_price.csv",
-      "code": "5695",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5697_margin.csv",
-      "code": "5697",
-      "kind": "margin",
-      "elapsed_sec": 2.05
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5697_price.csv",
-      "code": "5697",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5698_margin.csv",
-      "code": "5698",
-      "kind": "margin",
-      "elapsed_sec": 1.75
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5698_price.csv",
-      "code": "5698",
-      "kind": "price",
-      "elapsed_sec": 0.25
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5699_margin.csv",
-      "code": "5699",
-      "kind": "margin",
-      "elapsed_sec": 1.7
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5699_price.csv",
-      "code": "5699",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5721_margin.csv",
-      "code": "5721",
-      "kind": "margin",
-      "elapsed_sec": 1.69
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5721_price.csv",
-      "code": "5721",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 78,
-      "path": "data/cloud-cache/5724_margin.csv",
-      "code": "5724",
-      "kind": "margin",
-      "elapsed_sec": 1.91
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5724_price.csv",
-      "code": "5724",
-      "kind": "price",
-      "elapsed_sec": 0.14
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5729_margin.csv",
-      "code": "5729",
-      "kind": "margin",
-      "elapsed_sec": 1.83
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5729_price.csv",
-      "code": "5729",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 60,
-      "path": "data/cloud-cache/5742_margin.csv",
-      "code": "5742",
-      "kind": "margin",
-      "elapsed_sec": 2.08
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5742_price.csv",
-      "code": "5742",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5753_margin.csv",
-      "code": "5753",
-      "kind": "margin",
-      "elapsed_sec": 1.6
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5753_price.csv",
-      "code": "5753",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5816_margin.csv",
-      "code": "5816",
-      "kind": "margin",
-      "elapsed_sec": 2.33
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5816_price.csv",
-      "code": "5816",
-      "kind": "price",
-      "elapsed_sec": 0.19
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 96,
-      "path": "data/cloud-cache/5817_margin.csv",
-      "code": "5817",
-      "kind": "margin",
-      "elapsed_sec": 1.35
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5817_price.csv",
-      "code": "5817",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5819_margin.csv",
-      "code": "5819",
-      "kind": "margin",
-      "elapsed_sec": 1.85
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5819_price.csv",
-      "code": "5819",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5820_margin.csv",
-      "code": "5820",
-      "kind": "margin",
-      "elapsed_sec": 1.77
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5820_price.csv",
-      "code": "5820",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5843_margin.csv",
-      "code": "5843",
-      "kind": "margin",
-      "elapsed_sec": 1.78
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5843_price.csv",
-      "code": "5843",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 67,
-      "path": "data/cloud-cache/5845_margin.csv",
-      "code": "5845",
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6239",
       "kind": "margin",
       "elapsed_sec": 1.98
     },
@@ -1785,179 +93,35 @@
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/5845_price.csv",
-      "code": "5845",
+      "path": "data/cloud-cache/6239_price.csv",
+      "code": "6239",
       "kind": "price",
-      "elapsed_sec": 0.29
+      "elapsed_sec": 0.08
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 254,
-      "path": "data/cloud-cache/5856_margin.csv",
-      "code": "5856",
+      "rows": 0,
+      "error": "empty",
+      "code": "6245",
       "kind": "margin",
-      "elapsed_sec": 1.99
+      "elapsed_sec": 1.88
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/5856_price.csv",
-      "code": "5856",
-      "kind": "price",
-      "elapsed_sec": 0.14
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5868_margin.csv",
-      "code": "5868",
-      "kind": "margin",
-      "elapsed_sec": 1.79
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5868_price.csv",
-      "code": "5868",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 72,
-      "path": "data/cloud-cache/5869_margin.csv",
-      "code": "5869",
-      "kind": "margin",
-      "elapsed_sec": 1.79
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5869_price.csv",
-      "code": "5869",
+      "path": "data/cloud-cache/6245_price.csv",
+      "code": "6245",
       "kind": "price",
       "elapsed_sec": 0.16
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 54,
-      "path": "data/cloud-cache/5871_margin.csv",
-      "code": "5871",
-      "kind": "margin",
-      "elapsed_sec": 1.83
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5871_price.csv",
-      "code": "5871",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5885_margin.csv",
-      "code": "5885",
-      "kind": "margin",
-      "elapsed_sec": 1.77
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5885_price.csv",
-      "code": "5885",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5891_margin.csv",
-      "code": "5891",
-      "kind": "margin",
-      "elapsed_sec": 1.76
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5891_price.csv",
-      "code": "5891",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5900_margin.csv",
-      "code": "5900",
-      "kind": "margin",
-      "elapsed_sec": 2.15
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5900_price.csv",
-      "code": "5900",
-      "kind": "price",
-      "elapsed_sec": 0.2
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5903_margin.csv",
-      "code": "5903",
-      "kind": "margin",
-      "elapsed_sec": 1.6
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5903_price.csv",
-      "code": "5903",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5905_margin.csv",
-      "code": "5905",
-      "kind": "margin",
-      "elapsed_sec": 1.85
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 119,
-      "path": "data/cloud-cache/5905_price.csv",
-      "code": "5905",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5906_margin.csv",
-      "code": "5906",
+      "rows": 0,
+      "error": "empty",
+      "code": "6246",
       "kind": "margin",
       "elapsed_sec": 1.8
     },
@@ -1965,17 +129,35 @@
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/5906_price.csv",
-      "code": "5906",
+      "path": "data/cloud-cache/6246_price.csv",
+      "code": "6246",
       "kind": "price",
-      "elapsed_sec": 0.18
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6248",
+      "kind": "margin",
+      "elapsed_sec": 1.88
     },
     {
       "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6248_price.csv",
+      "code": "6248",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
       "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5909_margin.csv",
-      "code": "5909",
+      "rows": 0,
+      "error": "empty",
+      "code": "6249",
       "kind": "margin",
       "elapsed_sec": 1.86
     },
@@ -1983,1457 +165,17 @@
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/5909_price.csv",
-      "code": "5909",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5915_margin.csv",
-      "code": "5915",
-      "kind": "margin",
-      "elapsed_sec": 2.18
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5915_price.csv",
-      "code": "5915",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5918_margin.csv",
-      "code": "5918",
-      "kind": "margin",
-      "elapsed_sec": 1.77
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5918_price.csv",
-      "code": "5918",
-      "kind": "price",
-      "elapsed_sec": 0.19
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5921_margin.csv",
-      "code": "5921",
-      "kind": "margin",
-      "elapsed_sec": 1.62
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5921_price.csv",
-      "code": "5921",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5922_margin.csv",
-      "code": "5922",
-      "kind": "margin",
-      "elapsed_sec": 1.69
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5922_price.csv",
-      "code": "5922",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5923_margin.csv",
-      "code": "5923",
-      "kind": "margin",
-      "elapsed_sec": 2.06
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5923_price.csv",
-      "code": "5923",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 193,
-      "path": "data/cloud-cache/5928_margin.csv",
-      "code": "5928",
-      "kind": "margin",
-      "elapsed_sec": 1.89
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5928_price.csv",
-      "code": "5928",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 133,
-      "path": "data/cloud-cache/5936_margin.csv",
-      "code": "5936",
-      "kind": "margin",
-      "elapsed_sec": 1.76
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5936_price.csv",
-      "code": "5936",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5939_margin.csv",
-      "code": "5939",
-      "kind": "margin",
-      "elapsed_sec": 1.78
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5939_price.csv",
-      "code": "5939",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/5940_margin.csv",
-      "code": "5940",
-      "kind": "margin",
-      "elapsed_sec": 1.86
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5940_price.csv",
-      "code": "5940",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 64,
-      "path": "data/cloud-cache/5941_margin.csv",
-      "code": "5941",
-      "kind": "margin",
-      "elapsed_sec": 1.85
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5941_price.csv",
-      "code": "5941",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5942_margin.csv",
-      "code": "5942",
-      "kind": "margin",
-      "elapsed_sec": 1.6
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5942_price.csv",
-      "code": "5942",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5945_margin.csv",
-      "code": "5945",
-      "kind": "margin",
-      "elapsed_sec": 1.82
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5945_price.csv",
-      "code": "5945",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5950_margin.csv",
-      "code": "5950",
-      "kind": "margin",
-      "elapsed_sec": 1.83
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5950_price.csv",
-      "code": "5950",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5951_margin.csv",
-      "code": "5951",
-      "kind": "margin",
-      "elapsed_sec": 2.12
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5951_price.csv",
-      "code": "5951",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5952_margin.csv",
-      "code": "5952",
-      "kind": "margin",
-      "elapsed_sec": 1.75
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5952_price.csv",
-      "code": "5952",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5955_margin.csv",
-      "code": "5955",
-      "kind": "margin",
-      "elapsed_sec": 1.7
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5955_price.csv",
-      "code": "5955",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5956_margin.csv",
-      "code": "5956",
-      "kind": "margin",
-      "elapsed_sec": 1.99
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5956_price.csv",
-      "code": "5956",
-      "kind": "price",
-      "elapsed_sec": 0.23
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5958_margin.csv",
-      "code": "5958",
-      "kind": "margin",
-      "elapsed_sec": 1.84
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5958_price.csv",
-      "code": "5958",
-      "kind": "price",
-      "elapsed_sec": 0.23
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5962_margin.csv",
-      "code": "5962",
-      "kind": "margin",
-      "elapsed_sec": 1.46
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5962_price.csv",
-      "code": "5962",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5965_margin.csv",
-      "code": "5965",
-      "kind": "margin",
-      "elapsed_sec": 2.05
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5965_price.csv",
-      "code": "5965",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5966_margin.csv",
-      "code": "5966",
-      "kind": "margin",
-      "elapsed_sec": 1.75
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5966_price.csv",
-      "code": "5966",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5967_margin.csv",
-      "code": "5967",
-      "kind": "margin",
-      "elapsed_sec": 1.91
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5967_price.csv",
-      "code": "5967",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5969_margin.csv",
-      "code": "5969",
-      "kind": "margin",
-      "elapsed_sec": 1.57
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5969_price.csv",
-      "code": "5969",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5971_margin.csv",
-      "code": "5971",
-      "kind": "margin",
-      "elapsed_sec": 2.04
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 119,
-      "path": "data/cloud-cache/5971_price.csv",
-      "code": "5971",
-      "kind": "price",
-      "elapsed_sec": 0.2
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5973_margin.csv",
-      "code": "5973",
-      "kind": "margin",
-      "elapsed_sec": 1.69
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5973_price.csv",
-      "code": "5973",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5974_margin.csv",
-      "code": "5974",
-      "kind": "margin",
-      "elapsed_sec": 1.78
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5974_price.csv",
-      "code": "5974",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5982_margin.csv",
-      "code": "5982",
-      "kind": "margin",
-      "elapsed_sec": 1.76
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5982_price.csv",
-      "code": "5982",
-      "kind": "price",
-      "elapsed_sec": 0.19
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5983_margin.csv",
-      "code": "5983",
-      "kind": "margin",
-      "elapsed_sec": 1.82
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5983_price.csv",
-      "code": "5983",
-      "kind": "price",
-      "elapsed_sec": 0.19
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5984_margin.csv",
-      "code": "5984",
-      "kind": "margin",
-      "elapsed_sec": 1.85
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5984_price.csv",
-      "code": "5984",
-      "kind": "price",
-      "elapsed_sec": 0.14
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 77,
-      "path": "data/cloud-cache/5985_margin.csv",
-      "code": "5985",
-      "kind": "margin",
-      "elapsed_sec": 1.82
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5985_price.csv",
-      "code": "5985",
-      "kind": "price",
-      "elapsed_sec": 0.19
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5986_margin.csv",
-      "code": "5986",
-      "kind": "margin",
-      "elapsed_sec": 1.79
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5986_price.csv",
-      "code": "5986",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5987_margin.csv",
-      "code": "5987",
-      "kind": "margin",
-      "elapsed_sec": 2.14
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5987_price.csv",
-      "code": "5987",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5990_margin.csv",
-      "code": "5990",
-      "kind": "margin",
-      "elapsed_sec": 1.78
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5990_price.csv",
-      "code": "5990",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 227,
-      "path": "data/cloud-cache/5992_margin.csv",
-      "code": "5992",
-      "kind": "margin",
-      "elapsed_sec": 2.16
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5992_price.csv",
-      "code": "5992",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5994_margin.csv",
-      "code": "5994",
-      "kind": "margin",
-      "elapsed_sec": 1.31
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5994_price.csv",
-      "code": "5994",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5997_margin.csv",
-      "code": "5997",
-      "kind": "margin",
-      "elapsed_sec": 1.81
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 119,
-      "path": "data/cloud-cache/5997_price.csv",
-      "code": "5997",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/5998_margin.csv",
-      "code": "5998",
-      "kind": "margin",
-      "elapsed_sec": 2.04
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/5998_price.csv",
-      "code": "5998",
-      "kind": "price",
-      "elapsed_sec": 0.21
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6016_margin.csv",
-      "code": "6016",
-      "kind": "margin",
-      "elapsed_sec": 1.85
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6016_price.csv",
-      "code": "6016",
-      "kind": "price",
-      "elapsed_sec": 0.14
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6018_margin.csv",
-      "code": "6018",
-      "kind": "margin",
-      "elapsed_sec": 1.64
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6018_price.csv",
-      "code": "6018",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6022_margin.csv",
-      "code": "6022",
-      "kind": "margin",
-      "elapsed_sec": 2.16
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 119,
-      "path": "data/cloud-cache/6022_price.csv",
-      "code": "6022",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6023_margin.csv",
-      "code": "6023",
-      "kind": "margin",
-      "elapsed_sec": 1.59
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6023_price.csv",
-      "code": "6023",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6029_margin.csv",
-      "code": "6029",
-      "kind": "margin",
-      "elapsed_sec": 1.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6029_price.csv",
-      "code": "6029",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6035_margin.csv",
-      "code": "6035",
-      "kind": "margin",
-      "elapsed_sec": 1.93
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6035_price.csv",
-      "code": "6035",
-      "kind": "price",
-      "elapsed_sec": 0.13
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6037_margin.csv",
-      "code": "6037",
-      "kind": "margin",
-      "elapsed_sec": 2.18
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6037_price.csv",
-      "code": "6037",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6042_margin.csv",
-      "code": "6042",
-      "kind": "margin",
-      "elapsed_sec": 1.89
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6042_price.csv",
-      "code": "6042",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6044_margin.csv",
-      "code": "6044",
-      "kind": "margin",
-      "elapsed_sec": 1.51
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6044_price.csv",
-      "code": "6044",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 187,
-      "path": "data/cloud-cache/6046_margin.csv",
-      "code": "6046",
-      "kind": "margin",
-      "elapsed_sec": 1.94
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6046_price.csv",
-      "code": "6046",
-      "kind": "price",
-      "elapsed_sec": 0.11
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 84,
-      "path": "data/cloud-cache/6054_margin.csv",
-      "code": "6054",
-      "kind": "margin",
-      "elapsed_sec": 1.89
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6054_price.csv",
-      "code": "6054",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 59,
-      "path": "data/cloud-cache/6059_margin.csv",
-      "code": "6059",
-      "kind": "margin",
-      "elapsed_sec": 1.85
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6059_price.csv",
-      "code": "6059",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6061_margin.csv",
-      "code": "6061",
-      "kind": "margin",
-      "elapsed_sec": 2.01
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6061_price.csv",
-      "code": "6061",
-      "kind": "price",
-      "elapsed_sec": 0.13
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6063_margin.csv",
-      "code": "6063",
-      "kind": "margin",
-      "elapsed_sec": 1.81
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6063_price.csv",
-      "code": "6063",
-      "kind": "price",
-      "elapsed_sec": 0.13
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 117,
-      "path": "data/cloud-cache/6072_margin.csv",
-      "code": "6072",
-      "kind": "margin",
-      "elapsed_sec": 1.85
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 119,
-      "path": "data/cloud-cache/6072_price.csv",
-      "code": "6072",
+      "path": "data/cloud-cache/6249_price.csv",
+      "code": "6249",
       "kind": "price",
       "elapsed_sec": 0.12
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6074_margin.csv",
-      "code": "6074",
-      "kind": "margin",
-      "elapsed_sec": 1.9
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6074_price.csv",
-      "code": "6074",
-      "kind": "price",
-      "elapsed_sec": 0.13
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6082_margin.csv",
-      "code": "6082",
-      "kind": "margin",
-      "elapsed_sec": 1.71
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6082_price.csv",
-      "code": "6082",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6083_margin.csv",
-      "code": "6083",
-      "kind": "margin",
-      "elapsed_sec": 2.05
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6083_price.csv",
-      "code": "6083",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6087_margin.csv",
-      "code": "6087",
-      "kind": "margin",
-      "elapsed_sec": 1.59
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6087_price.csv",
-      "code": "6087",
-      "kind": "price",
-      "elapsed_sec": 0.13
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6090_margin.csv",
-      "code": "6090",
-      "kind": "margin",
-      "elapsed_sec": 2.12
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6090_price.csv",
-      "code": "6090",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 69,
-      "path": "data/cloud-cache/6091_margin.csv",
-      "code": "6091",
-      "kind": "margin",
-      "elapsed_sec": 1.85
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6091_price.csv",
-      "code": "6091",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 91,
-      "path": "data/cloud-cache/6092_margin.csv",
-      "code": "6092",
-      "kind": "margin",
-      "elapsed_sec": 1.9
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6092_price.csv",
-      "code": "6092",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6093_margin.csv",
-      "code": "6093",
-      "kind": "margin",
-      "elapsed_sec": 2.11
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6093_price.csv",
-      "code": "6093",
-      "kind": "price",
-      "elapsed_sec": 0.12
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 74,
-      "path": "data/cloud-cache/6096_margin.csv",
-      "code": "6096",
-      "kind": "margin",
-      "elapsed_sec": 1.65
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6096_price.csv",
-      "code": "6096",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6125_margin.csv",
-      "code": "6125",
-      "kind": "margin",
-      "elapsed_sec": 1.55
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6125_price.csv",
-      "code": "6125",
-      "kind": "price",
-      "elapsed_sec": 0.19
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 60,
-      "path": "data/cloud-cache/6137_margin.csv",
-      "code": "6137",
-      "kind": "margin",
-      "elapsed_sec": 1.82
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6137_price.csv",
-      "code": "6137",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6138_margin.csv",
-      "code": "6138",
-      "kind": "margin",
-      "elapsed_sec": 1.91
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6138_price.csv",
-      "code": "6138",
-      "kind": "price",
-      "elapsed_sec": 0.18
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6144_margin.csv",
-      "code": "6144",
-      "kind": "margin",
-      "elapsed_sec": 1.76
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6144_price.csv",
-      "code": "6144",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6145_margin.csv",
-      "code": "6145",
-      "kind": "margin",
-      "elapsed_sec": 1.79
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6145_price.csv",
-      "code": "6145",
-      "kind": "price",
-      "elapsed_sec": 0.22
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6147_margin.csv",
-      "code": "6147",
-      "kind": "margin",
-      "elapsed_sec": 2.16
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6147_price.csv",
-      "code": "6147",
-      "kind": "price",
-      "elapsed_sec": 0.12
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6149_margin.csv",
-      "code": "6149",
-      "kind": "margin",
-      "elapsed_sec": 1.67
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6149_price.csv",
-      "code": "6149",
-      "kind": "price",
-      "elapsed_sec": 0.19
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6150_margin.csv",
-      "code": "6150",
-      "kind": "margin",
-      "elapsed_sec": 1.91
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6150_price.csv",
-      "code": "6150",
-      "kind": "price",
-      "elapsed_sec": 0.17
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6155_margin.csv",
-      "code": "6155",
-      "kind": "margin",
-      "elapsed_sec": 1.56
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6155_price.csv",
-      "code": "6155",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6156_margin.csv",
-      "code": "6156",
-      "kind": "margin",
-      "elapsed_sec": 1.86
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6156_price.csv",
-      "code": "6156",
-      "kind": "price",
-      "elapsed_sec": 0.16
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6157_margin.csv",
-      "code": "6157",
-      "kind": "margin",
-      "elapsed_sec": 2.18
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6157_price.csv",
-      "code": "6157",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6158_margin.csv",
-      "code": "6158",
-      "kind": "margin",
-      "elapsed_sec": 1.53
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6158_price.csv",
-      "code": "6158",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6159_margin.csv",
-      "code": "6159",
-      "kind": "margin",
-      "elapsed_sec": 2.0
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6159_price.csv",
-      "code": "6159",
-      "kind": "price",
-      "elapsed_sec": 0.2
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6161_margin.csv",
-      "code": "6161",
-      "kind": "margin",
-      "elapsed_sec": 1.94
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6161_price.csv",
-      "code": "6161",
-      "kind": "price",
-      "elapsed_sec": 0.15
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6165_margin.csv",
-      "code": "6165",
-      "kind": "margin",
-      "elapsed_sec": 1.99
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6165_price.csv",
-      "code": "6165",
-      "kind": "price",
-      "elapsed_sec": 0.13
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 73,
-      "path": "data/cloud-cache/6171_margin.csv",
-      "code": "6171",
-      "kind": "margin",
-      "elapsed_sec": 1.46
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6171_price.csv",
-      "code": "6171",
-      "kind": "price",
-      "elapsed_sec": 0.12
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6176_margin.csv",
-      "code": "6176",
-      "kind": "margin",
-      "elapsed_sec": 1.89
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6176_price.csv",
-      "code": "6176",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 59,
-      "path": "data/cloud-cache/6185_margin.csv",
-      "code": "6185",
-      "kind": "margin",
-      "elapsed_sec": 1.85
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6185_price.csv",
-      "code": "6185",
-      "kind": "price",
-      "elapsed_sec": 0.1
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6186_margin.csv",
-      "code": "6186",
-      "kind": "margin",
-      "elapsed_sec": 2.02
-    },
-    {
-      "ok": true,
-      "source": "yfinance",
-      "rows": 120,
-      "path": "data/cloud-cache/6186_price.csv",
-      "code": "6186",
-      "kind": "price",
-      "elapsed_sec": 0.12
-    },
-    {
-      "ok": true,
-      "source": "irbank",
-      "rows": 55,
-      "path": "data/cloud-cache/6189_margin.csv",
-      "code": "6189",
+      "rows": 0,
+      "error": "empty",
+      "code": "6257",
       "kind": "margin",
       "elapsed_sec": 1.95
     },
@@ -3441,125 +183,125 @@
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/6189_price.csv",
-      "code": "6189",
+      "path": "data/cloud-cache/6257_price.csv",
+      "code": "6257",
       "kind": "price",
-      "elapsed_sec": 0.11
+      "elapsed_sec": 0.12
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 53,
-      "path": "data/cloud-cache/6199_margin.csv",
-      "code": "6199",
+      "rows": 0,
+      "error": "empty",
+      "code": "6262",
       "kind": "margin",
-      "elapsed_sec": 1.74
+      "elapsed_sec": 1.82
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/6199_price.csv",
-      "code": "6199",
+      "path": "data/cloud-cache/6262_price.csv",
+      "code": "6262",
       "kind": "price",
-      "elapsed_sec": 0.17
+      "elapsed_sec": 0.12
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 59,
-      "path": "data/cloud-cache/6203_margin.csv",
-      "code": "6203",
+      "rows": 0,
+      "error": "empty",
+      "code": "6265",
       "kind": "margin",
-      "elapsed_sec": 1.79
+      "elapsed_sec": 1.86
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/6203_price.csv",
-      "code": "6203",
+      "path": "data/cloud-cache/6265_price.csv",
+      "code": "6265",
       "kind": "price",
-      "elapsed_sec": 0.18
+      "elapsed_sec": 0.15
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 107,
-      "path": "data/cloud-cache/6208_margin.csv",
-      "code": "6208",
+      "rows": 0,
+      "error": "empty",
+      "code": "6267",
       "kind": "margin",
-      "elapsed_sec": 2.2
+      "elapsed_sec": 1.86
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/6208_price.csv",
-      "code": "6208",
+      "path": "data/cloud-cache/6267_price.csv",
+      "code": "6267",
       "kind": "price",
-      "elapsed_sec": 0.1
+      "elapsed_sec": 0.14
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 256,
-      "path": "data/cloud-cache/6217_margin.csv",
-      "code": "6217",
+      "rows": 0,
+      "error": "empty",
+      "code": "6276",
       "kind": "margin",
-      "elapsed_sec": 1.79
+      "elapsed_sec": 1.85
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/6217_price.csv",
-      "code": "6217",
+      "path": "data/cloud-cache/6276_price.csv",
+      "code": "6276",
       "kind": "price",
-      "elapsed_sec": 0.1
+      "elapsed_sec": 0.14
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6218_margin.csv",
-      "code": "6218",
+      "rows": 0,
+      "error": "empty",
+      "code": "6286",
       "kind": "margin",
-      "elapsed_sec": 1.87
+      "elapsed_sec": 1.94
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/6218_price.csv",
-      "code": "6218",
+      "path": "data/cloud-cache/6286_price.csv",
+      "code": "6286",
       "kind": "price",
-      "elapsed_sec": 0.16
+      "elapsed_sec": 0.15
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6223_margin.csv",
-      "code": "6223",
+      "rows": 0,
+      "error": "empty",
+      "code": "6291",
       "kind": "margin",
-      "elapsed_sec": 1.83
+      "elapsed_sec": 1.92
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/6223_price.csv",
-      "code": "6223",
+      "path": "data/cloud-cache/6291_price.csv",
+      "code": "6291",
       "kind": "price",
-      "elapsed_sec": 0.1
+      "elapsed_sec": 0.14
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6226_margin.csv",
-      "code": "6226",
+      "rows": 0,
+      "error": "empty",
+      "code": "6292",
       "kind": "margin",
       "elapsed_sec": 1.71
     },
@@ -3567,17 +309,143 @@
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/6226_price.csv",
-      "code": "6226",
+      "path": "data/cloud-cache/6292_price.csv",
+      "code": "6292",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6307",
+      "kind": "margin",
+      "elapsed_sec": 1.95
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6307_price.csv",
+      "code": "6307",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6316",
+      "kind": "margin",
+      "elapsed_sec": 1.82
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6316_price.csv",
+      "code": "6316",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6317",
+      "kind": "margin",
+      "elapsed_sec": 1.82
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6317_price.csv",
+      "code": "6317",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6322",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 119,
+      "path": "data/cloud-cache/6322_price.csv",
+      "code": "6322",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6325",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6325_price.csv",
+      "code": "6325",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6327",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6327_price.csv",
+      "code": "6327",
       "kind": "price",
       "elapsed_sec": 0.11
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 151,
-      "path": "data/cloud-cache/6227_margin.csv",
-      "code": "6227",
+      "rows": 0,
+      "error": "empty",
+      "code": "6334",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6334_price.csv",
+      "code": "6334",
+      "kind": "price",
+      "elapsed_sec": 0.09
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6335",
       "kind": "margin",
       "elapsed_sec": 2.0
     },
@@ -3585,35 +453,3167 @@
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/6227_price.csv",
-      "code": "6227",
+      "path": "data/cloud-cache/6335_price.csv",
+      "code": "6335",
       "kind": "price",
-      "elapsed_sec": 0.16
+      "elapsed_sec": 0.08
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "irbank",
-      "rows": 52,
-      "path": "data/cloud-cache/6228_margin.csv",
-      "code": "6228",
+      "rows": 0,
+      "error": "empty",
+      "code": "6336",
       "kind": "margin",
-      "elapsed_sec": 1.73
+      "elapsed_sec": 1.81
     },
     {
       "ok": true,
       "source": "yfinance",
       "rows": 120,
-      "path": "data/cloud-cache/6228_price.csv",
-      "code": "6228",
+      "path": "data/cloud-cache/6336_price.csv",
+      "code": "6336",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6337",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6337_price.csv",
+      "code": "6337",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6338",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6338_price.csv",
+      "code": "6338",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6342",
+      "kind": "margin",
+      "elapsed_sec": 1.95
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6342_price.csv",
+      "code": "6342",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6343",
+      "kind": "margin",
+      "elapsed_sec": 1.77
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6343_price.csv",
+      "code": "6343",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6346",
+      "kind": "margin",
+      "elapsed_sec": 1.96
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6346_price.csv",
+      "code": "6346",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6347",
+      "kind": "margin",
+      "elapsed_sec": 1.78
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6347_price.csv",
+      "code": "6347",
       "kind": "price",
       "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6356",
+      "kind": "margin",
+      "elapsed_sec": 2.01
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6356_price.csv",
+      "code": "6356",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6357",
+      "kind": "margin",
+      "elapsed_sec": 1.83
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6357_price.csv",
+      "code": "6357",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6360",
+      "kind": "margin",
+      "elapsed_sec": 1.81
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6360_price.csv",
+      "code": "6360",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6365",
+      "kind": "margin",
+      "elapsed_sec": 1.82
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6365_price.csv",
+      "code": "6365",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6366",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6366_price.csv",
+      "code": "6366",
+      "kind": "price",
+      "elapsed_sec": 0.11
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6378",
+      "kind": "margin",
+      "elapsed_sec": 1.93
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6378_price.csv",
+      "code": "6378",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6380",
+      "kind": "margin",
+      "elapsed_sec": 1.8
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6380_price.csv",
+      "code": "6380",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6382",
+      "kind": "margin",
+      "elapsed_sec": 1.92
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6382_price.csv",
+      "code": "6382",
+      "kind": "price",
+      "elapsed_sec": 0.19
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6384",
+      "kind": "margin",
+      "elapsed_sec": 1.82
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6384_price.csv",
+      "code": "6384",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6391",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6391_price.csv",
+      "code": "6391",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6392",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 119,
+      "path": "data/cloud-cache/6392_price.csv",
+      "code": "6392",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6393",
+      "kind": "margin",
+      "elapsed_sec": 1.79
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6393_price.csv",
+      "code": "6393",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6396",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 119,
+      "path": "data/cloud-cache/6396_price.csv",
+      "code": "6396",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6400",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6400_price.csv",
+      "code": "6400",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6402",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6402_price.csv",
+      "code": "6402",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6403",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6403_price.csv",
+      "code": "6403",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6405",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6405_price.csv",
+      "code": "6405",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6408",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6408_price.csv",
+      "code": "6408",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6424",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6424_price.csv",
+      "code": "6424",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6425",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6425_price.csv",
+      "code": "6425",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6428",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6428_price.csv",
+      "code": "6428",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6433",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6433_price.csv",
+      "code": "6433",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6444",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6444_price.csv",
+      "code": "6444",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6466",
+      "kind": "margin",
+      "elapsed_sec": 1.95
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6466_price.csv",
+      "code": "6466",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6467",
+      "kind": "margin",
+      "elapsed_sec": 1.81
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6467_price.csv",
+      "code": "6467",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6469",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6469_price.csv",
+      "code": "6469",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6470",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6470_price.csv",
+      "code": "6470",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6482",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6482_price.csv",
+      "code": "6482",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6484",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6484_price.csv",
+      "code": "6484",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6485",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6485_price.csv",
+      "code": "6485",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6488",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6488_price.csv",
+      "code": "6488",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6489",
+      "kind": "margin",
+      "elapsed_sec": 1.81
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 110,
+      "path": "data/cloud-cache/6489_price.csv",
+      "code": "6489",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6492",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6492_price.csv",
+      "code": "6492",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6493",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6493_price.csv",
+      "code": "6493",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6494",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6494_price.csv",
+      "code": "6494",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6495",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6495_price.csv",
+      "code": "6495",
+      "kind": "price",
+      "elapsed_sec": 0.11
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6496",
+      "kind": "margin",
+      "elapsed_sec": 1.89
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6496_price.csv",
+      "code": "6496",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6497",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6497_price.csv",
+      "code": "6497",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6505",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6505_price.csv",
+      "code": "6505",
+      "kind": "price",
+      "elapsed_sec": 0.17
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6513",
+      "kind": "margin",
+      "elapsed_sec": 1.82
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6513_price.csv",
+      "code": "6513",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6518",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6518_price.csv",
+      "code": "6518",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6524",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6524_price.csv",
+      "code": "6524",
+      "kind": "price",
+      "elapsed_sec": 0.09
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6538",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6538_price.csv",
+      "code": "6538",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6540",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6540_price.csv",
+      "code": "6540",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6543",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6543_price.csv",
+      "code": "6543",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6546",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 119,
+      "path": "data/cloud-cache/6546_price.csv",
+      "code": "6546",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6547",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6547_price.csv",
+      "code": "6547",
+      "kind": "price",
+      "elapsed_sec": 0.09
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6549",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6549_price.csv",
+      "code": "6549",
+      "kind": "price",
+      "elapsed_sec": 0.11
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6551",
+      "kind": "margin",
+      "elapsed_sec": 1.89
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6551_price.csv",
+      "code": "6551",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6552",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6552_price.csv",
+      "code": "6552",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6555",
+      "kind": "margin",
+      "elapsed_sec": 1.92
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6555_price.csv",
+      "code": "6555",
+      "kind": "price",
+      "elapsed_sec": 0.09
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6565",
+      "kind": "margin",
+      "elapsed_sec": 2.0
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 94,
+      "path": "data/cloud-cache/6565_price.csv",
+      "code": "6565",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6566",
+      "kind": "margin",
+      "elapsed_sec": 1.79
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6566_price.csv",
+      "code": "6566",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6570",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6570_price.csv",
+      "code": "6570",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6578",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6578_price.csv",
+      "code": "6578",
+      "kind": "price",
+      "elapsed_sec": 0.09
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6599",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6599_price.csv",
+      "code": "6599",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6614",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6614_price.csv",
+      "code": "6614",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6625",
+      "kind": "margin",
+      "elapsed_sec": 1.92
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6625_price.csv",
+      "code": "6625",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6626",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6626_price.csv",
+      "code": "6626",
+      "kind": "price",
+      "elapsed_sec": 0.11
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6627",
+      "kind": "margin",
+      "elapsed_sec": 1.89
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6627_price.csv",
+      "code": "6627",
+      "kind": "price",
+      "elapsed_sec": 0.09
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6629",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6629_price.csv",
+      "code": "6629",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6633",
+      "kind": "margin",
+      "elapsed_sec": 1.97
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6633_price.csv",
+      "code": "6633",
+      "kind": "price",
+      "elapsed_sec": 0.2
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6634",
+      "kind": "margin",
+      "elapsed_sec": 1.72
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6634_price.csv",
+      "code": "6634",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6635",
+      "kind": "margin",
+      "elapsed_sec": 1.93
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6635_price.csv",
+      "code": "6635",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6637",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6637_price.csv",
+      "code": "6637",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6643",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6643_price.csv",
+      "code": "6643",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6647",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6647_price.csv",
+      "code": "6647",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6648",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6648_price.csv",
+      "code": "6648",
+      "kind": "price",
+      "elapsed_sec": 0.19
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6654",
+      "kind": "margin",
+      "elapsed_sec": 1.81
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6654_price.csv",
+      "code": "6654",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6656",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6656_price.csv",
+      "code": "6656",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6658",
+      "kind": "margin",
+      "elapsed_sec": 1.92
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6658_price.csv",
+      "code": "6658",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6659",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6659_price.csv",
+      "code": "6659",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6662",
+      "kind": "margin",
+      "elapsed_sec": 1.92
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6662_price.csv",
+      "code": "6662",
+      "kind": "price",
+      "elapsed_sec": 0.34
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6663",
+      "kind": "margin",
+      "elapsed_sec": 1.67
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6663_price.csv",
+      "code": "6663",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6664",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6664_price.csv",
+      "code": "6664",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6666",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6666_price.csv",
+      "code": "6666",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6668",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6668_price.csv",
+      "code": "6668",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6670",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6670_price.csv",
+      "code": "6670",
+      "kind": "price",
+      "elapsed_sec": 0.11
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6675",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6675_price.csv",
+      "code": "6675",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6676",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6676_price.csv",
+      "code": "6676",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6677",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6677_price.csv",
+      "code": "6677",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6678",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6678_price.csv",
+      "code": "6678",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6694",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 119,
+      "path": "data/cloud-cache/6694_price.csv",
+      "code": "6694",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6699",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6699_price.csv",
+      "code": "6699",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6721",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6721_price.csv",
+      "code": "6721",
+      "kind": "price",
+      "elapsed_sec": 0.09
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6730",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6730_price.csv",
+      "code": "6730",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6731",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6731_price.csv",
+      "code": "6731",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6736",
+      "kind": "margin",
+      "elapsed_sec": 1.92
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6736_price.csv",
+      "code": "6736",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6743",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6743_price.csv",
+      "code": "6743",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6748",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6748_price.csv",
+      "code": "6748",
+      "kind": "price",
+      "elapsed_sec": 0.2
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6757",
+      "kind": "margin",
+      "elapsed_sec": 1.8
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6757_price.csv",
+      "code": "6757",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6769",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6769_price.csv",
+      "code": "6769",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6771",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6771_price.csv",
+      "code": "6771",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6772",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6772_price.csv",
+      "code": "6772",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6775",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6775_price.csv",
+      "code": "6775",
+      "kind": "price",
+      "elapsed_sec": 0.07
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6776",
+      "kind": "margin",
+      "elapsed_sec": 1.93
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6776_price.csv",
+      "code": "6776",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6777",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6777_price.csv",
+      "code": "6777",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6778",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6778_price.csv",
+      "code": "6778",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6786",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6786_price.csv",
+      "code": "6786",
+      "kind": "price",
+      "elapsed_sec": 0.07
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6797",
+      "kind": "margin",
+      "elapsed_sec": 1.93
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6797_price.csv",
+      "code": "6797",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6803",
+      "kind": "margin",
+      "elapsed_sec": 1.92
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6803_price.csv",
+      "code": "6803",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6819",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6819_price.csv",
+      "code": "6819",
+      "kind": "price",
+      "elapsed_sec": 0.11
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6822",
+      "kind": "margin",
+      "elapsed_sec": 1.89
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6822_price.csv",
+      "code": "6822",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6824",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6824_price.csv",
+      "code": "6824",
+      "kind": "price",
+      "elapsed_sec": 0.18
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6832",
+      "kind": "margin",
+      "elapsed_sec": 1.82
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6832_price.csv",
+      "code": "6832",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6834",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6834_price.csv",
+      "code": "6834",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6835",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6835_price.csv",
+      "code": "6835",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6836",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6836_price.csv",
+      "code": "6836",
+      "kind": "price",
+      "elapsed_sec": 0.07
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6837",
+      "kind": "margin",
+      "elapsed_sec": 1.93
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6837_price.csv",
+      "code": "6837",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6838",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6838_price.csv",
+      "code": "6838",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6840",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6840_price.csv",
+      "code": "6840",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6848",
+      "kind": "margin",
+      "elapsed_sec": 1.92
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6848_price.csv",
+      "code": "6848",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6853",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6853_price.csv",
+      "code": "6853",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6855",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6855_price.csv",
+      "code": "6855",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6858",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6858_price.csv",
+      "code": "6858",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6862",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6862_price.csv",
+      "code": "6862",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6863",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6863_price.csv",
+      "code": "6863",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6864",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6864_price.csv",
+      "code": "6864",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6867",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6867_price.csv",
+      "code": "6867",
+      "kind": "price",
+      "elapsed_sec": 0.11
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6870",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6870_price.csv",
+      "code": "6870",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6874",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6874_price.csv",
+      "code": "6874",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6877",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6877_price.csv",
+      "code": "6877",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6882",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6882_price.csv",
+      "code": "6882",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6888",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6888_price.csv",
+      "code": "6888",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6890",
+      "kind": "margin",
+      "elapsed_sec": 1.91
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6890_price.csv",
+      "code": "6890",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6894",
+      "kind": "margin",
+      "elapsed_sec": 1.82
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6894_price.csv",
+      "code": "6894",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6897",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6897_price.csv",
+      "code": "6897",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6898",
+      "kind": "margin",
+      "elapsed_sec": 1.89
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6898_price.csv",
+      "code": "6898",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6899",
+      "kind": "margin",
+      "elapsed_sec": 1.89
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6899_price.csv",
+      "code": "6899",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6901",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 103,
+      "path": "data/cloud-cache/6901_price.csv",
+      "code": "6901",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6904",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6904_price.csv",
+      "code": "6904",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6907",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6907_price.csv",
+      "code": "6907",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6912",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6912_price.csv",
+      "code": "6912",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6915",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6915_price.csv",
+      "code": "6915",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6918",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6918_price.csv",
+      "code": "6918",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6919",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6919_price.csv",
+      "code": "6919",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6926",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6926_price.csv",
+      "code": "6926",
+      "kind": "price",
+      "elapsed_sec": 0.17
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6927",
+      "kind": "margin",
+      "elapsed_sec": 1.83
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6927_price.csv",
+      "code": "6927",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6928",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6928_price.csv",
+      "code": "6928",
+      "kind": "price",
+      "elapsed_sec": 0.11
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6932",
+      "kind": "margin",
+      "elapsed_sec": 1.89
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6932_price.csv",
+      "code": "6932",
+      "kind": "price",
+      "elapsed_sec": 0.18
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6942",
+      "kind": "margin",
+      "elapsed_sec": 1.82
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6942_price.csv",
+      "code": "6942",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6943",
+      "kind": "margin",
+      "elapsed_sec": 1.93
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 119,
+      "path": "data/cloud-cache/6943_price.csv",
+      "code": "6943",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6946",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6946_price.csv",
+      "code": "6946",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6955",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6955_price.csv",
+      "code": "6955",
+      "kind": "price",
+      "elapsed_sec": 0.07
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6960",
+      "kind": "margin",
+      "elapsed_sec": 1.93
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6960_price.csv",
+      "code": "6960",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6964",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6964_price.csv",
+      "code": "6964",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6969",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6969_price.csv",
+      "code": "6969",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6977",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6977_price.csv",
+      "code": "6977",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6982",
+      "kind": "margin",
+      "elapsed_sec": 1.85
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6982_price.csv",
+      "code": "6982",
+      "kind": "price",
+      "elapsed_sec": 0.17
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6989",
+      "kind": "margin",
+      "elapsed_sec": 1.86
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6989_price.csv",
+      "code": "6989",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6993",
+      "kind": "margin",
+      "elapsed_sec": 1.82
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6993_price.csv",
+      "code": "6993",
+      "kind": "price",
+      "elapsed_sec": 0.11
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6994",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6994_price.csv",
+      "code": "6994",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "6998",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/6998_price.csv",
+      "code": "6998",
+      "kind": "price",
+      "elapsed_sec": 0.16
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7014",
+      "kind": "margin",
+      "elapsed_sec": 1.83
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7014_price.csv",
+      "code": "7014",
+      "kind": "price",
+      "elapsed_sec": 0.18
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7018",
+      "kind": "margin",
+      "elapsed_sec": 1.84
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7018_price.csv",
+      "code": "7018",
+      "kind": "price",
+      "elapsed_sec": 0.14
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7021",
+      "kind": "margin",
+      "elapsed_sec": 1.87
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7021_price.csv",
+      "code": "7021",
+      "kind": "price",
+      "elapsed_sec": 0.15
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7022",
+      "kind": "margin",
+      "elapsed_sec": 1.83
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7022_price.csv",
+      "code": "7022",
+      "kind": "price",
+      "elapsed_sec": 0.13
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7030",
+      "kind": "margin",
+      "elapsed_sec": 1.88
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7030_price.csv",
+      "code": "7030",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7035",
+      "kind": "margin",
+      "elapsed_sec": 1.9
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7035_price.csv",
+      "code": "7035",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7037",
+      "kind": "margin",
+      "elapsed_sec": 1.92
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7037_price.csv",
+      "code": "7037",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7040",
+      "kind": "margin",
+      "elapsed_sec": 1.97
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7040_price.csv",
+      "code": "7040",
+      "kind": "price",
+      "elapsed_sec": 0.09
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7042",
+      "kind": "margin",
+      "elapsed_sec": 1.83
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7042_price.csv",
+      "code": "7042",
+      "kind": "price",
+      "elapsed_sec": 0.1
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7044",
+      "kind": "margin",
+      "elapsed_sec": 1.93
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7044_price.csv",
+      "code": "7044",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7057",
+      "kind": "margin",
+      "elapsed_sec": 1.89
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7057_price.csv",
+      "code": "7057",
+      "kind": "price",
+      "elapsed_sec": 0.12
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7058",
+      "kind": "margin",
+      "elapsed_sec": 1.89
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 119,
+      "path": "data/cloud-cache/7058_price.csv",
+      "code": "7058",
+      "kind": "price",
+      "elapsed_sec": 0.09
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7060",
+      "kind": "margin",
+      "elapsed_sec": 1.99
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7060_price.csv",
+      "code": "7060",
+      "kind": "price",
+      "elapsed_sec": 0.09
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7064",
+      "kind": "margin",
+      "elapsed_sec": 1.83
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 119,
+      "path": "data/cloud-cache/7064_price.csv",
+      "code": "7064",
+      "kind": "price",
+      "elapsed_sec": 0.08
+    },
+    {
+      "ok": false,
+      "source": "irbank",
+      "rows": 0,
+      "error": "empty",
+      "code": "7065",
+      "kind": "margin",
+      "elapsed_sec": 1.92
+    },
+    {
+      "ok": true,
+      "source": "yfinance",
+      "rows": 120,
+      "path": "data/cloud-cache/7065_price.csv",
+      "code": "7065",
+      "kind": "price",
+      "elapsed_sec": 0.09
     }
   ],
   "summary": {
-    "ok": 400,
-    "fail": 0,
+    "ok": 200,
+    "fail": 200,
     "total": 400
   },
-  "ended_utc": "2026-06-11T04:20:52.479427+00:00",
-  "elapsed_sec": 399.2
+  "ended_utc": "2026-06-11T04:28:13.292909+00:00",
+  "elapsed_sec": 399.5
 }
