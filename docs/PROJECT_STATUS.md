@@ -1,7 +1,20 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-06-13（兩問題調查完成：① 頁面載入慢 ② 模擬交易「現價」與市場不同步 — 根因已證實、修法已設計，**待實作**，見下節）
+2026-06-13（兩問題 + Fix 3 **全部實作完成**：① 頁面載入慢（Fix 1-A~D）② 現價不同步（Fix 2-1/2-2）③ 價格獨立掃描鏈（Fix 3-1~3-3）；單元測試綠，workflow/前端畫面驗證列入 HUMAN_TODO）
+
+## 2026-06-13 修復實作完成（Fix 1 / Fix 2 / Fix 3）
+
+- ✅ **Fix 1-A 掃描禁外網**：`scraper.fetch_margin(cache_only=)`、`signal_service.analyze_one(offline=)`、`run_signals_scan` 全走 offline（margin 只讀快取、name 不爬 kabutan）。測試 `test_signal_service.py::TestOfflineScan`。
+- ✅ **Fix 1-B stale-while-revalidate**：`scan.py _get_or_compute_live_signals` 有舊資料立即回 + daemon thread 背景重算；response 加 `computed_at`/`refreshing`。
+- ✅ **Fix 1-C dividend 分頁**：`/scan/dividend` 加 `limit/offset`（預設 50）+ `to_dict("records")`；Dashboard `limit=5`、/dividend `limit=200`。
+- ✅ **Fix 1-D mtime key TTL**：`_inputs_mtime_key` 60 秒 module-level 快取，省每請求 11k 檔 stat。
+- ✅ **Fix 2-1 price_date 誠實標示**：`gate2_cost` 回傳 `price_date`；pocket 前端表格小字 + popup 文案 + >3 日紅字警示。測試 `test_pocket_filter.py`。
+- ✅ **Fix 2-2 quote 即時報價**：`api/services/quote_service.py`（in-memory TTL 5 分，不落地）+ `api/routers/quote.py` `GET /quote/{code}`；`portfolio_service._current_price` 改先打 quote fallback CSV；pocket/signals[code]/portfolio 前端接 quote。測試 `test_quote.py`。
+- ✅ **Fix 3-1 price bulk**：`cloud_fetch.py fetch_price_bulk_cloud` + `--price-bulk`（yf.download 批次、增量合併 trim 260 列）。測試 `test_cloud_fetch_price_bulk.py`。
+- ✅ **Fix 3-2 price-fetch.yml**：收盤後 JST 15:40 獨立抓價 workflow；cloud-fetch.yml 排程預設改 `margin`。
+- ✅ **Fix 3-3 price_sync**：`api/services/data_sync_service.py run_cloud_sync(kinds=)`（router 與排程共用）+ scheduler `price_sync` job（JST 17:00）。測試 `test_data_sync_service.py`、`test_scheduler_service.py`。
+- ⏳ 待人工：price-fetch.yml 手動 dispatch、前端畫面截圖 → 見 [HUMAN_TODO.md](HUMAN_TODO.md)。
 
 ## 2026-06-13 問題調查：① 頁面載入慢 ② 「現價」與市場不同步（修法已設計，待實作）
 
@@ -236,10 +249,10 @@ GitHub Actions cloud_fetch.py（yfinance 日線 period=6mo，每次覆寫）
   - ✅ 投機訊號頁 bug 修復（2026-05-11）
   - ✅ 投機訊號頁分頁實作（2026-05-11）
   - ✅ 全市場三訊號修復 #1/#2/#3（2026-06-06）
-  - **🔥 最優先：2026-06-13 兩問題修復**（修法已設計到實作粒度，見本文件頂部「2026-06-13 問題調查」節）
-    - 問題① 頁面慢：Fix 1-A 掃描禁外網 → 1-B stale-while-revalidate → 1-C dividend 分頁 → 1-D mtime key TTL
-    - 問題② 現價不同步：Fix 2-1 標示資料日期 → Fix 2-2 quote 即時報價端點
-    - Fix 3 價格獨立掃描鏈：3-1 cloud_fetch 價格 bulk 模式 → 3-2 收盤後 price-fetch.yml workflow → 3-3 本地 price_sync 排程自動同步（可與 Fix 1 並行）
+  - ✅ **2026-06-13 兩問題 + Fix 3 全部實作完成**（見本文件頂部「2026-06-13 修復實作完成」節）
+    - 問題① 頁面慢：Fix 1-A 掃描禁外網 / 1-B stale-while-revalidate / 1-C dividend 分頁 / 1-D mtime key TTL ✅
+    - 問題② 現價不同步：Fix 2-1 標示資料日期 / Fix 2-2 quote 即時報價端點 ✅
+    - Fix 3 價格獨立掃描鏈：3-1 cloud_fetch bulk / 3-2 price-fetch.yml / 3-3 price_sync 排程 ✅
   - **🔜 P0 每日不變式健康檢查**（見 [DEV_PROCESS_IMPROVEMENTS.md](DEV_PROCESS_IMPROVEMENTS.md) 第三節）
     - 斷言：完整全市場掃描 `rows>=3000` 時 `has_exit` 不可為 0；訊號旗標不可全市場同值；latest_price 覆蓋率 >95%；cache 最新交易日距今 < N 營業日
     - 違反就用既有通知通道告警（Email/LINE）→ 終結「壞掉沒人發現」

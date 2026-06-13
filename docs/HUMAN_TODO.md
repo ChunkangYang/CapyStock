@@ -1,5 +1,26 @@
 # Human TODO — 需要人工介入的任務
 
+## Fix 3：價格獨立掃描鏈（2026-06-13）
+
+### price-fetch.yml 手動 dispatch 驗證
+- **狀態**：待人工執行（GitHub Actions 本地測不了）
+- **步驟**：
+  1. GitHub Actions → 「Price Fetch」→ Run workflow（手動 dispatch）一次
+  2. 確認 commit 只含 `data/cloud-cache/*_price.csv` 與 `_fetch_report.json`
+  3. 確認全程 < 20 分鐘
+  4. 隔個交易日 JST 17:05 後，檢查本地 `data/cache/7203_price.csv` 最後一筆 = 當日日期
+     （price_sync 排程於 JST 17:00 自動拉價 + 重算）
+- **備註**：cloud-fetch.yml 排程預設已改為只抓 `margin`，價格全權交給 price-fetch.yml。
+
+### Fix 2 / Fix 1 前端畫面確認
+- **狀態**：待人工確認（瀏覽器）
+- **步驟**：
+  1. `/pocket` 開「模擬交易」popup → 購入價標示「即時報價（延遲約20分）HH:MM」或「最後收盤 YYYY-MM-DD」
+  2. 價格資料 > 3 日 → popup 紅字警示「請先回 Dashboard 雲端同步」
+  3. `/signals/[code]` 進場 popup、`/portfolio` 新增表單（輸入代號後）帶入即時報價
+  4. 投機訊號頁掃描中顯示「🔄 自動更新中」（refreshing=true，stale-while-revalidate）
+  5. 證據截圖存 `docs/EVIDENCES/`
+
 ## Sprint 25：持倉管理（S25）
 
 ### T25-07/08 Dashboard 前端畫面確認

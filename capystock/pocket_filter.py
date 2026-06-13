@@ -116,14 +116,18 @@ def gate2_cost(
 ) -> dict:
     """主力成本 = 各申報日鄰近收盤均價；現價（最新收盤）<= 成本×(1+tolerance) 過關。
 
-    回傳 {passed, master_cost, latest_price, premium_pct}
+    回傳 {passed, master_cost, latest_price, premium_pct, price_date}
+    price_date＝latest_price 來源那筆的日期（YYYY-MM-DD）。前端用它誠實標示
+    「現價」其實是哪天的收盤，避免把 stale 收盤當即時價。無 price_df 時為 None。
     """
-    out = {"passed": False, "master_cost": None, "latest_price": None, "premium_pct": None}
+    out = {"passed": False, "master_cost": None, "latest_price": None,
+           "premium_pct": None, "price_date": None}
     if price_df is None or len(price_df) == 0 or "close" not in price_df.columns:
         return out
     pdf = price_df.sort_values("date").reset_index(drop=True)
     latest_price = float(pdf.iloc[-1]["close"])
     out["latest_price"] = latest_price
+    out["price_date"] = str(pdf.iloc[-1]["date"])[:10] if "date" in pdf.columns else None
 
     costs: list[float] = []
     for d in filing_dates:

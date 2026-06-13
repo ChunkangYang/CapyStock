@@ -133,7 +133,9 @@ def run_signals_scan(
         try:
             wl_entry = wl.get(code) if isinstance(wl, dict) else None
             start_price = wl_entry.get("start_price") if isinstance(wl_entry, dict) else None
-            result = analyze_one(code, name=name, start_price=start_price)
+            # offline=True：全市場掃描永不打外網（margin 只讀快取、name 不爬 kabutan）。
+            # 設計意圖＝single source of truth = data/cache，新鮮度由 cloud-sync 負責。
+            result = analyze_one(code, name=name, start_price=start_price, offline=True)
             events = edinet_by_code.get(str(code).zfill(4), [])
             score = compute_score(result, events, include_technical=include_technical)
 

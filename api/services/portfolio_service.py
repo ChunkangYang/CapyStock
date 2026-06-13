@@ -9,6 +9,14 @@ from api.schemas.portfolio import PortfolioEntry, PortfolioLot
 
 
 def _current_price(code: str) -> Optional[float]:
+    # 先打即時報價（共用 TTL cache，延遲約 20 分）；失敗再 fallback 日線最後收盤。
+    try:
+        from api.services import quote_service
+        q = quote_service.get_quote(code)
+        if q is not None and q.get("price"):
+            return float(q["price"])
+    except Exception:
+        pass
     try:
         df, _ = scraper.fetch_price(code)
         if df is not None and not df.empty:

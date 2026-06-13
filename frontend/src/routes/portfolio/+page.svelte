@@ -49,6 +49,23 @@
     cacheClear(CACHE_KEY);
   }
 
+  let addQuoteNote = '';
+  // 輸入代號後嘗試帶入即時價（延遲約 20 分）；失敗則不動，使用者自行填。
+  async function prefillQuote() {
+    const code = addCode.trim();
+    addQuoteNote = '';
+    if (!code) return;
+    try {
+      const q = await api<{ price: number; price_time: string }>(`/quote/${code}`);
+      if (q && q.price > 0) {
+        addEntryPrice = String(q.price);
+        addQuoteNote = `即時報價（延遲約20分）${q.price_time}`;
+      }
+    } catch {
+      // 取不到即時價，保留使用者輸入
+    }
+  }
+
   async function handleAdd() {
     if (!addCode || !addEntryPrice || !addQuantity) return;
     addLoading = true;
@@ -114,7 +131,7 @@
   <section class="add-section">
     <h2>新增買入</h2>
     <div class="add-form">
-      <input class="inp" bind:value={addCode} placeholder="股票代號（e.g. 7203）" />
+      <input class="inp" bind:value={addCode} placeholder="股票代號（e.g. 7203）" on:blur={prefillQuote} />
       <input class="inp" bind:value={addEntryPrice} placeholder="買入價（円）" type="number" />
       <input class="inp" bind:value={addQuantity} placeholder="數量（股）" type="number" />
       <input class="inp" bind:value={addNote} placeholder="備注（可省略）" />
@@ -122,6 +139,7 @@
         {addLoading ? '新增中…' : '＋ 買入'}
       </button>
     </div>
+    {#if addQuoteNote}<p class="quote-note">{addQuoteNote}</p>{/if}
     {#if addMsg}
       <p class="msg" class:error-msg={addMsg.startsWith('✗')}>{addMsg}</p>
     {/if}

@@ -63,7 +63,7 @@
           loadOptional<PortfolioEntry[]>('/portfolio?open_only=true', []),
         ]);
         const signalsResp = await loadOptional<{ data: SignalScanRow[] }>('/scan/signals', { data: [] });
-        const top = (await loadOptional<any[]>('/scan/dividend?order_by=est_yield&desc=true', [])).slice(0, 5);
+        const top = (await loadOptional<any[]>('/scan/dividend?order_by=est_yield&desc=true&limit=5', [])).slice(0, 5);
         return {
           watchlist: wl,
           portfolioEntries: pf,

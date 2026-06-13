@@ -6,7 +6,7 @@
   import { loadFavorites } from '$lib/stores/favorites';
 
   interface Gate1 { passed: boolean; lead_filer: string | null; filing_count: number; dates: string[]; doc_types: string[]; }
-  interface Gate2 { passed: boolean; master_cost: number | null; latest_price: number | null; premium_pct: number | null; }
+  interface Gate2 { passed: boolean; master_cost: number | null; latest_price: number | null; premium_pct: number | null; price_date?: string | null; }
   interface Gate3 { passed: boolean; weeks: number; drop_pct: number | null; series: number[]; }
   interface PocketRow { code: string; name: string; in_pocket: boolean; gates_passed: number; gate1: Gate1; gate2: Gate2; gate3: Gate3; }
   interface Funnel { candidates: number; gate1_continuity: number; gate2_cost: number; gate3_margin: number; }
@@ -52,6 +52,21 @@
     return 'prem-zero';
   }
 
+  // 「現價」實際是最後收盤日的值；距今 > 3 個日曆日視為過期，提示先雲端同步。
+  function priceDateLabel(d: string | null | undefined): string {
+    return d ? d : '日期不明';
+  }
+  function priceStaleDays(d: string | null | undefined): number | null {
+    if (!d) return null;
+    const t = Date.parse(d);
+    if (Number.isNaN(t)) return null;
+    return Math.floor((Date.now() - t) / 86400000);
+  }
+  function isPriceStale(d: string | null | undefined): boolean {
+    const days = priceStaleDays(d);
+    return days != null && days > 3;
+  }
+
   async function addToWatch(r: PocketRow) {
     watchState[r.code] = 'loading';
     watchState = { ...watchState };
@@ -84,15 +99,26 @@
   let simStopPct = 10;        // 移動停損 N%，預設 10
   let simSaving = false;
   let simMsg = '';
+  let simQuoteNote = '';      // 即時報價來源說明（成功＝即時，失敗＝fallback 收盤日期）
 
   async function openSim(r: PocketRow) {
     simRow = r;
-    simEntryPrice = r.gate2.latest_price ?? 0;  // 預設帶現價，可改
+    simEntryPrice = r.gate2.latest_price ?? 0;  // 預設帶最後收盤，下面嘗試以即時價覆蓋
     simShares = null;
     simStopPct = 10;
     simNewLedger = '';
     simMsg = '';
+    simQuoteNote = `最後收盤 ${priceDateLabel(r.gate2.price_date)}`;
     simOpen = true;
+    // 嘗試即時報價（延遲約 20 分）；成功→預設購入價改用即時價，失敗→維持收盤值
+    api<{ price: number; price_time: string }>(`/quote/${r.code}`)
+      .then((q) => {
+        if (q && q.price > 0) {
+          simEntryPrice = q.price;
+          simQuoteNote = `即時報價（延遲約20分）${q.price_time}`;
+        }
+      })
+      .catch(() => {});
     try {
       ledgers = await api<LedgerSummary[]>('/ledgers');
       simLedgerId = ledgers.length ? ledgers[0].id : '';
@@ -200,7 +226,10 @@
                 <td>{r.name}</td>
                 <td class="filer">{r.gate1.lead_filer ?? '—'}<span class="cnt">×{r.gate1.filing_count}</span></td>
                 <td>{num(r.gate2.master_cost)}</td>
-                <td>{num(r.gate2.latest_price)}</td>
+                <td title={`最後收盤 ${priceDateLabel(r.gate2.price_date)}`}>
+                  {num(r.gate2.latest_price)}
+                  <span class="pdate" class:stale={isPriceStale(r.gate2.price_date)}>{priceDateLabel(r.gate2.price_date)}</span>
+                </td>
                 <td class={premiumClass(r.gate2.premium_pct)}>{pct(r.gate2.premium_pct)}</td>
                 <td class="prem-neg">↓ {pct(r.gate3.drop_pct)}</td>
                 <td class="actions">
@@ -267,9 +296,12 @@
         <input type="text" placeholder="輸入新帳本名稱（留空則用現有）" bind:value={simNewLedger} />
       </label>
 
-      <label>購入時價（預設現價，可改）
+      <label>購入時價（{simQuoteNote}，可改）
         <input type="number" step="0.1" bind:value={simEntryPrice} />
       </label>
+      {#if simQuoteNote.startsWith('最後收盤') && isPriceStale(simRow.gate2.price_date)}
+        <p class="price-warn">⚠ 價格資料已是 {priceDateLabel(simRow.gate2.price_date)}，請先回 Dashboard 雲端同步再加入</p>
+      {/if}
       <label>購入股數
         <input type="number" step="1" min="1" placeholder="必填" bind:value={simShares} />
       </label>
@@ -335,6 +367,9 @@
   .modal label { display: block; font-size: .8rem; color: #cbd5e1; margin-bottom: .7rem; }
   .modal input, .modal select { width: 100%; margin-top: .25rem; padding: .4rem .5rem; background: #0f172a; color: #e2e8f0; border: 1px solid #475569; border-radius: 5px; box-sizing: border-box; }
   .modal-msg { font-size: .8rem; color: #fbbf24; margin: .2rem 0 .6rem; }
+  .pdate { display: block; font-size: .68rem; color: #64748b; }
+  .pdate.stale { color: #f87171; }
+  .price-warn { font-size: .78rem; color: #f87171; margin: -.4rem 0 .8rem; line-height: 1.3; }
   .modal-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .4rem; }
   .modal-actions button { padding: .45rem .9rem; border: 0; border-radius: 6px; cursor: pointer; font-size: .85rem; }
   .btn-cancel { background: #475569; color: #fff; }

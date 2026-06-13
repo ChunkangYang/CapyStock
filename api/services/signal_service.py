@@ -104,6 +104,7 @@ def analyze_one(
     name: str = "",
     start_price: Optional[float] = None,
     price_df: Optional[pd.DataFrame] = None,
+    offline: bool = False,
 ) -> SignalResult:
     """分析單檔股票訊號。
 
@@ -112,21 +113,25 @@ def analyze_one(
         name: 股票名稱（若為空，會自動爬取）
         start_price: 起始價（若為 None，視為非 watchlist 股票）
         price_df: 預先下載的價格 DataFrame（批次掃描用，傳入則跳過 HTTP 爬取）
+        offline: True 時掃描永不打外網 — name 為空不爬 kabutan（用 ""，
+            全市場掃描本來就從 universe.csv 帶 name）、margin 只讀本地快取
+            （cache_only）。給 run_signals_scan 全市場重算用，避免請求內退化成
+            數千次即時爬蟲。
     """
-    if not name:
+    if not name and not offline:
         name = scraper.fetch_name(code) or ""
 
     if price_df is None:
         from concurrent.futures import ThreadPoolExecutor
         with ThreadPoolExecutor(max_workers=2) as executor:
             price_future = executor.submit(scraper.fetch_price, code)
-            margin_future = executor.submit(scraper.fetch_margin, code)
+            margin_future = executor.submit(scraper.fetch_margin, code, offline)
             price_df, _ = price_future.result()
             margin_df = margin_future.result()
     else:
         if isinstance(price_df, pd.DataFrame) and price_df.empty:
             price_df = None
-        margin_df = scraper.fetch_margin(code)
+        margin_df = scraper.fetch_margin(code, cache_only=offline)
 
     # 有傳入真實 start_price → 持倉/追蹤視角（停損等持倉專屬訊號適用）；
     # 沒傳入（全市場掃描）→ 用最新價當佔位，holdings_context=False 跳過持倉專屬訊號。

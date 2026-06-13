@@ -180,176 +180,33 @@ async def cloud_sync_status():
 class CloudSyncRequest(BaseModel):
     pull: bool = True  # True=從 GitHub 下載最新；False=只套用現有 cloud-cache 到 cache
     rescan_after_sync: bool = True  # 同步完自動重算全市場訊號（建議開啟，避免 stale snapshot）
-
-
-def _parse_github_remote() -> tuple[str, str, str]:
-    """解析 (owner, repo, branch)。
-    優先讀 env var（Docker 友善）；fallback 解析 .git/config + .git/HEAD。
-      CAPYSTOCK_GITHUB_REPO=owner/repo
-      CAPYSTOCK_GITHUB_BRANCH=feature/s25-portfolio
-    """
-    import os
-    import re
-
-    env_repo = os.environ.get("CAPYSTOCK_GITHUB_REPO", "").strip()
-    env_branch = os.environ.get("CAPYSTOCK_GITHUB_BRANCH", "").strip()
-    if env_repo and env_branch and "/" in env_repo:
-        owner, repo = env_repo.split("/", 1)
-        return owner, repo, env_branch
-
-    # fallback: 從 .git/ 解析（非 docker 情境）
-    git_dir = config.PROJECT_ROOT / ".git"
-    cfg = git_dir / "config"
-    head = git_dir / "HEAD"
-    if not cfg.exists() or not head.exists():
-        raise RuntimeError(
-            "找不到 .git/config 或 .git/HEAD。"
-            "若在 Docker 內執行，請在 docker-compose.yml 設定 env："
-            "CAPYSTOCK_GITHUB_REPO=<owner>/<repo>、CAPYSTOCK_GITHUB_BRANCH=<branch>"
-        )
-
-    cfg_text = cfg.read_text(encoding="utf-8", errors="ignore")
-    m = re.search(r"\[remote\s+\"origin\"\][^\[]*?url\s*=\s*(\S+)", cfg_text)
-    if not m:
-        raise RuntimeError("找不到 origin remote")
-    url = m.group(1).strip()
-    m2 = re.search(r"github\.com[:/]([^/]+)/([^/\s]+?)(?:\.git)?$", url)
-    if not m2:
-        raise RuntimeError(f"無法解析 GitHub repo: {url}")
-    owner, repo = m2.group(1), m2.group(2)
-
-    head_text = head.read_text(encoding="utf-8").strip()
-    m3 = re.match(r"ref:\s*refs/heads/(.+)$", head_text)
-    if not m3:
-        raise RuntimeError(f"HEAD 處於 detached 狀態：{head_text}")
-    branch = m3.group(1)
-    return owner, repo, branch
+    kinds: Optional[List[str]] = None  # None=全量；["price"]=只同步價格（價格獨立排程用）
 
 
 @router.post("/cloud-sync")
 async def cloud_sync(req: CloudSyncRequest):
-    """從雲端同步資料（用 GitHub API，不依賴本機 git CLI）：
-    1. (可選) GitHub Contents API 列出 data/cloud-cache/，並行下載 -> data/cloud-cache/
-    2. 複製 data/cloud-cache/*.csv -> data/cache/*.csv
+    """從雲端同步資料（cloud-cache → cache），完成後（可選）重算全市場訊號。
+
+    實作搬到 data_sync_service.run_cloud_sync（router 與 price_sync 排程共用同一份），
+    這裡只負責把同步函式丟到 threadpool 並把錯誤轉成 HTTPException。
     """
     import asyncio
-    import shutil
 
-    import httpx
+    from api.services import data_sync_service
 
-    cloud_dir = config.PROJECT_ROOT / "data" / "cloud-cache"
-    local_dir = config.CACHE_DIR
-    local_dir.mkdir(parents=True, exist_ok=True)
-    cloud_dir.mkdir(parents=True, exist_ok=True)
-
-    pulled_info = None
-    if req.pull:
-        try:
-            owner, repo, branch = _parse_github_remote()
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=f"解析 git config 失敗: {e}")
-
-        api_url = f"https://api.github.com/repos/{owner}/{repo}/contents/data/cloud-cache"
-        headers = {"Accept": "application/vnd.github+json"}
-        params = {"ref": branch}
-
-        try:
-            async with httpx.AsyncClient(timeout=30.0) as client:
-                r = await client.get(api_url, params=params, headers=headers)
-                if r.status_code == 404:
-                    raise HTTPException(status_code=404, detail="GitHub repo 上沒有 data/cloud-cache/ 目錄（先觸發一次 Cloud Fetch）")
-                if r.status_code == 403:
-                    raise HTTPException(status_code=403, detail=f"GitHub API 拒絕（rate limit 或 private repo 需 token）: {r.text[:200]}")
-                r.raise_for_status()
-                files = r.json()
-                if not isinstance(files, list):
-                    raise HTTPException(status_code=500, detail=f"GitHub API 回傳非預期格式: {str(files)[:200]}")
-
-                # 並行下載所有檔案
-                async def fetch_one(meta):
-                    name = meta["name"]
-                    dl = meta.get("download_url")
-                    if not dl:
-                        return name, False, "no download_url"
-                    resp = await client.get(dl)
-                    resp.raise_for_status()
-                    (cloud_dir / name).write_bytes(resp.content)
-                    return name, True, None
-
-                results = await asyncio.gather(*(fetch_one(f) for f in files), return_exceptions=True)
-
-            downloaded, dl_errors = [], []
-            for res in results:
-                if isinstance(res, Exception):
-                    dl_errors.append(str(res))
-                    continue
-                name, ok, err = res
-                if ok:
-                    downloaded.append(name)
-                else:
-                    dl_errors.append(f"{name}: {err}")
-
-            pulled_info = {
-                "owner": owner, "repo": repo, "branch": branch,
-                "downloaded": len(downloaded), "errors": dl_errors,
-            }
-        except HTTPException:
-            raise
-        except httpx.HTTPError as e:
-            raise HTTPException(status_code=502, detail=f"GitHub API 失敗: {e}")
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=f"pull error: {e}")
-
-    if not cloud_dir.exists():
-        raise HTTPException(status_code=404, detail="data/cloud-cache 不存在，先在 GitHub 觸發一次 Cloud Fetch")
-
-    copied = []
-    skipped = []
-    # CSV: 信用残 / flow / price
-    for src in cloud_dir.glob("*.csv"):
-        dst = local_dir / src.name
-        try:
-            shutil.copy2(src, dst)
-            copied.append(src.name)
-        except Exception as e:
-            skipped.append({"file": src.name, "error": str(e)})
-    # EDINET reports JSON → 仍保留在 cloud-cache 內，但也複製一份到 cache 給 analyzer 用
-    edinet_json = cloud_dir / "edinet_reports.json"
-    if edinet_json.exists():
-        try:
-            shutil.copy2(edinet_json, local_dir / "edinet_reports.json")
-            copied.append("edinet_reports.json")
-        except Exception as e:
-            skipped.append({"file": "edinet_reports.json", "error": str(e)})
-
-    # CSV 同步完成後，自動重算全市場訊號並寫 parquet —
-    # 「按 sync → 完成 sync + 重算 + 一致」單一原子操作，避免使用者再手動觸發 /scan/run。
-    scan_summary = None
-    if req.rescan_after_sync if hasattr(req, "rescan_after_sync") else True:
-        try:
-            from api.services import scan_service as _scan_service
-            from api.routers.scan import prime_live_signals_cache
-            universe = _scan_service.load_universe()
-            rows, errors = _scan_service.run_signals_scan(universe)
-            now = datetime.now()
-            today_str = now.strftime("%Y-%m-%d")
-            _scan_service.write_snapshot("signals", rows, today_str, guard=True)
-            if errors:
-                _scan_service.write_errors("signals", errors, today_str)
-            # 把結果塞進 in-mem cache：下次 /scan/signals 即時回，不再花 60 秒重算
-            prime_live_signals_cache(rows, errors, now)
-            scan_summary = {"rows": len(rows), "errors": len(errors), "snapshot_date": today_str}
-        except Exception as e:
-            scan_summary = {"error": str(e)}
-
-    return {
-        "pulled": pulled_info,
-        "copied_count": len(copied),
-        "copied_sample": copied[:10],
-        "skipped": skipped,
-        "applied_to": str(local_dir),
-        "rescan": scan_summary,
-    }
+    try:
+        return await asyncio.to_thread(
+            data_sync_service.run_cloud_sync,
+            pull=req.pull,
+            kinds=req.kinds,
+            rescan=req.rescan_after_sync,
+        )
+    except RuntimeError as e:
+        msg = str(e)
+        status = 404 if "沒有 data/cloud-cache" in msg or "不存在" in msg else 500
+        raise HTTPException(status_code=status, detail=msg)
+    except Exception as e:  # noqa: BLE001
+        raise HTTPException(status_code=502, detail=f"cloud-sync 失敗: {e}")
 
 
 @router.get("/latest-price/{code}")

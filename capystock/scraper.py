@@ -315,12 +315,17 @@ def _fetch_margin_irbank(code: str) -> Optional[pd.DataFrame]:
     return df.reset_index(drop=True)
 
 
-def fetch_margin(code: str) -> Optional[pd.DataFrame]:
+def fetch_margin(code: str, cache_only: bool = False) -> Optional[pd.DataFrame]:
     """週度信用残（融資/融券/倍率）。
 
     1. 先讀本地 CSV `data/cache/{code}_margin.csv`
-    2. 若 CSV 不存在或最新資料超過 14 天，改從 Yahoo Finance Japan 爬取並更新 CSV
+    2. 若 CSV 不存在或最新資料超過 8 天，改從 irbank.net 爬取並更新 CSV
     3. 若兩者都失敗回傳 None，analyzer 會跳過條件 2。
+
+    cache_only=True：只讀本地 CSV，**永不**爬 irbank、**永不**寫檔 —
+    有 cached（不論多舊）直接回，沒有就回 None。全市場掃描用此模式，
+    避免在請求內退化成數千次即時爬蟲（single source of truth = data/cache，
+    新鮮度由 cloud-sync 負責）。
     """
     path = storage.cache_path(code, "margin")
     cached: Optional[pd.DataFrame] = None
@@ -336,7 +341,11 @@ def fetch_margin(code: str) -> Optional[pd.DataFrame]:
         except Exception:
             pass
 
-    # 若快取存在且最新資料在 14 天內，直接回傳
+    # cache_only：不論新舊都不打外網，有 cached 直接回，無則 None
+    if cache_only:
+        return cached
+
+    # 若快取存在且最新資料在 8 天內，直接回傳
     if cached is not None:
         latest = cached["week"].max()
         age_days = (pd.Timestamp.now() - latest).days

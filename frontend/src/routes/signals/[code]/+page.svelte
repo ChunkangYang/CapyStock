@@ -33,10 +33,14 @@
 
   async function openEntryModal() {
     if (!signal) return;
-    entryPrice = signal.latest_price ?? 0;
+    entryPrice = signal.latest_price ?? 0;  // 預設最後收盤，下面嘗試以即時價覆蓋
     showEntryModal = true;
     entryError = '';
     entryMessage = '';
+    // 即時報價（延遲約 20 分）；成功→預設購入價改用即時價，失敗→維持收盤值
+    api<{ price: number }>(`/quote/${signal.code}`)
+      .then((q) => { if (q && q.price > 0) entryPrice = q.price; })
+      .catch(() => {});
     ledgersLoading = true;
     try {
       ledgers = await api<LedgerSummary[]>(`/ledgers`);

@@ -54,7 +54,7 @@
     try {
       const { data, ts } = await cachedFetch(
         CACHE_KEY,
-        () => api<DividendScanRow[]>('/scan/dividend'),
+        () => api<DividendScanRow[]>('/scan/dividend?limit=200'),
         forceRefresh,
       );
       rows = data;

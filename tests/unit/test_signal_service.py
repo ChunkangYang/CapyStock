@@ -70,6 +70,55 @@ class TestAnalyzeOne:
             assert result.latest_price is None
 
 
+class TestOfflineScan:
+    """Fix 1-A：掃描路徑 offline=True 永不打外網。"""
+
+    def test_offline_does_not_scrape_irbank_or_kabutan(self, mock_requests):
+        """offline=True：margin 走 cache_only（不爬 irbank）、name 空不爬 kabutan。"""
+        mock_price = pd.DataFrame({
+            "date": [datetime(2024, 1, 1), datetime(2024, 1, 2), datetime(2024, 1, 3)],
+            "open": [100.0, 101.0, 102.0],
+            "high": [102.0, 103.0, 104.0],
+            "low": [99.0, 100.0, 101.0],
+            "close": [101.0, 102.0, 103.0],
+            "volume": [1000.0, 1100.0, 1200.0],
+        })
+
+        with patch("capystock.scraper._fetch_margin_irbank") as mock_irbank, \
+             patch("capystock.scraper.fetch_name") as mock_name, \
+             patch("capystock.scraper.fetch_price", return_value=(mock_price, "cache")), \
+             patch("capystock.scraper.storage.cache_path") as mock_cache_path:
+            # margin cache 不存在 → cache_only 應直接回 None，不觸發 irbank
+            mock_cache_path.return_value = type("P", (), {"exists": lambda self: False})()
+            result = signal_service.analyze_one("7203", name="", offline=True)
+            assert isinstance(result, SignalResult)
+            mock_irbank.assert_not_called()
+            mock_name.assert_not_called()
+
+    def test_run_signals_scan_uses_offline(self, mock_requests):
+        """run_signals_scan 全市場路徑下，irbank 不被呼叫、不寫 margin CSV。"""
+        from api.services import scan_service
+
+        mock_price = pd.DataFrame({
+            "date": [datetime(2024, 1, 1), datetime(2024, 1, 2), datetime(2024, 1, 3)],
+            "open": [100.0, 101.0, 102.0],
+            "high": [102.0, 103.0, 104.0],
+            "low": [99.0, 100.0, 101.0],
+            "close": [101.0, 102.0, 103.0],
+            "volume": [1000.0, 1100.0, 1200.0],
+        })
+        universe = [{"code": "7203", "name": "トヨタ", "market": "Prime"}]
+
+        with patch("capystock.scraper._fetch_margin_irbank") as mock_irbank, \
+             patch("capystock.scraper.fetch_price", return_value=(mock_price, "cache")), \
+             patch("capystock.scraper.storage.cache_path") as mock_cache_path, \
+             patch("api.services.scan_service._load_edinet_by_code", return_value={}):
+            mock_cache_path.return_value = type("P", (), {"exists": lambda self: False})()
+            rows, errors = scan_service.run_signals_scan(universe)
+            assert len(rows) == 1
+            mock_irbank.assert_not_called()
+
+
 class TestAnalyzeWatchlist:
     """test analyze_watchlist()。"""
 

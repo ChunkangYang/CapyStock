@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Optional
 import threading
 
+import pandas as pd
 from fastapi import APIRouter, HTTPException, Query
 
 from api.deps import DATA_DIR
@@ -18,8 +19,17 @@ _registry_lock = threading.Lock()
 
 # In-memory live-scan cache（單一 source of truth = data/cache/*.csv）
 # key = CSV 目錄的最新 mtime；CSV 一變動就自動失效。
+# refreshing：是否有背景重算 in-flight（stale-while-revalidate）。
 _live_signals_lock = threading.Lock()
-_live_signals_state: dict = {"key": None, "rows": None, "errors": None, "at": None}
+_live_signals_state: dict = {"key": None, "rows": None, "errors": None, "at": None, "refreshing": False}
+
+
+# mtime key 自身的短 TTL 快取：避免每個請求都 stat 11k+ 檔（實測 ~0.34 秒）。
+# 60 秒內重用上次算出的 key；副作用是 CSV 變動最晚 60 秒後才反映（可接受，
+# 因為 Fix 1-B 之後重算已非阻塞）。
+_mtime_key_lock = threading.Lock()
+_mtime_key_cache: dict = {"computed_ts": 0.0, "key": None}
+_MTIME_KEY_TTL_SEC = 60.0
 
 
 def _inputs_mtime_key() -> str:
@@ -28,7 +38,18 @@ def _inputs_mtime_key() -> str:
     輸入有兩條來源：
     - data/cache/*.csv（cloud-sync 寫入；CSV 影響 analyze_one 的算出值）
     - data/watchlist.json（影響 start_price 注入；不納入會導致改 watchlist 後 stale）
+
+    結果自身有 60 秒 TTL（_MTIME_KEY_TTL_SEC），省掉每請求對 11k+ 檔的 stat。
     """
+    import time as _time
+    now_ts = _time.time()
+    with _mtime_key_lock:
+        if (
+            _mtime_key_cache["key"] is not None
+            and now_ts - _mtime_key_cache["computed_ts"] < _MTIME_KEY_TTL_SEC
+        ):
+            return _mtime_key_cache["key"]
+
     cache_dir: Path = DATA_DIR / "cache"
     csv_max = 0.0
     if cache_dir.exists():
@@ -46,7 +67,11 @@ def _inputs_mtime_key() -> str:
             wl_mtime = wl_path.stat().st_mtime
     except OSError:
         pass
-    return f"csv:{csv_max}|wl:{wl_mtime}"
+    key = f"csv:{csv_max}|wl:{wl_mtime}"
+    with _mtime_key_lock:
+        _mtime_key_cache["computed_ts"] = now_ts
+        _mtime_key_cache["key"] = key
+    return key
 
 
 def prime_live_signals_cache(
@@ -60,23 +85,62 @@ def prime_live_signals_cache(
             "rows": rows,
             "errors": errors,
             "at": computed_at,
+            "refreshing": False,
         })
 
 
-def _get_or_compute_live_signals() -> tuple[list[SignalScanRow], list[dict], datetime]:
-    """即時計算全市場訊號；cache key 涵蓋 CSV 與 watchlist mtime，任一變動自動失效。"""
-    current_key = _inputs_mtime_key()
-    state = _live_signals_state
-    if state["key"] == current_key and state["rows"] is not None:
-        return state["rows"], state["errors"], state["at"]
-    with _live_signals_lock:
-        if _live_signals_state["key"] == current_key and _live_signals_state["rows"] is not None:
-            return _live_signals_state["rows"], _live_signals_state["errors"], _live_signals_state["at"]
+def _recompute_live_signals(key: str) -> None:
+    """背景重算全市場訊號並 swap state。run_signals_scan 本身已有 _scan_lock
+    序列化，這裡不持有 _live_signals_lock（只在最後 swap 時短暫持有）。"""
+    try:
         universe = scan_service.load_universe()
         rows, errors = scan_service.run_signals_scan(universe)
         now = datetime.now()
-        _live_signals_state.update({"key": current_key, "rows": rows, "errors": errors, "at": now})
-        return rows, errors, now
+        with _live_signals_lock:
+            _live_signals_state.update({
+                "key": key, "rows": rows, "errors": errors, "at": now,
+            })
+    finally:
+        with _live_signals_lock:
+            _live_signals_state["refreshing"] = False
+
+
+def _get_or_compute_live_signals() -> tuple[list[SignalScanRow], list[dict], datetime, bool]:
+    """stale-while-revalidate 取得全市場訊號。
+
+    - state 有舊 rows（即使 key 不符）→ 立即回舊資料；若無 in-flight 重算則起
+      daemon thread 背景重算，算完 swap state。回傳 refreshing=True 提示前端輪詢。
+    - state 完全沒 rows（冷啟動）→ 同步算一次再回。
+
+    回傳 (rows, errors, computed_at, refreshing)。
+    """
+    current_key = _inputs_mtime_key()
+    with _live_signals_lock:
+        state = _live_signals_state
+        fresh = state["key"] == current_key and state["rows"] is not None
+
+        if state["rows"] is not None:
+            if fresh:
+                # 命中且新鮮：直接回，不重算
+                return state["rows"], state["errors"], state["at"], state["refreshing"]
+            # 有舊資料但已 stale：立即回舊資料，背景重算（若尚未啟動）
+            if not state["refreshing"]:
+                state["refreshing"] = True
+                thread = threading.Thread(
+                    target=_recompute_live_signals, args=(current_key,), daemon=True
+                )
+                thread.start()
+            return state["rows"], state["errors"], state["at"], True
+
+    # 冷啟動：沒有任何舊資料，只能同步算一次
+    universe = scan_service.load_universe()
+    rows, errors = scan_service.run_signals_scan(universe)
+    now = datetime.now()
+    with _live_signals_lock:
+        _live_signals_state.update({
+            "key": current_key, "rows": rows, "errors": errors, "at": now, "refreshing": False,
+        })
+    return rows, errors, now, False
 
 
 @router.get("/scan/snapshots")
@@ -95,10 +159,15 @@ def get_signals_snapshot(date: Optional[str] = None, limit: int = 50, offset: in
     """
     if date is None:
         # 即時計算路徑：唯一 source of truth = data/cache/*.csv
-        rows_all, _errors, computed_at = _get_or_compute_live_signals()
+        # stale-while-revalidate：有舊資料時立即回（refreshing=True 提示前端輪詢）
+        rows_all, _errors, computed_at, refreshing = _get_or_compute_live_signals()
         total = len(rows_all)
         rows_page = rows_all[offset:offset + limit]
-        return {"data": rows_page, "total": total, "limit": limit, "offset": offset}
+        return {
+            "data": rows_page, "total": total, "limit": limit, "offset": offset,
+            "computed_at": computed_at.isoformat() if computed_at else None,
+            "refreshing": refreshing,
+        }
 
     # 歷史快照路徑：僅當使用者明確要看某天 parquet
     df = scan_service.load_latest_snapshot("signals", date)
@@ -134,8 +203,14 @@ def get_dividend_snapshot(
     overall: Optional[str] = None,
     order_by: Optional[str] = None,
     desc: Optional[bool] = None,
+    limit: int = 50,
+    offset: int = 0,
 ) -> list[DividendScanRow]:
-    """讀配息快照（含篩選排序）"""
+    """讀配息快照（含篩選排序 + 分頁）。
+
+    預設只回前 50 筆 — 避免每請求把整張 ~3700 列表轉成 pydantic 物件、回傳數 MB JSON。
+    回傳形狀維持 list（相容現有前端）。
+    """
     df = scan_service.load_latest_snapshot("dividend", date)
     if df is None:
         raise HTTPException(status_code=404, detail="No snapshot found")
@@ -154,8 +229,14 @@ def get_dividend_snapshot(
         descending = desc if desc is not None else False
         df = df.sort_values(order_by, ascending=not descending)
 
+    # 分頁（篩選排序後再切片）
+    df = df.iloc[offset:offset + limit]
+
+    def _opt_float(v) -> Optional[float]:
+        return float(v) if v is not None and pd.notna(v) else None
+
     rows = []
-    for _, row in df.iterrows():
+    for row in df.to_dict("records"):
         rows.append(
             DividendScanRow(
                 code=row["code"],
@@ -164,12 +245,12 @@ def get_dividend_snapshot(
                 pass_count=int(row["pass_count"]),
                 warn_count=int(row["warn_count"]),
                 fail_count=int(row["fail_count"]),
-                latest_dps=float(row["latest_dps"]) if row["latest_dps"] is not None else None,
+                latest_dps=_opt_float(row["latest_dps"]),
                 dps_streak_no_cut=int(row["dps_streak_no_cut"]),
-                est_yield=float(row["est_yield"]) if row["est_yield"] is not None else None,
-                payout_avg=float(row["payout_avg"]) if row["payout_avg"] is not None else None,
-                equity_ratio_latest=float(row["equity_ratio_latest"]) if row["equity_ratio_latest"] is not None else None,
-                eps_growth=float(row["eps_growth"]) if row["eps_growth"] is not None else None,
+                est_yield=_opt_float(row["est_yield"]),
+                payout_avg=_opt_float(row["payout_avg"]),
+                equity_ratio_latest=_opt_float(row["equity_ratio_latest"]),
+                eps_growth=_opt_float(row["eps_growth"]),
                 generated_at=row["generated_at"],
             )
         )

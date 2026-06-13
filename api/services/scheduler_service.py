@@ -61,6 +61,13 @@ DEFAULT_JOBS: list[JobDef] = [
         timeout_seconds=1800,
     ),
     JobDef(
+        id="price_sync",
+        name="收盤後價格自動同步（cloud-cache → cache + 重算訊號）",
+        cron="0 17 * * 1-5",  # JST 17:00（price-fetch.yml 15:40 起跑後 ~1 小時 buffer）
+        handler="api.services.scheduler_service:_handler_price_sync",
+        timeout_seconds=1800,
+    ),
+    JobDef(
         id="daily_pipeline",
         name="每日通知管線（analyze + digest）",
         cron="0 8 * * 1-5",
@@ -113,6 +120,17 @@ def _handler_scan_dividend():
     if errors:
         scan_service.write_errors("dividend", errors, today_str)
     return {"rows": len(rows), "errors": len(errors)}
+
+
+def _handler_price_sync():
+    """收盤後只拉價格並重算：rescan 會重算訊號 + prime_live_signals_cache，
+    使用者晚上開頁面直接看到當日收盤，零等待。"""
+    from api.services import data_sync_service
+    r = data_sync_service.run_cloud_sync(pull=True, kinds=["price"], rescan=True)
+    return {
+        "copied": r.get("copied_count"),
+        "rescan": r.get("rescan"),
+    }
 
 
 def _handler_ledger_advance():

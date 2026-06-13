@@ -80,7 +80,7 @@
     if (pickerRows.length === 0) {
       pickerLoading = true;
       try {
-        pickerRows = await api<DividendScanRow[]>('/scan/dividend');
+        pickerRows = await api<DividendScanRow[]>('/scan/dividend?limit=200');
         pickerRows = pickerRows.sort((a, b) => (b.est_yield ?? 0) - (a.est_yield ?? 0));
       } catch {
         pickerRows = [];

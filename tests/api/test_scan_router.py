@@ -112,7 +112,7 @@ def test_get_signals_snapshot_live_uses_in_memory(mock_signals_snapshot):
     ) as mock_live:
         from datetime import datetime
 
-        mock_live.return_value = (mock_signals_snapshot, [], datetime.now())
+        mock_live.return_value = (mock_signals_snapshot, [], datetime.now(), False)
 
         response = client.get("/api/v1/scan/signals")
         assert response.status_code == 200

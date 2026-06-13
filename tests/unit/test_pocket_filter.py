@@ -80,6 +80,18 @@ def test_gate2_no_filing_dates_returns_fail():
     assert g["master_cost"] is None
 
 
+def test_gate2_price_date_is_last_close_date():
+    """price_date＝latest_price 來源那筆的日期（誠實標示「現價」是哪天收盤）。"""
+    price = _price_df([("2026-04-06", 1000.0), ("2026-06-05", 1010.0)])
+    g = pf.gate2_cost(price, ["2026-04-06"], tolerance=0.05)
+    assert g["price_date"] == "2026-06-05"
+
+
+def test_gate2_price_date_none_when_no_price():
+    g = pf.gate2_cost(None, ["2026-04-06"], tolerance=0.05)
+    assert g["price_date"] is None
+
+
 # ---------------- 第三盤 ----------------
 def test_gate3_pass_consecutive_decline():
     m = _margin_df([("w1", 100.0), ("w2", 90.0), ("w3", 80.0), ("w4", 70.0)])

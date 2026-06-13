@@ -37,6 +37,14 @@ def test_default_jobs_loaded(svc):
     assert {"scan_signals", "scan_dividend", "ledger_advance", "daily_pipeline", "healthcheck_ping"}.issubset(ids)
 
 
+def test_price_sync_job_present(svc):
+    """Fix 3-3：price_sync 排程內建，cron=JST 17:00、handler 正確。"""
+    job = svc.get_job("price_sync")
+    assert job is not None
+    assert job.cron == "0 17 * * 1-5"
+    assert job.handler == "api.services.scheduler_service:_handler_price_sync"
+
+
 def test_trigger_now_success(svc, monkeypatch):
     flag = {"called": False}
 

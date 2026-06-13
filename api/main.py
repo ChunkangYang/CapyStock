@@ -9,7 +9,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from api.routers import (
-    analytics, compare, data, dividend, exit_strategy, favorites, health, indicators, ingest, ledger, meta, notify, pocket, portfolio, scan, scheduler, signals, watchlist,
+    analytics, compare, data, dividend, exit_strategy, favorites, health, indicators, ingest, ledger, meta, notify, pocket, portfolio, quote, scan, scheduler, signals, watchlist,
 )
 from api.services import scheduler_service as scheduler_service_module
 
@@ -64,6 +64,7 @@ app.include_router(portfolio.router, prefix="/api/v1", tags=["portfolio"])
 app.include_router(exit_strategy.router, prefix="/api/v1", tags=["exit_strategy"])
 app.include_router(pocket.router, prefix="/api/v1", tags=["pocket"])
 app.include_router(ledger.router, prefix="/api/v1", tags=["ledger"])
+app.include_router(quote.router, prefix="/api/v1", tags=["quote"])
 
 
 _FRONTEND_DIR = Path(

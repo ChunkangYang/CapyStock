@@ -86,6 +86,116 @@ def fetch_price(code: str) -> dict:
         return {"ok": False, "source": "yfinance", "rows": 0, "error": str(e)}
 
 
+_PRICE_HEADER = ["date", "open", "high", "low", "close", "adj close", "volume", "dividends", "stock splits"]
+_PRICE_TRIM_ROWS = 260  # 約 1 年交易日，讓每日 git diff 只有 1-2 行
+
+
+def _reshape_price_for_cloud(df, code: str):
+    """把 yfinance 單檔 DataFrame reshape 成與既有 cloud-cache 檔完全相同的 9 欄 header。"""
+    import pandas as pd
+
+    if df is None or df.empty:
+        return None
+    out = df.reset_index()
+    out.columns = [str(c).lower() for c in out.columns]
+    # yfinance reset_index 後可能叫 'date' 或 'datetime'
+    if "datetime" in out.columns and "date" not in out.columns:
+        out = out.rename(columns={"datetime": "date"})
+    if "date" not in out.columns:
+        return None
+    out["date"] = out["date"].astype(str).str.slice(0, 10)
+    for col in _PRICE_HEADER:
+        if col not in out.columns:
+            out[col] = 0.0  # 缺 dividends / stock splits / adj close 補 0.0
+    out = out[_PRICE_HEADER]
+    out = out.dropna(subset=["close"])
+    return out if len(out) else None
+
+
+def _merge_and_trim_price(code: str, fresh) -> int:
+    """增量合併既有 CSV：concat → dedupe by date → sort → trim 最後 260 列。寫檔，回傳列數。"""
+    import pandas as pd
+
+    out_path = CLOUD_CACHE_DIR / f"{code}_price.csv"
+    combined = fresh
+    if out_path.exists():
+        try:
+            existing = pd.read_csv(out_path)
+            existing["date"] = existing["date"].astype(str).str.slice(0, 10)
+            combined = pd.concat([existing, fresh], ignore_index=True)
+        except Exception:
+            combined = fresh
+    combined = combined.drop_duplicates(subset=["date"], keep="last").sort_values("date")
+    combined = combined.tail(_PRICE_TRIM_ROWS).reset_index(drop=True)
+    combined.to_csv(out_path, index=False)
+    return len(combined)
+
+
+def fetch_price_bulk_cloud(codes: list[str], batch_size: int = 100) -> list[dict]:
+    """價格 bulk 模式：yf.download 一次抓多檔（每批 100），增量合併進 cloud-cache。
+
+    與 fetch_price 不同：批次抓取（5–10 分鐘跑完全市場，不需 batch chaining）、
+    增量合併只留最後 260 列（避免 6mo 全檔覆寫造成 repo 膨脹）。
+    既有檔不存在 → 該檔改用 period="6mo" 單獨初始化。
+    回傳與 fetch_price 相同形狀的 result dict list。
+    """
+    import time as _time
+
+    import pandas as pd
+    import yfinance as yf
+
+    results: list[dict] = []
+    for batch_start in range(0, len(codes), batch_size):
+        batch = codes[batch_start:batch_start + batch_size]
+        tickers = [f"{c}.T" for c in batch]
+        try:
+            hist = yf.download(
+                tickers, period="7d", auto_adjust=False,
+                group_by="ticker", threads=True, progress=False,
+            )
+        except Exception as e:
+            for c in batch:
+                results.append({"ok": False, "source": "yfinance", "rows": 0,
+                                "code": c, "kind": "price", "error": f"download: {e}"})
+            _time.sleep(1.0)
+            continue
+
+        multi = isinstance(hist.columns, pd.MultiIndex)
+        lvl0 = set(hist.columns.get_level_values(0)) if multi else set()
+
+        for c, ticker in zip(batch, tickers):
+            out_path = CLOUD_CACHE_DIR / f"{c}_price.csv"
+            try:
+                if not out_path.exists():
+                    # 初始化：單檔抓 6mo
+                    init = yf.Ticker(ticker).history(period="6mo", auto_adjust=False)
+                    fresh = _reshape_price_for_cloud(init, c)
+                else:
+                    if multi:
+                        df_t = hist[ticker].dropna(how="all") if ticker in lvl0 else None
+                    else:
+                        df_t = hist  # 單 ticker，flat columns
+                    fresh = _reshape_price_for_cloud(df_t, c) if df_t is not None else None
+
+                if fresh is None or fresh.empty:
+                    results.append({"ok": False, "source": "yfinance", "rows": 0,
+                                    "code": c, "kind": "price", "error": "empty"})
+                    continue
+                rows = _merge_and_trim_price(c, fresh)
+                try:
+                    rel = str(out_path.relative_to(ROOT))
+                except ValueError:
+                    rel = str(out_path)
+                results.append({"ok": True, "source": "yfinance", "rows": rows,
+                                "code": c, "kind": "price", "path": rel})
+            except Exception as e:
+                results.append({"ok": False, "source": "yfinance", "rows": 0,
+                                "code": c, "kind": "price", "error": str(e)})
+        _time.sleep(1.0)
+
+    return results
+
+
 def fetch_edinet(days: int = 7, codes: list[str] | None = None) -> dict:
     """抓 EDINET 大量保有報告（>5% 持股申報）。不分股票，整批回掃 N 天。"""
     import os
@@ -156,6 +266,8 @@ def main():
     ap.add_argument("--offset", type=int, default=0, help="從 codes[offset] 開始（分批斷點續跑）")
     ap.add_argument("--batch-size", type=int, default=0, help=">0 時只處理這批 N 支")
     ap.add_argument("--time-limit", type=int, default=0, help=">0 時超過 N 秒後完成當前代碼即停（soft stop）")
+    ap.add_argument("--price-bulk", action="store_true",
+                    help="price 改走 yf.download 批次模式（一次跑完全市場，不需 batch chaining）")
     args = ap.parse_args()
 
     if args.all:
@@ -179,6 +291,10 @@ def main():
         codes = codes[: args.batch_size]
 
     kinds = [k.strip() for k in args.kinds.split(",") if k.strip()]
+    # price-bulk：price 從 per-code 迴圈移除，改走批次函式（margin 迴圈照舊不動）
+    price_bulk = args.price_bulk and "price" in kinds
+    if price_bulk:
+        kinds = [k for k in kinds if k != "price"]
     CLOUD_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
     started = datetime.now(timezone.utc)
@@ -237,6 +353,15 @@ def main():
         break
     else:
         codes_done = len(codes)
+
+    # 價格 bulk 模式：批次 yf.download 全部 codes（不走 per-code 迴圈）
+    if price_bulk:
+        t0 = time.time()
+        bulk_results = fetch_price_bulk_cloud(codes)
+        report["results"].extend(bulk_results)
+        ok_n = sum(1 for r in bulk_results if r["ok"])
+        print(f"  [price-bulk] {len(codes)} 檔 → ok={ok_n} fail={len(bulk_results) - ok_n} "
+              f"t={round(time.time() - t0, 1)}s")
 
     # 額外：EDINET 整批模式（不依賴 codes 迴圈，因為是回掃日期）
     if args.edinet_days and args.edinet_days > 0:
