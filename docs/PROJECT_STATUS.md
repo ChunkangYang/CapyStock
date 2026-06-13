@@ -1,7 +1,121 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-06-07（每日三盤濾網選股上線：EDINET 連續性 + 主力成本 + 信用残籌碼集中 → 口袋名單 + /pocket 頁）
+2026-06-13（兩問題調查完成：① 頁面載入慢 ② 模擬交易「現價」與市場不同步 — 根因已證實、修法已設計，**待實作**，見下節）
+
+## 2026-06-13 問題調查：① 頁面載入慢 ② 「現價」與市場不同步（修法已設計，待實作）
+
+> 接手須知：以下兩個問題的根因都已用實際代碼路徑 + 檔案時間戳證實，修法已寫到「改哪個檔、哪個函式、加什麼參數、測試怎麼寫、驗收標準」的粒度。照順序實作即可，不需要重新調查。
+
+### 問題 ②：模擬交易加入時顯示的「現價」與真實市價不符 — 根因（已證實）
+
+價格的完整資料流（單一路徑，四層 stale 疊加）：
+
+```
+GitHub Actions cloud_fetch.py（yfinance 日線 period=6mo，每次覆寫）
+  → data/cloud-cache/{code}_price.csv            ← Actions 排程寫入
+  →（使用者「手動」按 Dashboard 雲端同步才複製）   ← ★ 最大斷點
+  → data/cache/{code}_price.csv                  ← 後端唯一讀取層
+  →（POST /api/v1/pocket 手動掃描時取最後一筆 close）
+  → data/scan_snapshots/pocket_YYYY-MM-DD.json 的 gate2.latest_price
+  →（前端 popup 開啟時）simEntryPrice = r.gate2.latest_price ← UI 卻標示「現價」
+```
+
+實測證據（2026-06-13 當天查）：
+- `data/cache/7203_price.csv` 最後一筆 = **2026-05-26** close 3013（mtime 05-26 20:46）
+- `data/cloud-cache/7203_price.csv` 最後一筆 = 2026-06-05 close 2853.5
+- → 兩層相差 **18 天、價差 -5.3%**。使用者在 popup 看到的「現價」就是這個 18 天前的舊收盤。
+- 即使全部同步到位，yfinance 日線最後一筆＝最近一個收盤，盤中也永遠不是即時價。
+
+四層 stale 來源：
+1. yfinance 日線只有收盤價（無盤中報價）
+2. Actions cloud_fetch 的排程時間差
+3. **cloud-cache → cache 需手動雲端同步**（實測 18 天沒同步，最大宗）
+4. pocket 快照固定在「掃描當下」的值，之後不再變
+
+對應代碼位置：
+- `capystock/scraper.py` `fetch_price()`（scraper.py:227）：**cache-first 無 TTL** — CSV 存在且 ≥5 列就直接回，永遠不更新
+- `capystock/pocket_filter.py` `gate2_cost()`（~:125）：`latest_price` = price CSV 最後一筆 close
+- `frontend/src/routes/pocket/+page.svelte:90`：`simEntryPrice = r.gate2.latest_price ?? 0`，UI 文案「購入時價（預設現價，可改）」
+- 同病的其他端點：`api/services/portfolio_service.py` `_current_price()`、`api/routers/watchlist.py` `_resolve_start_price()` — 都是 cache CSV 最後收盤
+- 注意：已寫入帳本的交易 `entry_price` 是原樣存下的 stale 值（`api/services/ledger_service.py:158`），系統無法回填，使用者需自行校正歷史交易
+
+### 問題 ② 修法（兩段，可分開 commit）
+
+**Fix 2-1（短期：誠實標示資料日期，半天內可完成）**
+1. `capystock/pocket_filter.py` `gate2_cost()` 回傳 dict 加一個 key `price_date`：值 = `str(pdf.iloc[-1]["date"])[:10]`（YYYY-MM-DD）。無 price_df 時為 None。
+2. 快照與 API 不用改 schema：pocket router 直接回 dict（無 pydantic model 擋），gate2 dict 多一個 key 自然帶到前端。
+3. `frontend/src/routes/pocket/+page.svelte`：
+   - `Gate2` interface 加 `price_date: string | null`
+   - popup 文案「購入時價（預設現價，可改）」改為「購入時價（最後收盤 {price_date}，可改）」
+   - 表格現價欄位 hover/小字顯示 price_date
+   - 若 `price_date` 距今 > 3 個日曆日 → popup 內紅字警示「⚠ 價格資料已是 {price_date}，請先回 Dashboard 雲端同步再加入」
+4. 測試：`tests/unit/test_pocket_filter.py` 加 case — price_df 最後列 date=2026-06-05 → `gate2["price_date"] == "2026-06-05"`；price_df=None → None。
+5. 注意：既有快照（pocket_2026-06-12.json 等）沒有 price_date，前端要容忍 undefined（顯示「日期不明」）。
+
+**Fix 2-2（中期：加入交易當下抓即時報價）**
+1. 新增 `api/routers/quote.py`：`GET /api/v1/quote/{code}` → `{code, price, price_time, source}`
+   - 實作：`yf.Ticker(f"{code}.T").fast_info` 取 `last_price`（東證延遲約 20 分）；module-level dict 做 in-memory TTL 5 分鐘快取 `{code: (ts, price)}`；yfinance 失敗或回 None → HTTP 404
+   - **不落地寫檔**：intraday 報價不能混進日線 price CSV（會讓 analyzer 把盤中價當收盤算訊號），所以不經過 fetch_price、不增加任何持久快取層
+   - `api/main.py` include_router
+2. `frontend/src/routes/pocket/+page.svelte`：popup 開啟時打 `/quote/{code}`，成功 → 預設購入價改用即時價，顯示「即時報價（延遲約20分）HH:MM」；失敗 → fallback 現行 snapshot 值 + Fix 2-1 的日期標示。
+3. `/signals/[code]` 的進場 popup、`/portfolio` 新增持倉表單同樣接 quote（同一 fallback 邏輯）。
+4. `api/services/portfolio_service.py` `_current_price()` 改為先打 quote helper（共用 TTL cache），失敗 fallback 現行 cache CSV 最後收盤。
+5. 測試：`tests/unit/test_quote.py` — mock `yfinance.Ticker`：(a) 正常回價 (b) TTL 內第二次呼叫不再建 Ticker（assert mock 只被叫一次）(c) 失敗回 404、portfolio fallback 走 CSV。前端部分手動驗證，步驟與截圖存 `docs/EVIDENCES/`。
+
+**架構 4 問（CLAUDE.md 架構紀律 §6）**：
+1. 情境：source of truth 不單一 + invalidation 鏈斷（cloud-cache→cache 是手動斷點）。
+2. Fix 2-1 純改現有函式；Fix 2-2 新增 quote 端點 — 不能改 fetch_price 的理由：fetch_price 是「日線歷史落地 CSV」路徑，intraday 報價是不同資料型態，混入會汙染 analyzer 輸入。quote 不落地。
+3. 根因 =「現價」其實是多層快照盡頭的舊收盤。Fix 2-1 治「標示誤導」、Fix 2-2 治「值本身」；cloud→cache 手動斷點的根治屬 P1「單一原子同步鏈」（DEV_PROCESS_IMPROVEMENTS 已列，不在本次範圍）。
+4. 修完 source of truth 數量不變（quote 是 in-memory TTL，非持久層）。
+
+### 問題 ①：每個畫面載入都要等很久 — 根因（與 Chrome cache/cookie 無關）
+
+前端 localStorage 快取只在同 session 內有效，延遲全部來自後端同步工作；cookie 對 localhost API 無影響，**清 Chrome 快取不會改善**。依嚴重度排序：
+
+**主因 A：`GET /scan/signals` 在請求內全市場重算，且會退化成數千次即時爬蟲**
+- `api/routers/scan.py` `_get_or_compute_live_signals()`：cache key = `data/cache` 全部 CSV 的最新 mtime；key 一變就**抱著 `_live_signals_lock` 在請求內跑 `run_signals_scan`（3700+ 檔）**
+- `run_signals_scan` → `analyze_one`（`api/services/signal_service.py:129`）→ `scraper.fetch_margin(code)`：margin CSV 最新週 **> 8 天就即時爬 irbank**（scraper.py:343；docstring 寫 14 天、實作是 8 天，本身就是個不一致）
+- 爬蟲有**全域** `_throttle()` 2 秒（scraper.py:24，整個 process 序列化）→ 當 margin 快取全面過期（目前 cache 已 18 天沒同步＝全面過期），一次「live 重算」= 數千次 × ≥2 秒的 irbank 請求，理論上限數小時
+- 重算期間鎖被佔住 → Dashboard 與投機訊號頁的 /scan/signals 全部排隊等它 → 體感「每個畫面都卡」
+- ping-pong：fetch_margin 成功會寫 CSV → mtime key 又變 → 下一個請求又觸發重算
+
+**次因 B：`/signals/[code]` 詳情頁每次 live 爬外網**
+- `signal_service.py:117` `fetch_name` 必爬 kabutan（完全沒快取）；`:123` `fetch_margin` 過期就爬 irbank → 每開一檔詳情 ≥4 秒（2 個 HTTP × 全域 2 秒 throttle），且寫 CSV 又觸發主因 A 的 invalidation
+
+**次因 C：`/scan/dividend` 無分頁 + iterrows**
+- `scan.py:130-177`：全表（~3700 列）每請求 `iterrows()` → pydantic 物件，回傳數 MB JSON；Dashboard 只顯示前 5 筆也得吞全表
+
+**小因 D：mtime key 每請求 stat 11,258 個檔案 ≈ 0.34 秒**（實測值）
+
+### 問題 ① 修法（4 個獨立小修，按 A→D 順序各自 commit）
+
+**Fix 1-A：掃描路徑禁止外網（最關鍵，先做）**
+1. `capystock/scraper.py` `fetch_margin(code, cache_only: bool = False)`：cache_only=True 時不爬 irbank、不寫檔 — 有 cached（不管多舊）直接回，沒有就回 None。
+2. `api/services/signal_service.py` `analyze_one(..., offline: bool = False)`：offline=True → `fetch_margin(code, cache_only=True)`，且 name 為空時不爬 kabutan（直接用 ""，全市場掃描本來就從 universe.csv 帶 name）。
+3. `api/services/scan_service.py` `run_signals_scan` 內改呼叫 `analyze_one(offline=True)`。設計意圖本來就是「single source of truth = data/cache，資料新鮮度由 cloud-sync 負責」，掃描永不打外網。
+4. 順手把 fetch_margin docstring 的「14 天」改成與實作一致的 8 天（或反過來，擇一對齊）。
+5. 測試：mock `_fetch_margin_irbank`，assert 走 `run_signals_scan` 路徑時它不被呼叫、且不產生 CSV 寫入。
+6. 驗收：margin 快取全面過期狀態下，`GET /scan/signals` 首次回應 < 30 秒（純本地重算，不再有任何外部 HTTP）。
+
+**Fix 1-B：stale-while-revalidate（重算不擋請求）**
+1. `scan.py` `_get_or_compute_live_signals()` 改邏輯：
+   - state 有舊 rows（即使 key 不符）→ **立即回舊資料**；若無 in-flight 重算則起 daemon thread 背景跑 `run_signals_scan`，算完 swap state
+   - state 完全沒 rows（冷啟動）→ 維持現行同步算一次
+   - `_live_signals_lock` 只包 state 讀寫，**不包** `run_signals_scan`（掃描互斥已有 scan_service 的 `_scan_lock`）
+2. response 加 `computed_at`、`refreshing: bool` 欄位；前端投機訊號頁重用既有「🔄 自動更新中」指標：refreshing=true 顯示並 10 秒後重打一次。
+3. 測試：預塞舊 state + 觸發 key 變動 → assert 呼叫立即回舊資料（< 1 秒）、背景算完後 state 已更新。
+
+**Fix 1-C：`/scan/dividend` 分頁**
+1. `scan.py` `get_dividend_snapshot` 加 `limit: int = 50, offset: int = 0` query 參數；篩選排序後 `df = df.iloc[offset:offset+limit]` 再轉 rows；轉換用 `df.to_dict("records")` 迴圈取代 `iterrows()`。回傳形狀維持 list（相容現有前端，本次不改成 dict 包裝）。
+2. Dashboard `+page.svelte` 的 `/scan/dividend?...` 呼叫加 `&limit=5`；`/dividend` 頁加 `limit=200` 或仿投機訊號頁實作分頁。
+3. 驗收：Dashboard 的 /scan/dividend 回應 payload < 50KB。
+
+**Fix 1-D：mtime key 加 TTL**
+1. `scan.py` `_inputs_mtime_key()` 結果用 module-level `(computed_ts, key)` 暫存，60 秒內直接重用，省掉每請求 0.34 秒的 11k 檔 stat。
+2. 副作用：CSV 變動最晚 60 秒後才反映 — 可接受（Fix 1-B 之後重算已非阻塞）。
+
+**整體驗收**：margin/price 快取過期 + 後端冷啟動的最差條件下，依序開 Dashboard / 投機訊號 / 金雞 / 口袋四頁，每頁首屏 API < 5 秒（唯一例外：冷啟動首次 /scan/signals 本地重算 < 30 秒，僅一次）；連開 3 檔個股詳情後回列表頁，不得再觸發 > 5 秒的等待。
 
 ## 2026-06-07 每日三盤濾網選股（舅舅心法第二篇）
 - 三盤（三關全過進口袋名單），全用「真實個股資料」（非全市場攤平 flow）：
@@ -78,7 +192,10 @@
   - ✅ 投機訊號頁 bug 修復（2026-05-11）
   - ✅ 投機訊號頁分頁實作（2026-05-11）
   - ✅ 全市場三訊號修復 #1/#2/#3（2026-06-06）
-  - **🔜 明天繼續：P0 每日不變式健康檢查**（見 [DEV_PROCESS_IMPROVEMENTS.md](DEV_PROCESS_IMPROVEMENTS.md) 第三節）
+  - **🔥 最優先：2026-06-13 兩問題修復**（修法已設計到實作粒度，見本文件頂部「2026-06-13 問題調查」節）
+    - 問題① 頁面慢：Fix 1-A 掃描禁外網 → 1-B stale-while-revalidate → 1-C dividend 分頁 → 1-D mtime key TTL
+    - 問題② 現價不同步：Fix 2-1 標示資料日期 → Fix 2-2 quote 即時報價端點
+  - **🔜 P0 每日不變式健康檢查**（見 [DEV_PROCESS_IMPROVEMENTS.md](DEV_PROCESS_IMPROVEMENTS.md) 第三節）
     - 斷言：完整全市場掃描 `rows>=3000` 時 `has_exit` 不可為 0；訊號旗標不可全市場同值；latest_price 覆蓋率 >95%；cache 最新交易日距今 < N 營業日
     - 違反就用既有通知通道告警（Email/LINE）→ 終結「壞掉沒人發現」
     - 之後接 P1：資料新鮮度可見化 + 單一原子同步鏈
