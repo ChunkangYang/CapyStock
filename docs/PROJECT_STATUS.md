@@ -117,6 +117,50 @@ GitHub Actions cloud_fetch.py（yfinance 日線 period=6mo，每次覆寫）
 
 **整體驗收**：margin/price 快取過期 + 後端冷啟動的最差條件下，依序開 Dashboard / 投機訊號 / 金雞 / 口袋四頁，每頁首屏 API < 5 秒（唯一例外：冷啟動首次 /scan/signals 本地重算 < 30 秒，僅一次）；連開 3 檔個股詳情後回列表頁，不得再觸發 > 5 秒的等待。
 
+### Fix 3：價格獨立掃描鏈（2026-06-13 使用者決策：價格與其他資料分開掃，收盤後抓價）
+
+**需求**：margin/EDINET 等「大方向」資料不需即時，維持現有每日慢速鏈；**價格獨立出來**，每天東證收盤（15:30 JST）後立刻抓，並自動同步到本地，不再依賴手動雲端同步。
+
+**現況問題**：[cloud-fetch.yml](.github/workflows/cloud-fetch.yml) 排程 UTC 08:00（JST 17:00）把 `kinds=margin,price` 綁在同一條批次鏈（160 檔/批、1100 秒 soft stop、resume 串接），全市場跑完要 ~23 個 chained run（數小時），價格新鮮度被 irbank 慢爬蟲拖累；抓完還要等使用者手動按雲端同步才進 `data/cache`。
+
+**Fix 3-1：`scripts/cloud_fetch.py` 加價格 bulk 模式**
+1. 新增函式 `fetch_price_bulk_cloud(codes: list[str]) -> list[dict]`：
+   - `yf.download([f"{c}.T" for c in batch], period="7d", auto_adjust=False, group_by="ticker", threads=True, progress=False)`，每批 100 檔，批間 `time.sleep(1.0)`（參考 `capystock/scraper.py` `fetch_price_bulk` 的 MultiIndex 拆法，但**輸出格式不同**，見下）
+   - 每檔 reshape 成與既有 cloud-cache 檔**完全相同的 header**：`date,open,high,low,close,adj close,volume,dividends,stock splits`（已實查 [data/cloud-cache/7203_price.csv](../data/cloud-cache/7203_price.csv) 確認此 9 欄；缺 dividends/stock splits 就補 0.0；date 切前 10 字元）
+   - **增量合併**：既有 CSV 讀入 → concat → `drop_duplicates(subset=["date"], keep="last")` → sort → **trim 只留最後 260 列**（~1 年；讓每日 git diff 只有 1-2 行，避免 6mo 全檔覆寫造成 repo 膨脹）。檔案不存在 → 該檔改用 `period="6mo"` 單獨初始化。
+   - 回傳與現有 `fetch_price` 相同形狀的 result dict list（ok/source/rows/code/kind），併入 `_fetch_report.json`
+2. CLI 加 `--price-bulk` flag：啟用時 price 從主 per-code 迴圈移除、改走批次函式；margin 迴圈照舊不動。
+3. 效能預估：3700 檔 ÷ 100/批 = 37 批 × 數秒 ≈ 5–10 分鐘，單一 Actions run 跑完全市場，**不需要 batch chaining**。
+
+**Fix 3-2：新 workflow `.github/workflows/price-fetch.yml`**
+1. 排程 `cron: "40 6 * * 1-5"`（UTC）= **JST 15:40**，東證 15:30 收盤後（Actions cron 常延遲 5–30 分，實際起跑 ~15:45–16:10，仍遠早於本地同步時間）。另加 `workflow_dispatch` 手動觸發。
+2. steps（照抄 cloud-fetch.yml 的 checkout/python/pip/Telegram 模式）：
+   - `python scripts/cloud_fetch.py --all --kinds price --price-bulk`
+   - commit 限定 `git add data/cloud-cache/*_price.csv data/cloud-cache/_fetch_report.json` → `git pull --rebase` → push（rebase 解掉與 margin 鏈的 push race）
+   - `concurrency: group: price-fetch`（與 cloud-fetch 分開，互不取消）
+   - timeout-minutes: 25
+3. **同步修改既有 cloud-fetch.yml**：排程觸發的預設 `kinds` 由 `margin,price` 改為 `margin`（價格改由新 workflow 全權負責，避免兩邊重複抓同一檔 + commit 衝突）。手動 dispatch 仍保留 price 選項當備援。
+
+**Fix 3-3：本地自動同步價格（接起「手動雲端同步」這個斷點）**
+1. 把 [api/routers/data.py](../api/routers/data.py) `cloud_sync()` 內的下載+複製+重算邏輯**搬**到新檔 `api/services/data_sync_service.py` 的 `run_cloud_sync(pull=True, kinds=None, rescan=True) -> dict`（是搬移不是複製 — router 與排程器共用同一實作，不留兩條會 diverge 的 path）：
+   - 寫成**同步**函式（`httpx.Client`，並行下載用 `ThreadPoolExecutor`）；router 端改 `def`（FastAPI 自動丟 threadpool）或 `await asyncio.to_thread(...)` 包
+   - `kinds` 參數：`None` = 現行為（全部 CSV + edinet_reports.json）；`["price"]` = GitHub 檔案列表與本地複製都只處理 `*_price.csv`（下載 11k 檔 → 3.7k 檔）
+2. `CloudSyncRequest` 加 `kinds: Optional[list[str]] = None`，Dashboard 既有「雲端同步」按鈕行為不變（全量）。
+3. `api/services/scheduler_service.py` 預設 jobs 加一筆：
+   - `id="price_sync"`、`cron="0 17 * * 1-5"`（排程器 DEFAULT_TIMEZONE 已是 **Asia/Tokyo**，即 JST 17:00 — Actions 15:40 起跑 + ~10 分抓取 + commit，留 ~1 小時 buffer）
+   - handler `_handler_price_sync` → `run_cloud_sync(pull=True, kinds=["price"], rescan=True)`；rescan 會重算訊號 + `prime_live_signals_cache` → 使用者晚上開頁面直接看到**當日收盤**，零等待
+4. 與既有 jobs 的順序關係：margin 慢速鏈 JST 17:00 起跑（抓到深夜）、`daily_pipeline` 隔天 JST 08:00 全量處理 — price_sync 插在 17:00 只拉價格，互不干擾。
+
+**效果**：每個交易日收盤後 ~1.5 小時內，當日收盤價自動進 `data/cache` 並完成訊號重算；pocket popup 的價格最差=當日收盤（配 Fix 2-1 的日期標示可直接驗證）。盤中真即時價仍由 Fix 2-2（quote 端點）負責，兩者互補不重疊。
+
+**測試**：
+- `tests/unit/test_cloud_fetch_price_bulk.py`（mock `yf.download`）：(a) 輸出 header 與既有檔逐字一致 (b) 增量合併 dedupe by date (c) trim 260 列 (d) 檔案不存在走 6mo 初始化 (e) 批次失敗不中斷其他批
+- `tests/unit/test_data_sync_service.py`：tmp dir 放 `X_price.csv` + `X_margin.csv`，`kinds=["price"]` 只複製 price、`kinds=None` 全複製；rescan=False 不觸發掃描
+- scheduler 測試：預設 jobs 含 `price_sync` 且 cron/handler 正確
+- workflow 本地測不了 → 寫入 `docs/HUMAN_TODO.md`：手動 dispatch price-fetch.yml 一次，確認 (1) commit 只含 `*_price.csv` (2) 全程 < 20 分鐘 (3) 隔個交易日 JST 17:05 檢查本地 `data/cache/7203_price.csv` 最後一筆=當日日期
+
+**實作順序建議**：Fix 3 可與 Fix 1-A/1-B 並行（不衝突）；3-1 → 3-2（先讓雲端有新鮮價格）→ 3-3（再接本地）。3-3 依賴的 rescan 體驗在 Fix 1-B 完成後最佳，但不互相 block。
+
 ## 2026-06-07 每日三盤濾網選股（舅舅心法第二篇）
 - 三盤（三關全過進口袋名單），全用「真實個股資料」（非全市場攤平 flow）：
   - 第一盤 連續性：同一 EDINET 申報人窗口內重複申報 ≥ N 次（`pocket_filter.gate1_continuity`）
@@ -195,6 +239,7 @@ GitHub Actions cloud_fetch.py（yfinance 日線 period=6mo，每次覆寫）
   - **🔥 最優先：2026-06-13 兩問題修復**（修法已設計到實作粒度，見本文件頂部「2026-06-13 問題調查」節）
     - 問題① 頁面慢：Fix 1-A 掃描禁外網 → 1-B stale-while-revalidate → 1-C dividend 分頁 → 1-D mtime key TTL
     - 問題② 現價不同步：Fix 2-1 標示資料日期 → Fix 2-2 quote 即時報價端點
+    - Fix 3 價格獨立掃描鏈：3-1 cloud_fetch 價格 bulk 模式 → 3-2 收盤後 price-fetch.yml workflow → 3-3 本地 price_sync 排程自動同步（可與 Fix 1 並行）
   - **🔜 P0 每日不變式健康檢查**（見 [DEV_PROCESS_IMPROVEMENTS.md](DEV_PROCESS_IMPROVEMENTS.md) 第三節）
     - 斷言：完整全市場掃描 `rows>=3000` 時 `has_exit` 不可為 0；訊號旗標不可全市場同值；latest_price 覆蓋率 >95%；cache 最新交易日距今 < N 營業日
     - 違反就用既有通知通道告警（Email/LINE）→ 終結「壞掉沒人發現」
