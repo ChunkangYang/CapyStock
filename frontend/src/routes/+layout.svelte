@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
   import { loadFavorites } from '$lib/stores/favorites';
+  import SyncGate from '$lib/components/SyncGate.svelte';
   import './styles.css';
 
   $: currentPath = $page.url.pathname;
@@ -10,6 +11,8 @@
     loadFavorites();
   });
 </script>
+
+<SyncGate />
 
 <div class="layout">
   <nav class="sidebar">

@@ -18,6 +18,8 @@ def fake_dirs(tmp_path, monkeypatch):
 
     monkeypatch.setattr(config, "PROJECT_ROOT", tmp_path)
     monkeypatch.setattr(config, "CACHE_DIR", cache)
+    # 同步標記檔導到 tmp，避免測試污染真實 data/last_sync.json
+    monkeypatch.setattr(dss, "SYNC_MARKER_PATH", tmp_path / "last_sync.json")
     return cloud, cache
 
 
@@ -46,3 +48,29 @@ def test_rescan_false_does_not_scan(fake_dirs, monkeypatch):
     monkeypatch.setattr("api.services.scan_service.run_signals_scan", boom)
     dss.run_cloud_sync(pull=False, kinds=["price"], rescan=False)
     assert called["n"] == 0
+
+
+def test_sync_marker_and_state(fake_dirs):
+    """同步成功後寫 marker，get_sync_state 報 synced_today=True。"""
+    # 同步前：marker 不存在 → synced_today=False
+    st0 = dss.get_sync_state()
+    assert st0["synced_today"] is False
+    assert st0["last_date"] is None
+
+    dss.run_cloud_sync(pull=False, kinds=["price"], rescan=False)
+
+    st1 = dss.get_sync_state()
+    assert st1["synced_today"] is True
+    assert st1["last_date"] == st1["today"]
+
+
+def test_progress_callback_emits_phases(fake_dirs):
+    """progress_callback 應收到 copy 階段與最後 done=100%。"""
+    events: list[dict] = []
+    dss.run_cloud_sync(
+        pull=False, kinds=["price"], rescan=False, progress_callback=events.append
+    )
+    phases = {e["phase"] for e in events}
+    assert "copy" in phases
+    assert events[-1]["phase"] == "done"
+    assert events[-1]["percent"] == 100

@@ -10,16 +10,59 @@ kinds 參數：
 """
 from __future__ import annotations
 
+import json
 import os
 import re
 import shutil
-from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
-from typing import Optional
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timedelta, timezone
+from typing import Callable, Optional
 
 import httpx
 
 from capystock import config
+
+# 東證時區（用於判定「今天有沒有同步過」）
+JST = timezone(timedelta(hours=9))
+# 最後一次成功同步的標記檔（single source of truth，router 與排程器共用）
+SYNC_MARKER_PATH = config.DATA_DIR / "last_sync.json"
+
+
+def _jst_today_str() -> str:
+    return datetime.now(JST).strftime("%Y-%m-%d")
+
+
+def _write_sync_marker(kinds: Optional[list[str]]) -> None:
+    """同步成功後寫入標記，供前端判斷「今天是否已同步」。失敗不影響同步本體。"""
+    try:
+        SYNC_MARKER_PATH.write_text(
+            json.dumps(
+                {"date": _jst_today_str(), "ts": datetime.now(JST).isoformat(), "kinds": kinds},
+                ensure_ascii=False,
+            ),
+            encoding="utf-8",
+        )
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def get_sync_state() -> dict:
+    """回傳 {today, synced_today, last_date, last_ts}（today 以 JST 計）。"""
+    today = _jst_today_str()
+    base = {"today": today, "synced_today": False, "last_date": None, "last_ts": None}
+    if not SYNC_MARKER_PATH.exists():
+        return base
+    try:
+        m = json.loads(SYNC_MARKER_PATH.read_text(encoding="utf-8"))
+        last_date = m.get("date")
+        return {
+            "today": today,
+            "synced_today": last_date == today,
+            "last_date": last_date,
+            "last_ts": m.get("ts"),
+        }
+    except Exception:  # noqa: BLE001
+        return base
 
 
 def _parse_github_remote() -> tuple[str, str, str]:
@@ -73,11 +116,26 @@ def run_cloud_sync(
     pull: bool = True,
     kinds: Optional[list[str]] = None,
     rescan: bool = True,
+    progress_callback: Optional[Callable[[dict], None]] = None,
 ) -> dict:
     """同步雲端資料並（可選）重算訊號。同步函式，供 router（threadpool）與排程器共用。
 
+    progress_callback(info)：可選，info = {phase, done, total, percent, message}。
+      phase ∈ {"pull","copy","rescan"}；percent 為 0–100 的整體進度估算。
+      只在有傳入時呼叫，排程器不傳則零開銷。
+
     Raises: RuntimeError / httpx.HTTPError（呼叫端決定如何轉成 HTTP error）。
     """
+    def _emit(phase: str, percent: int, message: str, done: int = 0, total: int = 0) -> None:
+        if progress_callback:
+            try:
+                progress_callback(
+                    {"phase": phase, "percent": percent, "message": message, "done": done, "total": total}
+                )
+            except Exception:  # noqa: BLE001
+                pass
+
+    _emit("pull", 1, "準備同步…")
     cloud_dir = config.PROJECT_ROOT / "data" / "cloud-cache"
     local_dir = config.CACHE_DIR
     local_dir.mkdir(parents=True, exist_ok=True)
@@ -121,8 +179,14 @@ def run_cloud_sync(
                 except Exception as e:  # noqa: BLE001
                     return name, False, str(e)
 
+            total_t = len(targets)
+            results = []
             with ThreadPoolExecutor(max_workers=16) as ex:
-                results = list(ex.map(fetch_one, targets))
+                futs = [ex.submit(fetch_one, m) for m in targets]
+                for i, fut in enumerate(as_completed(futs), 1):
+                    results.append(fut.result())
+                    pct = int(i / total_t * 55) if total_t else 55
+                    _emit("pull", pct, f"下載雲端資料 {i}/{total_t}", done=i, total=total_t)
 
         downloaded, dl_errors = [], []
         for name, ok, err in results:
@@ -135,6 +199,7 @@ def run_cloud_sync(
     if not cloud_dir.exists():
         raise RuntimeError("data/cloud-cache 不存在，先在 GitHub 觸發一次 Cloud Fetch")
 
+    _emit("copy", 58, "套用到本地 cache…")
     copied, skipped = [], []
     for src in cloud_dir.glob("*.csv"):
         if not _wanted(src.name, kinds):
@@ -154,13 +219,20 @@ def run_cloud_sync(
             except Exception as e:  # noqa: BLE001
                 skipped.append({"file": "edinet_reports.json", "error": str(e)})
 
+    _emit("copy", 65, "本地 cache 已更新")
     scan_summary = None
     if rescan:
         try:
             from api.services import scan_service as _scan_service
             from api.routers.scan import prime_live_signals_cache
             universe = _scan_service.load_universe()
-            rows, errors = _scan_service.run_signals_scan(universe)
+            total_u = len(universe)
+
+            def _scan_progress(curr: int) -> None:
+                pct = 65 + int(curr / total_u * 34) if total_u else 99
+                _emit("rescan", min(pct, 99), f"重算全市場訊號 {curr}/{total_u}", done=curr, total=total_u)
+
+            rows, errors = _scan_service.run_signals_scan(universe, progress_callback=_scan_progress)
             now = datetime.now()
             today_str = now.strftime("%Y-%m-%d")
             _scan_service.write_snapshot("signals", rows, today_str, guard=True)
@@ -171,6 +243,8 @@ def run_cloud_sync(
         except Exception as e:  # noqa: BLE001
             scan_summary = {"error": str(e)}
 
+    _write_sync_marker(kinds)
+    _emit("done", 100, "同步完成")
     return {
         "pulled": pulled_info,
         "copied_count": len(copied),
@@ -178,4 +252,5 @@ def run_cloud_sync(
         "skipped": skipped,
         "applied_to": str(local_dir),
         "rescan": scan_summary,
+        "synced_date": _jst_today_str(),
     }

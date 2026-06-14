@@ -21,6 +21,8 @@ _svc = IngestService()
 
 # in-memory 批量 job 狀態
 _batch_jobs: dict[str, dict] = {}
+# in-memory 雲端同步 job 狀態（給前端 popup 顯示進度用）
+_sync_jobs: dict[str, dict] = {}
 
 
 class CacheOverviewRow(BaseModel):
@@ -207,6 +209,76 @@ async def cloud_sync(req: CloudSyncRequest):
         raise HTTPException(status_code=status, detail=msg)
     except Exception as e:  # noqa: BLE001
         raise HTTPException(status_code=502, detail=f"cloud-sync 失敗: {e}")
+
+
+@router.get("/cloud-sync/state")
+async def cloud_sync_state():
+    """回傳今天是否已同步（JST），給前端決定是否跳出同步 popup。"""
+    from api.services import data_sync_service
+    return data_sync_service.get_sync_state()
+
+
+@router.post("/cloud-sync/start")
+async def cloud_sync_start(req: CloudSyncRequest):
+    """啟動一次雲端同步並回傳 job_id；進度用 GET /cloud-sync/jobs/{job_id} 輪詢。
+
+    與阻塞式 POST /cloud-sync 共用 data_sync_service.run_cloud_sync，只是改成背景
+    執行 + progress_callback 回報進度，讓前端 popup 能顯示百分比。
+    """
+    from api.services import data_sync_service
+
+    job_id = str(uuid.uuid4())
+    _sync_jobs[job_id] = {
+        "status": "running",
+        "phase": "start",
+        "percent": 0,
+        "message": "準備同步…",
+        "done": 0,
+        "total": 0,
+        "result": None,
+        "error": None,
+    }
+
+    def _cb(info: dict):
+        job = _sync_jobs.get(job_id)
+        if job is None:
+            return
+        job["phase"] = info.get("phase", job["phase"])
+        job["percent"] = info.get("percent", job["percent"])
+        job["message"] = info.get("message", job["message"])
+        job["done"] = info.get("done", job["done"])
+        job["total"] = info.get("total", job["total"])
+
+    async def _run():
+        job = _sync_jobs[job_id]
+        try:
+            result = await asyncio.to_thread(
+                data_sync_service.run_cloud_sync,
+                pull=req.pull,
+                kinds=req.kinds,
+                rescan=req.rescan_after_sync,
+                progress_callback=_cb,
+            )
+            job["result"] = result
+            job["percent"] = 100
+            job["phase"] = "done"
+            job["message"] = "同步完成"
+            job["status"] = "completed"
+        except Exception as e:  # noqa: BLE001
+            job["status"] = "error"
+            job["error"] = str(e)
+            job["message"] = f"同步失敗：{e}"
+
+    asyncio.create_task(_run())
+    return {"job_id": job_id}
+
+
+@router.get("/cloud-sync/jobs/{job_id}")
+async def cloud_sync_job(job_id: str):
+    job = _sync_jobs.get(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="job not found")
+    return job
 
 
 @router.get("/latest-price/{code}")
