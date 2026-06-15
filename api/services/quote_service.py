@@ -55,14 +55,41 @@ def _fetch_last_price(code: str) -> Optional[float]:
     except ImportError:
         return None
     try:
-        info = yf.Ticker(f"{code}.T").fast_info
-        last = info.get("last_price") if hasattr(info, "get") else getattr(info, "last_price", None)
-        if last is None:
-            return None
-        val = float(last)
-        return val if val > 0 else None
-    except Exception:
+        ticker = yf.Ticker(f"{code}.T")
+    except Exception:  # noqa: BLE001
         return None
+
+    # ① fast_info：不同 yfinance 版本 snake_case last_price 可能為 None，
+    #    camelCase ["lastPrice"] 才有值（v1.3.0 實測），逐一嘗試取第一個非 None。
+    try:
+        fi = ticker.fast_info
+        for getter in (
+            lambda: fi["lastPrice"],
+            lambda: fi["last_price"],
+            lambda: getattr(fi, "last_price", None),
+        ):
+            try:
+                v = getter()
+            except Exception:  # noqa: BLE001
+                continue
+            if v is not None:
+                val = float(v)
+                if val > 0:
+                    return val
+    except Exception:  # noqa: BLE001
+        pass
+
+    # ② fallback：日線最後一根收盤（fast_info 失效時仍能給出最新收盤）。
+    try:
+        h = ticker.history(period="5d", auto_adjust=False)
+        if h is not None and not h.empty:
+            val = float(h["Close"].iloc[-1])
+            if val > 0:
+                return val
+    except Exception:  # noqa: BLE001
+        pass
+
+    return None
 
 
 def _fmt_ts(ts: float) -> str:
