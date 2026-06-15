@@ -18,6 +18,8 @@
   let error: string | null = null;
   let advancing = false;
   let advMsg = '';
+  // code -> 即時報價（undefined=載入中，null=取不到）。複用 quote_service（與 portfolio 同源）。
+  let quotes: Record<string, { price: number; time: string } | null> = {};
 
   $: id = $page.params.id;
 
@@ -25,11 +27,28 @@
     loading = true; error = null;
     try {
       ledger = await api<Ledger>(`/ledgers/${id}`);
+      loadQuotes();  // 不 await，先讓表格渲染，現價隨後填入
     } catch (e) {
       error = e instanceof Error ? e.message : '載入失敗';
     } finally {
       loading = false;
     }
+  }
+
+  async function loadQuotes() {
+    if (!ledger) return;
+    const codes = [...new Set(ledger.trades.filter((t) => t.status === 'open').map((t) => t.code))];
+    await Promise.all(
+      codes.map(async (code) => {
+        try {
+          const q = await api<{ price: number; price_time: string }>(`/quote/${code}`);
+          quotes[code] = { price: q.price, time: q.price_time };
+        } catch {
+          quotes[code] = null;
+        }
+      }),
+    );
+    quotes = quotes;  // 觸發 Svelte 反應
   }
 
   onMount(load);
@@ -84,7 +103,7 @@
         <thead>
           <tr>
             <th>代碼</th><th>名稱</th><th>進場日</th><th>進場價</th><th>股數</th>
-            <th>停損%</th><th>最高收盤</th><th>目前停損線</th><th>狀態</th>
+            <th>停損%</th><th>最高收盤</th><th>現價</th><th>目前停損線</th><th>狀態</th>
             <th>出場日</th><th>出場價</th><th>損益</th><th></th>
           </tr>
         </thead>
@@ -98,6 +117,20 @@
               <td>{t.shares.toLocaleString()}</td>
               <td>{pct(t.stop_pct)}</td>
               <td>{num(t.high_water)}</td>
+              <td class="quote">
+                {#if t.status !== 'open'}
+                  —
+                {:else if quotes[t.code] === undefined}
+                  …
+                {:else if quotes[t.code] === null}
+                  <span class="muted" title="即時報價取不到">—</span>
+                {:else}
+                  {@const q = quotes[t.code]}
+                  <span class={q && q.price < t.stop_line ? 'neg' : 'pos'} title={q ? '報價時間 ' + q.time : ''}>
+                    {q ? num(q.price) : '—'}
+                  </span>
+                {/if}
+              </td>
               <td class="stop">{num(t.stop_line)}</td>
               <td>{t.status === 'open' ? '持有' : '已出場'}</td>
               <td>{t.exit_date ?? '—'}</td>
@@ -129,6 +162,8 @@
   th { color: #94a3b8; }
   .code { font-family: monospace; font-weight: 600; }
   .stop { color: #fbbf24; }
+  .quote { font-variant-numeric: tabular-nums; }
+  .muted { color: #64748b; }
   tr.closed { opacity: .65; }
   .pos { color: #34d399; }
   .neg { color: #f87171; }
