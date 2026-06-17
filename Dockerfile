@@ -32,11 +32,19 @@ COPY capystock/  ./capystock/
 
 COPY --from=frontend-build /app/frontend/dist /app/frontend/dist
 
-RUN mkdir -p /app/data
+# 把 git-tracked 的種子資料放進 image（watchlist / ledgers / universe / 快照等）。
+# 56MB 的 data/cloud-cache 已由 .dockerignore 排除 — 開機後由「雲端同步」從 GitHub 拉，
+# 避免 image 膨脹。data/cache（gitignored）也不在內，首次同步時建立。
+COPY data/ ./data/
+RUN mkdir -p /app/data/cache /app/data/cloud-cache
 
+# PaaS（Render/Fly/Railway…）會注入 $PORT；本地未注入時回退 8000。
+ENV PORT=8000
 EXPOSE 8000
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-  CMD curl -fsS http://localhost:8000/api/v1/health || exit 1
+  CMD curl -fsS "http://localhost:${PORT:-8000}/api/v1/health" || exit 1
 
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# shell 形式才能展開 $PORT；--proxy-headers 讓反向代理後的 base_url 帶正確 https scheme
+# （Google OAuth redirect_uri 需要 https）。
+CMD ["sh", "-c", "uvicorn api.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips='*'"]

@@ -1,0 +1,38 @@
+# Render Blueprint — 從 GitHub 一鍵部署 CapyStock 對外網。
+# 用法：Render Dashboard → New → Blueprint → 連到此 repo → 套用。
+# 也可改用 Fly.io / Railway / Koyeb（同一個 Dockerfile，把下面 env 對應過去即可）。
+#
+# 注意資源：全市場掃描（~3700 檔）吃記憶體，free（512MB）會 OOM。
+# 建議 plan 至少 standard（2GB）；或在小機器上設 CAPYSTOCK_SCHEDULER_DISABLED=1 並少用全市場重算。
+services:
+  - type: web
+    name: capystock
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: standard            # free 會 OOM；standard=2GB 較安全
+    healthCheckPath: /api/v1/health
+    autoDeploy: true
+    envVars:
+      - key: TZ
+        value: Asia/Tokyo
+      # 雲端同步來源（GitHub Actions Cloud Fetch 寫入的 repo/branch）
+      - key: CAPYSTOCK_GITHUB_REPO
+        value: ChunkangYang/CapyStock
+      - key: CAPYSTOCK_GITHUB_BRANCH
+        value: feature/s25-portfolio
+      # --- Google 登入（敏感值在 Dashboard 手動填，不進 repo）---
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: CAPYSTOCK_ALLOWED_EMAILS   # 只有這些 email 能登入，逗號分隔
+        sync: false
+      - key: CAPYSTOCK_PUBLIC_BASE_URL  # 例：https://capystock.onrender.com
+        sync: false
+      - key: CAPYSTOCK_SESSION_SECRET   # Render 自動產生隨機值
+        generateValue: true
+      # --- 選用 ---
+      - key: EDINET_API_KEY             # 不設則 EDINET 跳過
+        sync: false
+      - key: GITHUB_TOKEN              # 選用：提高 GitHub API rate limit / private repo
+        sync: false
