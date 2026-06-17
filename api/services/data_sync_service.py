@@ -146,6 +146,11 @@ def run_cloud_sync(
         owner, repo, branch = _parse_github_remote()
         api_url = f"https://api.github.com/repos/{owner}/{repo}/contents/data/cloud-cache"
         headers = {"Accept": "application/vnd.github+json"}
+        # 選用：設 GITHUB_TOKEN（或 GH_TOKEN）→ 支援 private repo + 提高 rate limit（60→5000/hr）。
+        # 對外 PaaS 部署多台抓取時尤其有用；public repo 可不設。
+        gh_token = os.environ.get("GITHUB_TOKEN", "").strip() or os.environ.get("GH_TOKEN", "").strip()
+        if gh_token:
+            headers["Authorization"] = f"Bearer {gh_token}"
         params = {"ref": branch}
 
         with httpx.Client(timeout=30.0) as client:

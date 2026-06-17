@@ -1,5 +1,27 @@
 # Human TODO — 需要人工介入的任務
 
+## 外網部署（雲端 PaaS + Google 登入，2026-06-17）
+
+程式碼/Dockerfile/測試已完成並本地驗證（見 [EXTERNAL_ACCESS.md](EXTERNAL_ACCESS.md)）。
+以下三步需要你的帳號/網址才能完成，我無法代做：
+
+1. **建立 Google OAuth Client**（Google Cloud Console）
+   - OAuth consent screen → External，Test users 加入你的 Google 帳號
+   - Credentials → OAuth client ID → Web application
+   - Authorized redirect URI：`https://<部署網址>/auth/callback`
+   - 取得 Client ID + Client Secret
+2. **在 Render（或 Fly/Railway）部署**
+   - New → Blueprint 連此 repo（讀 [render.yaml](../render.yaml)）；或 New → Web Service → Docker
+   - 填環境變數：`GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET`、`CAPYSTOCK_ALLOWED_EMAILS=cky1983@gmail.com`、
+     `CAPYSTOCK_PUBLIC_BASE_URL=https://<部署網址>`、`EDINET_API_KEY`（選用）
+   - **plan 建議 standard（2GB）**：free（512MB）全市場掃描會 OOM
+3. **拿到網址後回填**
+   - Google Console 的 redirect URI 改成實際網址 + `/auth/callback`
+   - `CAPYSTOCK_PUBLIC_BASE_URL` 填實際網址
+   - 進站登入後，`/data` 頁按「☁ 從雲端同步」拉首批資料
+
+> 驗收：用白名單 email 登入 → 可進站；用其他 Google 帳號 → 被擋 403。
+
 ## Fix 3：價格獨立掃描鏈（2026-06-13）
 
 ### price-fetch.yml 手動 dispatch 驗證

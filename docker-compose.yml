@@ -16,6 +16,13 @@ services:
       # 雲端同步（GitHub Actions Cloud Fetch）對應的 repo 與 branch
       - CAPYSTOCK_GITHUB_REPO=ChunkangYang/CapyStock
       - CAPYSTOCK_GITHUB_BRANCH=feature/s25-portfolio
+      # --- 對外網存取控制（Google 登入）：本地不設＝停用，行為不變 ---
+      # 設定下列三項即啟用「只有白名單 Google 帳號能登入」（詳見 docs/EXTERNAL_ACCESS.md）：
+      # - GOOGLE_CLIENT_ID=xxxxx.apps.googleusercontent.com
+      # - GOOGLE_CLIENT_SECRET=xxxxx
+      # - CAPYSTOCK_ALLOWED_EMAILS=cky1983@gmail.com
+      # - CAPYSTOCK_PUBLIC_BASE_URL=https://your-domain   # OAuth redirect 用
+      # - CAPYSTOCK_SESSION_SECRET=<隨機字串>              # 未設則重啟需重新登入
     env_file:
       - ./data/.env
     restart: unless-stopped

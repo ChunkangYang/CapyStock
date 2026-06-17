@@ -1,7 +1,27 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-06-13（兩問題 + Fix 3 **全部實作完成**：① 頁面載入慢（Fix 1-A~D）② 現價不同步（Fix 2-1/2-2）③ 價格獨立掃描鏈（Fix 3-1~3-3）；單元測試綠，workflow/前端畫面驗證列入 HUMAN_TODO）
+2026-06-17（外網部署：雲端 PaaS + Google 登入存取控制 **實作完成並本地+Docker 驗證**；
+Google OAuth client / Render 部署 / 網址回填列入 HUMAN_TODO）
+
+## 2026-06-17 外網訪問（雲端 PaaS 部署 + Google 登入）
+
+- 需求：把本地 Docker(localhost:8000) 改成外網可連、只有使用者 Google 帳號能登入。
+- 資料同步確認：`run_cloud_sync` 本來就直接打 GitHub Contents API 抓 cloud-cache，**不依賴本地 .git**；
+  repo public → 免 token。外網主機開機後雲端同步即有資料。
+- ✅ **Google 登入閘門**：新增 [api/auth.py](../api/auth.py)（Authlib + Starlette Session）：
+  `/auth/login|callback|logout|me` + email 白名單 + 純 ASGI `AuthGateMiddleware`（不干擾 SSE）。
+  三項齊全（CLIENT_ID/SECRET/ALLOWED_EMAILS）才啟用；未設＝停用（本地零回歸）。
+- ✅ **main.py**：掛 SessionMiddleware + 條件式 AuthGate；CORS 改 `CAPYSTOCK_CORS_ORIGINS` 可加。
+- ✅ **Dockerfile**：CMD 吃 `$PORT` + `--proxy-headers`；`COPY data/`（種子資料）；
+  新增 [.dockerignore](../.dockerignore) 排除 56MB cloud-cache（開機後雲端同步拉）。
+- ✅ **data_sync_service.py**：加 `GITHUB_TOKEN` header（private repo / rate limit 防呆）。
+- ✅ **部署設定**：[render.yaml](../render.yaml) 藍圖 + requirements(authlib/itsdangerous) + docker-compose env 註解。
+- ✅ **測試**：[test_auth.py](../tests/unit/test_auth.py) 10 passed；全套 179 passed（唯一紅是既有 indicator mock，非本次）。
+- ✅ **驗證**：本地 TestClient（auth 關/開）+ 實 Docker 容器（PORT=9123/9124，auth 關→200、auth 開→
+  health 200 / 受保護 API 401 / 頁面 302→Google）全綠。
+- ⏳ 待人工：建 Google OAuth client、Render 部署填 secret、拿到網址回填 redirect/BASE_URL —
+  見 [HUMAN_TODO.md](HUMAN_TODO.md) 與 [EXTERNAL_ACCESS.md](EXTERNAL_ACCESS.md)。
 
 ## 2026-06-13 修復實作完成（Fix 1 / Fix 2 / Fix 3）
 
