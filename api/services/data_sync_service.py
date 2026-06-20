@@ -248,6 +248,19 @@ def run_cloud_sync(
         except Exception as e:  # noqa: BLE001
             scan_summary = {"error": str(e)}
 
+    # 同步最新收盤後，把模擬交易（帳本）推進到最新價：棘輪移動停損更新、觸線者出場。
+    # 與 rescan 綁在一起（Dashboard 同步與 price_sync 排程皆 rescan=True），讓「按一次雲端
+    # 同步」就把行情、訊號、模擬交易一次推到最新，不需再各自手動推進。
+    ledger_summary = None
+    if rescan:
+        _emit("ledger", 99, "更新模擬交易到最新收盤…")
+        try:
+            from api.services import ledger_service as _ledger_service
+            adv = _ledger_service.advance_all()
+            ledger_summary = {"advanced": adv.advanced_trades, "closed": adv.closed_trades}
+        except Exception as e:  # noqa: BLE001
+            ledger_summary = {"error": str(e)}
+
     _write_sync_marker(kinds)
     _emit("done", 100, "同步完成")
     return {
@@ -257,5 +270,6 @@ def run_cloud_sync(
         "skipped": skipped,
         "applied_to": str(local_dir),
         "rescan": scan_summary,
+        "ledger_advance": ledger_summary,
         "synced_date": _jst_today_str(),
     }

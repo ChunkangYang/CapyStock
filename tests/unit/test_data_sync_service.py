@@ -64,6 +64,38 @@ def test_sync_marker_and_state(fake_dirs):
     assert st1["last_date"] == st1["today"]
 
 
+def test_rescan_true_advances_ledgers(fake_dirs, monkeypatch):
+    """rescan=True：同步後把模擬交易推進到最新收盤，結果帶回 ledger_advance。"""
+    from api.schemas.ledger import AdvanceResult
+
+    monkeypatch.setattr("api.services.scan_service.run_signals_scan", lambda *a, **k: ([], []))
+    monkeypatch.setattr("api.services.scan_service.write_snapshot", lambda *a, **k: None)
+    monkeypatch.setattr("api.services.scan_service.load_universe", lambda: [])
+    monkeypatch.setattr("api.routers.scan.prime_live_signals_cache", lambda *a, **k: None)
+
+    called = {"n": 0}
+
+    def fake_adv():
+        called["n"] += 1
+        return AdvanceResult(advanced_trades=2, closed_trades=1)
+
+    monkeypatch.setattr("api.services.ledger_service.advance_all", fake_adv)
+
+    r = dss.run_cloud_sync(pull=False, kinds=None, rescan=True)
+    assert called["n"] == 1
+    assert r["ledger_advance"] == {"advanced": 2, "closed": 1}
+
+
+def test_rescan_false_does_not_advance_ledgers(fake_dirs, monkeypatch):
+    """rescan=False：不碰帳本（避免測試/排程誤動真實模擬交易）。"""
+    monkeypatch.setattr(
+        "api.services.ledger_service.advance_all",
+        lambda: (_ for _ in ()).throw(AssertionError("不應被呼叫")),
+    )
+    r = dss.run_cloud_sync(pull=False, kinds=["price"], rescan=False)
+    assert r["ledger_advance"] is None
+
+
 def test_progress_callback_emits_phases(fake_dirs):
     """progress_callback 應收到 copy 階段與最後 done=100%。"""
     events: list[dict] = []

@@ -53,6 +53,15 @@ def delete_trade(ledger_id: str, trade_id: str):
     return {"status": "deleted", "id": trade_id}
 
 
+@router.get("/ledgers/{ledger_id}/trades/{trade_id}/price")
+def trade_price_series(ledger_id: str, trade_id: str):
+    """單筆交易：進場日 → 今天（已出場到出場日）的日曆軸收盤序列（缺資料留 None）。"""
+    data = ledger_service.trade_price_series(ledger_id, trade_id)
+    if data is None:
+        raise HTTPException(404, "帳本或交易不存在")
+    return data
+
+
 @router.post("/ledgers/{ledger_id}/advance", response_model=AdvanceResult)
 def advance_ledger(ledger_id: str):
     r = ledger_service.advance_ledger(ledger_id)

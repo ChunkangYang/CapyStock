@@ -11,7 +11,7 @@ import glob
 import json
 import os
 import uuid
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
@@ -184,6 +184,58 @@ def _closes_for(code: str, days: int = 400) -> list[tuple[date, float]]:
     from api.services import signal_service
     bars = signal_service.get_price_history(code, days=days)
     return [(b.date, float(b.close)) for b in bars]
+
+
+# ── 單筆交易：進場日 → 今天的價格折線序列 ────────────────────────────────
+
+def build_trade_price_series(trade: Trade, today: Optional[date] = None) -> dict:
+    """從進場日到今天（已出場則到出場日）的「日曆軸」收盤序列。
+
+    回傳 dates / closes 兩條等長陣列：當日 cache 沒有收盤（週末、未同步那天）→
+    close=None，前端折線留白（不連線）。另附進場價 / 停損線 / 出場點供標記。
+    """
+    today = today or date.today()
+    end = trade.exit_date or today
+    if end < trade.entry_date:
+        end = trade.entry_date
+    span = (end - trade.entry_date).days + 5
+    closes = dict(_closes_for(trade.code, days=max(span, 30)))
+
+    dates: list[str] = []
+    values: list[Optional[float]] = []
+    d = trade.entry_date
+    one = timedelta(days=1)
+    while d <= end:
+        dates.append(d.isoformat())
+        c = closes.get(d)
+        values.append(round(float(c), 2) if c is not None else None)
+        d += one
+
+    return {
+        "code": trade.code,
+        "name": trade.name,
+        "entry_date": trade.entry_date.isoformat(),
+        "end_date": end.isoformat(),
+        "entry_price": trade.entry_price,
+        "stop_line": trade.stop_line,
+        "high_water": trade.high_water,
+        "status": trade.status,
+        "exit_date": trade.exit_date.isoformat() if trade.exit_date else None,
+        "exit_price": trade.exit_price,
+        "dates": dates,
+        "closes": values,
+    }
+
+
+def trade_price_series(ledger_id: str, trade_id: str) -> Optional[dict]:
+    """讀某帳本某筆交易的價格折線序列。帳本/交易不存在回 None。"""
+    ledger = _load_ledger(ledger_id)
+    if ledger is None:
+        return None
+    trade = next((t for t in ledger.trades if t.id == trade_id), None)
+    if trade is None:
+        return None
+    return build_trade_price_series(trade)
 
 
 def advance_ledger(ledger_id: str) -> Optional[AdvanceResult]:

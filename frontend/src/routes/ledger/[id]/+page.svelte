@@ -3,6 +3,7 @@
   import { page } from '$app/stores';
   import { api } from '$lib/api';
   import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
+  import TradePriceChart from '$lib/components/TradePriceChart.svelte';
 
   interface Trade {
     id: string; code: string; name: string;
@@ -12,6 +13,11 @@
     pnl_jpy: number | null; pnl_pct: number | null;
   }
   interface Ledger { id: string; name: string; created_at: string; trades: Trade[]; }
+  interface PriceSeries {
+    code: string; name: string; entry_date: string; end_date: string;
+    entry_price: number; stop_line: number; exit_date: string | null; exit_price: number | null;
+    dates: string[]; closes: (number | null)[];
+  }
 
   let ledger: Ledger | null = null;
   let loading = true;
@@ -20,6 +26,12 @@
   let advMsg = '';
   // code -> 即時報價（undefined=載入中，null=取不到）。複用 quote_service（與 portfolio 同源）。
   let quotes: Record<string, { price: number; time: string } | null> = {};
+
+  // 折線圖 modal 狀態
+  let chartTrade: Trade | null = null;
+  let chartSeries: PriceSeries | null = null;
+  let chartLoading = false;
+  let chartError = '';
 
   $: id = $page.params.id;
 
@@ -66,6 +78,28 @@
     }
   }
 
+  async function openChart(t: Trade) {
+    chartTrade = t;
+    chartSeries = null;
+    chartError = '';
+    chartLoading = true;
+    try {
+      chartSeries = await api<PriceSeries>(`/ledgers/${id}/trades/${t.id}/price`);
+    } catch (e) {
+      chartError = e instanceof Error ? e.message : '載入失敗';
+    } finally {
+      chartLoading = false;
+    }
+  }
+
+  function closeChart() {
+    chartTrade = null;
+    chartSeries = null;
+    chartError = '';
+  }
+
+  $: chartAllBlank = chartSeries != null && chartSeries.closes.every((c) => c == null);
+
   async function removeTrade(tid: string) {
     if (!confirm('刪除這筆交易？')) return;
     try {
@@ -104,7 +138,7 @@
           <tr>
             <th>代碼</th><th>名稱</th><th>進場日</th><th>進場價</th><th>股數</th>
             <th>停損%</th><th>最高收盤</th><th>現價</th><th>目前停損線</th><th>狀態</th>
-            <th>出場日</th><th>出場價</th><th>損益</th><th></th>
+            <th>出場日</th><th>出場價</th><th>損益</th><th></th><th></th>
           </tr>
         </thead>
         <tbody>
@@ -138,6 +172,7 @@
               <td class={t.pnl_jpy == null ? '' : t.pnl_jpy >= 0 ? 'pos' : 'neg'}>
                 {t.pnl_jpy == null ? '—' : `${yen(t.pnl_jpy)} (${pct(t.pnl_pct)})`}
               </td>
+              <td><button class="btn-chart" on:click={() => openChart(t)}>📈 圖</button></td>
               <td><button class="btn-del" on:click={() => removeTrade(t.id)}>刪</button></td>
             </tr>
           {/each}
@@ -146,6 +181,40 @@
     {/if}
   {/if}
 </div>
+
+{#if chartTrade}
+  <div class="chart-overlay" on:click|self={closeChart} on:keydown={(e) => e.key === 'Escape' && closeChart()} role="dialog" aria-modal="true" tabindex="-1">
+    <div class="chart-modal">
+      <header class="cm-head">
+        <span class="cm-title">
+          <span class="code">{chartTrade.code}</span> {chartTrade.name}
+          <span class="cm-sub">　進場 {chartTrade.entry_date} → 至今</span>
+        </span>
+        <button class="cm-close" on:click={closeChart} aria-label="關閉">✕</button>
+      </header>
+
+      {#if chartLoading}
+        <LoadingSpinner />
+      {:else if chartError}
+        <div class="error">⚠ {chartError}</div>
+      {:else if chartSeries}
+        {#if chartAllBlank}
+          <p class="empty">此區間尚無價格資料，請先回 Dashboard 雲端同步。</p>
+        {:else}
+          <TradePriceChart
+            dates={chartSeries.dates}
+            closes={chartSeries.closes}
+            entryPrice={chartSeries.entry_price}
+            stopLine={chartSeries.stop_line}
+            exitDate={chartSeries.exit_date}
+            exitPrice={chartSeries.exit_price}
+          />
+        {/if}
+        <p class="cm-legend">藍線＝進場價，紅線＝目前停損線；折線空白＝該日無收盤資料（未同步/非交易日）。</p>
+      {/if}
+    </div>
+  </div>
+{/if}
 
 <style>
   .page { padding: 1.5rem; max-width: 1150px; }
@@ -168,4 +237,22 @@
   .pos { color: #34d399; }
   .neg { color: #f87171; }
   .btn-del { background: #7f1d1d; color: #fecaca; border: 0; padding: .25rem .5rem; border-radius: 4px; cursor: pointer; font-size: .75rem; }
+  .btn-chart { background: #1e3a5f; color: #bfdbfe; border: 0; padding: .25rem .5rem; border-radius: 4px; cursor: pointer; font-size: .75rem; white-space: nowrap; }
+  .btn-chart:hover { background: #1d4ed8; color: #fff; }
+
+  .chart-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,.72);
+    display: flex; align-items: center; justify-content: center; z-index: 9999;
+  }
+  .chart-modal {
+    width: 760px; max-width: calc(100vw - 40px); background: #1a1a1a;
+    border: 1px solid #333; border-radius: 10px; padding: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.6);
+  }
+  .cm-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: .6rem; }
+  .cm-title { font-size: 1rem; color: #e5e7eb; }
+  .cm-sub { color: #9ca3af; font-size: .82rem; }
+  .cm-close { background: transparent; border: 0; color: #9ca3af; font-size: 1.1rem; cursor: pointer; }
+  .cm-close:hover { color: #fff; }
+  .cm-legend { color: #9ca3af; font-size: .78rem; margin: .5rem 0 0; }
 </style>

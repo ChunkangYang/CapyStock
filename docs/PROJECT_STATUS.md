@@ -1,8 +1,31 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-06-17（外網部署：雲端 PaaS + Google 登入存取控制 **實作完成並本地+Docker 驗證**；
-Google OAuth client / Render 部署 / 網址回填列入 HUMAN_TODO）
+2026-06-20（雲端同步順手推進模擬交易到最新收盤 + 帳本單筆交易價格折線圖）
+
+## 2026-06-20 同步推進模擬交易 + 單筆交易價格折線圖
+
+- 需求：每日開啟時的雲端同步，同步行情時也把模擬交易推到最新價；點進交易能看
+  「進場日 → 至今」的價格折線圖，沒同步/非交易日那天留白即可。
+- ✅ **同步順手推進帳本**：[data_sync_service.py](../api/services/data_sync_service.py)
+  `run_cloud_sync` 在 rescan 階段後呼叫 `ledger_service.advance_all()`（棘輪移動停損
+  更新、觸線者出場），結果帶回 `ledger_advance`。與 rescan 綁定（Dashboard 同步、
+  price_sync 排程皆 rescan=True）→ 按一次雲端同步＝行情/訊號/模擬交易一次到最新。
+  rescan=False（測試/純價格套用）不動帳本，避免誤改真實模擬交易。
+- ✅ **單筆交易價格序列 API**：[ledger_service.py](../api/services/ledger_service.py)
+  `build_trade_price_series` / `trade_price_series` + [ledger.py](../api/routers/ledger.py)
+  `GET /ledgers/{id}/trades/{tid}/price`：回「日曆軸」dates/closes，當日 cache 無收盤
+  （週末、未同步那天）→ close=None（前端留白）；已出場交易軸到出場日為止。
+- ✅ **前端折線圖**：新增 [TradePriceChart.svelte](../frontend/src/lib/components/TradePriceChart.svelte)
+  （echarts，`connectNulls:false` 缺資料留白 + 進場價/停損線 markLine + 出場點 markPoint）；
+  [ledger/[id]/+page.svelte](../frontend/src/routes/ledger/[id]/+page.svelte) 每列加「📈 圖」鈕
+  → modal 顯示。SyncGate 詢問文案補上「並把模擬交易推進到最新收盤」。
+- ✅ **測試**：`test_ledger_price_series.py`（3）+ `test_data_sync_service.py` 新增 2 —
+  全套 184 passed（唯一紅＝既有 indicator mock，非本次）；前端 `vite build` 綠。
+- ✅ **驗證**：TestClient 打端點 200 / 缺交易 404；7203 真實 cache 進場 2026-05-25→至今
+  軸 27 天、15 交易日有值、12 留白（含週末與 cache 截止後）。
+
+## 2026-06-17 外網訪問（雲端 PaaS 部署 + Google 登入）
 
 ## 2026-06-17 外網訪問（雲端 PaaS 部署 + Google 登入）
 

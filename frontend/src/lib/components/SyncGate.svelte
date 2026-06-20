@@ -103,7 +103,7 @@
           今天（{today}）尚未同步最新行情。
           {#if lastDate}<br /><span class="sync-sub">上次同步：{lastDate}</span>{/if}
         </p>
-        <p class="sync-text">是否現在從雲端同步並重算全市場訊號？</p>
+        <p class="sync-text">是否現在從雲端同步、重算全市場訊號並把模擬交易推進到最新收盤？</p>
         <div class="sync-actions">
           <button class="btn btn-primary" on:click={startSync}>開始同步</button>
           <button class="btn" on:click={skipToday}>今天跳過</button>
