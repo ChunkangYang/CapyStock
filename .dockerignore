@@ -1,0 +1,35 @@
+# --- build context 瘦身：避免把 56MB cloud-cache、快取、截圖、git 史塞進 image ---
+.git
+.github
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+.coverage
+.playwright-mcp
+.backup
+
+# 前端原始碼/依賴由多階段 build 處理，不需進 runtime context
+frontend/node_modules
+frontend/.svelte-kit
+frontend/dist
+
+# 大型 / runtime 才需要的資料：cloud-cache 開機後雲端同步；cache 為 gitignored scrape 快取
+data/cloud-cache
+data/cache
+data/.env
+data/last_sync.json
+data/log.csv
+data/_verify_uvicorn.log
+data/DELETE_*
+data/simulations
+data/DELETE_simulations
+
+# 文件 / 截圖 / 雜項，不需進 image
+docs
+*.png
+*.xls
+*.xlsx
+*.log
+tests

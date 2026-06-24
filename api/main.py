@@ -7,7 +7,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.sessions import SessionMiddleware
 
+from api import auth as auth_module
 from api.routers import (
     analytics, compare, data, dividend, exit_strategy, favorites, health, indicators, ingest, ledger, meta, notify, pocket, portfolio, quote, scan, scheduler, signals, watchlist,
 )
@@ -36,10 +38,26 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# CORS（開發階段允許 localhost:5173 前端）
+# --- 存取控制中介層 ---
+# 中介層套用順序：後加入者為最外層。期望 outer→inner = CORS → Session → AuthGate → routes。
+# 故先加 AuthGate、再加 Session、最後加 CORS。AuthGate 為純 ASGI（不干擾 SSE/streaming），
+# 需 SessionMiddleware 在其外層先填好 scope["session"]。
+#
+# 對外部署時：設定 GOOGLE_CLIENT_ID/SECRET + CAPYSTOCK_ALLOWED_EMAILS 即啟用 Google 登入閘門；
+# 未設定則 auth 完全停用（本地/既有 Docker 行為不變）。
+auth_enabled = auth_module.register_auth(app)
+if auth_enabled:
+    app.add_middleware(auth_module.AuthGateMiddleware)
+app.add_middleware(SessionMiddleware, secret_key=auth_module.session_secret(), same_site="lax")
+
+# CORS：預設允許本地開發前端；可用 CAPYSTOCK_CORS_ORIGINS（逗號分隔）追加對外網址。
+_cors_origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
+_extra_origins = os.environ.get("CAPYSTOCK_CORS_ORIGINS", "").strip()
+if _extra_origins:
+    _cors_origins += [o.strip() for o in _extra_origins.split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
