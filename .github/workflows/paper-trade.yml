@@ -12,6 +12,11 @@ name: Paper Trade
       edinet_days:
         description: "EDINET 回補天數（0 = 略過）"
         default: "7"
+      report_style:
+        description: "日報版型"
+        type: choice
+        default: image
+        options: [image, html, text]
   schedule:
     # UTC 08:00 = JST 17:00（price-fetch 15:40 起跑 + ~10 分抓取，留約 1 小時 buffer）
     - cron: "0 8 * * 1-5"
@@ -92,22 +97,19 @@ jobs:
           path: data/auto_trade_log/
           if-no-files-found: ignore
 
+      - name: Install CJK font (日報圖用)
+        if: success() && github.event.inputs.dry_run != 'true'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
+
       - name: Notify Telegram — daily report
         if: success() && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+          REPORT_STYLE: ${{ github.event.inputs.report_style || 'image' }}
         run: |
-          REPORT="data/auto_trade_log/latest_report.txt"
-          if [ ! -f "$REPORT" ]; then
-            echo "no report file"; exit 0
-          fi
-          # 用 --data-urlencode 避免換行/特殊字元被吃掉；Telegram 單則上限 4096 字元
-          head -c 3900 "$REPORT" > /tmp/report.txt
-          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text@/tmp/report.txt" \
-            --data-urlencode "disable_web_page_preview=true" || true
+          # image＝日報圖（sendPhoto）；html＝<pre> 等寬表格；找不到 CJK 字型會自動退回 html
+          python scripts/send_daily_report.py --style "$REPORT_STYLE" || true
 
       - name: Notify Telegram — failure or cancelled
         if: (failure() || cancelled()) && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''

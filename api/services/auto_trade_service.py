@@ -474,6 +474,76 @@ def summary(as_of: Optional[date] = None) -> dict:
 
 # ── Telegram 日報文字 ───────────────────────────────────────────────────────
 
+def _w(s: str) -> int:
+    """字串顯示寬度（東亞全形算 2）— monospace 表格對齊用。"""
+    import unicodedata
+    return sum(2 if unicodedata.east_asian_width(c) in "WF" else 1 for c in s)
+
+
+def _pad(s: str, width: int, align: str = "left") -> str:
+    s = str(s)
+    while _w(s) > width:                    # 過長就截斷（全形逐字砍）
+        s = s[:-1]
+    fill = " " * max(0, width - _w(s))
+    return (fill + s) if align == "right" else (s + fill)
+
+
+def format_report_html(log: dict) -> str:
+    """Telegram HTML 版日報（<pre> 等寬表格）。parse_mode=HTML 送出。"""
+    yen = lambda v: f"¥{round(v or 0):,}"
+    pct = lambda v: f"{(v or 0) * 100:+.2f}%"
+    esc = lambda s: (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+
+    out = [f"🤖 <b>自動模擬交易日報 {log.get('date')}</b>", ""]
+    kpi = [
+        ("總權益", yen(log.get("equity_jpy")), pct(log.get("total_return_pct"))),
+        ("已實現", yen(log.get("realized_pnl_jpy")), f"{log.get('closed_count', 0)} 筆"),
+        ("未實現", yen(log.get("unrealized_pnl_jpy")), f"{log.get('open_count', 0)} 檔"),
+        ("現金", yen(log.get("cash_jpy")), f"市值 {yen(log.get('market_value_jpy'))}"),
+    ]
+    out.append("<pre>" + "\n".join(
+        f"{_pad(k, 8)}{_pad(v, 12, 'right')}  {s}" for k, v, s in kpi) + "</pre>")
+
+    opened = log.get("opened") or []
+    closed = log.get("closed") or []
+    holdings = sorted(log.get("holdings") or [],
+                      key=lambda h: h.get("unrealized_pnl_jpy", 0), reverse=True)
+
+    if opened:
+        rows = [f"{_pad('代碼', 6)}{_pad('名稱', 16)}{_pad('股數', 7, 'right')}{_pad('價格', 11, 'right')}"]
+        rows += [f"{_pad(o['code'], 6)}{_pad(o.get('name', ''), 16)}"
+                 f"{_pad(str(o['shares']), 7, 'right')}{_pad(yen(o['entry_price']), 11, 'right')}"
+                 for o in opened]
+        out.append(f"🟢 <b>今日進場 {len(opened)} 檔</b>")
+        out.append("<pre>" + esc("\n".join(rows)) + "</pre>")
+    else:
+        out.append("🟢 <b>今日無新進場</b>")
+        for s in (log.get("skipped") or [])[:3]:
+            out.append(f"　✗ {esc(s.get('code'))} {esc(s.get('name', ''))}：{esc(s.get('reason', ''))}")
+
+    if closed:
+        rows = [f"{_pad('代碼', 6)}{_pad('名稱', 14)}{_pad('損益', 12, 'right')}{_pad('%', 9, 'right')}"]
+        rows += [f"{_pad(c['code'], 6)}{_pad(c.get('name', ''), 14)}"
+                 f"{_pad(yen(c.get('pnl_jpy')), 12, 'right')}{_pad(pct(c.get('pnl_pct')), 9, 'right')}"
+                 for c in closed]
+        out.append(f"🔴 <b>今日出場 {len(closed)} 檔</b>")
+        out.append("<pre>" + esc("\n".join(rows)) + "</pre>")
+    else:
+        out.append("🔴 <b>今日無出場</b>")
+
+    if holdings:
+        rows = [f"{_pad('代碼', 6)}{_pad('名稱', 14)}{_pad('暫定損益', 12, 'right')}{_pad('%', 9, 'right')}"]
+        rows += [f"{_pad(h['code'], 6)}{_pad(h.get('name', ''), 14)}"
+                 f"{_pad(yen(h['unrealized_pnl_jpy']), 12, 'right')}"
+                 f"{_pad(pct(h['unrealized_pnl_pct']), 9, 'right')}"
+                 for h in holdings]
+        out.append(f"📊 <b>持倉 {len(holdings)} 檔</b>")
+        out.append("<pre>" + esc("\n".join(rows)) + "</pre>")
+
+    out.append(f"<i>口袋名單候選 {log.get('pocket_candidates', 0)} 檔</i>")
+    return "\n".join(out)
+
+
 def format_report(log: dict) -> str:
     """把當日 log 轉成 Telegram 純文字日報。"""
     yen = lambda v: f"¥{round(v or 0):,}"

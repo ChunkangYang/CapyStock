@@ -211,3 +211,36 @@ class TestBotLedgerIsolation:
         loaded.clear()
         ls.advance_all(include_bot=True)
         assert loaded == ["u1", "auto-pocket"]
+
+
+class TestReportFormats:
+    def _log(self):
+        return {
+            "date": "2026-07-21", "equity_jpy": 3_000_000, "cash_jpy": 2_166_900,
+            "market_value_jpy": 833_100, "initial_cash_jpy": 3_000_000,
+            "realized_pnl_jpy": 0, "unrealized_pnl_jpy": 0, "total_return_pct": 0.0,
+            "open_count": 1, "closed_count": 0, "pocket_candidates": 46,
+            "opened": [{"code": "9039", "name": "サカイ引越センター", "shares": 100,
+                        "entry_price": 2991.0, "reason": "三盤全過"}],
+            "closed": [],
+            "holdings": [{"trade_id": "t1", "code": "9039", "name": "サカイ引越センター",
+                          "entry_date": "2026-07-21", "entry_price": 2991.0, "shares": 100,
+                          "last_close": 2991.0, "last_close_date": "2026-07-20",
+                          "stop_line": 2691.9, "high_water": 2991.0,
+                          "market_value_jpy": 299_100, "unrealized_pnl_jpy": 0.0,
+                          "unrealized_pnl_pct": 0.0}],
+            "skipped": [],
+        }
+
+    def test_html_report_tables_are_width_aligned(self):
+        html = ats.format_report_html(self._log())
+        assert "<pre>" in html and "9039" in html
+        # 全形名稱佔 2 格：欄寬一致才會對齊
+        assert ats._w("サカイ") == 6 and ats._w("abc") == 3
+        assert ats._w(ats._pad("サカイ", 10)) == 10
+        assert ats._w(ats._pad("abc", 10, "right")) == 10
+
+    def test_render_daily_report_png(self, tmp_path):
+        from api.services import report_image
+        out = report_image.render_daily_report(self._log(), None, tmp_path / "r.png")
+        assert out.exists() and out.stat().st_size > 5000
