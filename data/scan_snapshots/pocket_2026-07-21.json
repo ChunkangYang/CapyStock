@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-07-21T04:07:56",
+ "generated_at": "2026-07-21T15:28:29",
  "params": {
   "min_filings": 2,
   "window_days": 60,
@@ -8,10 +8,10 @@
   "as_of": null
  },
  "funnel": {
-  "candidates": 1032,
-  "gate1_continuity": 454,
-  "gate2_cost": 339,
-  "gate3_margin": 46
+  "candidates": 1046,
+  "gate1_continuity": 463,
+  "gate2_cost": 326,
+  "gate3_margin": 45
  },
  "pocket": [
   {
@@ -35,9 +35,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2858.0,
-    "latest_price": 2991.0,
-    "premium_pct": 0.046536039188243526,
-    "price_date": "2026-07-17"
+    "latest_price": 2976.0,
+    "premium_pct": 0.041287613715885234,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -72,9 +72,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4213.0,
-    "latest_price": 3598.0,
-    "premium_pct": -0.1459767386660337,
-    "price_date": "2026-07-17"
+    "latest_price": 3684.0,
+    "premium_pct": -0.12556373130785664,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -109,9 +109,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2642.0,
-    "latest_price": 2688.0,
-    "premium_pct": 0.0174110522331567,
-    "price_date": "2026-07-17"
+    "latest_price": 2669.0,
+    "premium_pct": 0.010219530658591975,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -146,9 +146,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1327.5,
-    "latest_price": 1326.0,
-    "premium_pct": -0.0011299435028248588,
-    "price_date": "2026-07-17"
+    "latest_price": 1342.0,
+    "premium_pct": 0.010922787193973634,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -222,9 +222,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1461.75,
-    "latest_price": 1501.0,
-    "premium_pct": 0.02685137677441423,
-    "price_date": "2026-07-17"
+    "latest_price": 1529.5,
+    "premium_pct": 0.046348554814434756,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -235,43 +235,6 @@
      850.9,
      716.8,
      623.8
-    ]
-   }
-  },
-  {
-   "code": "1377",
-   "name": "サカタのタネ",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "株式会社みずほ銀行",
-    "filing_count": 2,
-    "dates": [
-     "2026-06-05",
-     "2026-06-22"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 4175.0,
-    "latest_price": 4365.0,
-    "premium_pct": 0.045508982035928146,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.4445964432284541,
-    "series": [
-     73.1,
-     53.4,
-     48.4,
-     40.6
     ]
    }
   },
@@ -300,9 +263,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 281.5,
-    "latest_price": 282.0,
-    "premium_pct": 0.0017761989342806395,
-    "price_date": "2026-07-17"
+    "latest_price": 252.0,
+    "premium_pct": -0.10479573712255773,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -313,51 +276,6 @@
      2965.7,
      2175.7,
      2094.8
-    ]
-   }
-  },
-  {
-   "code": "3179",
-   "name": "シュッピン",
-   "in_pocket": true,
-   "gates_passed": 3,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
-    "filing_count": 6,
-    "dates": [
-     "2026-06-09",
-     "2026-06-18",
-     "2026-06-18",
-     "2026-06-18",
-     "2026-06-18",
-     "2026-06-18"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1090.8333333333333,
-    "latest_price": 1096.0,
-    "premium_pct": 0.004736440030557747,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.3402386849808602,
-    "series": [
-     444.1,
-     358.8,
-     350.6,
-     293.0
     ]
    }
   },
@@ -394,9 +312,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4342.5,
-    "latest_price": 4355.0,
-    "premium_pct": 0.0028785261945883708,
-    "price_date": "2026-07-17"
+    "latest_price": 4415.0,
+    "premium_pct": 0.01669545192861255,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -472,9 +390,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 6257.5,
-    "latest_price": 5370.0,
-    "premium_pct": -0.1418298042349181,
-    "price_date": "2026-07-17"
+    "latest_price": 5591.0,
+    "premium_pct": -0.10651218537754695,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -531,9 +449,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1898.0,
-    "latest_price": 1916.0,
-    "premium_pct": 0.009483667017913594,
-    "price_date": "2026-07-17"
+    "latest_price": 1908.0,
+    "premium_pct": 0.005268703898840885,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -568,9 +486,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2274.0,
-    "latest_price": 2323.0,
-    "premium_pct": 0.021547933157431837,
-    "price_date": "2026-07-17"
+    "latest_price": 2344.0,
+    "premium_pct": 0.030782761653474055,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -607,9 +525,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 187.33333333333334,
-    "latest_price": 161.0,
-    "premium_pct": -0.14056939501779364,
-    "price_date": "2026-07-17"
+    "latest_price": 166.0,
+    "premium_pct": -0.11387900355871891,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -644,9 +562,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1955.0,
-    "latest_price": 1961.0,
-    "premium_pct": 0.003069053708439898,
-    "price_date": "2026-07-17"
+    "latest_price": 1976.0,
+    "premium_pct": 0.010741687979539642,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -681,9 +599,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3072.5,
-    "latest_price": 1395.0,
-    "premium_pct": -0.5459723352318958,
-    "price_date": "2026-07-17"
+    "latest_price": 1463.0,
+    "premium_pct": -0.5238405207485761,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -718,9 +636,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2440.0,
-    "latest_price": 2068.0,
-    "premium_pct": -0.15245901639344261,
-    "price_date": "2026-07-17"
+    "latest_price": 2098.0,
+    "premium_pct": -0.14016393442622951,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -765,9 +683,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 587.0,
-    "latest_price": 601.0,
-    "premium_pct": 0.02385008517887564,
-    "price_date": "2026-07-17"
+    "latest_price": 600.0,
+    "premium_pct": 0.022146507666098807,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -802,9 +720,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 914.0,
-    "latest_price": 899.0,
-    "premium_pct": -0.016411378555798686,
-    "price_date": "2026-07-17"
+    "latest_price": 927.0,
+    "premium_pct": 0.014223194748358862,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -839,9 +757,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2669.75,
-    "latest_price": 2293.0,
-    "premium_pct": -0.1411180822174361,
-    "price_date": "2026-07-17"
+    "latest_price": 2362.0,
+    "premium_pct": -0.11527296563348628,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -878,9 +796,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4868.333333333333,
-    "latest_price": 3850.0,
-    "premium_pct": -0.20917494008901055,
-    "price_date": "2026-07-17"
+    "latest_price": 4115.0,
+    "premium_pct": -0.15474152687435805,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -923,9 +841,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1745.3333333333333,
-    "latest_price": 1781.0,
-    "premium_pct": 0.020435446906035187,
-    "price_date": "2026-07-17"
+    "latest_price": 1813.0,
+    "premium_pct": 0.03877005347593587,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -936,6 +854,43 @@
      252.9,
      245.1,
      212.8
+    ]
+   }
+  },
+  {
+   "code": "9816",
+   "name": "ストライダーズ",
+   "in_pocket": true,
+   "gates_passed": 3,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "成成株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-07-10",
+     "2026-07-21"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 241.0,
+    "latest_price": 243.0,
+    "premium_pct": 0.008298755186721992,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.17800762112139354,
+    "series": [
+     734.8,
+     620.2,
+     614.8,
+     604.0
     ]
    }
   },
@@ -966,9 +921,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 63.4,
-    "latest_price": 57.0,
-    "premium_pct": -0.10094637223974762,
-    "price_date": "2026-07-17"
+    "latest_price": 59.0,
+    "premium_pct": -0.06940063091482648,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1005,9 +960,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 880.0,
-    "latest_price": 717.0,
-    "premium_pct": -0.18522727272727274,
-    "price_date": "2026-07-17"
+    "latest_price": 749.0,
+    "premium_pct": -0.14886363636363636,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1042,9 +997,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 255.0,
-    "latest_price": 256.0,
-    "premium_pct": 0.00392156862745098,
-    "price_date": "2026-07-17"
+    "latest_price": 261.0,
+    "premium_pct": 0.023529411764705882,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1091,9 +1046,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 131.125,
-    "latest_price": 128.0,
-    "premium_pct": -0.023832221163012392,
-    "price_date": "2026-07-17"
+    "latest_price": 125.0,
+    "premium_pct": -0.04671115347950429,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1136,9 +1091,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2317.6666666666665,
-    "latest_price": 2071.0,
-    "premium_pct": -0.10642887962030773,
-    "price_date": "2026-07-17"
+    "latest_price": 2121.0,
+    "premium_pct": -0.08485545807565074,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1173,9 +1128,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 978.0,
-    "latest_price": 596.0,
-    "premium_pct": -0.39059304703476483,
-    "price_date": "2026-07-17"
+    "latest_price": 593.0,
+    "premium_pct": -0.3936605316973415,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1212,9 +1167,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3044.0,
-    "latest_price": 3120.0,
-    "premium_pct": 0.024967148488830485,
-    "price_date": "2026-07-17"
+    "latest_price": 3195.0,
+    "premium_pct": 0.049605781865965835,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1251,9 +1206,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 105.66666666666667,
-    "latest_price": 107.0,
-    "premium_pct": 0.012618296529968409,
-    "price_date": "2026-07-17"
+    "latest_price": 109.0,
+    "premium_pct": 0.03154574132492109,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1288,9 +1243,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3180.0,
-    "latest_price": 3205.0,
-    "premium_pct": 0.007861635220125786,
-    "price_date": "2026-07-17"
+    "latest_price": 3300.0,
+    "premium_pct": 0.03773584905660377,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1327,9 +1282,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2072.3333333333335,
-    "latest_price": 2082.0,
-    "premium_pct": 0.004664629242399798,
-    "price_date": "2026-07-17"
+    "latest_price": 2099.0,
+    "premium_pct": 0.012867942737654743,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1351,7 +1306,7 @@
    "gate1": {
     "passed": true,
     "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 7,
+    "filing_count": 8,
     "dates": [
      "2026-05-28",
      "2026-06-04",
@@ -1359,9 +1314,11 @@
      "2026-06-11",
      "2026-06-12",
      "2026-07-07",
-     "2026-07-10"
+     "2026-07-10",
+     "2026-07-21"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350",
@@ -1373,10 +1330,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 31.142857142857142,
-    "latest_price": 30.0,
-    "premium_pct": -0.036697247706422,
-    "price_date": "2026-07-17"
+    "master_cost": 30.875,
+    "latest_price": 29.0,
+    "premium_pct": -0.06072874493927125,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1411,9 +1368,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1661.5,
-    "latest_price": 1070.0,
-    "premium_pct": -0.3560036111947036,
-    "price_date": "2026-07-17"
+    "latest_price": 1080.0,
+    "premium_pct": -0.34998495335540175,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1458,9 +1415,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1075.0,
-    "latest_price": 1101.0,
-    "premium_pct": 0.024186046511627906,
-    "price_date": "2026-07-17"
+    "latest_price": 1117.0,
+    "premium_pct": 0.03906976744186046,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1495,9 +1452,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1773.0,
-    "latest_price": 1821.0,
-    "premium_pct": 0.02707275803722504,
-    "price_date": "2026-07-17"
+    "latest_price": 1831.0,
+    "premium_pct": 0.032712915961646924,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1544,9 +1501,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 74.875,
-    "latest_price": 65.0,
-    "premium_pct": -0.1318864774624374,
-    "price_date": "2026-07-17"
+    "latest_price": 66.0,
+    "premium_pct": -0.11853088480801335,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1583,9 +1540,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2751.1666666666665,
-    "latest_price": 2723.5,
-    "premium_pct": -0.010056339734657969,
-    "price_date": "2026-07-17"
+    "latest_price": 2750.0,
+    "premium_pct": -0.0004240625189313074,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1634,7 +1591,7 @@
     "master_cost": 23.75,
     "latest_price": 22.0,
     "premium_pct": -0.07368421052631578,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1675,9 +1632,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 588.0,
-    "latest_price": 613.0,
-    "premium_pct": 0.04251700680272109,
-    "price_date": "2026-07-17"
+    "latest_price": 610.0,
+    "premium_pct": 0.03741496598639456,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1712,9 +1669,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 89.0,
-    "latest_price": 85.0,
-    "premium_pct": -0.0449438202247191,
-    "price_date": "2026-07-17"
+    "latest_price": 89.0,
+    "premium_pct": 0.0,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1757,9 +1714,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5145.0,
-    "latest_price": 5090.0,
-    "premium_pct": -0.010689990281827016,
-    "price_date": "2026-07-17"
+    "latest_price": 4985.0,
+    "premium_pct": -0.031098153547133137,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1796,9 +1753,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 90.66666666666667,
-    "latest_price": 84.0,
-    "premium_pct": -0.07352941176470593,
-    "price_date": "2026-07-17"
+    "latest_price": 85.0,
+    "premium_pct": -0.06250000000000006,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1833,9 +1790,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1689.5,
-    "latest_price": 1678.0,
-    "premium_pct": -0.006806747558449245,
-    "price_date": "2026-07-17"
+    "latest_price": 1718.0,
+    "premium_pct": 0.016868896123113347,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1870,9 +1827,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 469.0,
-    "latest_price": 462.0,
-    "premium_pct": -0.014925373134328358,
-    "price_date": "2026-07-17"
+    "latest_price": 455.0,
+    "premium_pct": -0.029850746268656716,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -1909,9 +1866,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4392.5,
-    "latest_price": 4505.0,
-    "premium_pct": 0.025611838360842343,
-    "price_date": "2026-07-17"
+    "latest_price": 4525.0,
+    "premium_pct": 0.03016505406943654,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -1946,9 +1903,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1325.5,
-    "latest_price": 1272.5,
-    "premium_pct": -0.03998491135420596,
-    "price_date": "2026-07-17"
+    "latest_price": 1266.0,
+    "premium_pct": -0.044888721237268954,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -1959,6 +1916,43 @@
      209.9,
      205.9,
      196.3
+    ]
+   }
+  },
+  {
+   "code": "1377",
+   "name": "サカタのタネ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社みずほ銀行",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-05",
+     "2026-06-22"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": false,
+    "master_cost": 4175.0,
+    "latest_price": 4400.0,
+    "premium_pct": 0.05389221556886228,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.4445964432284541,
+    "series": [
+     73.1,
+     53.4,
+     48.4,
+     40.6
     ]
    }
   },
@@ -1991,9 +1985,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1259.4166666666667,
-    "latest_price": 1272.5,
-    "premium_pct": 0.01038840733143645,
-    "price_date": "2026-07-17"
+    "latest_price": 1276.0,
+    "premium_pct": 0.013167471713094625,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2028,9 +2022,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 238.0,
-    "latest_price": 231.0,
-    "premium_pct": -0.029411764705882353,
-    "price_date": "2026-07-17"
+    "latest_price": 238.0,
+    "premium_pct": 0.0,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2065,9 +2059,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1481.0,
-    "latest_price": 1492.0,
-    "premium_pct": 0.007427413909520594,
-    "price_date": "2026-07-17"
+    "latest_price": 1501.0,
+    "premium_pct": 0.01350438892640108,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2102,9 +2096,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 55.5,
-    "latest_price": 48.0,
-    "premium_pct": -0.13513513513513514,
-    "price_date": "2026-07-17"
+    "latest_price": 49.0,
+    "premium_pct": -0.11711711711711711,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2139,9 +2133,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 343.0,
-    "latest_price": 353.0,
-    "premium_pct": 0.029154518950437316,
-    "price_date": "2026-07-17"
+    "latest_price": 360.0,
+    "premium_pct": 0.04956268221574344,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2184,7 +2178,7 @@
     "master_cost": 3721.0,
     "latest_price": 3690.0,
     "premium_pct": -0.0083310937919914,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2219,9 +2213,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1735.5,
-    "latest_price": 1690.0,
-    "premium_pct": -0.026217228464419477,
-    "price_date": "2026-07-17"
+    "latest_price": 1675.0,
+    "premium_pct": -0.03486027081532699,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2254,9 +2248,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2581.0,
-    "latest_price": 2460.0,
-    "premium_pct": -0.046881053855094924,
-    "price_date": "2026-07-17"
+    "latest_price": 2507.0,
+    "premium_pct": -0.028671057729562185,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -2291,9 +2285,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4122.5,
-    "latest_price": 3845.0,
-    "premium_pct": -0.06731352334748332,
-    "price_date": "2026-07-17"
+    "latest_price": 3975.0,
+    "premium_pct": -0.035779260157671314,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2326,9 +2320,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1997.0,
-    "latest_price": 1990.0,
-    "premium_pct": -0.0035052578868302454,
-    "price_date": "2026-07-17"
+    "latest_price": 2020.0,
+    "premium_pct": 0.011517275913870806,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -2363,9 +2357,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 564.0,
-    "latest_price": 541.0,
-    "premium_pct": -0.040780141843971635,
-    "price_date": "2026-07-17"
+    "latest_price": 539.0,
+    "premium_pct": -0.044326241134751775,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2400,9 +2394,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2817.5,
-    "latest_price": 2822.0,
-    "premium_pct": 0.0015971606033717836,
-    "price_date": "2026-07-17"
+    "latest_price": 2825.0,
+    "premium_pct": 0.0026619343389529724,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2439,9 +2433,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1916.0,
-    "latest_price": 2002.0,
-    "premium_pct": 0.04488517745302714,
-    "price_date": "2026-07-17"
+    "latest_price": 2004.0,
+    "premium_pct": 0.04592901878914405,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2480,9 +2474,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 161.66666793823242,
-    "latest_price": 162.0,
-    "premium_pct": 0.0020618477885307406,
-    "price_date": "2026-07-17"
+    "latest_price": 161.0,
+    "premium_pct": -0.004123719173126856,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2517,7 +2511,7 @@
     "master_cost": 1305.0,
     "latest_price": 1306.0,
     "premium_pct": 0.0007662835249042146,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -2528,41 +2522,6 @@
      97.4,
      62.4,
      54.8
-    ]
-   }
-  },
-  {
-   "code": "2207",
-   "name": "ｍｅｉｔｏ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": false,
-    "lead_filer": "ＵＧＳアセットマネジメント株式会社",
-    "filing_count": 1,
-    "dates": [
-     "2026-05-27"
-    ],
-    "doc_types": [
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 2989.0,
-    "latest_price": 3130.0,
-    "premium_pct": 0.047172967547674804,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.00912200684150526,
-    "series": [
-     526.2,
-     524.6,
-     521.5,
-     521.4
     ]
    }
   },
@@ -2605,9 +2564,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2651.0,
-    "latest_price": 2729.0,
-    "premium_pct": 0.02942285929837797,
-    "price_date": "2026-07-17"
+    "latest_price": 2752.0,
+    "premium_pct": 0.03809883062995096,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2644,9 +2603,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 238.33333333333334,
-    "latest_price": 88.0,
-    "premium_pct": -0.6307692307692307,
-    "price_date": "2026-07-17"
+    "latest_price": 107.0,
+    "premium_pct": -0.551048951048951,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2681,9 +2640,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3445.5,
-    "latest_price": 3615.0,
-    "premium_pct": 0.04919460165433174,
-    "price_date": "2026-07-17"
+    "latest_price": 3617.0,
+    "premium_pct": 0.049775068930489046,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2694,43 +2653,6 @@
      189.5,
      190.7,
      213.2
-    ]
-   }
-  },
-  {
-   "code": "2429",
-   "name": "ワールドＨＤ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "株式会社ワールドホールディングス",
-    "filing_count": 2,
-    "dates": [
-     "2026-06-05",
-     "2026-07-17"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 2480.5,
-    "latest_price": 2604.0,
-    "premium_pct": 0.04978834912316065,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     265.5,
-     262.5,
-     287.0,
-     278.1
     ]
    }
   },
@@ -2759,9 +2681,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2500.125,
-    "latest_price": 2415.0,
-    "premium_pct": -0.03404829758512074,
-    "price_date": "2026-07-17"
+    "latest_price": 2431.0,
+    "premium_pct": -0.027648617569121545,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2794,9 +2716,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2899.0,
-    "latest_price": 2666.0,
-    "premium_pct": -0.08037254225595032,
-    "price_date": "2026-07-17"
+    "latest_price": 2728.0,
+    "premium_pct": -0.05898585719213522,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -2837,9 +2759,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1758.8,
-    "latest_price": 1815.0,
-    "premium_pct": 0.031953604730498096,
-    "price_date": "2026-07-17"
+    "latest_price": 1816.0,
+    "premium_pct": 0.03252217420968845,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2875,10 +2797,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 1534.6666666666667,
-    "latest_price": 1418.0,
-    "premium_pct": -0.0760208514335361,
-    "price_date": "2026-07-17"
+    "master_cost": 1544.6666666666667,
+    "latest_price": 1448.0,
+    "premium_pct": -0.06258092360811399,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2917,9 +2839,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 100.0,
-    "latest_price": 92.0,
-    "premium_pct": -0.08,
-    "price_date": "2026-07-17"
+    "latest_price": 94.0,
+    "premium_pct": -0.06,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2956,9 +2878,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2487.0,
-    "latest_price": 2604.0,
-    "premium_pct": 0.047044632086851626,
-    "price_date": "2026-07-17"
+    "latest_price": 2593.0,
+    "premium_pct": 0.042621632488942504,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -2997,9 +2919,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3818.75,
-    "latest_price": 3745.0,
-    "premium_pct": -0.019312602291325694,
-    "price_date": "2026-07-17"
+    "latest_price": 3770.0,
+    "premium_pct": -0.01276595744680851,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3036,9 +2958,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1268.0,
-    "latest_price": 1265.0,
-    "premium_pct": -0.002365930599369085,
-    "price_date": "2026-07-17"
+    "latest_price": 1296.0,
+    "premium_pct": 0.022082018927444796,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3075,9 +2997,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3646.6666666666665,
-    "latest_price": 3745.0,
-    "premium_pct": 0.026965265082266952,
-    "price_date": "2026-07-17"
+    "latest_price": 3790.0,
+    "premium_pct": 0.03930530164533825,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3114,9 +3036,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5394.0,
-    "latest_price": 5072.0,
-    "premium_pct": -0.059695958472376714,
-    "price_date": "2026-07-17"
+    "latest_price": 5277.0,
+    "premium_pct": -0.021690767519466074,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3149,9 +3071,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3735.0,
-    "latest_price": 3730.0,
-    "premium_pct": -0.0013386880856760374,
-    "price_date": "2026-07-17"
+    "latest_price": 3750.0,
+    "premium_pct": 0.004016064257028112,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -3186,9 +3108,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 193.0,
-    "latest_price": 179.0,
-    "premium_pct": -0.07253886010362694,
-    "price_date": "2026-07-17"
+    "latest_price": 183.0,
+    "premium_pct": -0.05181347150259067,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3233,9 +3155,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 1096.7142857142858,
-    "latest_price": 1162.0,
-    "premium_pct": 0.05952846163866087,
-    "price_date": "2026-07-17"
+    "latest_price": 1172.0,
+    "premium_pct": 0.06864660674742731,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -3268,9 +3190,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1479.0,
-    "latest_price": 1513.0,
-    "premium_pct": 0.022988505747126436,
-    "price_date": "2026-07-17"
+    "latest_price": 1521.0,
+    "premium_pct": 0.028397565922920892,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -3309,9 +3231,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 401.75,
-    "latest_price": 406.0,
-    "premium_pct": 0.010578718108276292,
-    "price_date": "2026-07-17"
+    "latest_price": 412.0,
+    "premium_pct": 0.02551337896701929,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3346,9 +3268,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2159.5,
-    "latest_price": 2141.0,
-    "premium_pct": -0.008566797869877286,
-    "price_date": "2026-07-17"
+    "latest_price": 2158.0,
+    "premium_pct": -0.0006946052326927529,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3383,9 +3305,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1783.5,
-    "latest_price": 1820.0,
-    "premium_pct": 0.020465377067563777,
-    "price_date": "2026-07-17"
+    "latest_price": 1863.0,
+    "premium_pct": 0.044575273338940284,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3428,7 +3350,7 @@
     "master_cost": 431.4,
     "latest_price": 421.0,
     "premium_pct": -0.024107556791840467,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3467,9 +3389,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 992.75,
-    "latest_price": 887.0,
-    "premium_pct": -0.10652228657768824,
-    "price_date": "2026-07-17"
+    "latest_price": 935.0,
+    "premium_pct": -0.05817174515235457,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3480,6 +3402,41 @@
      2867.5,
      2885.7,
      2822.4
+    ]
+   }
+  },
+  {
+   "code": "3106",
+   "name": "クラボウ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "アセット・バリュー・インベスターズ・リミテッド",
+    "filing_count": 1,
+    "dates": [
+     "2026-07-21"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 10370.0,
+    "latest_price": 10370.0,
+    "premium_pct": 0.0,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.25280898876404495,
+    "series": [
+     17.8,
+     15.5,
+     15.0,
+     13.3
     ]
    }
   },
@@ -3508,9 +3465,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 215.0,
-    "latest_price": 217.0,
-    "premium_pct": 0.009302325581395349,
-    "price_date": "2026-07-17"
+    "latest_price": 219.0,
+    "premium_pct": 0.018604651162790697,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3563,9 +3520,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 391.8181818181818,
-    "latest_price": 269.0,
-    "premium_pct": -0.31345707656612526,
-    "price_date": "2026-07-17"
+    "latest_price": 276.0,
+    "premium_pct": -0.29559164733178656,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3598,9 +3555,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3195.0,
-    "latest_price": 3340.0,
-    "premium_pct": 0.04538341158059468,
-    "price_date": "2026-07-17"
+    "latest_price": 3345.0,
+    "premium_pct": 0.046948356807511735,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -3635,9 +3592,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 660.0,
-    "latest_price": 651.0,
-    "premium_pct": -0.013636363636363636,
-    "price_date": "2026-07-17"
+    "latest_price": 665.0,
+    "premium_pct": 0.007575757575757576,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3678,9 +3635,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 409.6,
-    "latest_price": 416.0,
-    "premium_pct": 0.015624999999999944,
-    "price_date": "2026-07-17"
+    "latest_price": 415.0,
+    "premium_pct": 0.013183593749999944,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3715,9 +3672,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1143.0,
-    "latest_price": 815.0,
-    "premium_pct": -0.2869641294838145,
-    "price_date": "2026-07-17"
+    "latest_price": 835.0,
+    "premium_pct": -0.2694663167104112,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3728,6 +3685,51 @@
      447.1,
      402.9,
      371.7
+    ]
+   }
+  },
+  {
+   "code": "3179",
+   "name": "シュッピン",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "filing_count": 6,
+    "dates": [
+     "2026-06-09",
+     "2026-06-18",
+     "2026-06-18",
+     "2026-06-18",
+     "2026-06-18",
+     "2026-06-18"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": false,
+    "master_cost": 1090.8333333333333,
+    "latest_price": 1234.0,
+    "premium_pct": 0.1312452253628725,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.3402386849808602,
+    "series": [
+     444.1,
+     358.8,
+     350.6,
+     293.0
     ]
    }
   },
@@ -3750,9 +3752,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3875.0,
-    "latest_price": 3515.0,
-    "premium_pct": -0.09290322580645162,
-    "price_date": "2026-07-17"
+    "latest_price": 3460.0,
+    "premium_pct": -0.10709677419354839,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -3812,45 +3814,6 @@
    }
   },
   {
-   "code": "3326",
-   "name": "ランシステム",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "ＧＡＵＤＩ株式会社",
-    "filing_count": 3,
-    "dates": [
-     "2026-06-02",
-     "2026-06-02",
-     "2026-06-05"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "360"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 592.6666666666666,
-    "latest_price": 622.0,
-    "premium_pct": 0.049493813273340896,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     56.1,
-     57.9,
-     44.7,
-     45.0
-    ]
-   }
-  },
-  {
    "code": "3433",
    "name": "トーカロ",
    "in_pocket": false,
@@ -3871,9 +3834,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3127.5,
-    "latest_price": 2883.0,
-    "premium_pct": -0.07817745803357314,
-    "price_date": "2026-07-17"
+    "latest_price": 2945.0,
+    "premium_pct": -0.058353317346123104,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3910,9 +3873,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4003.0,
-    "latest_price": 3914.0,
-    "premium_pct": -0.022233325006245315,
-    "price_date": "2026-07-17"
+    "latest_price": 3900.0,
+    "premium_pct": -0.02573070197351986,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3947,9 +3910,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1490.0,
-    "latest_price": 1433.0,
-    "premium_pct": -0.03825503355704698,
-    "price_date": "2026-07-17"
+    "latest_price": 1472.0,
+    "premium_pct": -0.012080536912751677,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -3982,9 +3945,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3105.0,
-    "latest_price": 3015.0,
-    "premium_pct": -0.028985507246376812,
-    "price_date": "2026-07-17"
+    "latest_price": 3020.0,
+    "premium_pct": -0.027375201288244767,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -4019,9 +3982,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1470.5,
-    "latest_price": 1337.0,
-    "premium_pct": -0.09078544712682761,
-    "price_date": "2026-07-17"
+    "latest_price": 1362.0,
+    "premium_pct": -0.07378442706562394,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4058,9 +4021,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 937.3333333333334,
-    "latest_price": 931.0,
-    "premium_pct": -0.006756756756756797,
-    "price_date": "2026-07-17"
+    "latest_price": 930.0,
+    "premium_pct": -0.007823613086771021,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4111,9 +4074,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1203.8,
-    "latest_price": 1222.0,
-    "premium_pct": 0.015118790496760298,
-    "price_date": "2026-07-17"
+    "latest_price": 1257.0,
+    "premium_pct": 0.044193387605914645,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4148,9 +4111,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 364.0,
-    "latest_price": 412.0,
-    "premium_pct": 0.13186813186813187,
-    "price_date": "2026-07-17"
+    "latest_price": 428.0,
+    "premium_pct": 0.17582417582417584,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -4185,9 +4148,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1603.5,
-    "latest_price": 1607.0,
-    "premium_pct": 0.002182725288431556,
-    "price_date": "2026-07-17"
+    "latest_price": 1617.0,
+    "premium_pct": 0.00841908325537886,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4222,7 +4185,7 @@
     "master_cost": 235.0,
     "latest_price": 237.0,
     "premium_pct": 0.00851063829787234,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -4267,9 +4230,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2229.5714285714284,
-    "latest_price": 2298.0,
-    "premium_pct": 0.03069135644262196,
-    "price_date": "2026-07-17"
+    "latest_price": 2273.5,
+    "premium_pct": 0.019702697507528733,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4280,43 +4243,6 @@
      177.4,
      214.8,
      208.6
-    ]
-   }
-  },
-  {
-   "code": "3672",
-   "name": "オルトプラス",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 2,
-    "dates": [
-     "2026-06-02",
-     "2026-07-02"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 28.5,
-    "latest_price": 28.0,
-    "premium_pct": -0.017543859649122806,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     5053.0,
-     4760.9,
-     5059.0,
-     4379.1
     ]
    }
   },
@@ -4343,9 +4269,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2840.6666666666665,
-    "latest_price": 2129.0,
-    "premium_pct": -0.25052804505984505,
-    "price_date": "2026-07-17"
+    "latest_price": 2157.0,
+    "premium_pct": -0.24067120394273642,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4380,9 +4306,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2136.5,
-    "latest_price": 2108.0,
-    "premium_pct": -0.013339574069740229,
-    "price_date": "2026-07-17"
+    "latest_price": 2132.0,
+    "premium_pct": -0.0021062485373274046,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4421,9 +4347,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 192.25,
-    "latest_price": 164.0,
-    "premium_pct": -0.1469440832249675,
-    "price_date": "2026-07-17"
+    "latest_price": 163.0,
+    "premium_pct": -0.15214564369310793,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4466,9 +4392,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 10240.0,
-    "latest_price": 10290.0,
-    "premium_pct": 0.0048828125,
-    "price_date": "2026-07-17"
+    "latest_price": 10510.0,
+    "premium_pct": 0.0263671875,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4503,9 +4429,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 714.0,
-    "latest_price": 699.0,
-    "premium_pct": -0.02100840336134454,
-    "price_date": "2026-07-17"
+    "latest_price": 697.0,
+    "premium_pct": -0.023809523809523808,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4516,6 +4442,53 @@
      504.1,
      527.3,
      526.8
+    ]
+   }
+  },
+  {
+   "code": "3763",
+   "name": "プロシップ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "filing_count": 7,
+    "dates": [
+     "2026-06-22",
+     "2026-06-22",
+     "2026-06-22",
+     "2026-06-22",
+     "2026-06-22",
+     "2026-06-22",
+     "2026-06-24"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1722.142857142857,
+    "latest_price": 1777.0,
+    "premium_pct": 0.03185400248859396,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     71.6,
+     78.0,
+     66.7,
+     64.8
     ]
    }
   },
@@ -4540,9 +4513,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2308.0,
-    "latest_price": 2347.0,
-    "premium_pct": 0.016897746967071057,
-    "price_date": "2026-07-17"
+    "latest_price": 2351.0,
+    "premium_pct": 0.018630849220103985,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4585,9 +4558,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1787.0,
-    "latest_price": 1804.0,
-    "premium_pct": 0.009513150531617236,
-    "price_date": "2026-07-17"
+    "latest_price": 1824.0,
+    "premium_pct": 0.020705092333519866,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4620,9 +4593,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1084.0,
-    "latest_price": 1127.0,
-    "premium_pct": 0.03966789667896679,
-    "price_date": "2026-07-17"
+    "latest_price": 1136.0,
+    "premium_pct": 0.04797047970479705,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -4659,7 +4632,7 @@
     "master_cost": 54.5,
     "latest_price": 48.0,
     "premium_pct": -0.11926605504587157,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4698,9 +4671,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 177.0,
-    "latest_price": 165.0,
-    "premium_pct": -0.06779661016949153,
-    "price_date": "2026-07-17"
+    "latest_price": 159.0,
+    "premium_pct": -0.1016949152542373,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4733,9 +4706,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 443.0,
-    "latest_price": 444.0,
-    "premium_pct": 0.002257336343115124,
-    "price_date": "2026-07-17"
+    "latest_price": 445.0,
+    "premium_pct": 0.004514672686230248,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -4772,9 +4745,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 34.666666666666664,
-    "latest_price": 32.0,
-    "premium_pct": -0.07692307692307686,
-    "price_date": "2026-07-17"
+    "latest_price": 34.0,
+    "premium_pct": -0.019230769230769162,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4785,6 +4758,43 @@
      10906.0,
      10864.6,
      11230.0
+    ]
+   }
+  },
+  {
+   "code": "3840",
+   "name": "パス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "株式会社サスティナ",
+    "filing_count": 2,
+    "dates": [
+     "2026-05-27",
+     "2026-05-27"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 58.0,
+    "latest_price": 60.0,
+    "premium_pct": 0.034482758620689655,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1276.0,
+     1605.0,
+     1503.1,
+     1417.6
     ]
    }
   },
@@ -4811,9 +4821,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2995.3333333333335,
-    "latest_price": 3035.0,
-    "premium_pct": 0.013242822167816552,
-    "price_date": "2026-07-17"
+    "latest_price": 3070.0,
+    "premium_pct": 0.024927665257066495,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4848,9 +4858,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 833.5499877929688,
-    "latest_price": 837.2999877929688,
-    "premium_pct": 0.004498830370004634,
-    "price_date": "2026-07-17"
+    "latest_price": 853.7999877929688,
+    "premium_pct": 0.024293683998025024,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4861,6 +4871,41 @@
      2152.5,
      2174.5,
      2124.1
+    ]
+   }
+  },
+  {
+   "code": "3864",
+   "name": "三菱製紙",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "株式会社シティインデックスイレブンス",
+    "filing_count": 1,
+    "dates": [
+     "2026-07-21"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1226.0,
+    "latest_price": 1226.0,
+    "premium_pct": 0.0,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.15249537892791126,
+    "series": [
+     1731.2,
+     1686.6,
+     1620.2,
+     1467.2
     ]
    }
   },
@@ -4885,9 +4930,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 9685.0,
-    "latest_price": 6950.0,
-    "premium_pct": -0.28239545689210116,
-    "price_date": "2026-07-17"
+    "latest_price": 7180.0,
+    "premium_pct": -0.2586473928755808,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4922,9 +4967,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5360.0,
-    "latest_price": 2527.0,
-    "premium_pct": -0.528544776119403,
-    "price_date": "2026-07-17"
+    "latest_price": 2511.0,
+    "premium_pct": -0.5315298507462687,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -4956,10 +5001,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 220.0,
-    "latest_price": 220.0,
+    "master_cost": 226.0,
+    "latest_price": 226.0,
     "premium_pct": 0.0,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -4970,47 +5015,6 @@
      846.6,
      846.1,
      845.4
-    ]
-   }
-  },
-  {
-   "code": "3950",
-   "name": "ザ・パック",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
-    "filing_count": 4,
-    "dates": [
-     "2026-06-19",
-     "2026-06-19",
-     "2026-06-19",
-     "2026-06-19"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1360.0,
-    "latest_price": 1421.0,
-    "premium_pct": 0.04485294117647059,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     82.7,
-     63.6,
-     30.5,
-     30.8
     ]
    }
   },
@@ -5035,9 +5039,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1407.0,
-    "latest_price": 1403.0,
-    "premium_pct": -0.0028429282160625444,
-    "price_date": "2026-07-17"
+    "latest_price": 1416.0,
+    "premium_pct": 0.006396588486140725,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5072,9 +5076,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 17852.5,
-    "latest_price": 13910.0,
-    "premium_pct": -0.22083741772860943,
-    "price_date": "2026-07-17"
+    "latest_price": 14580.0,
+    "premium_pct": -0.18330765999159782,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5111,9 +5115,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2108.0,
-    "latest_price": 1930.0,
-    "premium_pct": -0.08444022770398482,
-    "price_date": "2026-07-17"
+    "latest_price": 1946.0,
+    "premium_pct": -0.07685009487666034,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5148,9 +5152,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 202.5,
-    "latest_price": 204.0,
-    "premium_pct": 0.007407407407407408,
-    "price_date": "2026-07-17"
+    "latest_price": 210.0,
+    "premium_pct": 0.037037037037037035,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5205,9 +5209,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1798.0,
-    "latest_price": 1755.0,
-    "premium_pct": -0.023915461624026697,
-    "price_date": "2026-07-17"
+    "latest_price": 1792.0,
+    "premium_pct": -0.0033370411568409346,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5240,9 +5244,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2069.0,
-    "latest_price": 1513.0,
-    "premium_pct": -0.26872885451909134,
-    "price_date": "2026-07-17"
+    "latest_price": 1548.0,
+    "premium_pct": -0.25181246979217015,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -5277,9 +5281,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 222.5,
-    "latest_price": 209.0,
-    "premium_pct": -0.060674157303370786,
-    "price_date": "2026-07-17"
+    "latest_price": 217.0,
+    "premium_pct": -0.024719101123595506,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5312,9 +5316,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1611.0,
-    "latest_price": 1630.0,
-    "premium_pct": 0.011793916821849782,
-    "price_date": "2026-07-17"
+    "latest_price": 1633.0,
+    "premium_pct": 0.013656114214773432,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -5349,9 +5353,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2515.5,
-    "latest_price": 2396.0,
-    "premium_pct": -0.04750546611011727,
-    "price_date": "2026-07-17"
+    "latest_price": 2347.0,
+    "premium_pct": -0.06698469489167164,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5392,9 +5396,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3989.0,
-    "latest_price": 3830.0,
-    "premium_pct": -0.03985961393833041,
-    "price_date": "2026-07-17"
+    "latest_price": 4000.0,
+    "premium_pct": 0.0027575833542241163,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5431,9 +5435,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5030.0,
-    "latest_price": 4700.0,
-    "premium_pct": -0.06560636182902585,
-    "price_date": "2026-07-17"
+    "latest_price": 5190.0,
+    "premium_pct": 0.03180914512922465,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5470,9 +5474,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2273.3333333333335,
-    "latest_price": 2060.0,
-    "premium_pct": -0.09384164222873906,
-    "price_date": "2026-07-17"
+    "latest_price": 2069.0,
+    "premium_pct": -0.08988269794721414,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5509,7 +5513,7 @@
     "master_cost": 1667.5,
     "latest_price": 1663.0,
     "premium_pct": -0.0026986506746626685,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5558,9 +5562,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2190.777777777778,
-    "latest_price": 2200.0,
-    "premium_pct": 0.004209565349698207,
-    "price_date": "2026-07-17"
+    "latest_price": 2168.0,
+    "premium_pct": -0.010397119237206494,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5601,9 +5605,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 532.8,
-    "latest_price": 400.0,
-    "premium_pct": -0.24924924924924918,
-    "price_date": "2026-07-17"
+    "latest_price": 395.0,
+    "premium_pct": -0.25863363363363356,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5614,43 +5618,6 @@
      663.6,
      750.7,
      731.3
-    ]
-   }
-  },
-  {
-   "code": "4192",
-   "name": "スパイダープラス",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "伊藤　謙自",
-    "filing_count": 2,
-    "dates": [
-     "2026-06-03",
-     "2026-06-10"
-    ],
-    "doc_types": [
-     "350",
-     "360"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 265.5,
-    "latest_price": 274.0,
-    "premium_pct": 0.032015065913371,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     1053.1,
-     1065.9,
-     1053.8,
-     1026.7
     ]
    }
   },
@@ -5675,9 +5642,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 649.5,
-    "latest_price": 601.0,
-    "premium_pct": -0.07467282525019246,
-    "price_date": "2026-07-17"
+    "latest_price": 610.0,
+    "premium_pct": -0.06081601231716705,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5714,7 +5681,7 @@
     "master_cost": 4595.0,
     "latest_price": 4500.0,
     "premium_pct": -0.020674646354733407,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5749,9 +5716,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2415.0,
-    "latest_price": 2189.0,
-    "premium_pct": -0.09358178053830228,
-    "price_date": "2026-07-17"
+    "latest_price": 2320.0,
+    "premium_pct": -0.039337474120082816,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5786,9 +5753,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 664.0,
-    "latest_price": 672.0,
-    "premium_pct": 0.012048192771084338,
-    "price_date": "2026-07-17"
+    "latest_price": 667.0,
+    "premium_pct": 0.004518072289156626,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5825,9 +5792,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 3118.6666666666665,
-    "latest_price": 3506.0,
-    "premium_pct": 0.12419837537409155,
-    "price_date": "2026-07-17"
+    "latest_price": 3465.0,
+    "premium_pct": 0.11105173150919202,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -5860,9 +5827,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1889.0,
-    "latest_price": 1889.0,
-    "premium_pct": 0.0,
-    "price_date": "2026-07-17"
+    "latest_price": 1907.0,
+    "premium_pct": 0.009528851244044468,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -5897,9 +5864,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 667.5,
-    "latest_price": 667.0,
-    "premium_pct": -0.000749063670411985,
-    "price_date": "2026-07-17"
+    "latest_price": 677.0,
+    "premium_pct": 0.014232209737827715,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -5914,39 +5881,39 @@
    }
   },
   {
-   "code": "4345",
-   "name": "シーティーエス",
+   "code": "4361",
+   "name": "川口化学工業",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "lead_filer": "正喜商事株式会社",
     "filing_count": 2,
     "dates": [
-     "2026-06-05",
-     "2026-06-05"
+     "2026-06-01",
+     "2026-06-01"
     ],
     "doc_types": [
      "350",
-     "350"
+     "360"
     ]
    },
    "gate2": {
     "passed": true,
-    "master_cost": 814.0,
-    "latest_price": 854.0,
-    "premium_pct": 0.04914004914004914,
-    "price_date": "2026-07-17"
+    "master_cost": 1428.0,
+    "latest_price": 1486.0,
+    "premium_pct": 0.04061624649859944,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
-     120.3,
-     115.8,
-     121.2,
-     120.9
+     83.5,
+     84.9,
+     85.5,
+     87.4
     ]
    }
   },
@@ -5977,9 +5944,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3668.0,
-    "latest_price": 3190.0,
-    "premium_pct": -0.1303162486368593,
-    "price_date": "2026-07-17"
+    "latest_price": 3275.0,
+    "premium_pct": -0.10714285714285714,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6018,9 +5985,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 415.0,
-    "latest_price": 387.0,
-    "premium_pct": -0.06746987951807229,
-    "price_date": "2026-07-17"
+    "latest_price": 391.0,
+    "premium_pct": -0.05783132530120482,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6031,41 +5998,6 @@
      649.1,
      650.2,
      662.2
-    ]
-   }
-  },
-  {
-   "code": "4390",
-   "name": "アイ・ピー・エス",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": false,
-    "lead_filer": "宮下　幸治",
-    "filing_count": 1,
-    "dates": [
-     "2026-06-26"
-    ],
-    "doc_types": [
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 3305.0,
-    "latest_price": 3440.0,
-    "premium_pct": 0.04084720121028744,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.026995645863570426,
-    "series": [
-     689.0,
-     688.4,
-     680.6,
-     670.4
     ]
    }
   },
@@ -6090,9 +6022,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 321.0,
-    "latest_price": 286.0,
-    "premium_pct": -0.10903426791277258,
-    "price_date": "2026-07-17"
+    "latest_price": 291.0,
+    "premium_pct": -0.09345794392523364,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6125,9 +6057,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5847.0,
-    "latest_price": 3308.0,
-    "premium_pct": -0.43423978108431677,
-    "price_date": "2026-07-17"
+    "latest_price": 3270.0,
+    "premium_pct": -0.44073884043099026,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -6162,9 +6094,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 11915.0,
-    "latest_price": 10100.0,
-    "premium_pct": -0.15232899706252623,
-    "price_date": "2026-07-17"
+    "latest_price": 10590.0,
+    "premium_pct": -0.1112043642467478,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6197,9 +6129,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3251.0,
-    "latest_price": 3388.0,
-    "premium_pct": 0.04214087972931406,
-    "price_date": "2026-07-17"
+    "latest_price": 3376.0,
+    "premium_pct": 0.03844970778222086,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -6234,9 +6166,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2590.0,
-    "latest_price": 2545.0,
-    "premium_pct": -0.017374517374517374,
-    "price_date": "2026-07-17"
+    "latest_price": 2576.0,
+    "premium_pct": -0.005405405405405406,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6273,9 +6205,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2301.0,
-    "latest_price": 1921.0,
-    "premium_pct": -0.16514558887440242,
-    "price_date": "2026-07-17"
+    "latest_price": 1925.0,
+    "premium_pct": -0.1634072142546719,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6314,7 +6246,7 @@
     "master_cost": 19.333333333333332,
     "latest_price": 20.0,
     "premium_pct": 0.03448275862068972,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6347,9 +6279,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 454.0,
-    "latest_price": 312.0,
-    "premium_pct": -0.31277533039647576,
-    "price_date": "2026-07-17"
+    "latest_price": 335.0,
+    "premium_pct": -0.2621145374449339,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -6384,9 +6316,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 72.5,
-    "latest_price": 69.0,
-    "premium_pct": -0.04827586206896552,
-    "price_date": "2026-07-17"
+    "latest_price": 70.0,
+    "premium_pct": -0.034482758620689655,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6431,7 +6363,7 @@
     "master_cost": 77.0,
     "latest_price": 72.0,
     "premium_pct": -0.06493506493506493,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6466,9 +6398,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 64.5,
-    "latest_price": 73.0,
-    "premium_pct": 0.13178294573643412,
-    "price_date": "2026-07-17"
+    "latest_price": 75.0,
+    "premium_pct": 0.16279069767441862,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -6503,9 +6435,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 977.5,
-    "latest_price": 1035.0,
-    "premium_pct": 0.058823529411764705,
-    "price_date": "2026-07-17"
+    "latest_price": 1039.0,
+    "premium_pct": 0.06291560102301791,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -6516,6 +6448,43 @@
      4840.7,
      4766.9,
      4687.4
+    ]
+   }
+  },
+  {
+   "code": "4599",
+   "name": "ステムリム",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "冨田　憲介",
+    "filing_count": 2,
+    "dates": [
+     "2026-07-07",
+     "2026-07-21"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 304.5,
+    "latest_price": 299.0,
+    "premium_pct": -0.0180623973727422,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     2923.9,
+     2947.6,
+     3018.9,
+     3045.2
     ]
    }
   },
@@ -6538,9 +6507,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2791.0,
-    "latest_price": 2666.0,
-    "premium_pct": -0.04478681476173414,
-    "price_date": "2026-07-17"
+    "latest_price": 2680.5,
+    "premium_pct": -0.03959154424937299,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -6577,9 +6546,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1092.3333333333333,
-    "latest_price": 949.0,
-    "premium_pct": -0.13121757705218182,
-    "price_date": "2026-07-17"
+    "latest_price": 960.0,
+    "premium_pct": -0.1211473909063167,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6614,9 +6583,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 752.5,
-    "latest_price": 731.0,
-    "premium_pct": -0.02857142857142857,
-    "price_date": "2026-07-17"
+    "latest_price": 735.0,
+    "premium_pct": -0.023255813953488372,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6657,7 +6626,7 @@
     "master_cost": 9680.0,
     "latest_price": 8910.0,
     "premium_pct": -0.07954545454545454,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6706,9 +6675,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2154.4444444444443,
-    "latest_price": 808.0,
-    "premium_pct": -0.6249613202681794,
-    "price_date": "2026-07-17"
+    "latest_price": 820.0,
+    "premium_pct": -0.6193914388860237,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6749,9 +6718,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1023.6,
-    "latest_price": 1045.0,
-    "premium_pct": 0.020906604142243043,
-    "price_date": "2026-07-17"
+    "latest_price": 1046.0,
+    "premium_pct": 0.021883548261039446,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6762,49 +6731,6 @@
      769.8,
      771.7,
      767.4
-    ]
-   }
-  },
-  {
-   "code": "4674",
-   "name": "クレスコ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
-    "filing_count": 5,
-    "dates": [
-     "2026-06-10",
-     "2026-06-11",
-     "2026-06-11",
-     "2026-06-11",
-     "2026-06-18"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1466.8,
-    "latest_price": 1523.0,
-    "premium_pct": 0.03831469866375787,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     75.1,
-     99.5,
-     97.2,
-     85.4
     ]
    }
   },
@@ -6831,9 +6757,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 889.3333333333334,
-    "latest_price": 996.0,
-    "premium_pct": 0.11994002998500745,
-    "price_date": "2026-07-17"
+    "latest_price": 1010.0,
+    "premium_pct": 0.13568215892053967,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -6848,17 +6774,17 @@
    }
   },
   {
-   "code": "4691",
-   "name": "ワシントンホテル",
+   "code": "4733",
+   "name": "ＯＢＣ",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "アパホールディングス株式会社",
+    "lead_filer": "ファースト・イーグル・インベストメント・マネジメント・エルエルシー",
     "filing_count": 2,
     "dates": [
-     "2026-06-12",
-     "2026-06-19"
+     "2026-06-18",
+     "2026-07-21"
     ],
     "doc_types": [
      "350",
@@ -6866,21 +6792,21 @@
     ]
    },
    "gate2": {
-    "passed": true,
-    "master_cost": 2236.0,
-    "latest_price": 2336.0,
-    "premium_pct": 0.044722719141323794,
-    "price_date": "2026-07-17"
+    "passed": false,
+    "master_cost": 6265.5,
+    "latest_price": 6589.0,
+    "premium_pct": 0.05163195275716224,
+    "price_date": "2026-07-21"
    },
    "gate3": {
-    "passed": false,
+    "passed": true,
     "weeks": 3,
-    "drop_pct": null,
+    "drop_pct": 0.07986501687289098,
     "series": [
-     389.1,
-     403.8,
-     447.4,
-     477.6
+     88.9,
+     86.5,
+     84.3,
+     81.8
     ]
    }
   },
@@ -6905,9 +6831,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1502.0,
-    "latest_price": 1502.0,
-    "premium_pct": 0.0,
-    "price_date": "2026-07-17"
+    "latest_price": 1501.0,
+    "premium_pct": -0.0006657789613848203,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -6940,9 +6866,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2533.0,
-    "latest_price": 2566.0,
-    "premium_pct": 0.013028030003947888,
-    "price_date": "2026-07-17"
+    "latest_price": 2610.0,
+    "premium_pct": 0.030398736675878404,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -6975,9 +6901,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 209.0,
-    "latest_price": 200.0,
-    "premium_pct": -0.0430622009569378,
-    "price_date": "2026-07-17"
+    "latest_price": 199.0,
+    "premium_pct": -0.04784688995215311,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -7012,9 +6938,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1349.0,
-    "latest_price": 1357.0,
-    "premium_pct": 0.005930318754633061,
-    "price_date": "2026-07-17"
+    "latest_price": 1359.0,
+    "premium_pct": 0.007412898443291327,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7059,9 +6985,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 348.14285714285717,
-    "latest_price": 342.0,
-    "premium_pct": -0.017644645055396046,
-    "price_date": "2026-07-17"
+    "latest_price": 346.0,
+    "premium_pct": -0.00615510874025448,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7096,7 +7022,7 @@
     "master_cost": 47.0,
     "latest_price": 47.0,
     "premium_pct": 0.0,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -7139,7 +7065,7 @@
     "master_cost": 33.4,
     "latest_price": 33.0,
     "premium_pct": -0.011976047904191574,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7178,9 +7104,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 394.75,
-    "latest_price": 323.0,
-    "premium_pct": -0.181760607979734,
-    "price_date": "2026-07-17"
+    "latest_price": 325.0,
+    "premium_pct": -0.17669411019632678,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7221,7 +7147,7 @@
     "master_cost": 308.5,
     "latest_price": 305.0,
     "premium_pct": -0.011345218800648298,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7236,16 +7162,53 @@
    }
   },
   {
-   "code": "4902",
-   "name": "コニカミノルタ",
+   "code": "4891",
+   "name": "ティムス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "グロース・キャピタル株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-30",
+     "2026-07-21"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 104.5,
+    "latest_price": 100.0,
+    "premium_pct": -0.0430622009569378,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     3658.7,
+     3700.5,
+     3825.0,
+     3591.2
+    ]
+   }
+  },
+  {
+   "code": "4901",
+   "name": "富士フイルム",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": false,
-    "lead_filer": "エフィッシモ　キャピタル　マネージメント　ピーティーイー　エルティーディー（Ｅｆｆｉｓｓｉｍｏ　Ｃａｐｉｔａｌ　Ｍａｎａｇｅｍｅｎｔ　Ｐｔｅ　Ｌｔｄ）",
+    "lead_filer": "ブラックロック・ジャパン株式会社",
     "filing_count": 1,
     "dates": [
-     "2026-06-02"
+     "2026-07-21"
     ],
     "doc_types": [
      "350"
@@ -7253,20 +7216,20 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 596.7999877929688,
-    "latest_price": 612.7000122070312,
-    "premium_pct": 0.026642132606038614,
-    "price_date": "2026-07-17"
+    "master_cost": 3671.0,
+    "latest_price": 3671.0,
+    "premium_pct": 0.0,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
     "weeks": 3,
-    "drop_pct": 0.2776021309965396,
+    "drop_pct": 0.233302776322682,
     "series": [
-     4016.9,
-     3281.8,
-     2996.6,
-     2901.8
+     3054.4,
+     2634.5,
+     2565.2,
+     2341.8
     ]
    }
   },
@@ -7288,10 +7251,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 1212.0,
-    "latest_price": 1212.0,
+    "master_cost": 1260.0,
+    "latest_price": 1260.0,
     "premium_pct": 0.0,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -7313,7 +7276,7 @@
    "gate1": {
     "passed": true,
     "lead_filer": "ＳＭＢＣ日興証券株式会社",
-    "filing_count": 7,
+    "filing_count": 8,
     "dates": [
      "2026-06-29",
      "2026-07-09",
@@ -7321,9 +7284,11 @@
      "2026-07-13",
      "2026-07-15",
      "2026-07-16",
-     "2026-07-17"
+     "2026-07-17",
+     "2026-07-21"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350",
@@ -7335,10 +7300,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 319.14285714285717,
-    "latest_price": 259.0,
-    "premium_pct": -0.18845120859444947,
-    "price_date": "2026-07-17"
+    "master_cost": 314.25,
+    "latest_price": 280.0,
+    "premium_pct": -0.10898965791567224,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7349,6 +7314,43 @@
      3337.4,
      3332.4,
      3465.9
+    ]
+   }
+  },
+  {
+   "code": "4960",
+   "name": "ケミプロ化成",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "福岡靖介",
+    "filing_count": 2,
+    "dates": [
+     "2026-05-29",
+     "2026-07-21"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 561.5,
+    "latest_price": 507.0,
+    "premium_pct": -0.09706144256455922,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     725.9,
+     789.1,
+     799.6,
+     799.4
     ]
    }
   },
@@ -7377,9 +7379,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 23285.0,
-    "latest_price": 23000.0,
-    "premium_pct": -0.012239639252737813,
-    "price_date": "2026-07-17"
+    "latest_price": 23980.0,
+    "premium_pct": 0.02984754133562379,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7416,9 +7418,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 16070.0,
-    "latest_price": 14570.0,
-    "premium_pct": -0.09334163036714374,
-    "price_date": "2026-07-17"
+    "latest_price": 14660.0,
+    "premium_pct": -0.08774113254511512,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7440,14 +7442,16 @@
    "gate1": {
     "passed": true,
     "lead_filer": "ＡＸＩＵＭ　ＣＡＰＩＴＡＬ　ＰＴＥ．ＬＴＤ．",
-    "filing_count": 4,
+    "filing_count": 5,
     "dates": [
      "2026-06-11",
      "2026-06-24",
      "2026-07-07",
-     "2026-07-13"
+     "2026-07-13",
+     "2026-07-21"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350",
@@ -7456,10 +7460,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 3468.75,
-    "latest_price": 3330.0,
-    "premium_pct": -0.04,
-    "price_date": "2026-07-17"
+    "master_cost": 3495.0,
+    "latest_price": 3600.0,
+    "premium_pct": 0.030042918454935622,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7512,9 +7516,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5590.909090909091,
-    "latest_price": 4770.0,
-    "premium_pct": -0.14682926829268295,
-    "price_date": "2026-07-17"
+    "latest_price": 4915.0,
+    "premium_pct": -0.12089430894308945,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7549,9 +7553,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 124.5,
-    "latest_price": 126.0,
-    "premium_pct": 0.012048192771084338,
-    "price_date": "2026-07-17"
+    "latest_price": 127.0,
+    "premium_pct": 0.020080321285140562,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7590,9 +7594,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4080.5,
-    "latest_price": 3509.0,
-    "premium_pct": -0.1400563656414655,
-    "price_date": "2026-07-17"
+    "latest_price": 3613.0,
+    "premium_pct": -0.11456929297880161,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7627,9 +7631,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3099.5,
-    "latest_price": 2891.0,
-    "premium_pct": -0.06726891434102275,
-    "price_date": "2026-07-17"
+    "latest_price": 2947.0,
+    "premium_pct": -0.04920148411034038,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7666,9 +7670,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1330.8333333333333,
-    "latest_price": 1241.0,
-    "premium_pct": -0.06750156543519092,
-    "price_date": "2026-07-17"
+    "latest_price": 1292.5,
+    "premium_pct": -0.02880400751408886,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7705,9 +7709,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1244.8333333333333,
-    "latest_price": 1243.5,
-    "premium_pct": -0.0010710938545989484,
-    "price_date": "2026-07-17"
+    "latest_price": 1300.5,
+    "premium_pct": 0.0447181684295087,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7742,9 +7746,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 633.5,
-    "latest_price": 320.0,
-    "premium_pct": -0.494869771112865,
-    "price_date": "2026-07-17"
+    "latest_price": 330.0,
+    "premium_pct": -0.47908445146014206,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7777,9 +7781,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 972.0,
-    "latest_price": 746.0,
-    "premium_pct": -0.23251028806584362,
-    "price_date": "2026-07-17"
+    "latest_price": 776.0,
+    "premium_pct": -0.20164609053497942,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -7812,9 +7816,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 128.0,
-    "latest_price": 129.0,
-    "premium_pct": 0.0078125,
-    "price_date": "2026-07-17"
+    "latest_price": 118.0,
+    "premium_pct": -0.078125,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -7825,6 +7829,43 @@
      754.3,
      737.3,
      711.9
+    ]
+   }
+  },
+  {
+   "code": "5162",
+   "name": "朝日ラバー",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "晋文金属株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-16",
+     "2026-06-16"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 754.0,
+    "latest_price": 791.0,
+    "premium_pct": 0.04907161803713528,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     313.1,
+     352.4,
+     343.5,
+     345.9
     ]
    }
   },
@@ -7851,9 +7892,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5646.333333333333,
-    "latest_price": 5363.0,
-    "premium_pct": -0.05018005785465489,
-    "price_date": "2026-07-17"
+    "latest_price": 5728.0,
+    "premium_pct": 0.014463663734577066,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7886,9 +7927,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4206.0,
-    "latest_price": 3921.0,
-    "premium_pct": -0.06776034236804565,
-    "price_date": "2026-07-17"
+    "latest_price": 4092.0,
+    "premium_pct": -0.02710413694721826,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -7923,9 +7964,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1241.5,
-    "latest_price": 1233.0,
-    "premium_pct": -0.00684655658477648,
-    "price_date": "2026-07-17"
+    "latest_price": 1270.0,
+    "premium_pct": 0.022956101490132903,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -7962,9 +8003,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1781.6666666666667,
-    "latest_price": 1615.5,
-    "premium_pct": -0.09326473339569695,
-    "price_date": "2026-07-17"
+    "latest_price": 1638.0,
+    "premium_pct": -0.08063610851262866,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8003,9 +8044,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3998.75,
-    "latest_price": 3270.0,
-    "premium_pct": -0.18224445139105971,
-    "price_date": "2026-07-17"
+    "latest_price": 3415.0,
+    "premium_pct": -0.14598311972491404,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8040,9 +8081,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 66755.0,
-    "latest_price": 54630.0,
-    "premium_pct": -0.18163433450677852,
-    "price_date": "2026-07-17"
+    "latest_price": 56470.0,
+    "premium_pct": -0.15407085611564678,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8077,9 +8118,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 434.0,
-    "latest_price": 436.0,
-    "premium_pct": 0.004608294930875576,
-    "price_date": "2026-07-17"
+    "latest_price": 444.0,
+    "premium_pct": 0.02304147465437788,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8118,7 +8159,7 @@
     "master_cost": 4000.0,
     "latest_price": 3595.0,
     "premium_pct": -0.10125,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8153,9 +8194,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2274.0,
-    "latest_price": 2271.0,
-    "premium_pct": -0.0013192612137203166,
-    "price_date": "2026-07-17"
+    "latest_price": 2289.0,
+    "premium_pct": 0.006596306068601583,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8190,9 +8231,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1916.0,
-    "latest_price": 1923.0,
-    "premium_pct": 0.0036534446764091857,
-    "price_date": "2026-07-17"
+    "latest_price": 1953.0,
+    "premium_pct": 0.019311064718162838,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8227,9 +8268,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2728.5,
-    "latest_price": 2665.0,
-    "premium_pct": -0.023272860546087595,
-    "price_date": "2026-07-17"
+    "latest_price": 2702.0,
+    "premium_pct": -0.009712296133406633,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8264,9 +8305,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 692.0,
-    "latest_price": 688.0,
-    "premium_pct": -0.005780346820809248,
-    "price_date": "2026-07-17"
+    "latest_price": 698.0,
+    "premium_pct": 0.008670520231213872,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8301,9 +8342,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 7660.5,
-    "latest_price": 7335.0,
-    "premium_pct": -0.042490699040532605,
-    "price_date": "2026-07-17"
+    "latest_price": 7464.0,
+    "premium_pct": -0.02565106716271784,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8360,9 +8401,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 7636.923076923077,
-    "latest_price": 7720.0,
-    "premium_pct": 0.010878323932312623,
-    "price_date": "2026-07-17"
+    "latest_price": 7710.0,
+    "premium_pct": 0.009568896051571286,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8397,9 +8438,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 44430.0,
-    "latest_price": 29980.0,
-    "premium_pct": -0.3252306999774927,
-    "price_date": "2026-07-17"
+    "latest_price": 31290.0,
+    "premium_pct": -0.29574611748818364,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8432,9 +8473,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 918.0,
-    "latest_price": 762.0,
-    "premium_pct": -0.16993464052287582,
-    "price_date": "2026-07-17"
+    "latest_price": 813.0,
+    "premium_pct": -0.11437908496732026,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -8471,9 +8512,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4050.0,
-    "latest_price": 3070.0,
-    "premium_pct": -0.2419753086419753,
-    "price_date": "2026-07-17"
+    "latest_price": 3050.0,
+    "premium_pct": -0.24691358024691357,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8508,9 +8549,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4642.0,
-    "latest_price": 4384.0,
-    "premium_pct": -0.055579491598448945,
-    "price_date": "2026-07-17"
+    "latest_price": 4500.0,
+    "premium_pct": -0.03059026281775097,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8543,9 +8584,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2422.0,
-    "latest_price": 2323.0,
-    "premium_pct": -0.04087530966143683,
-    "price_date": "2026-07-17"
+    "latest_price": 2412.0,
+    "premium_pct": -0.004128819157720892,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -8590,7 +8631,7 @@
     "master_cost": 1682.3333333333333,
     "latest_price": 1685.0,
     "premium_pct": 0.0015851000594412972,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8625,9 +8666,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2232.0,
-    "latest_price": 2144.0,
-    "premium_pct": -0.03942652329749104,
-    "price_date": "2026-07-17"
+    "latest_price": 2193.0,
+    "premium_pct": -0.01747311827956989,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8662,9 +8703,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2329.0,
-    "latest_price": 2341.0,
-    "premium_pct": 0.005152425933877201,
-    "price_date": "2026-07-17"
+    "latest_price": 2355.0,
+    "premium_pct": 0.0111635895234006,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8697,9 +8738,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 854.0,
-    "latest_price": 850.0,
-    "premium_pct": -0.00468384074941452,
-    "price_date": "2026-07-17"
+    "latest_price": 863.0,
+    "premium_pct": 0.01053864168618267,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -8710,43 +8751,6 @@
      13.1,
      12.8,
      11.9
-    ]
-   }
-  },
-  {
-   "code": "5983",
-   "name": "イワブチ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "ＳＥＮＪＩＮ　ＣＡＰＩＴＡＬ　ＰＴＹ　ＬＴＤ",
-    "filing_count": 2,
-    "dates": [
-     "2026-06-09",
-     "2026-07-14"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 13465.0,
-    "latest_price": 13700.0,
-    "premium_pct": 0.017452655031563312,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     10.7,
-     10.7,
-     6.8,
-     7.0
     ]
    }
   },
@@ -8771,9 +8775,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3832.5,
-    "latest_price": 3645.0,
-    "premium_pct": -0.04892367906066536,
-    "price_date": "2026-07-17"
+    "latest_price": 3665.0,
+    "premium_pct": -0.04370515329419439,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8809,10 +8813,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 8500.0,
-    "latest_price": 8600.0,
-    "premium_pct": 0.011764705882352941,
-    "price_date": "2026-07-17"
+    "master_cost": 8516.666666666666,
+    "latest_price": 8650.0,
+    "premium_pct": 0.015655577299412988,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8847,9 +8851,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2436.5,
-    "latest_price": 2253.0,
-    "premium_pct": -0.0753129489021137,
-    "price_date": "2026-07-17"
+    "latest_price": 2320.0,
+    "premium_pct": -0.0478144879950749,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8894,7 +8898,7 @@
     "master_cost": 160.5,
     "latest_price": 159.0,
     "premium_pct": -0.009345794392523364,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8905,6 +8909,53 @@
      1386.3,
      1374.7,
      1357.5
+    ]
+   }
+  },
+  {
+   "code": "6089",
+   "name": "ウィルグループ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
+    "filing_count": 7,
+    "dates": [
+     "2026-06-16",
+     "2026-06-17",
+     "2026-06-17",
+     "2026-06-17",
+     "2026-06-17",
+     "2026-06-17",
+     "2026-06-17"
+    ],
+    "doc_types": [
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1038.5714285714287,
+    "latest_price": 1090.0,
+    "premium_pct": 0.04951856946354873,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     72.5,
+     112.7,
+     116.0,
+     117.8
     ]
    }
   },
@@ -8941,9 +8992,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 536.25,
-    "latest_price": 523.0,
-    "premium_pct": -0.02470862470862471,
-    "price_date": "2026-07-17"
+    "latest_price": 538.0,
+    "premium_pct": 0.0032634032634032634,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8980,9 +9031,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3715.0,
-    "latest_price": 3740.0,
-    "premium_pct": 0.006729475100942127,
-    "price_date": "2026-07-17"
+    "latest_price": 3790.0,
+    "premium_pct": 0.020188425302826378,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -8993,43 +9044,6 @@
      86.1,
      59.9,
      66.6
-    ]
-   }
-  },
-  {
-   "code": "6150",
-   "name": "タケダ機械",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "伊藤　直之",
-    "filing_count": 2,
-    "dates": [
-     "2026-06-08",
-     "2026-06-22"
-    ],
-    "doc_types": [
-     "350",
-     "360"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 2692.0,
-    "latest_price": 2801.0,
-    "premium_pct": 0.04049034175334324,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     43.2,
-     35.9,
-     29.9,
-     37.4
     ]
    }
   },
@@ -9052,9 +9066,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1025.0,
-    "latest_price": 1028.0,
-    "premium_pct": 0.002926829268292683,
-    "price_date": "2026-07-17"
+    "latest_price": 1038.0,
+    "premium_pct": 0.012682926829268294,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -9089,7 +9103,7 @@
     "master_cost": 385.0,
     "latest_price": 379.0,
     "premium_pct": -0.015584415584415584,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -9126,7 +9140,7 @@
     "master_cost": 79.5,
     "latest_price": 77.0,
     "premium_pct": -0.031446540880503145,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9198,9 +9212,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 918.6666666666666,
-    "latest_price": 887.0,
-    "premium_pct": -0.034470246734397636,
-    "price_date": "2026-07-17"
+    "latest_price": 882.0,
+    "premium_pct": -0.0399129172714078,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9233,9 +9247,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1317.0,
-    "latest_price": 1189.0,
-    "premium_pct": -0.09719058466211086,
-    "price_date": "2026-07-17"
+    "latest_price": 1215.0,
+    "premium_pct": -0.0774487471526196,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -9270,9 +9284,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1902.0,
-    "latest_price": 1662.0,
-    "premium_pct": -0.12618296529968454,
-    "price_date": "2026-07-17"
+    "latest_price": 1805.0,
+    "premium_pct": -0.05099894847528917,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9307,9 +9321,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3930.0,
-    "latest_price": 3115.0,
-    "premium_pct": -0.20737913486005088,
-    "price_date": "2026-07-17"
+    "latest_price": 3175.0,
+    "premium_pct": -0.1921119592875318,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9320,43 +9334,6 @@
      524.7,
      471.0,
      488.8
-    ]
-   }
-  },
-  {
-   "code": "6238",
-   "name": "フリュー",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "野村證券株式会社",
-    "filing_count": 2,
-    "dates": [
-     "2026-06-04",
-     "2026-06-22"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1290.5,
-    "latest_price": 1340.0,
-    "premium_pct": 0.038357225881441304,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     318.9,
-     422.1,
-     380.3,
-     369.5
     ]
    }
   },
@@ -9385,9 +9362,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2386.25,
-    "latest_price": 1932.0,
-    "premium_pct": -0.19036144578313252,
-    "price_date": "2026-07-17"
+    "latest_price": 1984.0,
+    "premium_pct": -0.16856993190151912,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9398,47 +9375,6 @@
      830.9,
      731.3,
      967.9
-    ]
-   }
-  },
-  {
-   "code": "6268",
-   "name": "ナブテスコ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "フィデリティ投信株式会社",
-    "filing_count": 4,
-    "dates": [
-     "2026-06-09",
-     "2026-06-10",
-     "2026-06-10",
-     "2026-06-12"
-    ],
-    "doc_types": [
-     "360",
-     "360",
-     "360",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 4665.5,
-    "latest_price": 4771.0,
-    "premium_pct": 0.022612796056156896,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     1166.1,
-     1342.1,
-     1507.4,
-     1494.2
     ]
    }
   },
@@ -9464,10 +9400,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 9695.333333333334,
-    "latest_price": 9492.0,
-    "premium_pct": -0.02097228907378126,
-    "price_date": "2026-07-17"
+    "master_cost": 9924.666666666666,
+    "latest_price": 10180.0,
+    "premium_pct": 0.025727144488479944,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9502,9 +9438,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5000.0,
-    "latest_price": 4805.0,
-    "premium_pct": -0.039,
-    "price_date": "2026-07-17"
+    "latest_price": 4890.0,
+    "premium_pct": -0.022,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9537,9 +9473,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 22700.0,
-    "latest_price": 17250.0,
-    "premium_pct": -0.24008810572687225,
-    "price_date": "2026-07-17"
+    "latest_price": 17730.0,
+    "premium_pct": -0.21894273127753303,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -9574,9 +9510,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1288.0,
-    "latest_price": 1255.0,
-    "premium_pct": -0.02562111801242236,
-    "price_date": "2026-07-17"
+    "latest_price": 1316.0,
+    "premium_pct": 0.021739130434782608,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9611,9 +9547,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5271.5,
-    "latest_price": 5029.0,
-    "premium_pct": -0.04600208669259224,
-    "price_date": "2026-07-17"
+    "latest_price": 5081.0,
+    "premium_pct": -0.03613772171108792,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9650,9 +9586,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 450.0,
-    "latest_price": 468.0,
-    "premium_pct": 0.04,
-    "price_date": "2026-07-17"
+    "latest_price": 462.0,
+    "premium_pct": 0.02666666666666667,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9691,9 +9627,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2532.0,
-    "latest_price": 2198.0,
-    "premium_pct": -0.13191153238546605,
-    "price_date": "2026-07-17"
+    "latest_price": 2299.0,
+    "premium_pct": -0.09202211690363349,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9728,9 +9664,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5902.5,
-    "latest_price": 5384.0,
-    "premium_pct": -0.08784413384159255,
-    "price_date": "2026-07-17"
+    "latest_price": 5587.0,
+    "premium_pct": -0.05345192714951292,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9765,9 +9701,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 24925.0,
-    "latest_price": 24500.0,
-    "premium_pct": -0.017051153460381142,
-    "price_date": "2026-07-17"
+    "latest_price": 24520.0,
+    "premium_pct": -0.01624874623871615,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9806,9 +9742,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4937.5,
-    "latest_price": 3955.0,
-    "premium_pct": -0.1989873417721519,
-    "price_date": "2026-07-17"
+    "latest_price": 3945.0,
+    "premium_pct": -0.2010126582278481,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9847,9 +9783,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 7270.0,
-    "latest_price": 7440.0,
-    "premium_pct": 0.023383768913342505,
-    "price_date": "2026-07-17"
+    "latest_price": 7510.0,
+    "premium_pct": 0.033012379642365884,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9884,9 +9820,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1480.0,
-    "latest_price": 1475.0,
-    "premium_pct": -0.0033783783783783786,
-    "price_date": "2026-07-17"
+    "latest_price": 1497.0,
+    "premium_pct": 0.011486486486486487,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9897,6 +9833,43 @@
      96.5,
      92.3,
      80.5
+    ]
+   }
+  },
+  {
+   "code": "6408",
+   "name": "小倉クラッチ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "成成株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-07-15",
+     "2026-07-21"
+    ],
+    "doc_types": [
+     "350",
+     "360"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 4030.0,
+    "latest_price": 4060.0,
+    "premium_pct": 0.007444168734491315,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     83.8,
+     79.5,
+     79.8,
+     78.4
     ]
    }
   },
@@ -9921,9 +9894,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3380.0,
-    "latest_price": 3250.0,
-    "premium_pct": -0.038461538461538464,
-    "price_date": "2026-07-17"
+    "latest_price": 3290.0,
+    "premium_pct": -0.026627218934911243,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -9966,7 +9939,7 @@
     "master_cost": 7484.0,
     "latest_price": 7170.0,
     "premium_pct": -0.04195617316942812,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10001,9 +9974,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 164.5,
-    "latest_price": 158.0,
-    "premium_pct": -0.03951367781155015,
-    "price_date": "2026-07-17"
+    "latest_price": 165.0,
+    "premium_pct": 0.00303951367781155,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10046,9 +10019,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1664.0,
-    "latest_price": 1623.0,
-    "premium_pct": -0.024639423076923076,
-    "price_date": "2026-07-17"
+    "latest_price": 1653.0,
+    "premium_pct": -0.006610576923076923,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10081,9 +10054,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 9290.0,
-    "latest_price": 8470.0,
-    "premium_pct": -0.08826695371367062,
-    "price_date": "2026-07-17"
+    "latest_price": 8760.0,
+    "premium_pct": -0.05705059203444564,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -10120,9 +10093,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 6483.333333333333,
-    "latest_price": 5450.0,
-    "premium_pct": -0.1593830334190231,
-    "price_date": "2026-07-17"
+    "latest_price": 5650.0,
+    "premium_pct": -0.12853470437017991,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10133,6 +10106,41 @@
      159.3,
      110.7,
      125.8
+    ]
+   }
+  },
+  {
+   "code": "6522",
+   "name": "アスタリスク",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": false,
+    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
+    "filing_count": 1,
+    "dates": [
+     "2026-07-21"
+    ],
+    "doc_types": [
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 1309.0,
+    "latest_price": 1309.0,
+    "premium_pct": 0.0,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": true,
+    "weeks": 3,
+    "drop_pct": 0.2306340973732642,
+    "series": [
+     1195.4,
+     1082.4,
+     1030.6,
+     919.7
     ]
    }
   },
@@ -10165,9 +10173,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 5819.5,
-    "latest_price": 6554.0,
-    "premium_pct": 0.1262135922330097,
-    "price_date": "2026-07-17"
+    "latest_price": 6457.0,
+    "premium_pct": 0.10954549359910645,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -10178,43 +10186,6 @@
      1390.7,
      1171.5,
      1080.7
-    ]
-   }
-  },
-  {
-   "code": "6535",
-   "name": "アイモバイル",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "野口　哲也",
-    "filing_count": 2,
-    "dates": [
-     "2026-06-15",
-     "2026-07-08"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 511.5,
-    "latest_price": 527.0,
-    "premium_pct": 0.030303030303030304,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     1073.7,
-     1026.3,
-     1069.1,
-     1184.9
     ]
    }
   },
@@ -10239,9 +10210,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1662.5,
-    "latest_price": 1695.0,
-    "premium_pct": 0.019548872180451128,
-    "price_date": "2026-07-17"
+    "latest_price": 1677.5,
+    "premium_pct": 0.009022556390977444,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10280,9 +10251,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 482.0,
-    "latest_price": 493.0,
-    "premium_pct": 0.022821576763485476,
-    "price_date": "2026-07-17"
+    "latest_price": 499.0,
+    "premium_pct": 0.035269709543568464,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10293,67 +10264,6 @@
      101.4,
      103.9,
      101.4
-    ]
-   }
-  },
-  {
-   "code": "6573",
-   "name": "ＣＲＡＶＩＡ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｅｖｏ　Ｆｕｎｄ",
-    "filing_count": 14,
-    "dates": [
-     "2026-05-25",
-     "2026-05-27",
-     "2026-05-29",
-     "2026-06-01",
-     "2026-06-09",
-     "2026-06-12",
-     "2026-06-18",
-     "2026-06-24",
-     "2026-06-29",
-     "2026-07-02",
-     "2026-07-06",
-     "2026-07-08",
-     "2026-07-09",
-     "2026-07-17"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 25.928571428571427,
-    "latest_price": 27.0,
-    "premium_pct": 0.04132231404958684,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     5500.5,
-     5395.2,
-     5265.9,
-     5740.5
     ]
    }
   },
@@ -10382,9 +10292,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2440.25,
-    "latest_price": 1806.0,
-    "premium_pct": -0.2599118942731278,
-    "price_date": "2026-07-17"
+    "latest_price": 1873.0,
+    "premium_pct": -0.23245569101526484,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10423,9 +10333,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1185.5,
-    "latest_price": 1124.0,
-    "premium_pct": -0.0518768452129903,
-    "price_date": "2026-07-17"
+    "latest_price": 1101.0,
+    "premium_pct": -0.07127794179671025,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10466,9 +10376,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 478.4,
-    "latest_price": 480.0,
-    "premium_pct": 0.003344481605351218,
-    "price_date": "2026-07-17"
+    "latest_price": 485.0,
+    "premium_pct": 0.013795986622073627,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10490,13 +10400,15 @@
    "gate1": {
     "passed": true,
     "lead_filer": "ｆｕｎｄｎｏｔｅ株式会社",
-    "filing_count": 3,
+    "filing_count": 4,
     "dates": [
      "2026-05-25",
      "2026-06-12",
-     "2026-06-19"
+     "2026-06-19",
+     "2026-07-21"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350"
@@ -10504,10 +10416,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 3275.0,
-    "latest_price": 2875.0,
-    "premium_pct": -0.12213740458015267,
-    "price_date": "2026-07-17"
+    "master_cost": 3188.5,
+    "latest_price": 2929.0,
+    "premium_pct": -0.08138623177042496,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10518,55 +10430,6 @@
      222.6,
      217.8,
      220.1
-    ]
-   }
-  },
-  {
-   "code": "6728",
-   "name": "アルバック",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "フィデリティ投信株式会社",
-    "filing_count": 8,
-    "dates": [
-     "2026-06-04",
-     "2026-06-04",
-     "2026-06-04",
-     "2026-06-04",
-     "2026-06-04",
-     "2026-06-04",
-     "2026-06-04",
-     "2026-06-04"
-    ],
-    "doc_types": [
-     "360",
-     "360",
-     "360",
-     "360",
-     "360",
-     "360",
-     "360",
-     "360"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 9080.0,
-    "latest_price": 9499.0,
-    "premium_pct": 0.04614537444933921,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     107.8,
-     121.4,
-     136.8,
-     137.2
     ]
    }
   },
@@ -10589,9 +10452,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 9230.0,
-    "latest_price": 8870.0,
-    "premium_pct": -0.0390032502708559,
-    "price_date": "2026-07-17"
+    "latest_price": 9280.0,
+    "premium_pct": 0.005417118093174431,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -10628,9 +10491,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 53.0,
-    "latest_price": 46.0,
-    "premium_pct": -0.1320754716981132,
-    "price_date": "2026-07-17"
+    "latest_price": 48.0,
+    "premium_pct": -0.09433962264150944,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10667,9 +10530,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 713.3333333333334,
-    "latest_price": 704.0,
-    "premium_pct": -0.013084112149532763,
-    "price_date": "2026-07-17"
+    "latest_price": 724.0,
+    "premium_pct": 0.01495327102803733,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10704,9 +10567,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4090.0,
-    "latest_price": 2719.0,
-    "premium_pct": -0.33520782396088017,
-    "price_date": "2026-07-17"
+    "latest_price": 2767.0,
+    "premium_pct": -0.3234718826405868,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10741,9 +10604,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2430.5,
-    "latest_price": 2411.0,
-    "premium_pct": -0.008023040526640608,
-    "price_date": "2026-07-17"
+    "latest_price": 2448.0,
+    "premium_pct": 0.00720016457519029,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10778,9 +10641,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2167.0,
-    "latest_price": 2025.0,
-    "premium_pct": -0.06552838024919243,
-    "price_date": "2026-07-17"
+    "latest_price": 2096.0,
+    "premium_pct": -0.032764190124596214,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10813,9 +10676,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1427.0,
-    "latest_price": 1289.0,
-    "premium_pct": -0.09670637701471618,
-    "price_date": "2026-07-17"
+    "latest_price": 1314.0,
+    "premium_pct": -0.07918710581639804,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -10852,9 +10715,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 8056.666666666667,
-    "latest_price": 5960.0,
-    "premium_pct": -0.2602399669011171,
-    "price_date": "2026-07-17"
+    "latest_price": 6360.0,
+    "premium_pct": -0.21059164253206458,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10889,9 +10752,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 15410.0,
-    "latest_price": 13970.0,
-    "premium_pct": -0.09344581440622972,
-    "price_date": "2026-07-17"
+    "latest_price": 14970.0,
+    "premium_pct": -0.02855288773523686,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10930,9 +10793,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 11027.5,
-    "latest_price": 9290.0,
-    "premium_pct": -0.15756064384493312,
-    "price_date": "2026-07-17"
+    "latest_price": 9400.0,
+    "premium_pct": -0.14758558150079348,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10969,9 +10832,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 9940.0,
-    "latest_price": 7010.0,
-    "premium_pct": -0.2947686116700201,
-    "price_date": "2026-07-17"
+    "latest_price": 7200.0,
+    "premium_pct": -0.27565392354124746,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -10982,43 +10845,6 @@
      529.1,
      781.6,
      826.0
-    ]
-   }
-  },
-  {
-   "code": "6902",
-   "name": "デンソー",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "株式会社豊田自動織機",
-    "filing_count": 2,
-    "dates": [
-     "2026-06-05",
-     "2026-06-25"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1873.75,
-    "latest_price": 1964.0,
-    "premium_pct": 0.048165443629086056,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     3505.1,
-     2833.7,
-     3366.8,
-     4003.9
     ]
    }
   },
@@ -11043,9 +10869,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4382.5,
-    "latest_price": 3510.0,
-    "premium_pct": -0.1990872789503708,
-    "price_date": "2026-07-17"
+    "latest_price": 3615.0,
+    "premium_pct": -0.1751283513976041,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11082,9 +10908,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3428.3333333333335,
-    "latest_price": 3025.0,
-    "premium_pct": -0.11764705882352945,
-    "price_date": "2026-07-17"
+    "latest_price": 3200.0,
+    "premium_pct": -0.06660184735051049,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11135,9 +10961,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4006.6,
-    "latest_price": 3824.0,
-    "premium_pct": -0.045574801577397274,
-    "price_date": "2026-07-17"
+    "latest_price": 4048.0,
+    "premium_pct": 0.010332950631458117,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11170,9 +10996,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1854.5,
-    "latest_price": 1799.5,
-    "premium_pct": -0.02965758964680507,
-    "price_date": "2026-07-17"
+    "latest_price": 1800.0,
+    "premium_pct": -0.029387975195470477,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -11207,9 +11033,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 659.0,
-    "latest_price": 627.0,
-    "premium_pct": -0.048558421851289835,
-    "price_date": "2026-07-17"
+    "latest_price": 643.0,
+    "premium_pct": -0.024279210925644917,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11244,9 +11070,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3741.5,
-    "latest_price": 3556.0,
-    "premium_pct": -0.04957904583723106,
-    "price_date": "2026-07-17"
+    "latest_price": 3666.0,
+    "premium_pct": -0.020179072564479487,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11293,9 +11119,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 15258.75,
-    "latest_price": 11035.0,
-    "premium_pct": -0.2768083886294749,
-    "price_date": "2026-07-17"
+    "latest_price": 11745.0,
+    "premium_pct": -0.23027770951093635,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11354,9 +11180,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4703.928571428572,
-    "latest_price": 3160.0,
-    "premium_pct": -0.32822109179257464,
-    "price_date": "2026-07-17"
+    "latest_price": 3100.0,
+    "premium_pct": -0.34097638751803205,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11391,9 +11217,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2889.5,
-    "latest_price": 2604.5,
-    "premium_pct": -0.09863298148468594,
-    "price_date": "2026-07-17"
+    "latest_price": 2676.0,
+    "premium_pct": -0.07388821595431735,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11408,17 +11234,17 @@
    }
   },
   {
-   "code": "7014",
-   "name": "名村造船所",
+   "code": "7018",
+   "name": "内海造船",
    "in_pocket": false,
    "gates_passed": 2,
    "gate1": {
     "passed": true,
-    "lead_filer": "ＪＰモルガン・アセット・マネジメント株式会社",
+    "lead_filer": "五味　大輔",
     "filing_count": 2,
     "dates": [
-     "2026-06-03",
-     "2026-06-18"
+     "2026-05-26",
+     "2026-07-21"
     ],
     "doc_types": [
      "350",
@@ -11427,20 +11253,20 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 3697.5,
-    "latest_price": 3785.0,
-    "premium_pct": 0.023664638269100743,
-    "price_date": "2026-07-17"
+    "master_cost": 10285.0,
+    "latest_price": 9930.0,
+    "premium_pct": -0.034516285853184246,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
     "weeks": 3,
     "drop_pct": null,
     "series": [
-     2060.1,
-     1786.0,
-     1924.8,
-     1934.8
+     260.4,
+     270.8,
+     290.7,
+     297.8
     ]
    }
   },
@@ -11471,9 +11297,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 895.0,
-    "latest_price": 900.0,
-    "premium_pct": 0.00558659217877095,
-    "price_date": "2026-07-17"
+    "latest_price": 915.0,
+    "premium_pct": 0.0223463687150838,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11508,9 +11334,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 329.0,
-    "latest_price": 377.0,
-    "premium_pct": 0.1458966565349544,
-    "price_date": "2026-07-17"
+    "latest_price": 376.0,
+    "premium_pct": 0.14285714285714285,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -11547,7 +11373,7 @@
     "master_cost": 1410.5,
     "latest_price": 1404.0,
     "premium_pct": -0.004608294930875576,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11582,9 +11408,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2881.0,
-    "latest_price": 2981.0,
-    "premium_pct": 0.03471017007983339,
-    "price_date": "2026-07-17"
+    "latest_price": 3025.0,
+    "premium_pct": 0.04998264491496009,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11619,9 +11445,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2062.5,
-    "latest_price": 2051.0,
-    "premium_pct": -0.005575757575757576,
-    "price_date": "2026-07-17"
+    "latest_price": 2114.0,
+    "premium_pct": 0.024969696969696968,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11658,9 +11484,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 8440.0,
-    "latest_price": 1639.0,
-    "premium_pct": -0.8058056872037914,
-    "price_date": "2026-07-17"
+    "latest_price": 1726.0,
+    "premium_pct": -0.7954976303317536,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11701,7 +11527,7 @@
     "master_cost": 253.5,
     "latest_price": 254.0,
     "premium_pct": 0.0019723865877712033,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11736,9 +11562,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2895.75,
-    "latest_price": 2899.5,
-    "premium_pct": 0.001295001295001295,
-    "price_date": "2026-07-17"
+    "latest_price": 2944.5,
+    "premium_pct": 0.016835016835016835,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11773,9 +11599,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 6705.0,
-    "latest_price": 3030.0,
-    "premium_pct": -0.5480984340044742,
-    "price_date": "2026-07-17"
+    "latest_price": 3120.0,
+    "premium_pct": -0.5346756152125279,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11808,9 +11634,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1491.0,
-    "latest_price": 1286.0,
-    "premium_pct": -0.1374916163648558,
-    "price_date": "2026-07-17"
+    "latest_price": 1311.0,
+    "premium_pct": -0.12072434607645875,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -11843,9 +11669,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 506.0,
-    "latest_price": 505.0,
-    "premium_pct": -0.001976284584980237,
-    "price_date": "2026-07-17"
+    "latest_price": 510.0,
+    "premium_pct": 0.007905138339920948,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -11880,9 +11706,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2277.0,
-    "latest_price": 2256.0,
-    "premium_pct": -0.00922266139657444,
-    "price_date": "2026-07-17"
+    "latest_price": 2293.5,
+    "premium_pct": 0.007246376811594203,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -11917,9 +11743,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 1454.75,
-    "latest_price": 1535.5,
-    "premium_pct": 0.055507819212923186,
-    "price_date": "2026-07-17"
+    "latest_price": 1557.0,
+    "premium_pct": 0.07028699089190582,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -11952,9 +11778,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1274.0,
-    "latest_price": 1273.5,
-    "premium_pct": -0.0003924646781789639,
-    "price_date": "2026-07-17"
+    "latest_price": 1293.5,
+    "premium_pct": 0.015306122448979591,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -11989,9 +11815,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 626.5,
-    "latest_price": 623.0,
-    "premium_pct": -0.00558659217877095,
-    "price_date": "2026-07-17"
+    "latest_price": 617.0,
+    "premium_pct": -0.015163607342378291,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12024,9 +11850,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1170.0,
-    "latest_price": 1138.0,
-    "premium_pct": -0.02735042735042735,
-    "price_date": "2026-07-17"
+    "latest_price": 1160.0,
+    "premium_pct": -0.008547008547008548,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -12102,9 +11928,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2005.5,
-    "latest_price": 1965.0,
-    "premium_pct": -0.02019446522064323,
-    "price_date": "2026-07-17"
+    "latest_price": 1931.0,
+    "premium_pct": -0.037147843430565944,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12141,9 +11967,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 683.3333333333334,
-    "latest_price": 672.0,
-    "premium_pct": -0.01658536585365859,
-    "price_date": "2026-07-17"
+    "latest_price": 685.0,
+    "premium_pct": 0.002439024390243847,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12154,6 +11980,43 @@
      147.6,
      148.0,
      141.6
+    ]
+   }
+  },
+  {
+   "code": "7359",
+   "name": "東京通信グループ",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "楽天証券株式会社",
+    "filing_count": 2,
+    "dates": [
+     "2026-06-22",
+     "2026-07-07"
+    ],
+    "doc_types": [
+     "350",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 219.5,
+    "latest_price": 225.0,
+    "premium_pct": 0.025056947608200455,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     675.3,
+     670.0,
+     660.3,
+     668.0
     ]
    }
   },
@@ -12176,9 +12039,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1169.0,
-    "latest_price": 1199.0,
-    "premium_pct": 0.02566295979469632,
-    "price_date": "2026-07-17"
+    "latest_price": 1210.0,
+    "premium_pct": 0.03507271171941831,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -12213,9 +12076,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 917.5,
-    "latest_price": 866.0,
-    "premium_pct": -0.0561307901907357,
-    "price_date": "2026-07-17"
+    "latest_price": 868.0,
+    "premium_pct": -0.05395095367847411,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12250,9 +12113,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1076.5,
-    "latest_price": 1018.0,
-    "premium_pct": -0.0543427775197399,
-    "price_date": "2026-07-17"
+    "latest_price": 1016.0,
+    "premium_pct": -0.0562006502554575,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12287,9 +12150,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4005.0,
-    "latest_price": 3860.0,
-    "premium_pct": -0.03620474406991261,
-    "price_date": "2026-07-17"
+    "latest_price": 4025.0,
+    "premium_pct": 0.004993757802746567,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12328,9 +12191,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1288.0,
-    "latest_price": 1215.0,
-    "premium_pct": -0.056677018633540376,
-    "price_date": "2026-07-17"
+    "latest_price": 1210.0,
+    "premium_pct": -0.06055900621118013,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12365,9 +12228,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1479.0,
-    "latest_price": 1522.0,
-    "premium_pct": 0.0290736984448952,
-    "price_date": "2026-07-17"
+    "latest_price": 1526.0,
+    "premium_pct": 0.03177822853279243,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12404,9 +12267,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 470.6666666666667,
-    "latest_price": 482.0,
-    "premium_pct": 0.024079320113314408,
-    "price_date": "2026-07-17"
+    "latest_price": 483.0,
+    "premium_pct": 0.026203966005665682,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12441,9 +12304,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2742.25,
-    "latest_price": 2848.5,
-    "premium_pct": 0.03874555565685112,
-    "price_date": "2026-07-17"
+    "latest_price": 2852.0,
+    "premium_pct": 0.040021879843194455,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12478,9 +12341,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3050.5,
-    "latest_price": 1659.0,
-    "premium_pct": -0.4561547287329946,
-    "price_date": "2026-07-17"
+    "latest_price": 1747.0,
+    "premium_pct": -0.4273069988526471,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12513,9 +12376,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1871.0,
-    "latest_price": 1731.0,
-    "premium_pct": -0.07482629609834313,
-    "price_date": "2026-07-17"
+    "latest_price": 1740.0,
+    "premium_pct": -0.07001603420630678,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -12552,9 +12415,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2184.0,
-    "latest_price": 2189.0,
-    "premium_pct": 0.0022893772893772895,
-    "price_date": "2026-07-17"
+    "latest_price": 2188.0,
+    "premium_pct": 0.0018315018315018315,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12593,9 +12456,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1787.75,
-    "latest_price": 1611.0,
-    "premium_pct": -0.09886729128793176,
-    "price_date": "2026-07-17"
+    "latest_price": 1587.0,
+    "premium_pct": -0.11229198713466648,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12636,9 +12499,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1359.4,
-    "latest_price": 1411.0,
-    "premium_pct": 0.037957922612917395,
-    "price_date": "2026-07-17"
+    "latest_price": 1416.0,
+    "premium_pct": 0.04163601588936289,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12673,9 +12536,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4010.0,
-    "latest_price": 4175.0,
-    "premium_pct": 0.04114713216957606,
-    "price_date": "2026-07-17"
+    "latest_price": 4190.0,
+    "premium_pct": 0.04488778054862843,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12712,7 +12575,7 @@
     "master_cost": 1350.0,
     "latest_price": 1295.0,
     "premium_pct": -0.040740740740740744,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12747,9 +12610,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1969.0,
-    "latest_price": 2019.0,
-    "premium_pct": 0.025393600812595226,
-    "price_date": "2026-07-17"
+    "latest_price": 1985.0,
+    "premium_pct": 0.008125952260030472,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12792,9 +12655,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 55.833333333333336,
-    "latest_price": 50.0,
-    "premium_pct": -0.10447761194029855,
-    "price_date": "2026-07-17"
+    "latest_price": 51.0,
+    "premium_pct": -0.08656716417910451,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12835,9 +12698,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3186.0,
-    "latest_price": 3075.0,
-    "premium_pct": -0.03483992467043315,
-    "price_date": "2026-07-17"
+    "latest_price": 3110.0,
+    "premium_pct": -0.023854362837413684,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12870,9 +12733,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 875.0,
-    "latest_price": 897.0,
-    "premium_pct": 0.025142857142857144,
-    "price_date": "2026-07-17"
+    "latest_price": 903.0,
+    "premium_pct": 0.032,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -12911,9 +12774,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3692.5,
-    "latest_price": 3240.0,
-    "premium_pct": -0.12254570074475288,
-    "price_date": "2026-07-17"
+    "latest_price": 3290.0,
+    "premium_pct": -0.10900473933649289,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12952,9 +12815,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1698.75,
-    "latest_price": 1704.0,
-    "premium_pct": 0.0030905077262693157,
-    "price_date": "2026-07-17"
+    "latest_price": 1710.0,
+    "premium_pct": 0.006622516556291391,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -12965,53 +12828,6 @@
      14.9,
      13.1,
      16.1
-    ]
-   }
-  },
-  {
-   "code": "7679",
-   "name": "薬王堂ホールディングス",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
-    "filing_count": 7,
-    "dates": [
-     "2026-06-09",
-     "2026-06-17",
-     "2026-06-17",
-     "2026-06-17",
-     "2026-06-17",
-     "2026-06-17",
-     "2026-06-17"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1672.2857142857142,
-    "latest_price": 1741.0,
-    "premium_pct": 0.04109003929608752,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     125.1,
-     122.6,
-     123.4,
-     125.6
     ]
    }
   },
@@ -13040,9 +12856,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3702.5,
-    "latest_price": 3400.0,
-    "premium_pct": -0.08170155300472653,
-    "price_date": "2026-07-17"
+    "latest_price": 3350.0,
+    "premium_pct": -0.09520594193112762,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13079,9 +12895,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2770.0,
-    "latest_price": 2762.0,
-    "premium_pct": -0.002888086642599278,
-    "price_date": "2026-07-17"
+    "latest_price": 2847.0,
+    "premium_pct": 0.02779783393501805,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13114,9 +12930,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 802.0,
-    "latest_price": 736.0,
-    "premium_pct": -0.08229426433915212,
-    "price_date": "2026-07-17"
+    "latest_price": 771.0,
+    "premium_pct": -0.03865336658354115,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -13151,9 +12967,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2785.0,
-    "latest_price": 2778.0,
-    "premium_pct": -0.0025134649910233393,
-    "price_date": "2026-07-17"
+    "latest_price": 2803.0,
+    "premium_pct": 0.006463195691202872,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13190,9 +13006,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2256.0,
-    "latest_price": 2179.0,
-    "premium_pct": -0.034131205673758866,
-    "price_date": "2026-07-17"
+    "latest_price": 2238.0,
+    "premium_pct": -0.007978723404255319,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13231,7 +13047,7 @@
     "master_cost": 205.33333333333334,
     "latest_price": 219.0,
     "premium_pct": 0.06655844155844151,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -13266,9 +13082,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1364.0,
-    "latest_price": 1335.0,
-    "premium_pct": -0.02126099706744868,
-    "price_date": "2026-07-17"
+    "latest_price": 1351.0,
+    "premium_pct": -0.009530791788856305,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13309,9 +13125,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1088.0,
-    "latest_price": 913.0,
-    "premium_pct": -0.16084558823529413,
-    "price_date": "2026-07-17"
+    "latest_price": 926.0,
+    "premium_pct": -0.1488970588235294,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13348,9 +13164,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1332.0,
-    "latest_price": 1260.0,
-    "premium_pct": -0.05405405405405406,
-    "price_date": "2026-07-17"
+    "latest_price": 1270.0,
+    "premium_pct": -0.046546546546546545,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13395,9 +13211,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 713.8571428571429,
-    "latest_price": 716.0,
-    "premium_pct": 0.0030018010806483436,
-    "price_date": "2026-07-17"
+    "latest_price": 721.0,
+    "premium_pct": 0.01000600360216125,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13434,9 +13250,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1790.0,
-    "latest_price": 1836.0,
-    "premium_pct": 0.02569832402234637,
-    "price_date": "2026-07-17"
+    "latest_price": 1842.0,
+    "premium_pct": 0.02905027932960894,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13469,9 +13285,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 179.0,
-    "latest_price": 185.0,
-    "premium_pct": 0.0335195530726257,
-    "price_date": "2026-07-17"
+    "latest_price": 184.0,
+    "premium_pct": 0.027932960893854747,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -13504,9 +13320,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1364.0,
-    "latest_price": 1330.0,
-    "premium_pct": -0.024926686217008796,
-    "price_date": "2026-07-17"
+    "latest_price": 1347.0,
+    "premium_pct": -0.012463343108504398,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -13542,10 +13358,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 4673.666666666667,
-    "latest_price": 4895.0,
-    "premium_pct": 0.04735753512588254,
-    "price_date": "2026-07-17"
+    "master_cost": 4659.666666666667,
+    "latest_price": 4853.0,
+    "premium_pct": 0.04149080764003141,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13641,9 +13457,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 4345.357142857143,
-    "latest_price": 4090.0,
-    "premium_pct": -0.058765513273609,
-    "price_date": "2026-07-17"
+    "latest_price": 4100.0,
+    "premium_pct": -0.05646420646009704,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13676,9 +13492,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1954.0,
-    "latest_price": 2029.5,
-    "premium_pct": 0.038638689866939614,
-    "price_date": "2026-07-17"
+    "latest_price": 2028.5,
+    "premium_pct": 0.03812691914022518,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -13711,9 +13527,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2209.0,
-    "latest_price": 2209.0,
-    "premium_pct": 0.0,
-    "price_date": "2026-07-17"
+    "latest_price": 2185.0,
+    "premium_pct": -0.010864644635581712,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -13750,9 +13566,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 570.6666666666666,
-    "latest_price": 571.0,
-    "premium_pct": 0.0005841121495327767,
-    "price_date": "2026-07-17"
+    "latest_price": 575.0,
+    "premium_pct": 0.0075934579439253,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13785,9 +13601,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1024.0,
-    "latest_price": 1005.0,
-    "premium_pct": -0.0185546875,
-    "price_date": "2026-07-17"
+    "latest_price": 1025.0,
+    "premium_pct": 0.0009765625,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -13809,14 +13625,16 @@
    "gate1": {
     "passed": true,
     "lead_filer": "伊藤忠商事株式会社",
-    "filing_count": 4,
+    "filing_count": 5,
     "dates": [
      "2026-06-11",
      "2026-06-19",
      "2026-06-22",
-     "2026-06-23"
+     "2026-06-23",
+     "2026-07-21"
     ],
     "doc_types": [
+     "350",
      "350",
      "350",
      "350",
@@ -13825,10 +13643,10 @@
    },
    "gate2": {
     "passed": true,
-    "master_cost": 1837.875,
-    "latest_price": 1902.5,
-    "premium_pct": 0.03516289192681766,
-    "price_date": "2026-07-17"
+    "master_cost": 1859.6,
+    "latest_price": 1946.5,
+    "premium_pct": 0.04673047967304802,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13867,9 +13685,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 783.5,
-    "latest_price": 778.0,
-    "premium_pct": -0.007019783024888321,
-    "price_date": "2026-07-17"
+    "latest_price": 785.0,
+    "premium_pct": 0.0019144862795149968,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13880,41 +13698,6 @@
      532.9,
      554.7,
      553.2
-    ]
-   }
-  },
-  {
-   "code": "8011",
-   "name": "三陽商会",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": false,
-    "lead_filer": "野村證券株式会社",
-    "filing_count": 1,
-    "dates": [
-     "2026-06-22"
-    ],
-    "doc_types": [
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 3995.0,
-    "latest_price": 4190.0,
-    "premium_pct": 0.04881101376720901,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.4394160583941606,
-    "series": [
-     68.5,
-     67.4,
-     63.9,
-     38.4
     ]
    }
   },
@@ -13941,9 +13724,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3868.3333333333335,
-    "latest_price": 3880.0,
-    "premium_pct": 0.0030159414045669575,
-    "price_date": "2026-07-17"
+    "latest_price": 3905.0,
+    "premium_pct": 0.009478672985781951,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -13954,90 +13737,6 @@
      37.0,
      41.1,
      40.0
-    ]
-   }
-  },
-  {
-   "code": "8015",
-   "name": "豊田通商",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "株式会社豊田自動織機",
-    "filing_count": 2,
-    "dates": [
-     "2026-06-08",
-     "2026-06-25"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 6082.5,
-    "latest_price": 6076.0,
-    "premium_pct": -0.0010686395396629674,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     545.1,
-     502.7,
-     516.0,
-     518.2
-    ]
-   }
-  },
-  {
-   "code": "8074",
-   "name": "ＹＵＡＳＡ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｆｉｄｅｌｉｔｙ　Ｍａｎａｇｅｍｅｎｔ　＆　Ｒｅｓｅａｒｃｈ　Ｃｏｍｐａｎｙ　ＬＬＣ",
-    "filing_count": 7,
-    "dates": [
-     "2026-06-10",
-     "2026-06-17",
-     "2026-06-17",
-     "2026-06-17",
-     "2026-06-17",
-     "2026-06-17",
-     "2026-06-17"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 5310.0,
-    "latest_price": 5510.0,
-    "premium_pct": 0.03766478342749529,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     10.4,
-     17.1,
-     17.1,
-     16.6
     ]
    }
   },
@@ -14062,9 +13761,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1594.75,
-    "latest_price": 1592.0,
-    "premium_pct": -0.0017244082144536761,
-    "price_date": "2026-07-17"
+    "latest_price": 1599.0,
+    "premium_pct": 0.0026649945132465906,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14099,9 +13798,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 238.0,
-    "latest_price": 99.0,
-    "premium_pct": -0.5840336134453782,
-    "price_date": "2026-07-17"
+    "latest_price": 104.0,
+    "premium_pct": -0.5630252100840336,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14140,9 +13839,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2045.0,
-    "latest_price": 2117.0,
-    "premium_pct": 0.035207823960880194,
-    "price_date": "2026-07-17"
+    "latest_price": 2110.0,
+    "premium_pct": 0.03178484107579462,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14175,9 +13874,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 419.0,
-    "latest_price": 428.0,
-    "premium_pct": 0.021479713603818614,
-    "price_date": "2026-07-17"
+    "latest_price": 430.0,
+    "premium_pct": 0.026252983293556086,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -14216,9 +13915,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1579.25,
-    "latest_price": 1605.0,
-    "premium_pct": 0.016305208168434383,
-    "price_date": "2026-07-17"
+    "latest_price": 1581.0,
+    "premium_pct": 0.001108120943485832,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14253,9 +13952,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3257.5,
-    "latest_price": 3205.0,
-    "premium_pct": -0.016116653875671526,
-    "price_date": "2026-07-17"
+    "latest_price": 3330.0,
+    "premium_pct": 0.022256331542594012,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14290,9 +13989,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 388.0,
-    "latest_price": 367.0,
-    "premium_pct": -0.05412371134020619,
-    "price_date": "2026-07-17"
+    "latest_price": 371.0,
+    "premium_pct": -0.04381443298969072,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14329,9 +14028,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 254.66666666666666,
-    "latest_price": 255.0,
-    "premium_pct": 0.0013089005235602466,
-    "price_date": "2026-07-17"
+    "latest_price": 261.0,
+    "premium_pct": 0.024869109947644016,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14366,9 +14065,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1455.0,
-    "latest_price": 1395.0,
-    "premium_pct": -0.041237113402061855,
-    "price_date": "2026-07-17"
+    "latest_price": 1366.5,
+    "premium_pct": -0.060824742268041236,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14403,9 +14102,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2501.0,
-    "latest_price": 2573.0,
-    "premium_pct": 0.028788484606157537,
-    "price_date": "2026-07-17"
+    "latest_price": 2589.0,
+    "premium_pct": 0.0351859256297481,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14448,9 +14147,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 6634.666666666667,
-    "latest_price": 6607.0,
-    "premium_pct": -0.004170016077170464,
-    "price_date": "2026-07-17"
+    "latest_price": 6603.0,
+    "premium_pct": -0.004772909967845704,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14493,9 +14192,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 700.5,
-    "latest_price": 661.0,
-    "premium_pct": -0.05638829407566024,
-    "price_date": "2026-07-17"
+    "latest_price": 665.0,
+    "premium_pct": -0.05067808708065667,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14506,45 +14205,6 @@
      2471.5,
      2393.7,
      2457.3
-    ]
-   }
-  },
-  {
-   "code": "8395",
-   "name": "佐賀銀行",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "野村證券株式会社",
-    "filing_count": 3,
-    "dates": [
-     "2026-06-03",
-     "2026-06-22",
-     "2026-07-07"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 5280.0,
-    "latest_price": 5340.0,
-    "premium_pct": 0.011363636363636364,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     508.7,
-     550.9,
-     541.4,
-     541.8
     ]
    }
   },
@@ -14575,9 +14235,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2853.5,
-    "latest_price": 2721.5,
-    "premium_pct": -0.04625898019975469,
-    "price_date": "2026-07-17"
+    "latest_price": 2814.0,
+    "premium_pct": -0.013842649377956895,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14588,6 +14248,65 @@
      7295.7,
      7228.6,
      8054.6
+    ]
+   }
+  },
+  {
+   "code": "8591",
+   "name": "オリックス",
+   "in_pocket": false,
+   "gates_passed": 2,
+   "gate1": {
+    "passed": true,
+    "lead_filer": "オリックス株式会社",
+    "filing_count": 13,
+    "dates": [
+     "2026-06-23",
+     "2026-07-21",
+     "2026-07-21",
+     "2026-07-21",
+     "2026-07-21",
+     "2026-07-21",
+     "2026-07-21",
+     "2026-07-21",
+     "2026-07-21",
+     "2026-07-21",
+     "2026-07-21",
+     "2026-07-21",
+     "2026-07-21"
+    ],
+    "doc_types": [
+     "350",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "360",
+     "350"
+    ]
+   },
+   "gate2": {
+    "passed": true,
+    "master_cost": 6489.076923076923,
+    "latest_price": 6502.0,
+    "premium_pct": 0.0019915123639726254,
+    "price_date": "2026-07-21"
+   },
+   "gate3": {
+    "passed": false,
+    "weeks": 3,
+    "drop_pct": null,
+    "series": [
+     1301.2,
+     1307.4,
+     1281.1,
+     1223.4
     ]
    }
   },
@@ -14612,9 +14331,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2281.25,
-    "latest_price": 2298.5,
-    "premium_pct": 0.007561643835616439,
-    "price_date": "2026-07-17"
+    "latest_price": 2309.5,
+    "premium_pct": 0.012383561643835616,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14649,9 +14368,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 1442.75,
-    "latest_price": 1520.0,
-    "premium_pct": 0.05354357996880957,
-    "price_date": "2026-07-17"
+    "latest_price": 1586.5,
+    "premium_pct": 0.09963611159244498,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -14686,9 +14405,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2214.0,
-    "latest_price": 2240.0,
-    "premium_pct": 0.011743450767841012,
-    "price_date": "2026-07-17"
+    "latest_price": 2267.0,
+    "premium_pct": 0.023938572719060525,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14729,9 +14448,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 169.2,
-    "latest_price": 98.0,
-    "premium_pct": -0.4208037825059101,
-    "price_date": "2026-07-17"
+    "latest_price": 105.0,
+    "premium_pct": -0.3794326241134751,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14774,9 +14493,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 108.0,
-    "latest_price": 67.0,
-    "premium_pct": -0.37962962962962965,
-    "price_date": "2026-07-17"
+    "latest_price": 68.0,
+    "premium_pct": -0.37037037037037035,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14819,9 +14538,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3246.6666666666665,
-    "latest_price": 3300.0,
-    "premium_pct": 0.016427104722792657,
-    "price_date": "2026-07-17"
+    "latest_price": 3365.0,
+    "premium_pct": 0.036447638603696146,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14866,9 +14585,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 887.0,
-    "latest_price": 894.0,
-    "premium_pct": 0.007891770011273957,
-    "price_date": "2026-07-17"
+    "latest_price": 903.0,
+    "premium_pct": 0.018038331454340473,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14905,9 +14624,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5926.666666666667,
-    "latest_price": 5350.0,
-    "premium_pct": -0.09730033745781781,
-    "price_date": "2026-07-17"
+    "latest_price": 5336.0,
+    "premium_pct": -0.09966254218222727,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -14940,9 +14659,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2764.0,
-    "latest_price": 2739.0,
-    "premium_pct": -0.009044862518089725,
-    "price_date": "2026-07-17"
+    "latest_price": 2747.0,
+    "premium_pct": -0.006150506512301013,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -14979,9 +14698,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2204.0,
-    "latest_price": 2274.0,
-    "premium_pct": 0.03176043557168784,
-    "price_date": "2026-07-17"
+    "latest_price": 2275.0,
+    "premium_pct": 0.03221415607985481,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15018,9 +14737,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 612.0,
-    "latest_price": 573.0,
-    "premium_pct": -0.06372549019607843,
-    "price_date": "2026-07-17"
+    "latest_price": 582.0,
+    "premium_pct": -0.049019607843137254,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15055,7 +14774,7 @@
     "master_cost": 2778.5,
     "latest_price": 2904.0,
     "premium_pct": 0.045168256253374124,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -15088,9 +14807,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 163.0,
-    "latest_price": 140.0,
-    "premium_pct": -0.1411042944785276,
-    "price_date": "2026-07-17"
+    "latest_price": 137.0,
+    "premium_pct": -0.15950920245398773,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -15125,9 +14844,9 @@
    "gate2": {
     "passed": false,
     "master_cost": 3305.0,
-    "latest_price": 3770.0,
-    "premium_pct": 0.14069591527987896,
-    "price_date": "2026-07-17"
+    "latest_price": 3750.0,
+    "premium_pct": 0.1346444780635401,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -15182,9 +14901,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 958.1666666666666,
-    "latest_price": 970.0,
-    "premium_pct": 0.012349973908505868,
-    "price_date": "2026-07-17"
+    "latest_price": 989.0,
+    "premium_pct": 0.03217950947990959,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15219,9 +14938,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3709.5,
-    "latest_price": 3589.0,
-    "premium_pct": -0.032484162286022376,
-    "price_date": "2026-07-17"
+    "latest_price": 3607.0,
+    "premium_pct": -0.027631756301388328,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15256,9 +14975,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1047.5,
-    "latest_price": 722.0,
-    "premium_pct": -0.3107398568019093,
-    "price_date": "2026-07-17"
+    "latest_price": 724.0,
+    "premium_pct": -0.3088305489260143,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15293,7 +15012,7 @@
     "master_cost": 1669.0,
     "latest_price": 1635.0,
     "premium_pct": -0.02037147992810066,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -15304,49 +15023,6 @@
      95.2,
      94.9,
      88.4
-    ]
-   }
-  },
-  {
-   "code": "9353",
-   "name": "櫻島埠頭",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "山本裕治",
-    "filing_count": 5,
-    "dates": [
-     "2026-06-01",
-     "2026-06-11",
-     "2026-06-16",
-     "2026-06-18",
-     "2026-07-14"
-    ],
-    "doc_types": [
-     "350",
-     "350",
-     "350",
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 2702.2,
-    "latest_price": 2820.0,
-    "premium_pct": 0.04359410850418185,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     45.6,
-     46.6,
-     44.2,
-     42.6
     ]
    }
   },
@@ -15381,9 +15057,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2212.0,
-    "latest_price": 2278.0,
-    "premium_pct": 0.029837251356238697,
-    "price_date": "2026-07-17"
+    "latest_price": 2309.0,
+    "premium_pct": 0.04385171790235081,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15418,9 +15094,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3237.5,
-    "latest_price": 2277.0,
-    "premium_pct": -0.29667953667953667,
-    "price_date": "2026-07-17"
+    "latest_price": 2285.0,
+    "premium_pct": -0.2942084942084942,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15463,9 +15139,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 205.5,
-    "latest_price": 194.0,
-    "premium_pct": -0.05596107055961071,
-    "price_date": "2026-07-17"
+    "latest_price": 203.0,
+    "premium_pct": -0.012165450121654502,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15500,9 +15176,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 212.0500030517578,
-    "latest_price": 220.5,
-    "premium_pct": 0.03984907723005166,
-    "price_date": "2026-07-17"
+    "latest_price": 222.1000061035156,
+    "premium_pct": 0.047394496142991085,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15541,7 +15217,7 @@
     "master_cost": 733.3333333333334,
     "latest_price": 765.0,
     "premium_pct": 0.04318181818181813,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15552,43 +15228,6 @@
      510.0,
      515.1,
      515.3
-    ]
-   }
-  },
-  {
-   "code": "9470",
-   "name": "学研ホールディングス",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "株式会社学研ホールディングス",
-    "filing_count": 2,
-    "dates": [
-     "2026-05-29",
-     "2026-06-19"
-    ],
-    "doc_types": [
-     "350",
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 969.0,
-    "latest_price": 1013.0,
-    "premium_pct": 0.04540763673890609,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     232.8,
-     230.4,
-     238.5,
-     142.1
     ]
    }
   },
@@ -15613,9 +15252,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2303.0,
-    "latest_price": 2297.0,
-    "premium_pct": -0.0026052974381241857,
-    "price_date": "2026-07-17"
+    "latest_price": 2355.5,
+    "premium_pct": 0.022796352583586626,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15648,9 +15287,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1114.0,
-    "latest_price": 855.0,
-    "premium_pct": -0.2324955116696589,
-    "price_date": "2026-07-17"
+    "latest_price": 862.0,
+    "premium_pct": -0.22621184919210055,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -15685,9 +15324,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1828.5,
-    "latest_price": 1767.0,
-    "premium_pct": -0.033634126333059886,
-    "price_date": "2026-07-17"
+    "latest_price": 1848.0,
+    "premium_pct": 0.01066447908121411,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15724,9 +15363,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 828.3333333333334,
-    "latest_price": 799.0,
-    "premium_pct": -0.03541247484909461,
-    "price_date": "2026-07-17"
+    "latest_price": 809.0,
+    "premium_pct": -0.023340040241448735,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15761,9 +15400,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 5563.5,
-    "latest_price": 5819.0,
-    "premium_pct": 0.045924328210658755,
-    "price_date": "2026-07-17"
+    "latest_price": 5822.0,
+    "premium_pct": 0.04646355711332794,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15798,7 +15437,7 @@
     "master_cost": 988.0,
     "latest_price": 1030.0,
     "premium_pct": 0.04251012145748988,
-    "price_date": "2026-07-17"
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -15831,9 +15470,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2324.0,
-    "latest_price": 2187.0,
-    "premium_pct": -0.05895008605851979,
-    "price_date": "2026-07-17"
+    "latest_price": 2180.0,
+    "premium_pct": -0.06196213425129088,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -15844,43 +15483,6 @@
      255.7,
      254.8,
      249.8
-    ]
-   }
-  },
-  {
-   "code": "9722",
-   "name": "藤田観光",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": true,
-    "lead_filer": "Ｏｌｄ　Ｐｅａｋ　Ｇｒｏｕｐ　Ｌｔｄ．",
-    "filing_count": 2,
-    "dates": [
-     "2026-05-28",
-     "2026-05-29"
-    ],
-    "doc_types": [
-     "350",
-     "360"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 1823.5,
-    "latest_price": 1909.0,
-    "premium_pct": 0.04688785302988758,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": false,
-    "weeks": 3,
-    "drop_pct": null,
-    "series": [
-     159.7,
-     233.4,
-     231.0,
-     231.6
     ]
    }
   },
@@ -15903,9 +15505,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1986.0,
-    "latest_price": 1884.0,
-    "premium_pct": -0.0513595166163142,
-    "price_date": "2026-07-17"
+    "latest_price": 1900.0,
+    "premium_pct": -0.0433031218529708,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -15946,9 +15548,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2504.8,
-    "latest_price": 2524.0,
-    "premium_pct": 0.007665282657297915,
-    "price_date": "2026-07-17"
+    "latest_price": 2548.0,
+    "premium_pct": 0.0172468859789204,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15983,9 +15585,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3137.5,
-    "latest_price": 3120.0,
-    "premium_pct": -0.005577689243027889,
-    "price_date": "2026-07-17"
+    "latest_price": 3105.0,
+    "premium_pct": -0.010358565737051793,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -15996,41 +15598,6 @@
      22.8,
      23.1,
      24.5
-    ]
-   }
-  },
-  {
-   "code": "9816",
-   "name": "ストライダーズ",
-   "in_pocket": false,
-   "gates_passed": 2,
-   "gate1": {
-    "passed": false,
-    "lead_filer": "成成株式会社",
-    "filing_count": 1,
-    "dates": [
-     "2026-07-10"
-    ],
-    "doc_types": [
-     "350"
-    ]
-   },
-   "gate2": {
-    "passed": true,
-    "master_cost": 239.0,
-    "latest_price": 244.0,
-    "premium_pct": 0.02092050209205021,
-    "price_date": "2026-07-17"
-   },
-   "gate3": {
-    "passed": true,
-    "weeks": 3,
-    "drop_pct": 0.17800762112139354,
-    "series": [
-     734.8,
-     620.2,
-     614.8,
-     604.0
     ]
    }
   },
@@ -16089,9 +15656,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 6999.473684210527,
-    "latest_price": 6500.0,
-    "premium_pct": -0.07135874877810366,
-    "price_date": "2026-07-17"
+    "latest_price": 6250.0,
+    "premium_pct": -0.10707571997894584,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -16124,9 +15691,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2375.0,
-    "latest_price": 2459.0,
-    "premium_pct": 0.03536842105263158,
-    "price_date": "2026-07-17"
+    "latest_price": 2460.0,
+    "premium_pct": 0.035789473684210524,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": true,
@@ -16161,9 +15728,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 434.0,
-    "latest_price": 421.0,
-    "premium_pct": -0.029953917050691243,
-    "price_date": "2026-07-17"
+    "latest_price": 418.0,
+    "premium_pct": -0.03686635944700461,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -16210,9 +15777,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1390.625,
-    "latest_price": 1368.0,
-    "premium_pct": -0.016269662921348314,
-    "price_date": "2026-07-17"
+    "latest_price": 1346.0,
+    "premium_pct": -0.03208988764044944,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -16249,9 +15816,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3790.0,
-    "latest_price": 3120.0,
-    "premium_pct": -0.17678100263852242,
-    "price_date": "2026-07-17"
+    "latest_price": 3075.0,
+    "premium_pct": -0.18865435356200527,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -16286,9 +15853,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 1737.0,
-    "latest_price": 1813.0,
-    "premium_pct": 0.04375359815774323,
-    "price_date": "2026-07-17"
+    "latest_price": 1806.0,
+    "premium_pct": 0.039723661485319514,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -16331,9 +15898,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2694.0,
-    "latest_price": 2743.0,
-    "premium_pct": 0.018188567186340016,
-    "price_date": "2026-07-17"
+    "latest_price": 2768.0,
+    "premium_pct": 0.02746844840386043,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -16380,9 +15947,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 6410.0,
-    "latest_price": 6430.0,
-    "premium_pct": 0.0031201248049922,
-    "price_date": "2026-07-17"
+    "latest_price": 6420.0,
+    "premium_pct": 0.0015600624024961,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -16417,9 +15984,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 2773.0,
-    "latest_price": 2320.0,
-    "premium_pct": -0.16336098088712586,
-    "price_date": "2026-07-17"
+    "latest_price": 2336.0,
+    "premium_pct": -0.1575910566173819,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
@@ -16454,9 +16021,9 @@
    "gate2": {
     "passed": true,
     "master_cost": 3903.0,
-    "latest_price": 3867.0,
-    "premium_pct": -0.009223674096848577,
-    "price_date": "2026-07-17"
+    "latest_price": 3818.0,
+    "premium_pct": -0.02177811939533692,
+    "price_date": "2026-07-21"
    },
    "gate3": {
     "passed": false,
