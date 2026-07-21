@@ -16,7 +16,11 @@
 - ✅ **每日 log**：`data/auto_trade_log/YYYY-MM-DD.json`（進場/出場/被跳過原因/當日權益）。
 - ✅ **圖表頁** `/auto-trade`：資金曲線（權益/現金/持倉市值 + 起始資金基準線）、
   持倉暫定損益、已結算明細、每日 log 展開、單筆交易走勢 modal。
-- ✅ **Telegram 日報**：`format_report()` → workflow curl 送出（token/chat_id 缺就跳過）。
+- ✅ **Telegram 日報**：**預設圖片版**（2026-07-21 使用者選定）—
+  [report_image.py](../api/services/report_image.py) 用 Pillow 畫深色日報圖（KPI 卡／資金曲線／
+  進出場／持倉暫定損益），[send_daily_report.py](../scripts/send_daily_report.py) `--style image`
+  走 sendPhoto；Actions 裝 `fonts-noto-cjk`，字型缺失自動退回 HTML 等寬表格版
+  （`format_report_html`），純文字版 `format_report` 保留為最後備援。
 - ✅ **同步**：雲端同步順手拉 Actions 產出的帳本與 log（PaaS 部署也會更新）。
 - ✅ **測試**：`test_auto_trade.py` 14 passed；全套 255 passed（2 紅為既有 indicator mock /
   favorites，非本次）。前端 `vite build` 綠 + Docker 重建後實機截圖
