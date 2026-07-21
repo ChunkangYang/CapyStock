@@ -31,6 +31,12 @@ logger = logging.getLogger(__name__)
 DAILY_LOG_DIR = DATA_DIR / "auto_trade_log"
 
 
+def jst_today() -> date:
+    """交易日以東京時區為準 — Actions runner 是 UTC，直接用 date.today() 會跨日錯位。"""
+    from datetime import timezone, timedelta as _td
+    return (datetime.now(timezone.utc) + _td(hours=9)).date()
+
+
 # ── 參數 ────────────────────────────────────────────────────────────────────
 
 @dataclass
@@ -190,7 +196,7 @@ def run_daily(
 ) -> dict:
     """推進 → 出場結算 → 依口袋名單進場 → 寫帳本與當日 log。回傳當日 log dict。"""
     cfg = cfg or AutoTradeConfig()
-    today = as_of or date.today()
+    today = as_of or jst_today()
     ledger = ledger_service.get_or_create_bot_ledger()
 
     # 1) 推進既有持倉（棘輪移動停損），出場的把現金收回來
@@ -387,7 +393,7 @@ def build_equity_curve(ledger: Optional[Ledger] = None, end: Optional[date] = No
     現金 = 起始資金 − 已發生的進場成本 + 已發生的出場價金。
     """
     ledger = ledger or ledger_service.get_or_create_bot_ledger()
-    end = end or date.today()
+    end = end or jst_today()
     trades = ledger.trades
     if not trades:
         return {"dates": [], "equity": [], "cash": [], "market_value": [],
@@ -443,7 +449,7 @@ def build_equity_curve(ledger: Optional[Ledger] = None, end: Optional[date] = No
 def summary(as_of: Optional[date] = None) -> dict:
     """帳戶總覽（現金/市值/已實現/未實現/持倉明細）+ 最新一筆 log 日期。"""
     ledger = ledger_service.get_or_create_bot_ledger()
-    as_of = as_of or date.today()
+    as_of = as_of or jst_today()
     eq = compute_equity(ledger, as_of)
     closed = [
         {"code": t.code, "name": t.name,

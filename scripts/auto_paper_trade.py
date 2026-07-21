@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 import sys
 import time
@@ -30,6 +31,15 @@ from capystock import config  # noqa: E402
 
 CLOUD_CACHE = PROJECT_ROOT / "data" / "cloud-cache"
 LOCAL_CACHE = PROJECT_ROOT / "data" / "cache"
+
+
+def _emit_gh_output(key: str, value: str) -> None:
+    """寫 GitHub Actions step output（本機執行時無此環境變數，直接略過）。"""
+    path = os.environ.get("GITHUB_OUTPUT")
+    if not path:
+        return
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(f"{key}={value}\n")
 
 
 def materialize_cache() -> int:
@@ -124,7 +134,33 @@ def main() -> int:
     ap.add_argument("--dry-run", action="store_true", help="不寫帳本/log，只印結果")
     ap.add_argument("--as-of", default="", help="指定交易日 YYYY-MM-DD（預設今天）")
     ap.add_argument("--replay", default="", help="歷史重放 YYYY-MM-DD:YYYY-MM-DD")
+    ap.add_argument("--skip-if-logged", action="store_true",
+                    help="當日（JST）已有交易 log 就跳過（cloud-fetch 觸發 + 保險排程可能重複觸發）")
+    ap.add_argument("--require-fetch-done", action="store_true",
+                    help="cloud-fetch 分批鏈尚未跑完（_fetch_state.json done=false）就不交易")
     args = ap.parse_args()
+
+    if args.require_fetch_done and not args.replay:
+        state = PROJECT_ROOT / "data" / "cloud-cache" / "_fetch_state.json"
+        if state.exists():
+            import json
+            try:
+                done = json.loads(state.read_text(encoding="utf-8")).get("done", True)
+            except (OSError, ValueError):
+                done = True
+            if not done:
+                print("[skip] cloud-fetch 分批鏈尚未完成（margin 資料不齊）→ 等鏈跑完會自動觸發交易")
+                _emit_gh_output("paper_trade_skipped", "true")
+                return 0
+
+    if args.skip_if_logged and not args.replay:
+        from api.services import auto_trade_service
+        d = (datetime.strptime(args.as_of, "%Y-%m-%d").date() if args.as_of
+             else auto_trade_service.jst_today())
+        if auto_trade_service.read_daily_log(d) is not None:
+            print(f"[skip] {d} 已有交易 log → 本次跳過（要重跑請用 --force / dispatch force=true）")
+            _emit_gh_output("paper_trade_skipped", "true")
+            return 0
 
     if args.materialize:
         materialize_cache()

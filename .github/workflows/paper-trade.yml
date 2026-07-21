@@ -1,12 +1,22 @@
 name: Paper Trade
 
 # 每日自動模擬交易：三盤口袋名單進場 + 棘輪移動停損出場（純門檻，無 LLM）。
-# 排在 price-fetch（JST 15:40）之後，確保用的是當日收盤價。
+#
+# 觸發順序（資料齊了才交易）：
+#   price-fetch.yml   JST 15:40  收盤價（~10 分）
+#   cloud-fetch.yml   JST 17:00  margin + EDINET，分批鏈式跑數小時
+#     └ 最後一批完成 → gh workflow run paper-trade.yml   ← 主要觸發點
+#   schedule          JST 22:00  保險：萬一 cloud-fetch 掛了/沒觸發，仍會交易
+#                                （腳本會跳過當日已交易，重複觸發無副作用）
 "on":
   workflow_dispatch:
     inputs:
       dry_run:
         description: "dry run（不寫帳本/不 commit）"
+        type: boolean
+        default: false
+      force:
+        description: "當日已交易也強制再跑一次"
         type: boolean
         default: false
       edinet_days:
@@ -18,8 +28,8 @@ name: Paper Trade
         default: image
         options: [image, html, text]
   schedule:
-    # UTC 08:00 = JST 17:00（price-fetch 15:40 起跑 + ~10 分抓取，留約 1 小時 buffer）
-    - cron: "0 8 * * 1-5"
+    # UTC 13:00 = JST 22:00 — 只是保險。正常路徑是 cloud-fetch 全部批次完成後直接觸發。
+    - cron: "0 13 * * 1-5"
 
 permissions:
   contents: write
@@ -51,19 +61,25 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run auto paper trade
+        id: trade
         env:
           EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
           INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
+          INPUT_FORCE: ${{ github.event.inputs.force }}
           INPUT_EDINET_DAYS: ${{ github.event.inputs.edinet_days || '7' }}
         run: |
           ARGS="--materialize"
           [ -n "$INPUT_EDINET_DAYS" ] && [ "$INPUT_EDINET_DAYS" != "0" ] && ARGS="$ARGS --backfill-edinet $INPUT_EDINET_DAYS"
           [ "$INPUT_DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
+          # cloud-fetch 完成觸發 + JST 22:00 保險排程，同一天可能被觸發兩次 → 已交易就跳過
+          [ "$INPUT_FORCE" != "true" ] && [ "$INPUT_DRY_RUN" != "true" ] && ARGS="$ARGS --skip-if-logged"
+          # 保險排程（JST 22:00）時，margin 分批鏈可能還在跑 → 不交易，等鏈跑完自己觸發
+          [ "${{ github.event_name }}" = "schedule" ] && ARGS="$ARGS --require-fetch-done"
           echo "args: $ARGS"
           python scripts/auto_paper_trade.py $ARGS
 
       - name: Persist EDINET daily cache to cloud-cache
-        if: success() && github.event.inputs.dry_run != 'true'
+        if: success() && steps.trade.outputs.paper_trade_skipped != 'true' && github.event.inputs.dry_run != 'true'
         run: |
           # data/cache 是 gitignored（runner 每次全新），EDINET 每日申報要存回 cloud-cache
           # 才能跨 run 累積 60 天窗口（第一盤的輸入）。
@@ -73,7 +89,7 @@ jobs:
           fi
 
       - name: Commit results
-        if: success() && github.event.inputs.dry_run != 'true'
+        if: success() && steps.trade.outputs.paper_trade_skipped != 'true' && github.event.inputs.dry_run != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -98,11 +114,11 @@ jobs:
           if-no-files-found: ignore
 
       - name: Install CJK font (日報圖用)
-        if: success() && github.event.inputs.dry_run != 'true'
+        if: success() && steps.trade.outputs.paper_trade_skipped != 'true' && github.event.inputs.dry_run != 'true'
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk
 
       - name: Notify Telegram — daily report
-        if: success() && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
+        if: success() && steps.trade.outputs.paper_trade_skipped != 'true' && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}

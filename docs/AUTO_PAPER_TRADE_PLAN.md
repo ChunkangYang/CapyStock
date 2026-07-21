@@ -100,13 +100,25 @@ AUTO_TRADE_SLIPPAGE_BPS     = 0
 - Actions cron 會延遲，若 price-fetch 當天失敗，driver 應**偵測 price CSV 最新日期 ≠ 當日就整個跳過不交易**（寧可不交易，不要拿舊價下單）
 - 這是模擬，不接券商；任何實盤化都是另一個決策
 
-## 時序
+## 時序（2026-07-21 修正：改成資料抓完才交易）
 
 ```
 JST 15:30 東證收盤
-JST 15:40 price-fetch.yml   → cloud-cache 收盤價 commit
-JST 17:00 paper-trade.yml   → 推進停損 + 依三盤下單 → ledgers commit  ← 新
+JST 15:40 price-fetch.yml   → 全市場收盤價（~10 分）→ cloud-cache commit
+JST 17:00 cloud-fetch.yml   → margin + EDINET，分批鏈式（~23 個 run，數小時）
+            └ 最後一批 done=true → gh workflow run paper-trade.yml  ← 主要觸發點
+          paper-trade.yml   → 推進停損 + 依三盤下單 → ledgers/log commit + Telegram 日報圖
+JST 22:00 paper-trade schedule（保險）
+            → 若 `_fetch_state.json` done=false（鏈還在跑）→ 不交易，等鏈觸發
+            → 若當日已有 log → 跳過（不重複交易、不重複發日報）
 JST 17:00 本地 price_sync（既有，只拉 price，不動 bot 帳本）
 隔日 08:00 daily_pipeline（既有）
 ```
+
+**為什麼不是固定 17:00 交易**：margin（第三盤輸入）由 cloud-fetch 分批抓，17:00 才剛起跑，
+當下交易等於用昨天的籌碼資料，而且和 cloud-fetch 的 commit 互搶 push。改成鏈跑完再觸發，
+三盤三種資料（price / EDINET / margin）都是當日最新。
+
+**冪等**：`--skip-if-logged` 以 JST 日期判斷當日是否已交易（runner 是 UTC，
+`auto_trade_service.jst_today()` 統一換算），重複觸發不會重複下單或重複發日報。
 本地要看結果：`git pull` 或 Dashboard 雲端同步後開 `/ledger`。

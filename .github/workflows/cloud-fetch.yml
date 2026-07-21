@@ -167,6 +167,10 @@ jobs:
               -f offset="$NEXT"
           else
             echo "All batches done (total=$TOTAL)"
+            # 全市場資料（price 已於 JST 15:40 抓完、margin/EDINET 到此刻才齊）→ 才觸發自動模擬交易。
+            # 交易腳本自己會跳過「今天已經交易過」的情況，重複觸發無副作用。
+            echo "Triggering paper-trade"
+            gh workflow run paper-trade.yml --ref "${{ github.ref_name }}" || true
           fi
 
       - name: Notify Telegram — batch done (full scan complete)
