@@ -6,8 +6,9 @@ name: Paper Trade
 #   price-fetch.yml   JST 15:40  收盤價（~10 分）
 #   cloud-fetch.yml   JST 17:00  margin + EDINET，分批鏈式跑數小時
 #     └ 最後一批完成 → gh workflow run paper-trade.yml   ← 主要觸發點
-#   schedule          JST 22:00  保險：萬一 cloud-fetch 掛了/沒觸發，仍會交易
-#                                （腳本會跳過當日已交易，重複觸發無副作用）
+#   schedule          JST 23:00  死線：這時候還沒跑過就直接跑（不管 margin 鏈跑完沒），
+#                                寧可用略舊的 margin 也不要整天沒交易。
+#                                （腳本以 JST 日期判斷當日是否已交易，重複觸發無副作用）
 "on":
   workflow_dispatch:
     inputs:
@@ -28,8 +29,9 @@ name: Paper Trade
         default: image
         options: [image, html, text]
   schedule:
-    # UTC 13:00 = JST 22:00 — 只是保險。正常路徑是 cloud-fetch 全部批次完成後直接觸發。
-    - cron: "0 13 * * 1-5"
+    # UTC 14:00 = JST 23:00 — 死線。正常路徑是 cloud-fetch 全部批次完成後（約 JST 19–20 點）
+    # 直接觸發；到這個時間還沒交易過就無條件補跑。
+    - cron: "0 14 * * 1-5"
 
 permissions:
   contents: write
@@ -71,10 +73,9 @@ jobs:
           ARGS="--materialize"
           [ -n "$INPUT_EDINET_DAYS" ] && [ "$INPUT_EDINET_DAYS" != "0" ] && ARGS="$ARGS --backfill-edinet $INPUT_EDINET_DAYS"
           [ "$INPUT_DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
-          # cloud-fetch 完成觸發 + JST 22:00 保險排程，同一天可能被觸發兩次 → 已交易就跳過
+          # cloud-fetch 完成觸發 + JST 23:00 死線排程，同一天可能被觸發兩次 → 已交易就跳過。
+          # 死線排程不加 --require-fetch-done：margin 鏈沒跑完也照跑（略舊的籌碼資料 > 沒交易）。
           [ "$INPUT_FORCE" != "true" ] && [ "$INPUT_DRY_RUN" != "true" ] && ARGS="$ARGS --skip-if-logged"
-          # 保險排程（JST 22:00）時，margin 分批鏈可能還在跑 → 不交易，等鏈跑完自己觸發
-          [ "${{ github.event_name }}" = "schedule" ] && ARGS="$ARGS --require-fetch-done"
           echo "args: $ARGS"
           python scripts/auto_paper_trade.py $ARGS
 

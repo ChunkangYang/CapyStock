@@ -16,8 +16,8 @@
 - ✅ **每日 log**：`data/auto_trade_log/YYYY-MM-DD.json`（進場/出場/被跳過原因/當日權益）。
 - ✅ **觸發時機（2026-07-21 修正）**：原本 paper-trade 與 cloud-fetch 同時 JST 17:00 起跑，
   等於用**昨天的 margin** 交易且與其 commit 互搶。改為 **cloud-fetch 分批鏈全部完成後
-  `gh workflow run paper-trade.yml`**；保險排程移到 JST 22:00 且加 `--require-fetch-done`
-  （鏈未完成不交易）＋ `--skip-if-logged`（JST 當日已交易就跳過，含不重發日報）。
+  `gh workflow run paper-trade.yml`**；死線排程 JST 23:00：到那時還沒交易過就無條件補跑
+  （margin 鏈沒跑完也照跑），靠 `--skip-if-logged`（JST 當日已交易就跳過，含不重發日報）保證不重複。
   交易日一律以 `jst_today()` 判斷（runner 是 UTC，避免跨日錯位）。
 - ✅ **圖表頁** `/auto-trade`：資金曲線（權益/現金/持倉市值 + 起始資金基準線）、
   持倉暫定損益、已結算明細、每日 log 展開、單筆交易走勢 modal。

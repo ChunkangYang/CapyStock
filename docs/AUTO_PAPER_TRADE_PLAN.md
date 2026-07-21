@@ -108,12 +108,16 @@ JST 15:40 price-fetch.yml   → 全市場收盤價（~10 分）→ cloud-cache c
 JST 17:00 cloud-fetch.yml   → margin + EDINET，分批鏈式（~23 個 run，數小時）
             └ 最後一批 done=true → gh workflow run paper-trade.yml  ← 主要觸發點
           paper-trade.yml   → 推進停損 + 依三盤下單 → ledgers/log commit + Telegram 日報圖
-JST 22:00 paper-trade schedule（保險）
-            → 若 `_fetch_state.json` done=false（鏈還在跑）→ 不交易，等鏈觸發
+JST 23:00 paper-trade schedule（死線）
+            → 到這時候還沒交易過就無條件補跑（margin 鏈沒跑完也照跑，
+              略舊的籌碼資料 > 整天沒交易）
             → 若當日已有 log → 跳過（不重複交易、不重複發日報）
 JST 17:00 本地 price_sync（既有，只拉 price，不動 bot 帳本）
 隔日 08:00 daily_pipeline（既有）
 ```
+
+交易本身很快（實測：三盤全市場掃描 6.9 秒、下單寫檔 <1 秒，整個 job 約 1.5 分鐘），
+所以死線放在 23:00 完全來得及。`--require-fetch-done` 旗標保留供手動使用，死線排程不帶。
 
 **為什麼不是固定 17:00 交易**：margin（第三盤輸入）由 cloud-fetch 分批抓，17:00 才剛起跑，
 當下交易等於用昨天的籌碼資料，而且和 cloud-fetch 的 commit 互搶 push。改成鏈跑完再觸發，
