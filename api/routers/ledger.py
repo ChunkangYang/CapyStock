@@ -9,6 +9,12 @@ from api.services import ledger_service
 router = APIRouter()
 
 
+def _reject_if_bot(ledger_id: str) -> None:
+    """自動模擬交易帳本唯讀 — 只有排程/GitHub Actions 能寫（單一寫入者，避免衝突）。"""
+    if ledger_service.is_bot_ledger(ledger_id):
+        raise HTTPException(403, "自動模擬交易帳本為唯讀，只能由每日排程寫入")
+
+
 @router.get("/ledgers", response_model=list[LedgerSummary])
 def list_ledgers():
     return ledger_service.list_ledgers()
@@ -29,6 +35,7 @@ def get_ledger(ledger_id: str):
 
 @router.delete("/ledgers/{ledger_id}")
 def delete_ledger(ledger_id: str):
+    _reject_if_bot(ledger_id)
     if not ledger_service.delete_ledger(ledger_id):
         raise HTTPException(404, f"帳本 {ledger_id} 不存在")
     return {"status": "deleted", "id": ledger_id}
@@ -40,6 +47,7 @@ def add_trade(ledger_id: str, req: TradeAddRequest):
         raise HTTPException(422, "購入股數必須 > 0")
     if req.entry_price <= 0:
         raise HTTPException(422, "購入時價必須 > 0")
+    _reject_if_bot(ledger_id)
     trade = ledger_service.add_trade(ledger_id, req)
     if trade is None:
         raise HTTPException(404, f"帳本 {ledger_id} 不存在")
@@ -48,6 +56,7 @@ def add_trade(ledger_id: str, req: TradeAddRequest):
 
 @router.delete("/ledgers/{ledger_id}/trades/{trade_id}")
 def delete_trade(ledger_id: str, trade_id: str):
+    _reject_if_bot(ledger_id)
     if not ledger_service.delete_trade(ledger_id, trade_id):
         raise HTTPException(404, "帳本或交易不存在")
     return {"status": "deleted", "id": trade_id}
@@ -64,6 +73,7 @@ def trade_price_series(ledger_id: str, trade_id: str):
 
 @router.post("/ledgers/{ledger_id}/advance", response_model=AdvanceResult)
 def advance_ledger(ledger_id: str):
+    _reject_if_bot(ledger_id)
     r = ledger_service.advance_ledger(ledger_id)
     if r is None:
         raise HTTPException(404, f"帳本 {ledger_id} 不存在")

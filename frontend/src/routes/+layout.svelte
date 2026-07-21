@@ -70,6 +70,11 @@
         </a>
       </li>
       <li>
+        <a href="/auto-trade" class:active={currentPath.startsWith('/auto-trade')}>
+          🤖 自動模擬
+        </a>
+      </li>
+      <li>
         <a href="/data" class:active={currentPath.startsWith('/data')}>
           資料管理
         </a>

@@ -112,6 +112,49 @@ def _wanted(name: str, kinds: Optional[list[str]]) -> bool:
     return False
 
 
+def _pull_auto_trade(owner: str, repo: str, branch: str, headers: dict) -> dict:
+    """把 GitHub 上的自動模擬交易成果拉下來（帳本 + 每日 log）。
+
+    自動交易由 GitHub Actions（paper-trade.yml）執行並 commit，本機/雲端主機是唯讀端；
+    走 Contents API（與 cloud-cache 同機制），不依賴本地 .git，PaaS 部署也能更新。
+    """
+    out = {"ledger": False, "logs": 0, "errors": []}
+    base = f"https://api.github.com/repos/{owner}/{repo}/contents"
+    params = {"ref": branch}
+    ledger_name = f"{config.AUTO_TRADE_LEDGER_ID}.json"
+    try:
+        with httpx.Client(timeout=30.0) as client:
+            r = client.get(f"{base}/data/ledgers/{ledger_name}", params=params, headers=headers)
+            if r.status_code == 200:
+                dl = r.json().get("download_url")
+                if dl:
+                    resp = client.get(dl)
+                    resp.raise_for_status()
+                    dest = config.DATA_DIR / "ledgers"
+                    dest.mkdir(parents=True, exist_ok=True)
+                    (dest / ledger_name).write_bytes(resp.content)
+                    out["ledger"] = True
+
+            r = client.get(f"{base}/data/auto_trade_log", params=params, headers=headers)
+            if r.status_code == 200 and isinstance(r.json(), list):
+                dest = config.DATA_DIR / "auto_trade_log"
+                dest.mkdir(parents=True, exist_ok=True)
+                for meta in r.json():
+                    dl = meta.get("download_url")
+                    if not dl:
+                        continue
+                    try:
+                        resp = client.get(dl)
+                        resp.raise_for_status()
+                        (dest / meta["name"]).write_bytes(resp.content)
+                        out["logs"] += 1
+                    except Exception as e:  # noqa: BLE001
+                        out["errors"].append(f"{meta.get('name')}: {e}")
+    except Exception as e:  # noqa: BLE001
+        out["errors"].append(str(e))
+    return out
+
+
 def run_cloud_sync(
     pull: bool = True,
     kinds: Optional[list[str]] = None,
@@ -200,6 +243,8 @@ def run_cloud_sync(
             "owner": owner, "repo": repo, "branch": branch,
             "downloaded": len(downloaded), "errors": dl_errors,
         }
+        # 順手拉自動模擬交易成果（帳本 + 每日 log）— Actions 是唯一寫入者，這裡只覆寫本地副本
+        pulled_info["auto_trade"] = _pull_auto_trade(owner, repo, branch, headers)
 
     if not cloud_dir.exists():
         raise RuntimeError("data/cloud-cache 不存在，先在 GitHub 觸發一次 Cloud Fetch")

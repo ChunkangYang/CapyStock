@@ -1,5 +1,22 @@
 # Human TODO — 需要人工介入的任務
 
+## 自動模擬交易上線（2026-07-21）
+
+程式碼與本地驗證已完成（見 [AUTO_PAPER_TRADE_PLAN.md](AUTO_PAPER_TRADE_PLAN.md)）。以下要你操作：
+
+1. **GitHub Secrets 確認**（Settings → Secrets and variables → Actions）
+   - `TELEGRAM_BOT_TOKEN`、`TELEGRAM_CHAT_ID`：日報要送到你的 Telegram，缺這兩個就只寫 log 不通知
+   - `EDINET_API_KEY`：第一盤（EDINET 申報）的資料源，缺了口袋名單會嚴重縮水
+2. **手動 dispatch 一次**：Actions →「Paper Trade」→ Run workflow
+   - 第一次建議先 `dry_run = true`：只跑不寫檔、不 commit，看 log 輸出正不正常
+   - 再跑一次 `dry_run = false`：確認 commit 只含 `data/ledgers/auto-pocket.json`、
+     `data/auto_trade_log/`、`data/scan_snapshots/pocket_*.json`、`data/cloud-cache/edinet/daily/`
+   - 確認 Telegram 收到日報
+3. **隔個交易日 JST 17:30 後**：檢查 Actions 排程有自動跑、`/auto-trade` 頁資金曲線多一個點
+   - 本機/雲端主機要看到最新結果：按 Dashboard「雲端同步」（會順手拉帳本與每日 log）或 `git pull`
+
+> 注意：GitHub 排程 workflow 只在**預設分支**跑；本 repo 預設分支＝`feature/s25-portfolio`，已相符。
+
 ## 外網部署（雲端 PaaS + Google 登入，2026-06-17）
 
 程式碼/Dockerfile/測試已完成並本地驗證（見 [EXTERNAL_ACCESS.md](EXTERNAL_ACCESS.md)）。

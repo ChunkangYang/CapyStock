@@ -1,7 +1,28 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-06-20（雲端同步順手推進模擬交易到最新收盤 + 帳本單筆交易價格折線圖）
+2026-07-21（自動模擬交易：GitHub Actions 每日下單 + /auto-trade 圖表頁 + Telegram 日報）
+
+## 2026-07-21 自動模擬交易（零 LLM，每日 Actions 執行）
+
+- 需求：依三盤策略每天自動做模擬交易、留 log（已結算盈虧 + 未結算暫定收益）、
+  系統內看得到圖表、每天 Telegram 收日報。
+- ✅ **策略腳本化**：進場＝當日三盤口袋名單（drop_pct 排序、每筆 30 萬、單日≤3 檔、
+  同時≤10 檔、停損出場後 20 日冷卻、股價/折價/資料新鮮度防呆）；出場＝既有棘輪移動停損。
+  純 config 門檻，決策可重現。核心純函式 `auto_trade_service.select_new_trades`。
+- ✅ **單一寫入者**：帳本 `data/ledgers/auto-pocket.json`（`owner="bot"`）只由
+  [paper-trade.yml](../.github/workflows/paper-trade.yml)（JST 17:00）寫；本地 `advance_all()`
+  預設跳過 bot 帳本、API 寫入端點 403 → 不會與 Actions 雙寫衝突。
+- ✅ **每日 log**：`data/auto_trade_log/YYYY-MM-DD.json`（進場/出場/被跳過原因/當日權益）。
+- ✅ **圖表頁** `/auto-trade`：資金曲線（權益/現金/持倉市值 + 起始資金基準線）、
+  持倉暫定損益、已結算明細、每日 log 展開、單筆交易走勢 modal。
+- ✅ **Telegram 日報**：`format_report()` → workflow curl 送出（token/chat_id 缺就跳過）。
+- ✅ **同步**：雲端同步順手拉 Actions 產出的帳本與 log（PaaS 部署也會更新）。
+- ✅ **測試**：`test_auto_trade.py` 14 passed；全套 255 passed（2 紅為既有 indicator mock /
+  favorites，非本次）。前端 `vite build` 綠 + Docker 重建後實機截圖
+  [docs/EVIDENCES/auto-trade-page-replay.png](EVIDENCES/auto-trade-page-replay.png)。
+- ⏳ 待人工：GitHub Secrets 確認 + 手動 dispatch 一次 → [HUMAN_TODO.md](HUMAN_TODO.md)。
+- 細節與重放結果見 [AUTO_PAPER_TRADE_PLAN.md](AUTO_PAPER_TRADE_PLAN.md)。
 
 ## 2026-06-20 同步推進模擬交易 + 單筆交易價格折線圖
 

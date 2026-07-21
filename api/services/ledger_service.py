@@ -92,6 +92,16 @@ def _save_ledger(ledger: Ledger) -> None:
         json.dump(ledger.model_dump(mode="json"), f, ensure_ascii=False, indent=1)
 
 
+# 公開別名（auto_trade_service 等同套件內服務使用，避免各自實作讀寫）
+load_ledger = _load_ledger
+save_ledger = _save_ledger
+
+
+def closes_for(code: str, days: int = 400) -> list[tuple[date, float]]:
+    """(日期, 收盤) 序列 — 讀 data/cache 的 price CSV（cache-first，不打外網）。"""
+    return _closes_for(code, days=days)
+
+
 # ── 帳本 CRUD ────────────────────────────────────────────────────────────
 
 def create_ledger(name: str) -> Ledger:
@@ -119,7 +129,7 @@ def list_ledgers() -> list[LedgerSummary]:
             continue
         realized = sum((t.pnl_jpy or 0.0) for t in lg.trades if t.status == "closed")
         out.append(LedgerSummary(
-            id=lg.id, name=lg.name, created_at=lg.created_at,
+            id=lg.id, name=lg.name, created_at=lg.created_at, owner=lg.owner,
             trade_count=len(lg.trades),
             open_count=sum(1 for t in lg.trades if t.status == "open"),
             closed_count=sum(1 for t in lg.trades if t.status == "closed"),
@@ -132,6 +142,31 @@ def list_ledgers() -> list[LedgerSummary]:
 
 def get_ledger(ledger_id: str) -> Optional[Ledger]:
     return _load_ledger(ledger_id)
+
+
+def get_or_create_bot_ledger() -> Ledger:
+    """取得（或初始化）自動模擬交易帳本 — 固定 id，owner="bot"，只由排程/Actions 寫。"""
+    from capystock import config
+    ledger = _load_ledger(config.AUTO_TRADE_LEDGER_ID)
+    if ledger is not None:
+        return ledger
+    _ensure_dir()
+    ledger = Ledger(
+        id=config.AUTO_TRADE_LEDGER_ID,
+        name=config.AUTO_TRADE_LEDGER_NAME,
+        created_at=datetime.now().isoformat(timespec="seconds"),
+        owner="bot",
+        initial_cash_jpy=float(config.AUTO_TRADE_INITIAL_CASH_JPY),
+        cash_jpy=float(config.AUTO_TRADE_INITIAL_CASH_JPY),
+        trades=[],
+    )
+    _save_ledger(ledger)
+    return ledger
+
+
+def is_bot_ledger(ledger_id: str) -> bool:
+    lg = _load_ledger(ledger_id)
+    return lg is not None and lg.owner == "bot"
 
 
 def delete_ledger(ledger_id: str) -> bool:
@@ -245,11 +280,18 @@ def advance_ledger(ledger_id: str) -> Optional[AdvanceResult]:
     return _advance_and_save(ledger)
 
 
-def advance_all() -> AdvanceResult:
-    """推進所有帳本所有 open 交易（排程/手動用）。"""
+def advance_all(include_bot: bool = False) -> AdvanceResult:
+    """推進所有帳本所有 open 交易（排程/手動用）。
+
+    include_bot=False（預設）：**跳過 owner="bot" 的自動模擬交易帳本** —
+    該帳本唯一寫入者是 GitHub Actions（paper-trade.yml），本地若也推進會造成
+    重複推進與 git 衝突（單一寫入者原則）。
+    """
     total_adv = 0
     total_closed = 0
     for s in list_ledgers():
+        if not include_bot and s.owner == "bot":
+            continue
         ledger = _load_ledger(s.id)
         if ledger is None:
             continue

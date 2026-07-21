@@ -1,0 +1,334 @@
+{
+ "date": "2026-06-02",
+ "generated_at": "2026-07-21T12:59:32",
+ "dry_run": false,
+ "params": {
+  "position_jpy": 300000,
+  "max_open": 10,
+  "max_new_per_day": 3,
+  "stop_pct": 0.1,
+  "lot_size": 100,
+  "fee_bps": 0.0,
+  "slippage_bps": 0.0,
+  "max_price_age_days": 5,
+  "min_premium_pct": -0.5,
+  "min_price_jpy": 50.0
+ },
+ "pocket_candidates": 30,
+ "advanced_trades": 10,
+ "opened": [],
+ "closed": [],
+ "skipped": [
+  {
+   "code": "6173",
+   "name": "アクアライン",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "7922",
+   "name": "三光産業",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "1976",
+   "name": "明星工業",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4556",
+   "name": "カイノス",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "9338",
+   "name": "ＩＮＦＯＲＩＣＨ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4452",
+   "name": "花王",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "7138",
+   "name": "ＴＯＲＩＣＯ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "3179",
+   "name": "シュッピン",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "9270",
+   "name": "バリュエンス",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4883",
+   "name": "モダリス",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4888",
+   "name": "ステラファーマ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "9830",
+   "name": "トラスコ中山",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "5341",
+   "name": "アサヒエイト",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6670",
+   "name": "ＭＣＪ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4596",
+   "name": "窪田製薬ＨＤ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "8518",
+   "name": "日本アジア投資",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6161",
+   "name": "エスティック",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4840",
+   "name": "トライアイズ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6786",
+   "name": "ＲＶＨ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4617",
+   "name": "中国塗料",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6731",
+   "name": "ピクセラ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "3667",
+   "name": "ｅｎｉｓｈ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "8818",
+   "name": "京阪神ビルディング",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4884",
+   "name": "クリングルファーマ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "5707",
+   "name": "東邦亜鉛",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "3727",
+   "name": "アプリックス",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6555",
+   "name": "ＭＳコンサル",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4598",
+   "name": "デルタフライ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "5129",
+   "name": "ＦＩＸＥＲ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "8742",
+   "name": "小林洋行",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  }
+ ],
+ "cash_jpy": 256000.0,
+ "market_value_jpy": 2412400.0,
+ "equity_jpy": 2668400.0,
+ "initial_cash_jpy": 3000000.0,
+ "realized_pnl_jpy": -315600.0,
+ "unrealized_pnl_jpy": -16000.0,
+ "total_return_pct": -0.11053333333333333,
+ "open_count": 10,
+ "closed_count": 8,
+ "holdings": [
+  {
+   "trade_id": "7246c51c-9a6e-40a3-ab21-7ede13ed2c6c",
+   "code": "7922",
+   "name": "三光産業",
+   "entry_date": "2026-05-15",
+   "entry_price": 720.0,
+   "shares": 400,
+   "last_close": 719.0,
+   "last_close_date": "2026-06-02",
+   "stop_line": 648.0,
+   "high_water": 720.0,
+   "market_value_jpy": 287600.0,
+   "unrealized_pnl_jpy": -400.0,
+   "unrealized_pnl_pct": -0.001388888888888889
+  },
+  {
+   "trade_id": "828dffae-7c20-430b-92cd-b31ef34c7d1b",
+   "code": "1976",
+   "name": "明星工業",
+   "entry_date": "2026-05-15",
+   "entry_price": 1780.0,
+   "shares": 100,
+   "last_close": 1676.0,
+   "last_close_date": "2026-06-02",
+   "stop_line": 1638.0,
+   "high_water": 1820.0,
+   "market_value_jpy": 167600.0,
+   "unrealized_pnl_jpy": -10400.0,
+   "unrealized_pnl_pct": -0.058426966292134834
+  },
+  {
+   "trade_id": "78540633-5b1d-4715-9d7b-4d30710c8fcb",
+   "code": "4556",
+   "name": "カイノス",
+   "entry_date": "2026-05-15",
+   "entry_price": 2273.0,
+   "shares": 100,
+   "last_close": 2264.0,
+   "last_close_date": "2026-06-02",
+   "stop_line": 2049.3,
+   "high_water": 2277.0,
+   "market_value_jpy": 226400.0,
+   "unrealized_pnl_jpy": -900.0,
+   "unrealized_pnl_pct": -0.003959524857017158
+  },
+  {
+   "trade_id": "44d25454-2257-4cae-a9af-51e2eb7aae49",
+   "code": "3179",
+   "name": "シュッピン",
+   "entry_date": "2026-05-18",
+   "entry_price": 1021.0,
+   "shares": 200,
+   "last_close": 1050.0,
+   "last_close_date": "2026-06-02",
+   "stop_line": 980.1,
+   "high_water": 1089.0,
+   "market_value_jpy": 210000.0,
+   "unrealized_pnl_jpy": 5800.0,
+   "unrealized_pnl_pct": 0.02840352595494613
+  },
+  {
+   "trade_id": "264a450e-3f28-4d7c-85a8-10c39f3b605c",
+   "code": "9270",
+   "name": "バリュエンス",
+   "entry_date": "2026-05-18",
+   "entry_price": 2283.0,
+   "shares": 100,
+   "last_close": 2416.0,
+   "last_close_date": "2026-06-02",
+   "stop_line": 2335.5,
+   "high_water": 2595.0,
+   "market_value_jpy": 241600.0,
+   "unrealized_pnl_jpy": 13300.0,
+   "unrealized_pnl_pct": 0.05825667980727114
+  },
+  {
+   "trade_id": "699078f3-ea5c-4a76-80a1-e07a58a5a76f",
+   "code": "9830",
+   "name": "トラスコ中山",
+   "entry_date": "2026-05-19",
+   "entry_price": 2267.0,
+   "shares": 100,
+   "last_close": 2178.0,
+   "last_close_date": "2026-06-02",
+   "stop_line": 2040.3,
+   "high_water": 2267.0,
+   "market_value_jpy": 217800.0,
+   "unrealized_pnl_jpy": -8900.0,
+   "unrealized_pnl_pct": -0.03925893250992501
+  },
+  {
+   "trade_id": "5efd12ac-deca-4d62-a98b-fd131939a3ef",
+   "code": "6670",
+   "name": "ＭＣＪ",
+   "entry_date": "2026-05-28",
+   "entry_price": 2187.0,
+   "shares": 100,
+   "last_close": 2182.0,
+   "last_close_date": "2026-06-02",
+   "stop_line": 1968.3,
+   "high_water": 2187.0,
+   "market_value_jpy": 218200.0,
+   "unrealized_pnl_jpy": -500.0,
+   "unrealized_pnl_pct": -0.002286236854138089
+  },
+  {
+   "trade_id": "f38e6d14-59b7-45d9-8de6-13bf20c8bb4b",
+   "code": "7138",
+   "name": "ＴＯＲＩＣＯ",
+   "entry_date": "2026-06-01",
+   "entry_price": 134.0,
+   "shares": 2200,
+   "last_close": 134.0,
+   "last_close_date": "2026-06-02",
+   "stop_line": 120.6,
+   "high_water": 134.0,
+   "market_value_jpy": 294800.0,
+   "unrealized_pnl_jpy": 0.0,
+   "unrealized_pnl_pct": 0.0
+  },
+  {
+   "trade_id": "ebf949d1-1fba-427b-a38e-54701f58381b",
+   "code": "4888",
+   "name": "ステラファーマ",
+   "entry_date": "2026-06-01",
+   "entry_price": 339.0,
+   "shares": 800,
+   "last_close": 332.0,
+   "last_close_date": "2026-06-02",
+   "stop_line": 305.1,
+   "high_water": 339.0,
+   "market_value_jpy": 265600.0,
+   "unrealized_pnl_jpy": -5600.0,
+   "unrealized_pnl_pct": -0.02064896755162242
+  },
+  {
+   "trade_id": "eafaf507-cdfe-42b2-b294-21e87143f233",
+   "code": "5341",
+   "name": "アサヒエイト",
+   "entry_date": "2026-06-01",
+   "entry_price": 208.0,
+   "shares": 1400,
+   "last_close": 202.0,
+   "last_close_date": "2026-06-02",
+   "stop_line": 187.2,
+   "high_water": 208.0,
+   "market_value_jpy": 282800.0,
+   "unrealized_pnl_jpy": -8400.0,
+   "unrealized_pnl_pct": -0.028846153846153848
+  }
+ ]
+}

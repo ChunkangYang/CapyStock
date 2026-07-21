@@ -1,6 +1,32 @@
 # 自動模擬交易（GitHub Actions 每日跑，零 LLM）— 可行性與計畫
 
-日期：2026-07-21　狀態：計畫（待實作）
+日期：2026-07-21　狀態：**已實作**（待人工 dispatch 一次，見 [HUMAN_TODO.md](HUMAN_TODO.md)）
+
+## 實作結果（2026-07-21）
+
+| 檔案 | 內容 |
+|---|---|
+| [config.py](../capystock/config.py) | `AUTO_TRADE_*` 參數（起始資金/每筆金額/上限/停損/冷卻/防呆） |
+| [ledger.py schema](../api/schemas/ledger.py) | `Ledger.owner/initial_cash_jpy/cash_jpy`、`Trade.entry_reason` |
+| [ledger_service.py](../api/services/ledger_service.py) | `get_or_create_bot_ledger`、`advance_all(include_bot=False)` 跳過 bot 帳本 |
+| [routers/ledger.py](../api/routers/ledger.py) | bot 帳本寫入類端點一律 403（單一寫入者） |
+| [auto_trade_service.py](../api/services/auto_trade_service.py) | 選股純函式 `select_new_trades`、`run_daily`、`compute_equity`、`build_equity_curve`、每日 log、Telegram 日報文字 |
+| [routers/auto_trade.py](../api/routers/auto_trade.py) | `/auto-trade/summary｜equity｜logs｜logs/{date}｜logs/{date}/report｜run` |
+| [data_sync_service.py](../api/services/data_sync_service.py) | 雲端同步順手拉 Actions 產出的帳本 + 每日 log（PaaS 也能更新） |
+| [scripts/auto_paper_trade.py](../scripts/auto_paper_trade.py) | driver：materialize cache → EDINET 回補 → 三盤掃描 → 交易 → 日報；含 `--dry-run` / `--replay` |
+| [paper-trade.yml](../.github/workflows/paper-trade.yml) | JST 17:00 排程 + 手動 dispatch（dry_run 選項）、commit、Telegram 日報 |
+| [/auto-trade 頁](../frontend/src/routes/auto-trade/+page.svelte) + [EquityChart](../frontend/src/lib/components/EquityChart.svelte) | 資金曲線、持倉暫定損益、已結算明細、每日 log 展開 |
+| [test_auto_trade.py](../tests/unit/test_auto_trade.py) | 14 tests（選股規則 8 / run_daily 3 / 資金曲線 2 / bot 隔離 1） |
+
+實作中新增的規則（計畫外，來自重放發現）：**停損出場後 20 日內不買回同一檔**
+（`AUTO_TRADE_REENTRY_COOLDOWN_DAYS`）。口袋名單條件是週頻的，隔天買回會被同一段跌勢反覆巴：
+同一區間重放，加冷卻前 -11.6%、加冷卻後 -5.5%。
+
+重放結果（`--replay 2026-05-15:2026-06-20`，僅流程煙霧測試，**不是有效回測**
+——用的是 06-17 的口袋名單快照套到 5 月，有前視偏差）：權益 300 萬 → 283.5 萬，
+16 筆交易、6 筆結算、勝率 17%。上線後帳本已重置為乾淨初始狀態（重放產物存
+`data/DELETE_auto_trade_log_replay*`）。
+
 
 ## 結論：可行，且大部分零件已經在了
 

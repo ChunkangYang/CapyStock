@@ -29,6 +29,7 @@ class Trade(_DateModel):
     shares: int                 # 購入股數（必填）
     stop_pct: float             # 移動停損 N（小數，0.10 = 10%）
     status: Literal["open", "closed"] = "open"
+    entry_reason: str = ""      # 自動交易記進場理由（三盤 drop_pct 等），手動加入為空
     # 棘輪移動停損即時狀態
     high_water: float = 0.0     # 進場後最高收盤（初始＝進場價）
     stop_line: float = 0.0      # 目前停損線
@@ -46,6 +47,9 @@ class Ledger(_DateModel):
     id: str
     name: str
     created_at: str
+    owner: Literal["user", "bot"] = "user"   # bot＝自動模擬交易帳本，唯讀（只有排程/Actions 寫）
+    initial_cash_jpy: float = 0.0            # bot 帳本起始資金（user 帳本 0＝不管現金）
+    cash_jpy: float = 0.0                    # bot 帳本目前現金
     trades: list[Trade] = Field(default_factory=list)
 
 
@@ -54,6 +58,7 @@ class LedgerSummary(_DateModel):
     id: str
     name: str
     created_at: str
+    owner: Literal["user", "bot"] = "user"
     trade_count: int
     open_count: int
     closed_count: int

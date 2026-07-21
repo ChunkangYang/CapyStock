@@ -1,0 +1,124 @@
+name: Paper Trade
+
+# 每日自動模擬交易：三盤口袋名單進場 + 棘輪移動停損出場（純門檻，無 LLM）。
+# 排在 price-fetch（JST 15:40）之後，確保用的是當日收盤價。
+"on":
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "dry run（不寫帳本/不 commit）"
+        type: boolean
+        default: false
+      edinet_days:
+        description: "EDINET 回補天數（0 = 略過）"
+        default: "7"
+  schedule:
+    # UTC 08:00 = JST 17:00（price-fetch 15:40 起跑 + ~10 分抓取，留約 1 小時 buffer）
+    - cron: "0 8 * * 1-5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: paper-trade
+  cancel-in-progress: false
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install deps
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run auto paper trade
+        env:
+          EDINET_API_KEY: ${{ secrets.EDINET_API_KEY }}
+          INPUT_DRY_RUN: ${{ github.event.inputs.dry_run }}
+          INPUT_EDINET_DAYS: ${{ github.event.inputs.edinet_days || '7' }}
+        run: |
+          ARGS="--materialize"
+          [ -n "$INPUT_EDINET_DAYS" ] && [ "$INPUT_EDINET_DAYS" != "0" ] && ARGS="$ARGS --backfill-edinet $INPUT_EDINET_DAYS"
+          [ "$INPUT_DRY_RUN" = "true" ] && ARGS="$ARGS --dry-run"
+          echo "args: $ARGS"
+          python scripts/auto_paper_trade.py $ARGS
+
+      - name: Persist EDINET daily cache to cloud-cache
+        if: success() && github.event.inputs.dry_run != 'true'
+        run: |
+          # data/cache 是 gitignored（runner 每次全新），EDINET 每日申報要存回 cloud-cache
+          # 才能跨 run 累積 60 天窗口（第一盤的輸入）。
+          mkdir -p data/cloud-cache/edinet/daily
+          if [ -d data/cache/edinet/daily ]; then
+            cp -r data/cache/edinet/daily/. data/cloud-cache/edinet/daily/
+          fi
+
+      - name: Commit results
+        if: success() && github.event.inputs.dry_run != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ledgers/auto-pocket.json \
+                  data/auto_trade_log/ \
+                  data/scan_snapshots/pocket_*.json \
+                  data/cloud-cache/edinet/daily/ || true
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+          else
+            git commit -m "chore(paper-trade): $(date -u +%Y-%m-%d) 自動模擬交易"
+            git pull --rebase origin ${{ github.ref_name }}
+            git push
+          fi
+
+      - name: Upload daily log artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-trade-log-${{ github.run_id }}
+          path: data/auto_trade_log/
+          if-no-files-found: ignore
+
+      - name: Notify Telegram — daily report
+        if: success() && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          REPORT="data/auto_trade_log/latest_report.txt"
+          if [ ! -f "$REPORT" ]; then
+            echo "no report file"; exit 0
+          fi
+          # 用 --data-urlencode 避免換行/特殊字元被吃掉；Telegram 單則上限 4096 字元
+          head -c 3900 "$REPORT" > /tmp/report.txt
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text@/tmp/report.txt" \
+            --data-urlencode "disable_web_page_preview=true" || true
+
+      - name: Notify Telegram — failure or cancelled
+        if: (failure() || cancelled()) && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          STATUS="${{ job.status }}"
+          MSG="❌ CapyStock 自動模擬交易 ${STATUS}%0Arun: $RUN_URL"
+          curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}" \
+            -d "text=${MSG}" \
+            -d "disable_web_page_preview=true" || true

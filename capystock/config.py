@@ -83,6 +83,24 @@ POCKET_GATE2_COST_TOLERANCE_PCT = 0.05  # 現價 <= 主力成本 ×(1+此值) �
 # 第三盤 戶數/籌碼集中：信用残(融資 margin_long)連續下降代表浮額釋出、籌碼集中。
 POCKET_GATE3_MARGIN_DECLINE_WEEKS = 3   # 融資餘額連續下降週數
 
+# --- 自動模擬交易（GitHub Actions 每日跑，無 LLM，純門檻）---
+# 進場＝當日三盤口袋名單（三關全過）；出場＝既有棘輪式移動停損。
+# 帳本固定一本、owner="bot"，只由排程/Actions 寫入，本地 advance_all 不碰它。
+AUTO_TRADE_LEDGER_ID = "auto-pocket"
+AUTO_TRADE_LEDGER_NAME = "🤖 自動模擬交易（三盤）"
+AUTO_TRADE_INITIAL_CASH_JPY = 3_000_000   # 起始資金
+AUTO_TRADE_POSITION_JPY = 300_000         # 每筆固定投入金額（滿倉約 10 檔）
+AUTO_TRADE_MAX_OPEN = 10                  # 同時最多持倉檔數
+AUTO_TRADE_MAX_NEW_PER_DAY = 3            # 單日最多新進場檔數
+AUTO_TRADE_STOP_PCT = 0.10                # 棘輪移動停損 N
+AUTO_TRADE_LOT_SIZE = 100                 # 日股交易單位（股）
+AUTO_TRADE_FEE_BPS = 0.0                  # 單邊手續費（bps，10 = 0.1%）
+AUTO_TRADE_SLIPPAGE_BPS = 0.0             # 單邊滑價（bps）
+AUTO_TRADE_MAX_PRICE_AGE_DAYS = 5         # 收盤價資料超過 N 個日曆日 → 當日不進場（防用舊價下單）
+AUTO_TRADE_REENTRY_COOLDOWN_DAYS = 20     # 停損出場後 N 日內不再買回同一檔（避免來回被雙巴）
+AUTO_TRADE_MIN_PREMIUM_PCT = -0.50       # 現價相對主力成本折價超過此值 → 視為資料異常（分割/錯價）跳過
+AUTO_TRADE_MIN_PRICE_JPY = 50.0           # 低於此股價不交易（雞蛋水餃股/錯價防呆）
+
 # --- 三階段移動停損（Chandelier Exit）---
 # Stage 1（profit < STAGE2）：max(進場×(1-STOP_LOSS_DROP_PCT), 進場 - INITIAL_STOP_ATR_MULT×ATR)
 # Stage 2（STAGE2 ≤ profit < STAGE3）：停損移到進場價（保本）
