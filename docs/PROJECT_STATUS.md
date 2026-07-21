@@ -21,7 +21,10 @@
 - ✅ **測試**：`test_auto_trade.py` 14 passed；全套 255 passed（2 紅為既有 indicator mock /
   favorites，非本次）。前端 `vite build` 綠 + Docker 重建後實機截圖
   [docs/EVIDENCES/auto-trade-page-replay.png](EVIDENCES/auto-trade-page-replay.png)。
-- ⏳ 待人工：GitHub Secrets 確認 + 手動 dispatch 一次 → [HUMAN_TODO.md](HUMAN_TODO.md)。
+- ✅ **線上驗證（2026-07-21）**：Actions dry-run 一次 → 正式跑一次（`edinet_days=60` 種子回補）：
+  候選 1032 → 一盤 454 → 二盤 339 → 口袋 46 → 進場 3 檔（9039 / 7976 / 4262，共 ¥833,100），
+  commit `46746dacd` 已入 repo，Telegram 日報實際送達（message_id 113）。全程 ~2 分鐘。
+- ⏳ 待人工：隔個交易日 JST 17:30 後確認排程自動跑 → [HUMAN_TODO.md](HUMAN_TODO.md)。
 - 細節與重放結果見 [AUTO_PAPER_TRADE_PLAN.md](AUTO_PAPER_TRADE_PLAN.md)。
 
 ## 2026-06-20 同步推進模擬交易 + 單筆交易價格折線圖

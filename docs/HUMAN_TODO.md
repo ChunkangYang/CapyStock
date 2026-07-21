@@ -4,6 +4,9 @@
 
 程式碼與本地驗證已完成（見 [AUTO_PAPER_TRADE_PLAN.md](AUTO_PAPER_TRADE_PLAN.md)）。以下要你操作：
 
+> ✅ 1、2 已於 2026-07-21 由 Claude 執行完畢（secrets 三項齊全；dry-run + 正式跑各一次，
+> 正式跑進場 3 檔並 commit `46746dacd`，Telegram 日報確認送達）。剩下第 3 項要你隔天看。
+
 1. **GitHub Secrets 確認**（Settings → Secrets and variables → Actions）
    - `TELEGRAM_BOT_TOKEN`、`TELEGRAM_CHAT_ID`：日報要送到你的 Telegram，缺這兩個就只寫 log 不通知
    - `EDINET_API_KEY`：第一盤（EDINET 申報）的資料源，缺了口袋名單會嚴重縮水
