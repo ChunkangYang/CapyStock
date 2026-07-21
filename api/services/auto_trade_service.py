@@ -497,6 +497,9 @@ def format_report(log: dict) -> str:
                          f"　{o.get('reason','')}")
     else:
         lines.append("🟢 今日無新進場")
+        # 沒進場時把前幾個「為什麼沒買」列出來，避免每天看到空報告卻不知原因
+        for s in (log.get("skipped") or [])[:5]:
+            lines.append(f"　✗ {s.get('code')} {s.get('name','')}：{s.get('reason','')}")
     if closed:
         lines.append(f"🔴 今日出場 {len(closed)} 檔")
         for c in closed:
