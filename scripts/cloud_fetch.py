@@ -38,15 +38,47 @@ POC_CODES = ["7203", "6758", "9984", "8035", "6367"]
 CLOUD_CACHE_DIR = ROOT / "data" / "cloud-cache"
 
 
-def fetch_margin(code: str) -> dict:
-    """從 irbank.net 爬取個股週頻信用残（一次回傳完整歷史，適合初始化與增量更新）。"""
+def fetch_margin(code: str, market_df=None) -> dict:
+    """從 JPX 官方週末信用残（全市場 PDF，已於 run 起始預載為 market_df）切出個股，
+    寫 cloud-cache 並與既有歷史合併。
+
+    改用 JPX 而非 irbank 的原因：irbank 走 Cloudflare，對 GitHub Actions 的
+    datacenter IP 回 403（本地住宅 IP 正常），導致雲端信用残長期抓不到。JPX 為
+    官方 bulk 來源、不擋 datacenter IP，一次下載即涵蓋全市場。
+
+    單位：JPX 原始為「株」，此處 ÷1000 轉「千株」與既有 CSV / analyzer 對齊。
+
+    回傳 ok 語意：
+      - market_df 為 None（JPX 下載/解析整批失敗）→ ok=False（會累積觸發熔斷，讓 run 紅燈）
+      - code 不在 PDF（該股無信用交易）→ ok=True rows=<既有>，note=no_margin（非失敗，不觸發熔斷）
+      - 正常 → ok=True 並寫檔
+    """
     try:
         import pandas as pd
-        from capystock.scraper import _fetch_margin_irbank
 
-        fresh = _fetch_margin_irbank(code)
-        if fresh is None or fresh.empty:
-            return {"ok": False, "source": "irbank", "rows": 0, "error": "empty"}
+        if market_df is None or market_df.empty:
+            return {"ok": False, "source": "jpx", "rows": 0, "error": "jpx_unavailable"}
+
+        sub = market_df[market_df["code"] == str(code)]
+        if sub.empty:
+            # 該股無信用交易資料屬正常，不算失敗（否則會誤觸連續失敗熔斷）
+            return {"ok": True, "source": "jpx", "rows": 0, "note": "no_margin"}
+
+        fresh = sub[["week", "margin_long", "margin_short"]].copy()
+        # 株 → 千株
+        fresh["margin_long"] = fresh["margin_long"] / 1000.0
+        fresh["margin_short"] = fresh["margin_short"] / 1000.0
+        # ratio 與歷史 irbank 列一致採「信用倍率 = 融資買残 / 融券売残」
+        # （JPX 原始 ratio 為 short/long，語意相反；ratio 未被 analyzer 使用，
+        #  此處重算僅為同序列語意一致）。融券残為 0 時倍率無定義 → NaN。
+        import numpy as np
+        fresh["ratio"] = np.where(
+            fresh["margin_short"] > 0,
+            (fresh["margin_long"] / fresh["margin_short"]).round(2),
+            np.nan,
+        )
+        fresh["week"] = pd.to_datetime(fresh["week"], errors="coerce")
+        fresh = fresh.dropna(subset=["week"])
 
         out = CLOUD_CACHE_DIR / f"{code}_margin.csv"
         if out.exists():
@@ -60,9 +92,9 @@ def fetch_margin(code: str) -> dict:
             except Exception:
                 pass
         fresh.to_csv(out, index=False)
-        return {"ok": True, "source": "irbank", "rows": len(fresh), "path": str(out.relative_to(ROOT))}
+        return {"ok": True, "source": "jpx", "rows": len(fresh), "path": str(out.relative_to(ROOT))}
     except Exception as e:
-        return {"ok": False, "source": "irbank", "rows": 0, "error": str(e)}
+        return {"ok": False, "source": "jpx", "rows": 0, "error": str(e)}
 
 
 def fetch_price(code: str) -> dict:
@@ -297,6 +329,19 @@ def main():
         kinds = [k for k in kinds if k != "price"]
     CLOUD_CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
+    # margin 走 JPX 全市場 PDF：整個 run 只下載/解析一次，per-code 迴圈再切片。
+    # 下載失敗 → market_margin_df=None → 每檔 ok=False → 觸發熔斷讓 run 紅燈。
+    market_margin_df = None
+    if "margin" in kinds:
+        try:
+            from capystock.ingest.jpx_margin import fetch_market_margin
+            market_margin_df = fetch_market_margin(force=True)
+            print(f"[cloud_fetch] JPX market margin loaded: {len(market_margin_df)} rows, "
+                  f"{market_margin_df['code'].nunique()} codes")
+        except Exception as e:
+            print(f"[cloud_fetch] JPX market margin load FAILED: {type(e).__name__}: {e}")
+            market_margin_df = None
+
     started = datetime.now(timezone.utc)
     batch_label = f"offset={batch_offset} batch={len(codes)}" if args.batch_size else f"all={len(codes)}"
     print(f"[cloud_fetch] start ts={started.isoformat()} {batch_label} kinds={kinds}")
@@ -325,7 +370,7 @@ def main():
             t0 = time.time()
             try:
                 if kind == "margin":
-                    r = fetch_margin(code)
+                    r = fetch_margin(code, market_margin_df)
                 elif kind == "price":
                     r = fetch_price(code)
                 else:
@@ -407,8 +452,11 @@ def main():
         state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"[cloud_fetch] state -> next_offset={next_offset}/{total_universe} done={batch_done}")
 
-    # 全失敗時非零退出，讓 Actions 顯示紅燈
-    if report["summary"]["ok"] == 0:
+    # 非零退出讓 Actions 顯示紅燈：
+    #   1) 全失敗（ok==0）
+    #   2) 觸發連續失敗熔斷 —— 即使 EDINET 等其他 kind 有 ok，也不得被遮成綠燈
+    #      （舊 bug：margin 全掛 + EDINET ok=1 → ok!=0 → 假成功）
+    if report["summary"]["ok"] == 0 or report["summary"].get("aborted") == "consecutive_failures":
         sys.exit(2)
 
 

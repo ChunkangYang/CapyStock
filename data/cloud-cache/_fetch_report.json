@@ -1,119 +1,45 @@
 {
-  "started_utc": "2026-07-24T10:21:55.765464+00:00",
-  "codes_total": 200,
+  "started_utc": "2026-07-24T10:53:48.178734+00:00",
+  "codes_total": 3,
   "batch_offset": 0,
-  "universe_total": 3747,
+  "universe_total": 3,
   "kinds": [
     "margin"
   ],
   "results": [
     {
-      "ok": false,
-      "source": "irbank",
-      "rows": 0,
-      "error": "empty",
-      "code": "1401",
+      "ok": true,
+      "source": "jpx",
+      "rows": 54,
+      "path": "data\\cloud-cache\\7203_margin.csv",
+      "code": "7203",
       "kind": "margin",
-      "elapsed_sec": 0.83
-    },
-    {
-      "ok": false,
-      "source": "irbank",
-      "rows": 0,
-      "error": "empty",
-      "code": "1431",
-      "kind": "margin",
-      "elapsed_sec": 1.86
-    },
-    {
-      "ok": false,
-      "source": "irbank",
-      "rows": 0,
-      "error": "empty",
-      "code": "1436",
-      "kind": "margin",
-      "elapsed_sec": 2.02
-    },
-    {
-      "ok": false,
-      "source": "irbank",
-      "rows": 0,
-      "error": "empty",
-      "code": "1444",
-      "kind": "margin",
-      "elapsed_sec": 2.08
-    },
-    {
-      "ok": false,
-      "source": "irbank",
-      "rows": 0,
-      "error": "empty",
-      "code": "1447",
-      "kind": "margin",
-      "elapsed_sec": 1.89
-    },
-    {
-      "ok": false,
-      "source": "irbank",
-      "rows": 0,
-      "error": "empty",
-      "code": "2158",
-      "kind": "margin",
-      "elapsed_sec": 2.09
-    },
-    {
-      "ok": false,
-      "source": "irbank",
-      "rows": 0,
-      "error": "empty",
-      "code": "2160",
-      "kind": "margin",
-      "elapsed_sec": 1.91
-    },
-    {
-      "ok": false,
-      "source": "irbank",
-      "rows": 0,
-      "error": "empty",
-      "code": "2173",
-      "kind": "margin",
-      "elapsed_sec": 2.0
-    },
-    {
-      "ok": false,
-      "source": "irbank",
-      "rows": 0,
-      "error": "empty",
-      "code": "2195",
-      "kind": "margin",
-      "elapsed_sec": 2.01
-    },
-    {
-      "ok": false,
-      "source": "irbank",
-      "rows": 0,
-      "error": "empty",
-      "code": "2321",
-      "kind": "margin",
-      "elapsed_sec": 1.98
+      "elapsed_sec": 0.01
     },
     {
       "ok": true,
-      "source": "edinet",
-      "rows": 7,
-      "total_after_dedup": 136,
-      "path": "data/cloud-cache/edinet_reports.json",
-      "code": "*",
-      "kind": "edinet",
-      "elapsed_sec": 4.58
+      "source": "jpx",
+      "rows": 77,
+      "path": "data\\cloud-cache\\2321_margin.csv",
+      "code": "2321",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 58,
+      "path": "data\\cloud-cache\\1401_margin.csv",
+      "code": "1401",
+      "kind": "margin",
+      "elapsed_sec": 0.02
     }
   ],
   "summary": {
-    "aborted": "consecutive_failures",
-    "ok": 1,
-    "fail": 10,
-    "total": 11
+    "ok": 3,
+    "fail": 0,
+    "total": 3
   },
-  "ended_utc": "2026-07-24T10:22:19.018412+00:00",
-  "elapsed_sec": 23.3
+  "ended_utc": "2026-07-24T10:53:48.215062+00:00",
+  "elapsed_sec": 0.0
 }
