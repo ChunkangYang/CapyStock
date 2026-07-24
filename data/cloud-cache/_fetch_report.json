@@ -1,8 +1,8 @@
 {
-  "started_utc": "2026-07-24T10:53:48.178734+00:00",
-  "codes_total": 3,
+  "started_utc": "2026-07-24T10:55:13.061246+00:00",
+  "codes_total": 5,
   "batch_offset": 0,
-  "universe_total": 3,
+  "universe_total": 5,
   "kinds": [
     "margin"
   ],
@@ -11,7 +11,7 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data\\cloud-cache\\7203_margin.csv",
+      "path": "data/cloud-cache/7203_margin.csv",
       "code": "7203",
       "kind": "margin",
       "elapsed_sec": 0.01
@@ -20,7 +20,7 @@
       "ok": true,
       "source": "jpx",
       "rows": 77,
-      "path": "data\\cloud-cache\\2321_margin.csv",
+      "path": "data/cloud-cache/2321_margin.csv",
       "code": "2321",
       "kind": "margin",
       "elapsed_sec": 0.01
@@ -29,17 +29,35 @@
       "ok": true,
       "source": "jpx",
       "rows": 58,
-      "path": "data\\cloud-cache\\1401_margin.csv",
+      "path": "data/cloud-cache/1401_margin.csv",
       "code": "1401",
       "kind": "margin",
-      "elapsed_sec": 0.02
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 129,
+      "path": "data/cloud-cache/6758_margin.csv",
+      "code": "6758",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 54,
+      "path": "data/cloud-cache/9984_margin.csv",
+      "code": "9984",
+      "kind": "margin",
+      "elapsed_sec": 0.01
     }
   ],
   "summary": {
-    "ok": 3,
+    "ok": 5,
     "fail": 0,
-    "total": 3
+    "total": 5
   },
-  "ended_utc": "2026-07-24T10:53:48.215062+00:00",
+  "ended_utc": "2026-07-24T10:55:13.100031+00:00",
   "elapsed_sec": 0.0
 }
