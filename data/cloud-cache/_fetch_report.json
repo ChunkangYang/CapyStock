@@ -1,7 +1,7 @@
 {
-  "started_utc": "2026-07-24T11:10:04.598022+00:00",
+  "started_utc": "2026-07-24T11:11:18.859047+00:00",
   "codes_total": 160,
-  "batch_offset": 1769,
+  "batch_offset": 1929,
   "universe_total": 3747,
   "kinds": [
     "margin"
@@ -10,9 +10,9 @@
     {
       "ok": true,
       "source": "jpx",
-      "rows": 54,
-      "path": "data/cloud-cache/8001_margin.csv",
-      "code": "8001",
+      "rows": 52,
+      "path": "data/cloud-cache/8698_margin.csv",
+      "code": "8698",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -20,8 +20,71 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8002_margin.csv",
-      "code": "8002",
+      "path": "data/cloud-cache/8706_margin.csv",
+      "code": "8706",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 59,
+      "path": "data/cloud-cache/8707_margin.csv",
+      "code": "8707",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 88,
+      "path": "data/cloud-cache/8708_margin.csv",
+      "code": "8708",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8713_margin.csv",
+      "code": "8713",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8714_margin.csv",
+      "code": "8714",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8715_margin.csv",
+      "code": "8715",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 0,
+      "note": "no_margin",
+      "code": "8725",
+      "kind": "margin",
+      "elapsed_sec": 0.0
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 87,
+      "path": "data/cloud-cache/8729_margin.csv",
+      "code": "8729",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -29,8 +92,161 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8005_margin.csv",
-      "code": "8005",
+      "path": "data/cloud-cache/8739_margin.csv",
+      "code": "8739",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8750_margin.csv",
+      "code": "8750",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8766_margin.csv",
+      "code": "8766",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8771_margin.csv",
+      "code": "8771",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 62,
+      "path": "data/cloud-cache/8793_margin.csv",
+      "code": "8793",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8795_margin.csv",
+      "code": "8795",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8798_margin.csv",
+      "code": "8798",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8801_margin.csv",
+      "code": "8801",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8802_margin.csv",
+      "code": "8802",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8803_margin.csv",
+      "code": "8803",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8804_margin.csv",
+      "code": "8804",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8818_margin.csv",
+      "code": "8818",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8830_margin.csv",
+      "code": "8830",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8848_margin.csv",
+      "code": "8848",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8850_margin.csv",
+      "code": "8850",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8860_margin.csv",
+      "code": "8860",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8876_margin.csv",
+      "code": "8876",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8877_margin.csv",
+      "code": "8877",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -38,8 +254,395 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8007_margin.csv",
-      "code": "8007",
+      "path": "data/cloud-cache/8881_margin.csv",
+      "code": "8881",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 51,
+      "path": "data/cloud-cache/8892_margin.csv",
+      "code": "8892",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 51,
+      "path": "data/cloud-cache/8897_margin.csv",
+      "code": "8897",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 51,
+      "path": "data/cloud-cache/8919_margin.csv",
+      "code": "8919",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8923_margin.csv",
+      "code": "8923",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 97,
+      "path": "data/cloud-cache/8934_margin.csv",
+      "code": "8934",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/8935_margin.csv",
+      "code": "8935",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 56,
+      "path": "data/cloud-cache/8999_margin.csv",
+      "code": "8999",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9001_margin.csv",
+      "code": "9001",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9003_margin.csv",
+      "code": "9003",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9005_margin.csv",
+      "code": "9005",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9006_margin.csv",
+      "code": "9006",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9007_margin.csv",
+      "code": "9007",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9008_margin.csv",
+      "code": "9008",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9009_margin.csv",
+      "code": "9009",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9010_margin.csv",
+      "code": "9010",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9020_margin.csv",
+      "code": "9020",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9021_margin.csv",
+      "code": "9021",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9022_margin.csv",
+      "code": "9022",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9023_margin.csv",
+      "code": "9023",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9024_margin.csv",
+      "code": "9024",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9025_margin.csv",
+      "code": "9025",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9031_margin.csv",
+      "code": "9031",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9037_margin.csv",
+      "code": "9037",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9039_margin.csv",
+      "code": "9039",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9041_margin.csv",
+      "code": "9041",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9042_margin.csv",
+      "code": "9042",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9044_margin.csv",
+      "code": "9044",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9045_margin.csv",
+      "code": "9045",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 185,
+      "path": "data/cloud-cache/9046_margin.csv",
+      "code": "9046",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9048_margin.csv",
+      "code": "9048",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 77,
+      "path": "data/cloud-cache/9052_margin.csv",
+      "code": "9052",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9064_margin.csv",
+      "code": "9064",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9065_margin.csv",
+      "code": "9065",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9068_margin.csv",
+      "code": "9068",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9069_margin.csv",
+      "code": "9069",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9072_margin.csv",
+      "code": "9072",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9075_margin.csv",
+      "code": "9075",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9076_margin.csv",
+      "code": "9076",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 63,
+      "path": "data/cloud-cache/9081_margin.csv",
+      "code": "9081",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9090_margin.csv",
+      "code": "9090",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9101_margin.csv",
+      "code": "9101",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9104_margin.csv",
+      "code": "9104",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 52,
+      "path": "data/cloud-cache/9107_margin.csv",
+      "code": "9107",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -47,8 +650,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8008_margin.csv",
-      "code": "8008",
+      "path": "data/cloud-cache/9110_margin.csv",
+      "code": "9110",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -56,8 +659,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8011_margin.csv",
-      "code": "8011",
+      "path": "data/cloud-cache/9119_margin.csv",
+      "code": "9119",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -65,8 +668,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8012_margin.csv",
-      "code": "8012",
+      "path": "data/cloud-cache/9142_margin.csv",
+      "code": "9142",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -74,8 +677,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8014_margin.csv",
-      "code": "8014",
+      "path": "data/cloud-cache/9143_margin.csv",
+      "code": "9143",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -83,8 +686,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8015_margin.csv",
-      "code": "8015",
+      "path": "data/cloud-cache/9147_margin.csv",
+      "code": "9147",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -92,8 +695,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8016_margin.csv",
-      "code": "8016",
+      "path": "data/cloud-cache/9201_margin.csv",
+      "code": "9201",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -101,8 +704,26 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8020_margin.csv",
-      "code": "8020",
+      "path": "data/cloud-cache/9202_margin.csv",
+      "code": "9202",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 80,
+      "path": "data/cloud-cache/9216_margin.csv",
+      "code": "9216",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 150,
+      "path": "data/cloud-cache/9229_margin.csv",
+      "code": "9229",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -110,8 +731,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8022_margin.csv",
-      "code": "8022",
+      "path": "data/cloud-cache/9247_margin.csv",
+      "code": "9247",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -119,8 +740,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8031_margin.csv",
-      "code": "8031",
+      "path": "data/cloud-cache/9267_margin.csv",
+      "code": "9267",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -128,8 +749,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8032_margin.csv",
-      "code": "8032",
+      "path": "data/cloud-cache/9273_margin.csv",
+      "code": "9273",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -137,8 +758,17 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8035_margin.csv",
-      "code": "8035",
+      "path": "data/cloud-cache/9274_margin.csv",
+      "code": "9274",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 80,
+      "path": "data/cloud-cache/9278_margin.csv",
+      "code": "9278",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -146,8 +776,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8037_margin.csv",
-      "code": "8037",
+      "path": "data/cloud-cache/9279_margin.csv",
+      "code": "9279",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -155,8 +785,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8043_margin.csv",
-      "code": "8043",
+      "path": "data/cloud-cache/9301_margin.csv",
+      "code": "9301",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -164,8 +794,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8050_margin.csv",
-      "code": "8050",
+      "path": "data/cloud-cache/9302_margin.csv",
+      "code": "9302",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -173,17 +803,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8051_margin.csv",
-      "code": "8051",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 78,
-      "path": "data/cloud-cache/8052_margin.csv",
-      "code": "8052",
+      "path": "data/cloud-cache/9303_margin.csv",
+      "code": "9303",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -191,8 +812,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8053_margin.csv",
-      "code": "8053",
+      "path": "data/cloud-cache/9304_margin.csv",
+      "code": "9304",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -200,8 +821,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8056_margin.csv",
-      "code": "8056",
+      "path": "data/cloud-cache/9305_margin.csv",
+      "code": "9305",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -209,8 +830,35 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8057_margin.csv",
-      "code": "8057",
+      "path": "data/cloud-cache/9310_margin.csv",
+      "code": "9310",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 61,
+      "path": "data/cloud-cache/9319_margin.csv",
+      "code": "9319",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 77,
+      "path": "data/cloud-cache/9324_margin.csv",
+      "code": "9324",
+      "kind": "margin",
+      "elapsed_sec": 0.01
+    },
+    {
+      "ok": true,
+      "source": "jpx",
+      "rows": 61,
+      "path": "data/cloud-cache/9332_margin.csv",
+      "code": "9332",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -218,8 +866,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8058_margin.csv",
-      "code": "8058",
+      "path": "data/cloud-cache/9336_margin.csv",
+      "code": "9336",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -227,8 +875,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8059_margin.csv",
-      "code": "8059",
+      "path": "data/cloud-cache/9341_margin.csv",
+      "code": "9341",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -236,8 +884,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8060_margin.csv",
-      "code": "8060",
+      "path": "data/cloud-cache/9347_margin.csv",
+      "code": "9347",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -245,26 +893,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 54,
-      "path": "data/cloud-cache/8061_margin.csv",
-      "code": "8061",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 54,
-      "path": "data/cloud-cache/8065_margin.csv",
-      "code": "8065",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 54,
-      "path": "data/cloud-cache/8070_margin.csv",
-      "code": "8070",
+      "path": "data/cloud-cache/9364_margin.csv",
+      "code": "9364",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -272,8 +902,8 @@
       "ok": true,
       "source": "jpx",
       "rows": 53,
-      "path": "data/cloud-cache/8074_margin.csv",
-      "code": "8074",
+      "path": "data/cloud-cache/9381_margin.csv",
+      "code": "9381",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -281,332 +911,260 @@
       "ok": true,
       "source": "jpx",
       "rows": 53,
-      "path": "data/cloud-cache/8075_margin.csv",
-      "code": "8075",
+      "path": "data/cloud-cache/9401_margin.csv",
+      "code": "9401",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8078_margin.csv",
-      "code": "8078",
+      "rows": 53,
+      "path": "data/cloud-cache/9404_margin.csv",
+      "code": "9404",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8079_margin.csv",
-      "code": "8079",
+      "rows": 63,
+      "path": "data/cloud-cache/9405_margin.csv",
+      "code": "9405",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8081_margin.csv",
-      "code": "8081",
+      "rows": 53,
+      "path": "data/cloud-cache/9409_margin.csv",
+      "code": "9409",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8084_margin.csv",
-      "code": "8084",
+      "rows": 53,
+      "path": "data/cloud-cache/9412_margin.csv",
+      "code": "9412",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8086_margin.csv",
-      "code": "8086",
+      "rows": 53,
+      "path": "data/cloud-cache/9413_margin.csv",
+      "code": "9413",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8088_margin.csv",
-      "code": "8088",
+      "rows": 53,
+      "path": "data/cloud-cache/9416_margin.csv",
+      "code": "9416",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8091_margin.csv",
-      "code": "8091",
+      "rows": 54,
+      "path": "data/cloud-cache/9418_margin.csv",
+      "code": "9418",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8093_margin.csv",
-      "code": "8093",
+      "rows": 54,
+      "path": "data/cloud-cache/9424_margin.csv",
+      "code": "9424",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8095_margin.csv",
-      "code": "8095",
+      "rows": 54,
+      "path": "data/cloud-cache/9432_margin.csv",
+      "code": "9432",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8097_margin.csv",
-      "code": "8097",
+      "rows": 54,
+      "path": "data/cloud-cache/9433_margin.csv",
+      "code": "9433",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8098_margin.csv",
-      "code": "8098",
+      "rows": 54,
+      "path": "data/cloud-cache/9434_margin.csv",
+      "code": "9434",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8101_margin.csv",
-      "code": "8101",
+      "rows": 54,
+      "path": "data/cloud-cache/9435_margin.csv",
+      "code": "9435",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 72,
-      "path": "data/cloud-cache/8103_margin.csv",
-      "code": "8103",
+      "rows": 54,
+      "path": "data/cloud-cache/9438_margin.csv",
+      "code": "9438",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8111_margin.csv",
-      "code": "8111",
+      "rows": 54,
+      "path": "data/cloud-cache/9449_margin.csv",
+      "code": "9449",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8113_margin.csv",
-      "code": "8113",
+      "rows": 54,
+      "path": "data/cloud-cache/9468_margin.csv",
+      "code": "9468",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8125_margin.csv",
-      "code": "8125",
+      "rows": 54,
+      "path": "data/cloud-cache/9470_margin.csv",
+      "code": "9470",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 147,
-      "path": "data/cloud-cache/8129_margin.csv",
-      "code": "8129",
+      "rows": 54,
+      "path": "data/cloud-cache/9474_margin.csv",
+      "code": "9474",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8130_margin.csv",
-      "code": "8130",
+      "rows": 54,
+      "path": "data/cloud-cache/9501_margin.csv",
+      "code": "9501",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8132_margin.csv",
-      "code": "8132",
+      "rows": 54,
+      "path": "data/cloud-cache/9502_margin.csv",
+      "code": "9502",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8133_margin.csv",
-      "code": "8133",
+      "rows": 54,
+      "path": "data/cloud-cache/9503_margin.csv",
+      "code": "9503",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8136_margin.csv",
-      "code": "8136",
+      "rows": 54,
+      "path": "data/cloud-cache/9504_margin.csv",
+      "code": "9504",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8137_margin.csv",
-      "code": "8137",
+      "rows": 54,
+      "path": "data/cloud-cache/9505_margin.csv",
+      "code": "9505",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 66,
-      "path": "data/cloud-cache/8141_margin.csv",
-      "code": "8141",
+      "rows": 54,
+      "path": "data/cloud-cache/9506_margin.csv",
+      "code": "9506",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 67,
-      "path": "data/cloud-cache/8142_margin.csv",
-      "code": "8142",
+      "rows": 54,
+      "path": "data/cloud-cache/9507_margin.csv",
+      "code": "9507",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8150_margin.csv",
-      "code": "8150",
+      "rows": 54,
+      "path": "data/cloud-cache/9508_margin.csv",
+      "code": "9508",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8151_margin.csv",
-      "code": "8151",
+      "rows": 54,
+      "path": "data/cloud-cache/9509_margin.csv",
+      "code": "9509",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8153_margin.csv",
-      "code": "8153",
+      "rows": 54,
+      "path": "data/cloud-cache/9511_margin.csv",
+      "code": "9511",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8154_margin.csv",
-      "code": "8154",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8157_margin.csv",
-      "code": "8157",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8158_margin.csv",
-      "code": "8158",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8159_margin.csv",
-      "code": "8159",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 82,
-      "path": "data/cloud-cache/8160_margin.csv",
-      "code": "8160",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 101,
-      "path": "data/cloud-cache/8163_margin.csv",
-      "code": "8163",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8167_margin.csv",
-      "code": "8167",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8173_margin.csv",
-      "code": "8173",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8174_margin.csv",
-      "code": "8174",
+      "rows": 54,
+      "path": "data/cloud-cache/9513_margin.csv",
+      "code": "9513",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
@@ -614,836 +1172,278 @@
       "ok": true,
       "source": "jpx",
       "rows": 57,
-      "path": "data/cloud-cache/8179_margin.csv",
-      "code": "8179",
+      "path": "data/cloud-cache/9517_margin.csv",
+      "code": "9517",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8185_margin.csv",
-      "code": "8185",
+      "rows": 54,
+      "path": "data/cloud-cache/9519_margin.csv",
+      "code": "9519",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8194_margin.csv",
-      "code": "8194",
+      "rows": 54,
+      "path": "data/cloud-cache/9531_margin.csv",
+      "code": "9531",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 79,
-      "path": "data/cloud-cache/8200_margin.csv",
-      "code": "8200",
+      "rows": 54,
+      "path": "data/cloud-cache/9532_margin.csv",
+      "code": "9532",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8203_margin.csv",
-      "code": "8203",
+      "rows": 54,
+      "path": "data/cloud-cache/9533_margin.csv",
+      "code": "9533",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8214_margin.csv",
-      "code": "8214",
+      "rows": 54,
+      "path": "data/cloud-cache/9534_margin.csv",
+      "code": "9534",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8217_margin.csv",
-      "code": "8217",
+      "rows": 56,
+      "path": "data/cloud-cache/9535_margin.csv",
+      "code": "9535",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8218_margin.csv",
-      "code": "8218",
+      "rows": 54,
+      "path": "data/cloud-cache/9536_margin.csv",
+      "code": "9536",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8219_margin.csv",
-      "code": "8219",
+      "rows": 54,
+      "path": "data/cloud-cache/9543_margin.csv",
+      "code": "9543",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8227_margin.csv",
-      "code": "8227",
+      "rows": 54,
+      "path": "data/cloud-cache/9551_margin.csv",
+      "code": "9551",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8233_margin.csv",
-      "code": "8233",
+      "rows": 112,
+      "path": "data/cloud-cache/9552_margin.csv",
+      "code": "9552",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8237_margin.csv",
-      "code": "8237",
+      "rows": 65,
+      "path": "data/cloud-cache/9601_margin.csv",
+      "code": "9601",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8242_margin.csv",
-      "code": "8242",
+      "rows": 54,
+      "path": "data/cloud-cache/9602_margin.csv",
+      "code": "9602",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8252_margin.csv",
-      "code": "8252",
+      "rows": 54,
+      "path": "data/cloud-cache/9603_margin.csv",
+      "code": "9603",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8253_margin.csv",
-      "code": "8253",
+      "rows": 53,
+      "path": "data/cloud-cache/9605_margin.csv",
+      "code": "9605",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8255_margin.csv",
-      "code": "8255",
+      "rows": 53,
+      "path": "data/cloud-cache/9612_margin.csv",
+      "code": "9612",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8267_margin.csv",
-      "code": "8267",
+      "rows": 53,
+      "path": "data/cloud-cache/9616_margin.csv",
+      "code": "9616",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8273_margin.csv",
-      "code": "8273",
+      "rows": 53,
+      "path": "data/cloud-cache/9619_margin.csv",
+      "code": "9619",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8276_margin.csv",
-      "code": "8276",
+      "rows": 53,
+      "path": "data/cloud-cache/9621_margin.csv",
+      "code": "9621",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8278_margin.csv",
-      "code": "8278",
+      "rows": 53,
+      "path": "data/cloud-cache/9622_margin.csv",
+      "code": "9622",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8281_margin.csv",
-      "code": "8281",
+      "rows": 53,
+      "path": "data/cloud-cache/9627_margin.csv",
+      "code": "9627",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8282_margin.csv",
-      "code": "8282",
+      "rows": 53,
+      "path": "data/cloud-cache/9628_margin.csv",
+      "code": "9628",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 69,
-      "path": "data/cloud-cache/8283_margin.csv",
-      "code": "8283",
+      "rows": 53,
+      "path": "data/cloud-cache/9629_margin.csv",
+      "code": "9629",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 151,
-      "path": "data/cloud-cache/8303_margin.csv",
-      "code": "8303",
+      "rows": 53,
+      "path": "data/cloud-cache/9644_margin.csv",
+      "code": "9644",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 68,
-      "path": "data/cloud-cache/8304_margin.csv",
-      "code": "8304",
+      "rows": 53,
+      "path": "data/cloud-cache/9658_margin.csv",
+      "code": "9658",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8306_margin.csv",
-      "code": "8306",
+      "rows": 71,
+      "path": "data/cloud-cache/9663_margin.csv",
+      "code": "9663",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8308_margin.csv",
-      "code": "8308",
+      "rows": 53,
+      "path": "data/cloud-cache/9672_margin.csv",
+      "code": "9672",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8309_margin.csv",
-      "code": "8309",
+      "rows": 53,
+      "path": "data/cloud-cache/9678_margin.csv",
+      "code": "9678",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8316_margin.csv",
-      "code": "8316",
+      "rows": 53,
+      "path": "data/cloud-cache/9682_margin.csv",
+      "code": "9682",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8331_margin.csv",
-      "code": "8331",
+      "rows": 53,
+      "path": "data/cloud-cache/9684_margin.csv",
+      "code": "9684",
       "kind": "margin",
       "elapsed_sec": 0.01
     },
     {
       "ok": true,
       "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8334_margin.csv",
-      "code": "8334",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8336_margin.csv",
-      "code": "8336",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8337_margin.csv",
-      "code": "8337",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8338_margin.csv",
-      "code": "8338",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8341_margin.csv",
-      "code": "8341",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8343_margin.csv",
-      "code": "8343",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8344_margin.csv",
-      "code": "8344",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8345_margin.csv",
-      "code": "8345",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8346_margin.csv",
-      "code": "8346",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8354_margin.csv",
-      "code": "8354",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8358_margin.csv",
-      "code": "8358",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8359_margin.csv",
-      "code": "8359",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8360_margin.csv",
-      "code": "8360",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8361_margin.csv",
-      "code": "8361",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8362_margin.csv",
-      "code": "8362",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8364_margin.csv",
-      "code": "8364",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 51,
-      "path": "data/cloud-cache/8366_margin.csv",
-      "code": "8366",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8367_margin.csv",
-      "code": "8367",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8368_margin.csv",
-      "code": "8368",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8370_margin.csv",
-      "code": "8370",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8377_margin.csv",
-      "code": "8377",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8381_margin.csv",
-      "code": "8381",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8386_margin.csv",
-      "code": "8386",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8387_margin.csv",
-      "code": "8387",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8388_margin.csv",
-      "code": "8388",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8392_margin.csv",
-      "code": "8392",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8393_margin.csv",
-      "code": "8393",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8395_margin.csv",
-      "code": "8395",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8399_margin.csv",
-      "code": "8399",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8410_margin.csv",
-      "code": "8410",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8411_margin.csv",
-      "code": "8411",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8418_margin.csv",
-      "code": "8418",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8424_margin.csv",
-      "code": "8424",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8425_margin.csv",
-      "code": "8425",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8439_margin.csv",
-      "code": "8439",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8473_margin.csv",
-      "code": "8473",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8511_margin.csv",
-      "code": "8511",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8522_margin.csv",
-      "code": "8522",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8524_margin.csv",
-      "code": "8524",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8541_margin.csv",
-      "code": "8541",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8544_margin.csv",
-      "code": "8544",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8550_margin.csv",
-      "code": "8550",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8551_margin.csv",
-      "code": "8551",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8558_margin.csv",
-      "code": "8558",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8566_margin.csv",
-      "code": "8566",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8570_margin.csv",
-      "code": "8570",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8584_margin.csv",
-      "code": "8584",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8585_margin.csv",
-      "code": "8585",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8591_margin.csv",
-      "code": "8591",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8593_margin.csv",
-      "code": "8593",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8595_margin.csv",
-      "code": "8595",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8600_margin.csv",
-      "code": "8600",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8601_margin.csv",
-      "code": "8601",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8604_margin.csv",
-      "code": "8604",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8609_margin.csv",
-      "code": "8609",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8613_margin.csv",
-      "code": "8613",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 215,
-      "path": "data/cloud-cache/8614_margin.csv",
-      "code": "8614",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8616_margin.csv",
-      "code": "8616",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8622_margin.csv",
-      "code": "8622",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8624_margin.csv",
-      "code": "8624",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8628_margin.csv",
-      "code": "8628",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8630_margin.csv",
-      "code": "8630",
-      "kind": "margin",
-      "elapsed_sec": 0.01
-    },
-    {
-      "ok": true,
-      "source": "jpx",
-      "rows": 52,
-      "path": "data/cloud-cache/8697_margin.csv",
-      "code": "8697",
+      "rows": 53,
+      "path": "data/cloud-cache/9692_margin.csv",
+      "code": "9692",
       "kind": "margin",
       "elapsed_sec": 0.01
     }
@@ -1453,6 +1453,6 @@
     "fail": 0,
     "total": 160
   },
-  "ended_utc": "2026-07-24T11:10:05.637951+00:00",
-  "elapsed_sec": 1.0
+  "ended_utc": "2026-07-24T11:11:19.913960+00:00",
+  "elapsed_sec": 1.1
 }
