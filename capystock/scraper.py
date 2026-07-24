@@ -29,19 +29,50 @@ def _throttle() -> None:
     _last_request_at = time.time()
 
 
+# 瀏覽器擬真 headers：irbank/kabutan 皆走 Cloudflare，datacenter IP（如 GitHub
+# Actions）用 bot UA 會被反爬擋（回 403/503 或無資料表）。改用真實瀏覽器 UA +
+# 完整 Accept/Referer 提高通過率。
+_BROWSER_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+)
+_BROWSER_HEADERS = {
+    "User-Agent": _BROWSER_UA,
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+}
+
+_GET_RETRIES = 3
+
+
 def _get(url: str) -> Optional[str]:
-    _throttle()
-    try:
-        r = requests.get(
-            url,
-            headers={"User-Agent": config.USER_AGENT},
-            timeout=config.REQUEST_TIMEOUT,
-        )
-        r.encoding = r.apparent_encoding or "utf-8"
-        if r.status_code == 200:
-            return r.text
-    except requests.RequestException:
-        pass
+    """HTTP GET，含瀏覽器擬真 headers 與退避重試。
+
+    非 200 或連線錯誤時最多重試 _GET_RETRIES 次（指數退避），並印出狀態碼
+    供診斷（例如被 Cloudflare 擋會看到 403/503）。全部失敗回 None。
+    """
+    last_status = None
+    for attempt in range(_GET_RETRIES):
+        _throttle()
+        try:
+            r = requests.get(
+                url,
+                headers=_BROWSER_HEADERS,
+                timeout=config.REQUEST_TIMEOUT,
+            )
+            last_status = r.status_code
+            r.encoding = r.apparent_encoding or "utf-8"
+            if r.status_code == 200:
+                return r.text
+        except requests.RequestException as exc:
+            last_status = f"exc:{type(exc).__name__}"
+        # 退避後重試（2s、4s…疊加在 _throttle 之上）
+        if attempt < _GET_RETRIES - 1:
+            time.sleep(config.REQUEST_DELAY_SECONDS * (attempt + 1))
+    print(f"[scraper] GET failed url={url} status={last_status} after {_GET_RETRIES} tries")
     return None
 
 
