@@ -1,7 +1,26 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-07-21（自動模擬交易：GitHub Actions 每日下單 + /auto-trade 圖表頁 + Telegram 日報）
+2026-07-24（修雲端信用残：irbank 被 Actions datacenter IP 403 封鎖 → 改用 JPX 官方全市場 PDF）
+
+## 2026-07-24 雲端信用残來源修復（Cloud Fetch 每日失敗）
+
+- 症狀：Cloud Fetch 每天發 ❌ 失敗 Telegram 通知。
+- 根因（實測驗證）：**irbank.net 走 Cloudflare，對 GitHub Actions 的 datacenter IP
+  硬回 HTTP 403**（本地住宅 IP + 同 UA 正常回資料）。瀏覽器擬真 UA + 重試也擋不住
+  （IP/ASN 封鎖）。連帶發現雲端信用残其實**長期一筆都沒抓到**，每日 schedule run 只因
+  多跑 EDINET（ok=1）被 EDINET 遮成假綠燈，鏈式續跑批次（無 EDINET）才 exit 2 曝光。
+- ✅ **改用 JPX 官方全市場 PDF**（`capystock/ingest/jpx_margin.py`，本就為「避開 Azure IP
+  封鎖」而寫但未接上）：`cloud_fetch.fetch_margin` 改吃單次預載的 JPX market_df，per-code
+  切片；株→千株換算、ratio 重算為信用倍率(long/short) 與歷史 irbank 列一致。
+- ✅ **熔斷器防呆**：代碼不在 PDF（無信用交易）回 ok=True，只有 JPX 整批下載失敗才全體
+  ok=False 觸發熔斷。**修假綠燈**：熔斷中止時無條件 exit 2（不再被 EDINET ok=1 遮住）。
+- ✅ **scraper._get 強化**：改用真實 Chrome UA + 完整 headers + 退避重試 3 次，失敗印狀態碼
+  供診斷（kabutan 也走 Cloudflare，一併受益）。
+- ✅ **線上驗證**：Actions codes 模式實跑 JPX 載入 3946 檔、5/5 margin OK、run 綠燈
+  （同環境 irbank 回 403）。
+
+## 2026-07-21 自動模擬交易（零 LLM，每日 Actions 執行）
 
 ## 2026-07-21 自動模擬交易（零 LLM，每日 Actions 執行）
 
