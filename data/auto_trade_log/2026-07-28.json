@@ -1,0 +1,435 @@
+{
+ "date": "2026-07-28",
+ "generated_at": "2026-07-27T16:06:39",
+ "dry_run": false,
+ "params": {
+  "position_jpy": 300000,
+  "max_open": 10,
+  "max_new_per_day": 3,
+  "stop_pct": 0.1,
+  "lot_size": 100,
+  "fee_bps": 0.0,
+  "slippage_bps": 0.0,
+  "max_price_age_days": 5,
+  "min_premium_pct": -0.5,
+  "min_price_jpy": 50.0,
+  "reentry_cooldown_days": 20
+ },
+ "pocket_candidates": 52,
+ "advanced_trades": 10,
+ "opened": [],
+ "closed": [],
+ "skipped": [
+  {
+   "code": "7082",
+   "name": "ジモティー",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "7490",
+   "name": "日新商事",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "1447",
+   "name": "ＳＡＡＦＨＤ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4262",
+   "name": "ニフティライフスタイル",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "5471",
+   "name": "大同特殊鋼",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "8141",
+   "name": "新光商事",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "3034",
+   "name": "クオールＨＤ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "3681",
+   "name": "ブイキューブ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6402",
+   "name": "兼松エンジニアリング",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6392",
+   "name": "ヤマダコーポレーション",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "7531",
+   "name": "清和中央ＨＤ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "7426",
+   "name": "山大",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "8105",
+   "name": "ＢＴＣＪＰＮ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4972",
+   "name": "綜研化学",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4980",
+   "name": "デクセリアルズ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "8131",
+   "name": "ミツウロコＧ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "9107",
+   "name": "川崎汽船",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "8871",
+   "name": "ゴールドクレスト",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "2901",
+   "name": "ウェルディッシュ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "5721",
+   "name": "エスクリプトエナジー",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4494",
+   "name": "バリオセキュア",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "3850",
+   "name": "ＮＴＴＤイン",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "8518",
+   "name": "日本アジア投資",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4448",
+   "name": "ｋｕｂｅｌｌ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "9842",
+   "name": "アークランズ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6269",
+   "name": "三井海洋開発",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "2432",
+   "name": "ディー・エヌ・エー",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "3667",
+   "name": "ｅｎｉｓｈ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "2782",
+   "name": "セリア",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6788",
+   "name": "日本トリム",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "5341",
+   "name": "アサヒエイト",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "2742",
+   "name": "ハローズ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "8591",
+   "name": "オリックス",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "3840",
+   "name": "パス",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "1414",
+   "name": "ショーボンド",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "2491",
+   "name": "バリューコマース",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6855",
+   "name": "日本電子材料",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "7373",
+   "name": "アイドマＨＤ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4840",
+   "name": "トライアイズ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "9256",
+   "name": "サクシード",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "3687",
+   "name": "フィックスターズ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "3692",
+   "name": "ＦＦＲＩセキュリティ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4056",
+   "name": "ニューラルグループ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4564",
+   "name": "オンコセラピ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "4592",
+   "name": "サンバイオ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "9037",
+   "name": "ハマキョウレックス",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6574",
+   "name": "コンヴァノ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "9418",
+   "name": "ＵＮＥＸＴ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "9816",
+   "name": "ストライダーズ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  },
+  {
+   "code": "6081",
+   "name": "アライドアーキテクツ",
+   "reason": "額度已滿（單日上限或持倉上限）"
+  }
+ ],
+ "cash_jpy": 632450.0,
+ "market_value_jpy": 2369550.0,
+ "equity_jpy": 3002000.0,
+ "initial_cash_jpy": 3000000.0,
+ "realized_pnl_jpy": 0,
+ "unrealized_pnl_jpy": 2000.0,
+ "total_return_pct": 0.0006666666666666666,
+ "open_count": 10,
+ "closed_count": 0,
+ "holdings": [
+  {
+   "trade_id": "af0ac5cf-6292-4cbe-87b0-ee3e33e0db32",
+   "code": "9039",
+   "name": "サカイ引越センター",
+   "entry_date": "2026-07-21",
+   "entry_price": 2991.0,
+   "shares": 100,
+   "last_close": 3010.0,
+   "last_close_date": "2026-07-27",
+   "stop_line": 2709.0,
+   "high_water": 3010.0,
+   "market_value_jpy": 301000.0,
+   "unrealized_pnl_jpy": 1900.0,
+   "unrealized_pnl_pct": 0.006352390504847877
+  },
+  {
+   "trade_id": "0268f43e-c1aa-4198-859f-3ab8583edf75",
+   "code": "7976",
+   "name": "三菱鉛筆",
+   "entry_date": "2026-07-21",
+   "entry_price": 2688.0,
+   "shares": 100,
+   "last_close": 2632.0,
+   "last_close_date": "2026-07-27",
+   "stop_line": 2419.2,
+   "high_water": 2688.0,
+   "market_value_jpy": 263200.0,
+   "unrealized_pnl_jpy": -5600.0,
+   "unrealized_pnl_pct": -0.020833333333333332
+  },
+  {
+   "trade_id": "d20a8306-1556-41f1-8524-a69e10ce5d8b",
+   "code": "4262",
+   "name": "ニフティライフスタイル",
+   "entry_date": "2026-07-21",
+   "entry_price": 1326.0,
+   "shares": 200,
+   "last_close": 1360.0,
+   "last_close_date": "2026-07-27",
+   "stop_line": 1224.0,
+   "high_water": 1360.0,
+   "market_value_jpy": 272000.0,
+   "unrealized_pnl_jpy": 6800.0,
+   "unrealized_pnl_pct": 0.02564102564102564
+  },
+  {
+   "trade_id": "3159ff1e-a5f1-4b7e-8eec-7855103ef432",
+   "code": "7752",
+   "name": "リコー",
+   "entry_date": "2026-07-22",
+   "entry_price": 1529.5,
+   "shares": 100,
+   "last_close": 1632.5,
+   "last_close_date": "2026-07-27",
+   "stop_line": 1469.25,
+   "high_water": 1632.5,
+   "market_value_jpy": 163250.0,
+   "unrealized_pnl_jpy": 10300.0,
+   "unrealized_pnl_pct": 0.06734226871526643
+  },
+  {
+   "trade_id": "916c1454-7d08-46c0-9cd4-1d640694ce17",
+   "code": "3776",
+   "name": "ブロードバンドタワー",
+   "entry_date": "2026-07-22",
+   "entry_price": 252.0,
+   "shares": 1100,
+   "last_close": 237.0,
+   "last_close_date": "2026-07-27",
+   "stop_line": 226.8,
+   "high_water": 252.0,
+   "market_value_jpy": 260700.0,
+   "unrealized_pnl_jpy": -16500.0,
+   "unrealized_pnl_pct": -0.05952380952380952
+  },
+  {
+   "trade_id": "b68bb82c-d9e4-40fc-8601-5e78262fe877",
+   "code": "9842",
+   "name": "アークランズ",
+   "entry_date": "2026-07-22",
+   "entry_price": 1908.0,
+   "shares": 100,
+   "last_close": 1940.0,
+   "last_close_date": "2026-07-27",
+   "stop_line": 1746.0,
+   "high_water": 1940.0,
+   "market_value_jpy": 194000.0,
+   "unrealized_pnl_jpy": 3200.0,
+   "unrealized_pnl_pct": 0.016771488469601678
+  },
+  {
+   "trade_id": "686ac7f2-504c-461c-9ea1-6b6ea175c977",
+   "code": "4326",
+   "name": "インテージＨ",
+   "entry_date": "2026-07-23",
+   "entry_price": 1895.0,
+   "shares": 100,
+   "last_close": 2023.0,
+   "last_close_date": "2026-07-27",
+   "stop_line": 1820.7,
+   "high_water": 2023.0,
+   "market_value_jpy": 202300.0,
+   "unrealized_pnl_jpy": 12800.0,
+   "unrealized_pnl_pct": 0.06754617414248021
+  },
+  {
+   "trade_id": "98954479-eee8-4a4c-b898-50fe50175cc1",
+   "code": "9830",
+   "name": "トラスコ中山",
+   "entry_date": "2026-07-23",
+   "entry_price": 2349.0,
+   "shares": 100,
+   "last_close": 2405.0,
+   "last_close_date": "2026-07-27",
+   "stop_line": 2164.5,
+   "high_water": 2405.0,
+   "market_value_jpy": 240500.0,
+   "unrealized_pnl_jpy": 5600.0,
+   "unrealized_pnl_pct": 0.023839931885908897
+  },
+  {
+   "trade_id": "1da6e73c-b6fe-4b0f-a181-421ffdbd967d",
+   "code": "5341",
+   "name": "アサヒエイト",
+   "entry_date": "2026-07-23",
+   "entry_price": 162.0,
+   "shares": 1800,
+   "last_close": 152.0,
+   "last_close_date": "2026-07-27",
+   "stop_line": 145.8,
+   "high_water": 162.0,
+   "market_value_jpy": 273600.0,
+   "unrealized_pnl_jpy": -18000.0,
+   "unrealized_pnl_pct": -0.06172839506172839
+  },
+  {
+   "trade_id": "27874b3b-211b-44e1-8ee4-4acd7e043ecf",
+   "code": "7444",
+   "name": "ハリマ共和物産",
+   "entry_date": "2026-07-24",
+   "entry_price": 1975.0,
+   "shares": 100,
+   "last_close": 1990.0,
+   "last_close_date": "2026-07-27",
+   "stop_line": 1791.0,
+   "high_water": 1990.0,
+   "market_value_jpy": 199000.0,
+   "unrealized_pnl_jpy": 1500.0,
+   "unrealized_pnl_pct": 0.007594936708860759
+  }
+ ]
+}
