@@ -4,10 +4,14 @@
   - Ledger（帳本）＝資料夾，純分組，無特殊功能。可新增/刪除。
   - Trade（交易）＝主體單位。一個帳本可放多筆，同一股票可重複出現、各自獨立。
 
-出場：棘輪式移動停損（只升不降，以進場後最高收盤為錨）。
-  high_water = max(進場價, 進場後最高收盤)
-  停損線     = high_water × (1 − stop_pct)
-  出場       = 某日收盤 < 停損線 → 以該日收盤出場
+出場：
+  - trailing_stop：棘輪式移動停損（只升不降，以進場後最高收盤為錨）。
+      high_water = max(進場價, 進場後最高收盤)
+      停損線     = high_water × (1 − stop_pct)
+      出場       = 某日收盤 < 停損線 → 以該日收盤出場
+  - time_stop：進場後 N 根 K 棒仍在成本帶 ±BAND 內盤整（自動交易帳本才啟用）。
+  - off_list：持倉離開三盤口袋名單超過 N 個日曆日＝進場理由消失（自動交易帳本才啟用）。
+  - manual：使用者手動平倉。
 """
 from datetime import date
 from typing import Literal, Optional
@@ -34,10 +38,16 @@ class Trade(_DateModel):
     high_water: float = 0.0     # 進場後最高收盤（初始＝進場價）
     stop_line: float = 0.0      # 目前停損線
     last_advanced_date: Optional[date] = None  # 已推進到的最後交易日
+    # entry_price 取自哪一天的收盤。排程在收盤後跑時 = entry_date；跨日跑（JST 00:xx）
+    # 時會早於 entry_date，此時若把推進錨點設成 entry_date，進場後第一根 K 棒會被
+    # `d <= last_advanced_date` 跳過而永遠不檢查（見 AUTO_TRADE_LOW_TURNOVER_AUDIT.md §7）。
+    entry_bar_date: Optional[date] = None
+    # 訊號失效出場：最後一次出現在口袋名單的日期（None = 尚未評估過）
+    last_on_list_date: Optional[date] = None
     # 出場後欄位
     exit_date: Optional[date] = None
     exit_price: Optional[float] = None
-    exit_reason: Optional[Literal["trailing_stop", "manual"]] = None
+    exit_reason: Optional[Literal["trailing_stop", "time_stop", "off_list", "manual"]] = None
     pnl_jpy: Optional[float] = None
     pnl_pct: Optional[float] = None
 

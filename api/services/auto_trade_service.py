@@ -1,6 +1,15 @@
-"""自動模擬交易服務 — 每日依「三盤口袋名單」下單、依棘輪移動停損出場。
+"""自動模擬交易服務 — 每日依「三盤口袋名單」下單，三個閥門出場。
 
 零 LLM：全部是 config 裡的數值門檻，決策可完全重現。
+
+出場閥門（2026-08-22 由單一棘輪停損擴充為三條，見
+docs/AUTO_TRADE_LOW_TURNOVER_AUDIT.md）：
+  1. trailing_stop — 棘輪移動停損（價格）
+  2. time_stop     — 進場後 N 根 K 棒仍在成本帶 ±BAND 內盤整
+  3. off_list      — 掉出口袋名單超過 N 個日曆日＝進場理由消失
+
+進場的額度檢查放在所有條件之後，滿倉時仍算出「若有空位會買誰」寫進 log 的
+`missed`，避免像過去那樣每天只看到「額度已滿」而不知錯過什麼。
 
 寫入者只有一個：GitHub Actions 的 paper-trade.yml（或本地手動 `POST /auto-trade/run`）。
 本地排程 `ledger_service.advance_all()` 預設跳過 owner="bot" 的帳本，避免雙寫衝突。
@@ -52,6 +61,11 @@ class AutoTradeConfig:
     min_premium_pct: float = config.AUTO_TRADE_MIN_PREMIUM_PCT
     min_price_jpy: float = config.AUTO_TRADE_MIN_PRICE_JPY
     reentry_cooldown_days: int = config.AUTO_TRADE_REENTRY_COOLDOWN_DAYS
+    off_list_exit_days: int = config.AUTO_TRADE_OFF_LIST_EXIT_DAYS
+    off_list_cooldown_days: int = config.AUTO_TRADE_OFF_LIST_COOLDOWN_DAYS
+    time_stop_days: int = config.AUTO_TRADE_TIME_STOP_DAYS
+    time_stop_band_pct: float = config.AUTO_TRADE_TIME_STOP_BAND_PCT
+    missed_top_n: int = config.AUTO_TRADE_MISSED_TOP_N
 
 
 def _bps(v: float) -> float:
@@ -70,24 +84,30 @@ def select_new_trades(
     price_lookup: Callable[[str], Optional[tuple[date, float]]],
     last_exit: Optional[dict[str, date]] = None,
     cfg: Optional[AutoTradeConfig] = None,
-) -> tuple[list[dict], list[dict]]:
-    """從口袋名單挑出今天要進場的交易。回傳 (picks, skipped)。
+) -> tuple[list[dict], list[dict], list[dict]]:
+    """從口袋名單挑出今天要進場的交易。回傳 (picks, skipped, missed)。
 
     規則（依序）：
       1. 排序：gate3.drop_pct 由大到小（融資減最多＝籌碼最乾淨）
-      2. 已持有同一 code → 跳過（不加碼、不重複）；停損出場後 reentry_cooldown_days
-         日內同一 code 也跳過（口袋名單條件是週頻的，隔天就買回會被同一段跌勢反覆巴）
+      2. 已持有同一 code → 跳過（不加碼、不重複）；出場冷卻中同一 code 也跳過
+         （停損/時間停損 20 日，訊號失效 5 日 — 由呼叫端算好塞進 last_exit）
       3. 收盤價資料日期距 today > max_price_age_days → 跳過（不用舊價下單）
       4. 收盤價 < min_price_jpy 或 gate2.premium_pct < min_premium_pct → 跳過（錯價/分割防呆）
-      5. 股數 = floor(position_jpy / 成交價 / lot) × lot，不足 1 單位 → 跳過
-      6. 現金不足 → 跳過；持倉檔數達 max_open 或當日達 max_new_per_day → 停止
+      5. 股數 = floor(預算 / 成交價 / lot) × lot，不足 1 單位 → 跳過
+      6. **最後**才看額度：持倉達 max_open 或當日達 max_new_per_day → 記為 missed
+
+    額度檢查刻意放在最後（2026-08-22）：原本放在迴圈第一個，滿倉後所有候選的 skip
+    理由都被短路成「額度已滿」，其他理由永遠看不到，也不知道錯過了什麼 —
+    正是這個一個月沒被發現的原因（見 docs/AUTO_TRADE_LOW_TURNOVER_AUDIT.md §6）。
 
     picks 每筆：{code, name, entry_price, close, shares, cost_jpy, stop_pct, reason}
     skipped 每筆：{code, name, reason}
+    missed 每筆：通過所有條件、只差額度的候選（含 rank/drop_pct），供日報顯示。
     """
     cfg = cfg or AutoTradeConfig()
     picks: list[dict] = []
     skipped: list[dict] = []
+    missed: list[dict] = []
     slots = max(0, cfg.max_open - open_count)
     remaining_cash = float(cash)
 
@@ -97,22 +117,18 @@ def select_new_trades(
         reverse=True,
     )
 
-    for r in rows:
+    for rank, r in enumerate(rows, start=1):
         code = str(r.get("code", "")).strip()
         name = r.get("name", "") or ""
         if not code:
-            continue
-        if len(picks) >= cfg.max_new_per_day or slots <= 0:
-            skipped.append({"code": code, "name": name, "reason": "額度已滿（單日上限或持倉上限）"})
             continue
         if code in open_codes:
             skipped.append({"code": code, "name": name, "reason": "已持有同一檔"})
             continue
         prev_exit = (last_exit or {}).get(code)
-        if prev_exit is not None and (today - prev_exit).days < cfg.reentry_cooldown_days:
+        if prev_exit is not None and today < prev_exit:
             skipped.append({"code": code, "name": name,
-                            "reason": f"停損冷卻中（{prev_exit.isoformat()} 出場，"
-                                      f"{cfg.reentry_cooldown_days} 日內不買回）"})
+                            "reason": f"出場冷卻中（{prev_exit.isoformat()} 前不買回）"})
             continue
 
         quote = price_lookup(code)
@@ -152,6 +168,17 @@ def select_new_trades(
         if drop is not None:
             reason += f"｜融資降 {drop:.0%}"
 
+        # ── 條件全過，最後才看額度 ──
+        if len(picks) >= cfg.max_new_per_day or slots <= 0:
+            why = ("已達單日上限" if len(picks) >= cfg.max_new_per_day
+                   else f"持倉已達上限 {cfg.max_open} 檔")
+            skipped.append({"code": code, "name": name, "reason": f"額度已滿（{why}）"})
+            if len(missed) < cfg.missed_top_n:
+                missed.append({"code": code, "name": name, "rank": rank,
+                               "drop_pct": drop, "close": close,
+                               "would_cost_jpy": round(cost, 2), "reason": why})
+            continue
+
         remaining_cash -= cost
         slots -= 1
         picks.append({
@@ -160,7 +187,7 @@ def select_new_trades(
             "price_date": px_date.isoformat(), "reason": reason,
         })
 
-    return picks, skipped
+    return picks, skipped, missed
 
 
 # ── 價格存取 ────────────────────────────────────────────────────────────────
@@ -194,13 +221,42 @@ def run_daily(
     dry_run: bool = False,
     cfg: Optional[AutoTradeConfig] = None,
 ) -> dict:
-    """推進 → 出場結算 → 依口袋名單進場 → 寫帳本與當日 log。回傳當日 log dict。"""
+    """推進 → 出場結算 → 依口袋名單進場 → 寫帳本與當日 log。回傳當日 log dict。
+
+    出場有三個閥門，依序評估：
+      1. 棘輪移動停損（價格）
+      2. 時間停損（進場後 N 根 K 棒仍在成本帶內盤整）
+      3. 訊號失效（掉出口袋名單超過 N 個日曆日）— 進場理由消失就該出場
+    """
     cfg = cfg or AutoTradeConfig()
     today = as_of or jst_today()
     ledger = ledger_service.get_or_create_bot_ledger()
 
-    # 1) 推進既有持倉（棘輪移動停損），出場的把現金收回來
+    # 0) 先拿口袋名單（訊號失效出場要用，所以必須在出場階段之前）
+    if pocket_result is None:
+        from api.services import pocket_service
+        pocket_result = pocket_service.latest_snapshot() or {}
+    pocket_rows = pocket_result.get("pocket", []) or []
+    pocket_codes = {str(r.get("code", "")).strip() for r in pocket_rows}
+
     closed_rows: list[dict] = []
+
+    def _settle(t: Trade) -> None:
+        """出場後把價金收回現金並記一列 log。"""
+        proceeds = (t.exit_price or 0.0) * t.shares
+        proceeds *= (1.0 - _bps(cfg.slippage_bps)) * (1.0 - _bps(cfg.fee_bps))
+        ledger.cash_jpy += proceeds
+        closed_rows.append({
+            "code": t.code, "name": t.name, "shares": t.shares,
+            "entry_date": t.entry_date.isoformat(), "entry_price": t.entry_price,
+            "exit_date": t.exit_date.isoformat() if t.exit_date else None,
+            "exit_price": t.exit_price, "exit_reason": t.exit_reason,
+            "exit_reason_label": exit_reason_label(t.exit_reason),
+            "pnl_jpy": round(t.pnl_jpy or 0.0, 2), "pnl_pct": t.pnl_pct,
+            "proceeds_jpy": round(proceeds, 2),
+        })
+
+    # 1) 推進既有持倉（棘輪移動停損 + 時間停損），出場的把現金收回來
     advanced = 0
     for t in ledger.trades:
         if t.status != "open":
@@ -208,44 +264,64 @@ def run_daily(
         closes = ledger_service.closes_for(t.code)
         if as_of is not None:
             closes = [(d, c) for d, c in closes if d <= today]
-        before = t.status
-        ledger_service.advance_trade(t, closes)
+        ledger_service.advance_trade(
+            t, closes,
+            time_stop_days=cfg.time_stop_days,
+            time_stop_band_pct=cfg.time_stop_band_pct,
+        )
         advanced += 1
-        if before == "open" and t.status == "closed":
-            proceeds = (t.exit_price or 0.0) * t.shares
-            proceeds *= (1.0 - _bps(cfg.slippage_bps)) * (1.0 - _bps(cfg.fee_bps))
-            ledger.cash_jpy += proceeds
-            closed_rows.append({
-                "code": t.code, "name": t.name, "shares": t.shares,
-                "entry_date": t.entry_date.isoformat(), "entry_price": t.entry_price,
-                "exit_date": t.exit_date.isoformat() if t.exit_date else None,
-                "exit_price": t.exit_price, "exit_reason": t.exit_reason,
-                "pnl_jpy": round(t.pnl_jpy or 0.0, 2), "pnl_pct": t.pnl_pct,
-                "proceeds_jpy": round(proceeds, 2),
-            })
+        if t.status == "closed":
+            _settle(t)
 
-    # 2) 進場：三盤口袋名單
-    if pocket_result is None:
-        from api.services import pocket_service
-        pocket_result = pocket_service.latest_snapshot() or {}
-    pocket_rows = pocket_result.get("pocket", []) or []
+    # 2) 訊號失效出場：掉出口袋名單超過 off_list_exit_days 個日曆日。
+    #    防呆：掃描結果為空（EDINET/margin 資料異常、degraded）時完全不評估，
+    #    否則一次壞掃描會把整本帳清空。
+    off_list_rows: list[dict] = []
+    if pocket_rows and cfg.off_list_exit_days:
+        for t in ledger.trades:
+            if t.status != "open":
+                continue
+            if t.code in pocket_codes:
+                t.last_on_list_date = today
+                continue
+            if t.last_on_list_date is None:
+                # 舊資料/首次評估 → 從今天開始起算，不追溯（避免部署當天整批出場）
+                t.last_on_list_date = today
+                continue
+            off_days = (today - t.last_on_list_date).days
+            if off_days < cfg.off_list_exit_days:
+                continue
+            closes = [(d, c) for d, c in ledger_service.closes_for(t.code) if d <= today]
+            if not closes:
+                continue
+            d, close = closes[-1]
+            ledger_service.close_trade(t, d, close, "off_list")
+            off_list_rows.append({"code": t.code, "name": t.name, "off_days": off_days})
+            _settle(t)
 
+    # 3) 進場：三盤口袋名單
     open_codes = {t.code for t in ledger.trades if t.status == "open"}
     open_count = len(open_codes)
-    last_exit: dict[str, date] = {}
+    # code → 冷卻到期日。停損/時間停損＝「這檔沒搞頭」用長冷卻；訊號失效＝進場理由
+    # 消失，若重新入榜就是新訊號，用短冷卻即可，否則等於變相封殺重新合格的好標的。
+    cooldown_until: dict[str, date] = {}
     for t in ledger.trades:
-        if t.status == "closed" and t.exit_date is not None:
-            prev = last_exit.get(t.code)
-            if prev is None or t.exit_date > prev:
-                last_exit[t.code] = t.exit_date
-    picks, skipped = select_new_trades(
+        if t.status != "closed" or t.exit_date is None:
+            continue
+        days = (cfg.off_list_cooldown_days if t.exit_reason == "off_list"
+                else cfg.reentry_cooldown_days)
+        until = t.exit_date + timedelta(days=days)
+        if cooldown_until.get(t.code) is None or until > cooldown_until[t.code]:
+            cooldown_until[t.code] = until
+
+    picks, skipped, missed = select_new_trades(
         pocket_rows,
         open_codes=open_codes,
         cash=ledger.cash_jpy,
         open_count=open_count,
         today=today,
         price_lookup=make_price_lookup(as_of),
-        last_exit=last_exit,
+        last_exit=cooldown_until,
         cfg=cfg,
     )
 
@@ -258,12 +334,14 @@ def run_daily(
             entry_date=today, entry_price=p["entry_price"], shares=p["shares"],
             stop_pct=p["stop_pct"], status="open", entry_reason=p["reason"],
         )
-        ledger_service.init_trade_stops(trade)
+        # 推進錨點＝進場價那根 K 棒的日期（不是 entry_date），否則進場後第一根會被跳過
+        ledger_service.init_trade_stops(trade, date.fromisoformat(p["price_date"]))
+        trade.last_on_list_date = today       # 進場當下必在榜
         ledger.trades.append(trade)
         ledger.cash_jpy -= p["cost_jpy"]
         opened_rows.append({**p, "trade_id": trade.id})
 
-    # 3) 當日權益
+    # 4) 當日權益
     equity = compute_equity(ledger, today)
 
     log = {
@@ -275,7 +353,9 @@ def run_daily(
         "advanced_trades": advanced,
         "opened": opened_rows,
         "closed": closed_rows,
+        "off_list_exits": off_list_rows,
         "skipped": skipped[:50],
+        "missed": missed,
         **equity,
     }
 
@@ -379,6 +459,7 @@ def list_daily_logs(days: int = 30) -> list[dict]:
                         "pnl_jpy": c.get("pnl_jpy"), "pnl_pct": c.get("pnl_pct"),
                         "exit_price": c.get("exit_price"), "exit_reason": c.get("exit_reason")}
                        for c in lg.get("closed", [])],
+            "missed": lg.get("missed", []),
             "pocket_candidates": lg.get("pocket_candidates"),
         })
     return out
@@ -457,7 +538,8 @@ def summary(as_of: Optional[date] = None) -> dict:
          "exit_date": t.exit_date.isoformat() if t.exit_date else None,
          "exit_price": t.exit_price, "shares": t.shares,
          "pnl_jpy": round(t.pnl_jpy or 0.0, 2), "pnl_pct": t.pnl_pct,
-         "exit_reason": t.exit_reason}
+         "exit_reason": t.exit_reason,
+         "exit_reason_label": exit_reason_label(t.exit_reason)}
         for t in ledger.trades if t.status == "closed"
     ]
     closed.sort(key=lambda r: r["exit_date"] or "", reverse=True)
@@ -470,6 +552,7 @@ def summary(as_of: Optional[date] = None) -> dict:
         "last_log_date": logs[-1] if logs else None,
         "log_count": len(logs),
         "win_rate": (len(wins) / len(closed)) if closed else None,
+        "exit_reason_breakdown": _count_by(closed, "exit_reason"),
         "avg_win_jpy": (sum(c["pnl_jpy"] for c in wins) / len(wins)) if wins else 0.0,
         "avg_loss_jpy": (sum(c["pnl_jpy"] for c in closed if c["pnl_jpy"] <= 0)
                          / max(1, len(closed) - len(wins))) if closed else 0.0,
@@ -479,6 +562,32 @@ def summary(as_of: Optional[date] = None) -> dict:
 
 
 # ── Telegram 日報文字 ───────────────────────────────────────────────────────
+
+EXIT_REASON_LABEL = {
+    "trailing_stop": "移動停損",
+    "time_stop": "時間停損",
+    "off_list": "訊號失效",
+    "manual": "手動平倉",
+}
+
+
+def exit_reason_label(reason: Optional[str]) -> str:
+    return EXIT_REASON_LABEL.get(reason or "", reason or "")
+
+
+def _count_by(rows: list[dict], key: str) -> dict[str, int]:
+    out: dict[str, int] = {}
+    for r in rows:
+        k = r.get(key) or "unknown"
+        out[k] = out.get(k, 0) + 1
+    return out
+
+
+def _drop(m: dict) -> str:
+    """missed 列的融資降幅顯示（可能為 None）。"""
+    v = m.get("drop_pct")
+    return f"{v:.0%}" if v is not None else "—"
+
 
 def _w(s: str) -> int:
     """字串顯示寬度（東亞全形算 2）— monospace 表格對齊用。"""
@@ -527,10 +636,22 @@ def format_report_html(log: dict) -> str:
         for s in (log.get("skipped") or [])[:3]:
             out.append(f"　✗ {esc(s.get('code'))} {esc(s.get('name', ''))}：{esc(s.get('reason', ''))}")
 
+    # 額度滿而錯過的合格候選 — 沒有這段就只會天天看到「額度已滿」而不知錯過什麼
+    missed = log.get("missed") or []
+    if missed:
+        rows = [f"{_pad('#', 4)}{_pad('代碼', 6)}{_pad('名稱', 16)}{_pad('融資降', 9, 'right')}"]
+        rows += [f"{_pad(str(m.get('rank', '')), 4)}{_pad(m['code'], 6)}"
+                 f"{_pad(m.get('name', ''), 16)}{_pad(_drop(m), 9, 'right')}"
+                 for m in missed]
+        out.append(f"⚠️ <b>額度滿錯過 {len(missed)} 檔合格候選</b>")
+        out.append("<pre>" + esc("\n".join(rows)) + "</pre>")
+
     if closed:
-        rows = [f"{_pad('代碼', 6)}{_pad('名稱', 14)}{_pad('損益', 12, 'right')}{_pad('%', 9, 'right')}"]
-        rows += [f"{_pad(c['code'], 6)}{_pad(c.get('name', ''), 14)}"
-                 f"{_pad(yen(c.get('pnl_jpy')), 12, 'right')}{_pad(pct(c.get('pnl_pct')), 9, 'right')}"
+        rows = [f"{_pad('代碼', 6)}{_pad('名稱', 12)}{_pad('損益', 11, 'right')}"
+                f"{_pad('%', 8, 'right')}  {_pad('原因', 8)}"]
+        rows += [f"{_pad(c['code'], 6)}{_pad(c.get('name', ''), 12)}"
+                 f"{_pad(yen(c.get('pnl_jpy')), 11, 'right')}{_pad(pct(c.get('pnl_pct')), 8, 'right')}"
+                 f"  {_pad(exit_reason_label(c.get('exit_reason')), 8)}"
                  for c in closed]
         out.append(f"🔴 <b>今日出場 {len(closed)} 檔</b>")
         out.append("<pre>" + esc("\n".join(rows)) + "</pre>")
@@ -576,12 +697,18 @@ def format_report(log: dict) -> str:
         # 沒進場時把前幾個「為什麼沒買」列出來，避免每天看到空報告卻不知原因
         for s in (log.get("skipped") or [])[:5]:
             lines.append(f"　✗ {s.get('code')} {s.get('name','')}：{s.get('reason','')}")
+    missed = log.get("missed") or []
+    if missed:
+        lines.append(f"⚠️ 額度滿錯過 {len(missed)} 檔合格候選")
+        for m in missed:
+            lines.append(f"　#{m.get('rank','?')} {m['code']} {m.get('name','')}"
+                         f"　融資降 {_drop(m)}（{m.get('reason','')}）")
     if closed:
         lines.append(f"🔴 今日出場 {len(closed)} 檔")
         for c in closed:
             lines.append(f"　{c['code']} {c.get('name','')} @¥{c.get('exit_price')}"
                          f"　損益 {yen(c.get('pnl_jpy'))}（{pct(c.get('pnl_pct'))}）"
-                         f" {c.get('exit_reason','')}")
+                         f" {exit_reason_label(c.get('exit_reason'))}")
     else:
         lines.append("🔴 今日無出場")
 

@@ -15,6 +15,7 @@
     code: string; name: string; entry_date: string; entry_price: number;
     exit_date: string | null; exit_price: number | null; shares: number;
     pnl_jpy: number; pnl_pct: number | null; exit_reason: string | null;
+    exit_reason_label?: string | null;
   }
   interface Summary {
     ledger_id: string; ledger_name: string; as_of: string;
@@ -36,7 +37,16 @@
     opened: { code: string; name: string; shares: number; entry_price: number; reason: string }[];
     closed: { code: string; name: string; pnl_jpy: number; pnl_pct: number | null;
               exit_price: number | null; exit_reason: string | null }[];
+    missed?: { code: string; name: string; rank: number; drop_pct: number | null;
+               reason: string }[];
   }
+
+  // 出場理由中文標籤（後端也會給 exit_reason_label，這裡是 log 端的備援）
+  const EXIT_LABEL: Record<string, string> = {
+    trailing_stop: '移動停損', time_stop: '時間停損',
+    off_list: '訊號失效', manual: '手動平倉'
+  };
+  const exitLabel = (r: string | null | undefined) => (r ? (EXIT_LABEL[r] ?? r) : '');
 
   let summary: Summary | null = null;
   let curve: EquityCurve | null = null;
@@ -196,7 +206,7 @@
                 <td>{c.shares}</td>
                 <td class={sign(c.pnl_jpy)}>{yen(c.pnl_jpy)}</td>
                 <td class={sign(c.pnl_pct)}>{pct(c.pnl_pct)}</td>
-                <td class="ts">{c.exit_reason ?? ''}</td>
+                <td class="ts">{c.exit_reason_label ?? exitLabel(c.exit_reason)}</td>
               </tr>
             {/each}
           </tbody>
@@ -243,7 +253,14 @@
                       {#each lg.closed as c}
                         <div class="d-row">{c.code} {c.name}　@{yen(c.exit_price)}
                           <span class={sign(c.pnl_jpy)}>{yen(c.pnl_jpy)}（{pct(c.pnl_pct)}）</span>
-                          <span class="ts"> {c.exit_reason ?? ''}</span></div>
+                          <span class="ts"> {exitLabel(c.exit_reason)}</span></div>
+                      {/each}
+                    {/if}
+                    {#if lg.missed?.length}
+                      <div class="d-title warn">⚠️ 額度滿錯過的合格候選</div>
+                      {#each lg.missed as m}
+                        <div class="d-row">#{m.rank} {m.code} {m.name}
+                          <span class="ts">　融資降 {m.drop_pct != null ? (m.drop_pct * 100).toFixed(0) + '%' : '—'}　{m.reason}</span></div>
                       {/each}
                     {/if}
                     {#if !lg.opened.length && !lg.closed.length}
@@ -312,6 +329,7 @@
   .ts { color: #64748b; font-size: .78rem; }
   .pos { color: #34d399; }
   .neg { color: #f87171; }
+  .warn { color: #fbbf24; }
   .btn-chart { background: #1e293b; color: #cbd5e1; border: 1px solid #334155; padding: .22rem .5rem;
                border-radius: 5px; cursor: pointer; font-size: .76rem; }
   .detail td { background: #0b1220; }

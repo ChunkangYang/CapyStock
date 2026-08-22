@@ -89,17 +89,37 @@ POCKET_GATE3_MARGIN_DECLINE_WEEKS = 3   # 融資餘額連續下降週數
 AUTO_TRADE_LEDGER_ID = "auto-pocket"
 AUTO_TRADE_LEDGER_NAME = "🤖 自動模擬交易（三盤）"
 AUTO_TRADE_INITIAL_CASH_JPY = 3_000_000   # 起始資金
-AUTO_TRADE_POSITION_JPY = 300_000         # 每筆固定投入金額（滿倉約 10 檔）
-AUTO_TRADE_MAX_OPEN = 10                  # 同時最多持倉檔數
+AUTO_TRADE_POSITION_JPY = 300_000         # 每筆固定投入金額（上限；lot 湊整後常低於此數）
+# MAX_OPEN 是「安全上限」不是目標值：真正的約束是現金。
+# lot=100 股湊整會讓每筆實際成本只有預算的 50~70%，若把上限壓在 3.0M/300k=10 檔，
+# 會有 16~21% 現金永遠閒置卻還被判「額度已滿」（見 docs/AUTO_TRADE_LOW_TURNOVER_AUDIT.md §5）。
+AUTO_TRADE_MAX_OPEN = 15                  # 同時最多持倉檔數（安全上限，實際由現金決定）
 AUTO_TRADE_MAX_NEW_PER_DAY = 3            # 單日最多新進場檔數
-AUTO_TRADE_STOP_PCT = 0.10                # 棘輪移動停損 N
+AUTO_TRADE_STOP_PCT = 0.07                # 棘輪移動停損 N（2026-08-22：0.10 → 0.07，見審計 §3）
 AUTO_TRADE_LOT_SIZE = 100                 # 日股交易單位（股）
 AUTO_TRADE_FEE_BPS = 0.0                  # 單邊手續費（bps，10 = 0.1%）
 AUTO_TRADE_SLIPPAGE_BPS = 0.0             # 單邊滑價（bps）
 AUTO_TRADE_MAX_PRICE_AGE_DAYS = 5         # 收盤價資料超過 N 個日曆日 → 當日不進場（防用舊價下單）
-AUTO_TRADE_REENTRY_COOLDOWN_DAYS = 20     # 停損出場後 N 日內不再買回同一檔（避免來回被雙巴）
+AUTO_TRADE_REENTRY_COOLDOWN_DAYS = 20     # 停損/時間停損出場後 N 日內不買回同一檔（避免來回被雙巴）
 AUTO_TRADE_MIN_PREMIUM_PCT = -0.50       # 現價相對主力成本折價超過此值 → 視為資料異常（分割/錯價）跳過
 AUTO_TRADE_MIN_PRICE_JPY = 50.0           # 低於此股價不交易（雞蛋水餃股/錯價防呆）
+
+# --- 自動模擬交易：出場閥門（2026-08-22 新增）---
+# 原本只有「棘輪移動停損」單一出場規則，平均持有 ~65 個交易日，滿倉後進場速率被
+# 出場速率 1:1 鎖死（26 個交易日只進 14 出 4）。以下兩條把出場理由補齊。
+#
+# 1) 訊號失效出場：進場理由是「當日三盤口袋名單」，那離開名單就該是出場理由。
+#    用「距最後一次在榜的日曆日數」判斷（冪等，重跑不會重複累計）。
+#    口袋名單約 11% 的代碼會短暫掉出 1~2 日又回榜（gate3 信用残是週更），
+#    5 個日曆日可濾掉這種抖動。
+AUTO_TRADE_OFF_LIST_EXIT_DAYS = 5         # 掉出口袋名單連續 N 個日曆日 → 出場（0 = 停用）
+AUTO_TRADE_OFF_LIST_COOLDOWN_DAYS = 5     # 訊號失效出場後的冷卻（比停損短：重新入榜＝新訊號）
+# 2) 時間停損：進場後 N 根 K 棒還在成本帶 ±BAND 內盤整 → 認賠時間成本出場。
+#    帶寬條件是為了不砍掉正在跑的贏家（無條件時間停損會把 +10% 的部位也砍掉）。
+AUTO_TRADE_TIME_STOP_DAYS = 15            # 進場後 N 根 K 棒（0 = 停用）
+AUTO_TRADE_TIME_STOP_BAND_PCT = 0.05      # 損益在 ±N 內視為盤整
+# 診斷：滿倉時仍記錄「若有空位會買誰」的前 N 名，寫進當日 log 與日報。
+AUTO_TRADE_MISSED_TOP_N = 5
 
 # --- 三階段移動停損（Chandelier Exit）---
 # Stage 1（profit < STAGE2）：max(進場×(1-STOP_LOSS_DROP_PCT), 進場 - INITIAL_STOP_ATR_MULT×ATR)

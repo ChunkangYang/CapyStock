@@ -3,7 +3,8 @@
 儲存：每個帳本一個 JSON 檔 `data/ledgers/{id}.json`（帳本＝資料夾，trades 內含）。
 刪除：依專案絕對規則不真刪，改名加 `DELETE_` prefix（軟刪除，列表排除）。
 
-出場：棘輪式移動停損（pure function `advance_trade`，方便測試）。
+出場：棘輪式移動停損（pure function `advance_trade`，方便測試）＋選配時間停損。
+「訊號失效出場」（掉出口袋名單）是自動交易帳本專屬，實作在 auto_trade_service。
 """
 from __future__ import annotations
 
@@ -33,40 +34,71 @@ def _ledger_path(ledger_id: str) -> Path:
 
 # ── 棘輪式移動停損（純函式核心，便於 pytest）────────────────────────────
 
-def init_trade_stops(trade: Trade) -> Trade:
-    """初始化棘輪狀態：high_water=進場價、停損線=進場價×(1-N)。"""
+def init_trade_stops(trade: Trade, entry_bar_date: Optional[date] = None) -> Trade:
+    """初始化棘輪狀態：high_water=進場價、停損線=進場價×(1-N)。
+
+    `entry_bar_date`＝entry_price 取自哪一天的收盤（預設＝entry_date）。推進的錨點用它
+    而不是 entry_date：排程若在 JST 00:xx 跑，entry_price 是前一交易日收盤但 entry_date
+    記成當天，用 entry_date 當錨點會讓進場後第一根 K 棒被永久跳過。
+    """
     trade.high_water = float(trade.entry_price)
     trade.stop_line = float(trade.entry_price) * (1.0 - trade.stop_pct)
-    trade.last_advanced_date = trade.entry_date
+    trade.entry_bar_date = entry_bar_date or trade.entry_date
+    trade.last_advanced_date = trade.entry_bar_date
     return trade
 
 
-def advance_trade(trade: Trade, closes: list[tuple[date, float]]) -> Trade:
-    """以「(日期, 收盤)」序列推進一筆 open 交易（棘輪移動停損）。
+def close_trade(trade: Trade, d: date, close: float, reason: str) -> Trade:
+    """把一筆 open 交易結算掉（統一寫 exit_* 與損益欄位）。"""
+    trade.status = "closed"
+    trade.exit_date = d
+    trade.exit_price = float(close)
+    trade.exit_reason = reason
+    trade.pnl_jpy = (close - trade.entry_price) * trade.shares
+    trade.pnl_pct = (close - trade.entry_price) / trade.entry_price if trade.entry_price else 0.0
+    return trade
+
+
+def advance_trade(
+    trade: Trade,
+    closes: list[tuple[date, float]],
+    *,
+    time_stop_days: int = 0,
+    time_stop_band_pct: Optional[float] = None,
+) -> Trade:
+    """以「(日期, 收盤)」序列推進一筆 open 交易（棘輪移動停損 + 選配時間停損）。
 
     規則（只處理晚於 last_advanced_date 的收盤）：
-      - 收盤創新高 → high_water=收盤、停損線=high_water×(1-N)（只升不降）
       - 收盤 < 停損線 → 出場（exit_price=該日收盤、reason=trailing_stop）
+      - time_stop_days>0 且進場後已滿 N 根 K 棒，且（未指定帶寬 或 損益在 ±帶寬內）
+        → 出場（reason=time_stop）。帶寬條件避免把正在跑的贏家砍掉。
+      - 收盤創新高 → high_water=收盤、停損線=high_water×(1-N)（只升不降）
+
+    time_stop_* 預設關閉 → user 帳本行為與過去完全一致，只有自動交易帳本會傳。
     """
     if trade.status != "open":
         return trade
     if trade.high_water <= 0:
         init_trade_stops(trade)
 
-    start = trade.last_advanced_date or trade.entry_date
-    for d, close in sorted(closes, key=lambda x: x[0]):
+    anchor = trade.entry_bar_date or trade.entry_date
+    start = trade.last_advanced_date or anchor
+    ordered = sorted(closes, key=lambda x: x[0])
+    # 已推進過的 K 棒根數（跨 run 續算，不需另存欄位）
+    held = sum(1 for d, _ in ordered if anchor < d <= start)
+
+    for d, close in ordered:
         if d <= start:
             continue
         trade.last_advanced_date = d
+        held += 1
         # 先判出場（用「進入該日前」的停損線），再更新新高
         if close < trade.stop_line:
-            trade.status = "closed"
-            trade.exit_date = d
-            trade.exit_price = float(close)
-            trade.exit_reason = "trailing_stop"
-            trade.pnl_jpy = (close - trade.entry_price) * trade.shares
-            trade.pnl_pct = (close - trade.entry_price) / trade.entry_price if trade.entry_price else 0.0
-            return trade
+            return close_trade(trade, d, close, "trailing_stop")
+        if time_stop_days and held >= time_stop_days:
+            pnl_pct = ((close - trade.entry_price) / trade.entry_price) if trade.entry_price else 0.0
+            if time_stop_band_pct is None or abs(pnl_pct) <= time_stop_band_pct:
+                return close_trade(trade, d, close, "time_stop")
         if close > trade.high_water:
             trade.high_water = float(close)
             trade.stop_line = float(close) * (1.0 - trade.stop_pct)
