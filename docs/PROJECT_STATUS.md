@@ -1,9 +1,38 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-08-22（審計自動模擬交易「進出頻率過低」，找到根因，尚未動程式）
+2026-08-22（自動模擬交易進出頻率過低：審計 + 修復已完成並部署，待線上觀察）
 
-## 2026-08-22 自動模擬交易進出頻率過低 — 審計完成，待修
+## 2026-08-22（下午）修復實作完成
+
+詳見 [AUTO_TRADE_LOW_TURNOVER_AUDIT.md §9](AUTO_TRADE_LOW_TURNOVER_AUDIT.md)。
+
+- ✅ **訊號失效出場 `off_list`**：距最後在榜 ≥ 5 個日曆日 → 出場。用
+  `Trade.last_on_list_date` 判斷（冪等，`force` 重跑不重複累計）。
+  **兩個防呆**：口袋名單為空（掃描 degraded）時完全不評估，避免一次壞掃描清空整本帳；
+  舊資料無 `last_on_list_date` 從當天起算不追溯，避免部署當天整批出場。
+- ✅ **時間停損 `time_stop`**：進場後 15 根 K 棒仍在成本帶 ±5% 內 → 出場。
+  帶寬條件避免砍掉正在跑的贏家。以**選配參數**加在 `ledger_service.advance_trade`，
+  user 帳本不傳 → 行為完全不變。
+- ✅ **停損 0.10 → 0.07**；既有持倉沿用自己 Trade 上存的 0.10，不追溯（不製造假出場）。
+- ✅ **`MAX_OPEN` 10 → 15**：讓現金而非檔數成為真正的約束，回收原本閒置的 16~21% 資金。
+- ✅ **診斷**：`select_new_trades` 額度檢查移到所有條件之後 + 回傳 `missed`
+  （滿倉時「若有空位會買誰」），日報與 `/auto-trade` 頁都會顯示。
+- ✅ **冷卻依理由分流**：停損/時間停損 20 日，訊號失效 5 日（重新入榜＝新訊號）。
+- ✅ **修 off-by-one**：新增 `Trade.entry_bar_date`，推進錨點改用進場價那根 K 棒的日期。
+- ⬜ **滿倉換倉不做**：與訊號失效出場重疊（掉出名單的持倉 5 日內自動出場，換倉最多提前
+  5 日），卻多一條會互相打架的 churn 來源。
+- ✅ **實測**：2026-08-21 真實資料 dry-run → 進場 0→3（含原本被擋的排名第 1 的 8141）、
+  持倉 10→13、現金 494,050→9,750、skip 理由由 1 種變 8 種。
+  反事實重放（重現 production 4 筆出場）：出場 4→12 筆、平均已實現 -8.7%→-1.0%。
+- ✅ **測試**：`test_auto_trade.py` 29 passed；全套 271 passed（2 紅為既有 favorites /
+  indicator mock，非本次）。前端 `vite build` 綠。
+- ✅ **部署**：`docker compose build + up -d --force-recreate` 後實機驗證 —
+  出場理由顯示中文「移動停損」
+  ([截圖](EVIDENCES/auto-trade-exit-labels-2026-08-22.png))。
+- ⏳ 待人工：等下一次 Actions 執行確認線上行為 → [HUMAN_TODO.md](HUMAN_TODO.md)。
+
+## 2026-08-22（上午）自動模擬交易進出頻率過低 — 審計
 
 詳見 [AUTO_TRADE_LOW_TURNOVER_AUDIT.md](AUTO_TRADE_LOW_TURNOVER_AUDIT.md)。
 
