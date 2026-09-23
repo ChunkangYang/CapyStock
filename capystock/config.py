@@ -137,6 +137,28 @@ SMA_BREAK_PERIOD = 20  # 跌破 SMA20 且向下走平
 VOLUME_DRY_DAYS = 5
 VOLUME_DRY_RATIO = 0.5  # 連續 N 日量能 < 5 日均量 × 0.5
 
+# --- 海龜投資法模擬交易（Turtle Trading）---
+# 平行於「三盤口袋名單」自動交易的第二套模擬帳本，只做多、System 2（55 日突破，
+# 不看上一筆是否獲利）。規則理由見 docs/TURTLE_STRATEGY.md。
+TURTLE_N_PERIOD = 20                      # N（波動單位）＝最近 20 日 True Range 簡單平均
+TURTLE_ENTRY_BREAKOUT_DAYS = 55           # 進場：收盤 > 過去 55 日（不含當日）收盤最高值
+TURTLE_EXIT_BREAKOUT_DAYS = 20            # 出場：收盤 < 過去 20 日（不含當日）收盤最低值
+TURTLE_UNIT_RISK_PCT = 0.01               # 1 unit = 帳戶權益 1% 波動風險（equity×比例/N）
+TURTLE_STOP_N_MULT = 2.0                  # 停損線 = 進場/加碼價 − 2×N
+TURTLE_PYRAMID_ADD_N_MULT = 0.5           # 價格再漲 0.5×N（從最近一次進場/加碼價起算）可加碼
+TURTLE_MAX_UNITS_PER_MARKET = 4           # 單一股票最多累積 4 個 unit（含首次進場）
+TURTLE_MAX_TOTAL_UNITS = 20               # 全帳本任一時刻總持有 unit 數上限
+TURTLE_MAX_NEW_UNITS_PER_DAY = 4          # 單日新增 unit（新進場＋加碼）總數上限
+TURTLE_DRAWDOWN_THROTTLE_PCT = 0.20       # 權益跌破歷史高點 20% → 縮手（unit_risk_pct 減半）
+TURTLE_DRAWDOWN_RECOVER_PCT = 0.10        # 權益回升到歷史高點 -10% 以內 → 恢復正常 risk
+TURTLE_REENTRY_COOLDOWN_DAYS = 10         # 出場（停損/Donchian）後 N 日曆日內不可用新倉重新進場
+TURTLE_MIN_PRICE_JPY = 50.0               # 低於此股價不交易（雞蛋水餃股/錯價防呆）
+TURTLE_MAX_PRICE_AGE_DAYS = 5             # 收盤價資料超過 N 個日曆日 → 當日不進場（防用舊價下單）
+TURTLE_LOT_SIZE = 100                     # 日股交易單位（股）
+TURTLE_INITIAL_CASH_JPY = 3_000_000       # 起始資金（比照舊模型，方便直接比較績效）
+TURTLE_LEDGER_ID = "auto-turtle"          # 獨立帳本 id，與舊模型 auto-pocket 平行不互動
+TURTLE_LEDGER_NAME = "🐢 海龜投資法模擬交易"
+
 # --- 出場策略 override 檔（Phase 2 動態調參）---
 EXIT_STRATEGY_OVERRIDE_PATH = DATA_DIR / "exit_strategy.json"
 
