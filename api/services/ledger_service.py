@@ -176,20 +176,33 @@ def get_ledger(ledger_id: str) -> Optional[Ledger]:
     return _load_ledger(ledger_id)
 
 
-def get_or_create_bot_ledger() -> Ledger:
-    """取得（或初始化）自動模擬交易帳本 — 固定 id，owner="bot"，只由排程/Actions 寫。"""
+def get_or_create_bot_ledger(
+    ledger_id: Optional[str] = None,
+    name: Optional[str] = None,
+    initial_cash_jpy: Optional[float] = None,
+) -> Ledger:
+    """取得（或初始化）某本自動交易 bot 帳本 — owner="bot"，只由排程/Actions 寫。
+
+    不帶參數＝舊三盤模型帳本（向後相容，既有呼叫端不用改）。海龜模型呼叫時傳
+    `config.TURTLE_LEDGER_ID` / `TURTLE_LEDGER_NAME` / `TURTLE_INITIAL_CASH_JPY`，
+    是完全獨立的另一個帳本檔案，不會互相影響。
+    """
     from capystock import config
-    ledger = _load_ledger(config.AUTO_TRADE_LEDGER_ID)
+    ledger_id = ledger_id or config.AUTO_TRADE_LEDGER_ID
+    name = name or config.AUTO_TRADE_LEDGER_NAME
+    initial_cash_jpy = (float(initial_cash_jpy) if initial_cash_jpy is not None
+                        else float(config.AUTO_TRADE_INITIAL_CASH_JPY))
+    ledger = _load_ledger(ledger_id)
     if ledger is not None:
         return ledger
     _ensure_dir()
     ledger = Ledger(
-        id=config.AUTO_TRADE_LEDGER_ID,
-        name=config.AUTO_TRADE_LEDGER_NAME,
+        id=ledger_id,
+        name=name,
         created_at=datetime.now().isoformat(timespec="seconds"),
         owner="bot",
-        initial_cash_jpy=float(config.AUTO_TRADE_INITIAL_CASH_JPY),
-        cash_jpy=float(config.AUTO_TRADE_INITIAL_CASH_JPY),
+        initial_cash_jpy=initial_cash_jpy,
+        cash_jpy=initial_cash_jpy,
         trades=[],
     )
     _save_ledger(ledger)

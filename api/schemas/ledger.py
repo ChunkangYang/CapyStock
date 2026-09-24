@@ -47,9 +47,17 @@ class Trade(_DateModel):
     # 出場後欄位
     exit_date: Optional[date] = None
     exit_price: Optional[float] = None
-    exit_reason: Optional[Literal["trailing_stop", "time_stop", "off_list", "manual"]] = None
+    exit_reason: Optional[Literal[
+        "trailing_stop", "time_stop", "off_list", "manual",
+        "turtle_stop", "turtle_donchian_exit",
+    ]] = None
     pnl_jpy: Optional[float] = None
     pnl_pct: Optional[float] = None
+    # 海龜投資法（金字塔加碼）專用欄位 — user/舊自動交易帳本不使用，預設 None 不影響既有讀取。
+    # 同一檔股票的金字塔加碼在帳本內以多筆 Trade（同 code）表示，unit_index 標示第幾個 unit
+    # （1=首次進場），n_at_fill 記錄該次進場/加碼當下的 N 值（供之後檢討/畫圖用）。
+    unit_index: Optional[int] = None
+    n_at_fill: Optional[float] = None
 
 
 class Ledger(_DateModel):
