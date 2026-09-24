@@ -609,7 +609,7 @@ def format_report_html(log: dict) -> str:
     pct = lambda v: f"{(v or 0) * 100:+.2f}%"
     esc = lambda s: (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
 
-    out = [f"🤖 <b>自動模擬交易日報 {log.get('date')}</b>", ""]
+    out = [f"🤖 <b>三盤模型 自動模擬交易日報 {log.get('date')}</b>", ""]
     kpi = [
         ("總權益", yen(log.get("equity_jpy")), pct(log.get("total_return_pct"))),
         ("已實現", yen(log.get("realized_pnl_jpy")), f"{log.get('closed_count', 0)} 筆"),
@@ -676,7 +676,7 @@ def format_report(log: dict) -> str:
     yen = lambda v: f"¥{round(v or 0):,}"
     pct = lambda v: f"{(v or 0) * 100:+.2f}%"
     lines = [
-        f"🤖 CapyStock 自動模擬交易日報 {log.get('date')}",
+        f"🤖 CapyStock 三盤模型 自動模擬交易日報 {log.get('date')}",
         "",
         f"總權益 {yen(log.get('equity_jpy'))}（起始 {yen(log.get('initial_cash_jpy'))}，"
         f"報酬 {pct(log.get('total_return_pct'))}）",

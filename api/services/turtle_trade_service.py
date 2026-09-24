@@ -500,3 +500,160 @@ def read_daily_log(d) -> Optional[dict]:
             return json.load(f)
     except (OSError, json.JSONDecodeError):
         return None
+
+
+def latest_log_date() -> Optional[str]:
+    """最近一筆 log 的日期字串（無 log 回 None）。供日報腳本找預設日期用。"""
+    if not DAILY_LOG_DIR.exists():
+        return None
+    files = sorted(glob.glob(str(DAILY_LOG_DIR / "*.json")))
+    return Path(files[-1]).stem if files else None
+
+
+# ── Telegram 日報 ───────────────────────────────────────────────────────────
+# 標籤固定帶「🐢 海龜模型」，跟舊三盤模型（🤖 三盤模型）的日報並存時一眼能分辨
+# 是哪個模型送的（兩本帳本 auto-pocket / auto-turtle 平行跑，互不影響）。
+
+EXIT_REASON_LABEL = {
+    "turtle_stop": "停損（2N）",
+    "turtle_donchian_exit": "Donchian 出場（20日低）",
+    "manual": "手動平倉",
+}
+
+
+def exit_reason_label(reason: Optional[str]) -> str:
+    return EXIT_REASON_LABEL.get(reason or "", reason or "")
+
+
+def _w(s: str) -> int:
+    import unicodedata
+    return sum(2 if unicodedata.east_asian_width(c) in "WF" else 1 for c in s)
+
+
+def _pad(s: str, width: int, align: str = "left") -> str:
+    s = str(s)
+    while _w(s) > width:
+        s = s[:-1]
+    fill = " " * max(0, width - _w(s))
+    return (fill + s) if align == "right" else (s + fill)
+
+
+ACTION_LABEL = {"entry": "新倉", "pyramid": "加碼"}
+
+
+def _score_str(v) -> str:
+    return f"{v:.2f}" if isinstance(v, (int, float)) else "—"
+
+
+def format_report_html(log: dict) -> str:
+    """Telegram HTML 版日報（<pre> 等寬表格）。parse_mode=HTML 送出。"""
+    yen = lambda v: f"¥{round(v or 0):,}"
+    pct = lambda v: f"{(v or 0) * 100:+.2f}%"
+    esc = lambda s: (str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+
+    out = [f"🐢 <b>海龜模型 自動模擬交易日報 {log.get('date')}</b>", ""]
+    if log.get("throttled"):
+        out.append(f"⚠️ <b>回撤節流中</b>（unit 風險比例已減半至 {log.get('unit_risk_pct_used', 0):.2%}）")
+
+    kpi = [
+        ("總權益", yen(log.get("equity_jpy")), pct(log.get("total_return_pct"))),
+        ("已實現", yen(log.get("realized_pnl_jpy")), f"{log.get('closed_count', 0)} unit"),
+        ("未實現", yen(log.get("unrealized_pnl_jpy")), f"{log.get('open_units', 0)} unit / {log.get('open_codes', 0)} 檔"),
+        ("現金", yen(log.get("cash_jpy")), f"市值 {yen(log.get('market_value_jpy'))}"),
+    ]
+    out.append("<pre>" + "\n".join(
+        f"{_pad(k, 8)}{_pad(v, 12, 'right')}  {s}" for k, v, s in kpi) + "</pre>")
+
+    opened = log.get("opened") or []
+    closed = log.get("closed") or []
+    holdings = sorted(log.get("holdings") or [],
+                      key=lambda h: h.get("unrealized_pnl_jpy", 0), reverse=True)
+
+    if opened:
+        rows = [f"{_pad('代碼', 6)}{_pad('動作', 6)}{_pad('unit', 5, 'right')}{_pad('股數', 7, 'right')}{_pad('價格', 11, 'right')}"]
+        rows += [f"{_pad(o['code'], 6)}{_pad(ACTION_LABEL.get(o.get('action'), o.get('action', '')), 6)}"
+                 f"{_pad(str(o.get('unit_index', '')), 5, 'right')}{_pad(str(o['shares']), 7, 'right')}"
+                 f"{_pad(yen(o['entry_price']), 11, 'right')}"
+                 for o in opened]
+        out.append(f"🟢 <b>今日新增 {len(opened)} unit</b>")
+        out.append("<pre>" + esc("\n".join(rows)) + "</pre>")
+    else:
+        out.append("🟢 <b>今日無新增 unit</b>")
+
+    missed = [m for m in (log.get("missed") or []) if m.get("reason") == "額度已滿"][:5]
+    if missed:
+        rows = [f"{_pad('代碼', 6)}{_pad('動作', 6)}{_pad('score', 8, 'right')}"]
+        rows += [f"{_pad(m['code'], 6)}{_pad(ACTION_LABEL.get(m.get('action'), m.get('action', '')), 6)}"
+                 f"{_pad(_score_str(m.get('score')), 8, 'right')}"
+                 for m in missed]
+        out.append(f"⚠️ <b>額度滿錯過候選（前 5）</b>")
+        out.append("<pre>" + esc("\n".join(rows)) + "</pre>")
+
+    if closed:
+        rows = [f"{_pad('代碼', 6)}{_pad('損益', 11, 'right')}{_pad('%', 8, 'right')}  {_pad('原因', 14)}"]
+        rows += [f"{_pad(c['code'], 6)}{_pad(yen(c.get('pnl_jpy')), 11, 'right')}{_pad(pct(c.get('pnl_pct')), 8, 'right')}"
+                 f"  {_pad(exit_reason_label(c.get('exit_reason')), 14)}"
+                 for c in closed]
+        out.append(f"🔴 <b>今日出場 {len(closed)} unit</b>")
+        out.append("<pre>" + esc("\n".join(rows)) + "</pre>")
+    else:
+        out.append("🔴 <b>今日無出場</b>")
+
+    if holdings:
+        rows = [f"{_pad('代碼', 6)}{_pad('unit', 5, 'right')}{_pad('暫定損益', 12, 'right')}{_pad('停損線', 10, 'right')}"]
+        rows += [f"{_pad(h['code'], 6)}{_pad(str(h.get('unit_index', '')), 5, 'right')}"
+                 f"{_pad(yen(h['unrealized_pnl_jpy']), 12, 'right')}{_pad(yen(h['stop_line']), 10, 'right')}"
+                 for h in holdings]
+        out.append(f"📊 <b>持倉 {len(holdings)} unit</b>")
+        out.append("<pre>" + esc("\n".join(rows)) + "</pre>")
+
+    out.append(f"<i>候選宇宙 {log.get('universe_size', 0)} 檔</i>")
+    return "\n".join(out)
+
+
+def format_report(log: dict) -> str:
+    """把當日 log 轉成 Telegram 純文字日報（🐢 海龜模型）。"""
+    yen = lambda v: f"¥{round(v or 0):,}"
+    pct = lambda v: f"{(v or 0) * 100:+.2f}%"
+    lines = [
+        f"🐢 CapyStock 海龜模型 自動模擬交易日報 {log.get('date')}",
+        "",
+    ]
+    if log.get("throttled"):
+        lines.append(f"⚠️ 回撤節流中（unit 風險比例已減半至 {log.get('unit_risk_pct_used', 0):.2%}）")
+    lines += [
+        f"總權益 {yen(log.get('equity_jpy'))}（起始 {yen(log.get('initial_cash_jpy'))}，"
+        f"報酬 {pct(log.get('total_return_pct'))}）",
+        f"現金 {yen(log.get('cash_jpy'))}｜持倉 {log.get('open_units', 0)} unit / {log.get('open_codes', 0)} 檔"
+        f" {yen(log.get('market_value_jpy'))}",
+        f"已實現 {yen(log.get('realized_pnl_jpy'))}｜未實現 {yen(log.get('unrealized_pnl_jpy'))}",
+        "",
+    ]
+    opened = log.get("opened") or []
+    closed = log.get("closed") or []
+    if opened:
+        lines.append(f"🟢 今日新增 {len(opened)} unit")
+        for o in opened:
+            lines.append(f"　{o['code']}（{ACTION_LABEL.get(o.get('action'), o.get('action', ''))}"
+                         f" unit{o.get('unit_index', '')}）{o['shares']}股@¥{o['entry_price']}")
+    else:
+        lines.append("🟢 今日無新增 unit")
+    if closed:
+        lines.append(f"🔴 今日出場 {len(closed)} unit")
+        for c in closed:
+            lines.append(f"　{c['code']} @¥{c.get('exit_price')}　損益 {yen(c.get('pnl_jpy'))}"
+                         f"（{pct(c.get('pnl_pct'))}） {exit_reason_label(c.get('exit_reason'))}")
+    else:
+        lines.append("🔴 今日無出場")
+
+    holdings = log.get("holdings") or []
+    if holdings:
+        lines.append("")
+        lines.append("📊 持倉暫定損益")
+        for h in sorted(holdings, key=lambda x: x.get("unrealized_pnl_jpy", 0), reverse=True):
+            lines.append(f"　{h['code']} unit{h.get('unit_index', '')} @¥{h['last_close']}"
+                         f"（進 ¥{h['entry_price']}）{yen(h['unrealized_pnl_jpy'])}｜停損 ¥{h['stop_line']}")
+    lines.append("")
+    lines.append(f"候選宇宙 {log.get('universe_size', 0)} 檔"
+                 + ("（DRY RUN，未寫入帳本）" if log.get("dry_run") else ""))
+    return "\n".join(lines)

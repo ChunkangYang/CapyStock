@@ -87,6 +87,15 @@ jobs:
           path: data/auto_trade_log_turtle/
           if-no-files-found: ignore
 
+      - name: Notify Telegram — daily report
+        if: success() && steps.trade.outputs.turtle_trade_skipped != 'true' && github.event.inputs.dry_run != 'true' && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID:   ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          # 海龜模型日報不支援 image 版（欄位結構跟三盤模型不同），固定送 html 等寬表格。
+          python scripts/send_daily_report.py --model turtle --style html || true
+
       - name: Notify Telegram — failure or cancelled
         if: (failure() || cancelled()) && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
         env:

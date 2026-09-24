@@ -136,7 +136,7 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           STATUS="${{ job.status }}"
-          MSG="❌ CapyStock 自動模擬交易 ${STATUS}%0Arun: $RUN_URL"
+          MSG="❌ CapyStock 三盤模型 自動模擬交易 ${STATUS}%0Arun: $RUN_URL"
           curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d "chat_id=${TELEGRAM_CHAT_ID}" \
             -d "text=${MSG}" \
