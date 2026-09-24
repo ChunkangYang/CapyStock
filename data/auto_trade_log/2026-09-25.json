@@ -1,0 +1,517 @@
+{
+ "date": "2026-09-25",
+ "generated_at": "2026-09-24T18:01:29",
+ "dry_run": false,
+ "params": {
+  "position_jpy": 300000,
+  "max_open": 15,
+  "max_new_per_day": 3,
+  "stop_pct": 0.07,
+  "lot_size": 100,
+  "fee_bps": 0.0,
+  "slippage_bps": 0.0,
+  "max_price_age_days": 5,
+  "min_premium_pct": -0.5,
+  "min_price_jpy": 50.0,
+  "reentry_cooldown_days": 20,
+  "off_list_exit_days": 5,
+  "off_list_cooldown_days": 5,
+  "time_stop_days": 15,
+  "time_stop_band_pct": 0.05,
+  "missed_top_n": 5
+ },
+ "pocket_candidates": 60,
+ "advanced_trades": 15,
+ "opened": [],
+ "closed": [],
+ "off_list_exits": [],
+ "skipped": [
+  {
+   "code": "3276",
+   "name": "ＪＰＭＣ",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "7426",
+   "name": "山大",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "3480",
+   "name": "ジェイ・エス・ビー",
+   "reason": "價格資料過舊（2026-09-01，24 日前）"
+  },
+  {
+   "code": "3856",
+   "name": "Ａｂａｌａｎｃｅ",
+   "reason": "出場冷卻中（2026-10-07 前不買回）"
+  },
+  {
+   "code": "4628",
+   "name": "エスケー化研",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "7709",
+   "name": "クボテック",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "3681",
+   "name": "ブイキューブ",
+   "reason": "價格資料過舊（2026-06-30，87 日前）"
+  },
+  {
+   "code": "7173",
+   "name": "東京きらぼし",
+   "reason": "出場冷卻中（2026-10-05 前不買回）"
+  },
+  {
+   "code": "2162",
+   "name": "ｎｍｓ",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "4413",
+   "name": "ボードルア",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "2607",
+   "name": "不二製油",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "4320",
+   "name": "ＣＥホールディングス",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "7643",
+   "name": "ダイイチ",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "2883",
+   "name": "大冷",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "3787",
+   "name": "テクノマセマティカル",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "4494",
+   "name": "バリオセキュア",
+   "reason": "價格資料過舊（2026-06-25，92 日前）"
+  },
+  {
+   "code": "8061",
+   "name": "西華産業",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "7719",
+   "name": "東京衡機",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "3388",
+   "name": "明治電機工業",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "6495",
+   "name": "宮入バルブ製作所",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "4316",
+   "name": "ビーマップ",
+   "reason": "出場冷卻中（2026-10-05 前不買回）"
+  },
+  {
+   "code": "6877",
+   "name": "ＯＢＡＲＡ　ＧＲＯＵＰ",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "8001",
+   "name": "伊藤忠商事",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "9956",
+   "name": "バローホールディングス",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "6699",
+   "name": "ダイヤＨＤ",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "2436",
+   "name": "共同ピーアール",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "9439",
+   "name": "M・H・GROUP LTD.",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "2371",
+   "name": "カカクコム",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "5571",
+   "name": "エキサイト",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "4025",
+   "name": "多木化学",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "6740",
+   "name": "ジャパンディスプレイ",
+   "reason": "股價過低（¥49.0）"
+  },
+  {
+   "code": "7003",
+   "name": "三井Ｅ＆Ｓ",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "7352",
+   "name": "ＴＷＯＳＴ",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "4189",
+   "name": "ＫＨネオケム",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "6047",
+   "name": "Ｇｕｎｏｓｙ",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "4549",
+   "name": "栄研化学",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "9416",
+   "name": "ビジョン",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "1711",
+   "name": "ＳＤＳホールディングス",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "2120",
+   "name": "ＬＩＦＵＬＬ",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "8746",
+   "name": "ｕｎｂａｎｋｅｄ",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "4990",
+   "name": "昭和化学工業",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "4109",
+   "name": "ステラ　ケミファ",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "3133",
+   "name": "海帆",
+   "reason": "股價過低（¥46.0）"
+  },
+  {
+   "code": "3719",
+   "name": "ＡＩストーム",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "9238",
+   "name": "バリュークリエーション",
+   "reason": "已持有同一檔"
+  },
+  {
+   "code": "3776",
+   "name": "ブロードバンドタワー",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "6616",
+   "name": "ＴＯＲＥＸ",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "4564",
+   "name": "オンコセラピ",
+   "reason": "股價過低（¥21.0）"
+  },
+  {
+   "code": "6224",
+   "name": "ＪＲＣ",
+   "reason": "現金不足（買不起 1 單位）"
+  },
+  {
+   "code": "8002",
+   "name": "丸紅",
+   "reason": "現金不足（買不起 1 單位）"
+  }
+ ],
+ "missed": [],
+ "cash_jpy": 1800.0,
+ "market_value_jpy": 2831300.0,
+ "equity_jpy": 2833100.0,
+ "initial_cash_jpy": 3000000.0,
+ "realized_pnl_jpy": -167700.0,
+ "unrealized_pnl_jpy": 800.0,
+ "total_return_pct": -0.05563333333333333,
+ "open_count": 15,
+ "closed_count": 40,
+ "holdings": [
+  {
+   "trade_id": "ebb4bb0a-4dae-448e-8c75-669776ffa546",
+   "code": "2162",
+   "name": "ｎｍｓ",
+   "entry_date": "2026-08-07",
+   "entry_price": 536.0,
+   "shares": 500,
+   "last_close": 538.0,
+   "last_close_date": "2026-08-27",
+   "stop_line": 484.2,
+   "high_water": 538.0,
+   "market_value_jpy": 269000.0,
+   "unrealized_pnl_jpy": 1000.0,
+   "unrealized_pnl_pct": 0.0037313432835820895
+  },
+  {
+   "trade_id": "d6f754da-8d47-44dd-9c9e-5947c21170ab",
+   "code": "9439",
+   "name": "M・H・GROUP LTD.",
+   "entry_date": "2026-08-26",
+   "entry_price": 231.0,
+   "shares": 400,
+   "last_close": 218.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 214.83,
+   "high_water": 231.0,
+   "market_value_jpy": 87200.0,
+   "unrealized_pnl_jpy": -5200.0,
+   "unrealized_pnl_pct": -0.05627705627705628
+  },
+  {
+   "trade_id": "a5c61fdc-7dc3-4d02-a2dd-bd666b416012",
+   "code": "7426",
+   "name": "山大",
+   "entry_date": "2026-09-07",
+   "entry_price": 597.0,
+   "shares": 500,
+   "last_close": 592.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 558.0,
+   "high_water": 600.0,
+   "market_value_jpy": 296000.0,
+   "unrealized_pnl_jpy": -2500.0,
+   "unrealized_pnl_pct": -0.008375209380234505
+  },
+  {
+   "trade_id": "929ecc82-0f9f-4b32-85f0-c47edbb2f56b",
+   "code": "6328",
+   "name": "荏原実業",
+   "entry_date": "2026-09-07",
+   "entry_price": 2415.0,
+   "shares": 100,
+   "last_close": 2391.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 2245.95,
+   "high_water": 2415.0,
+   "market_value_jpy": 239100.0,
+   "unrealized_pnl_jpy": -2400.0,
+   "unrealized_pnl_pct": -0.009937888198757764
+  },
+  {
+   "trade_id": "0fbd53eb-fe4d-4798-bea9-52b693abd2e1",
+   "code": "9238",
+   "name": "バリュークリエーション",
+   "entry_date": "2026-09-10",
+   "entry_price": 375.0,
+   "shares": 100,
+   "last_close": 361.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 348.75,
+   "high_water": 375.0,
+   "market_value_jpy": 36100.0,
+   "unrealized_pnl_jpy": -1400.0,
+   "unrealized_pnl_pct": -0.037333333333333336
+  },
+  {
+   "trade_id": "4cdd9838-f791-4c32-ac63-7332c919e76a",
+   "code": "4413",
+   "name": "ボードルア",
+   "entry_date": "2026-09-15",
+   "entry_price": 2968.0,
+   "shares": 100,
+   "last_close": 2965.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 2762.1,
+   "high_water": 2970.0,
+   "market_value_jpy": 296500.0,
+   "unrealized_pnl_jpy": -300.0,
+   "unrealized_pnl_pct": -0.0010107816711590297
+  },
+  {
+   "trade_id": "09b19f26-10bb-4180-97f9-ea971d45eb37",
+   "code": "4320",
+   "name": "ＣＥホールディングス",
+   "entry_date": "2026-09-16",
+   "entry_price": 1645.0,
+   "shares": 100,
+   "last_close": 1629.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 1529.85,
+   "high_water": 1645.0,
+   "market_value_jpy": 162900.0,
+   "unrealized_pnl_jpy": -1600.0,
+   "unrealized_pnl_pct": -0.009726443768996961
+  },
+  {
+   "trade_id": "e0d334b3-e4b3-4266-9332-95377c8d50e7",
+   "code": "6699",
+   "name": "ダイヤＨＤ",
+   "entry_date": "2026-09-16",
+   "entry_price": 497.0,
+   "shares": 100,
+   "last_close": 493.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 464.07,
+   "high_water": 499.0,
+   "market_value_jpy": 49300.0,
+   "unrealized_pnl_jpy": -400.0,
+   "unrealized_pnl_pct": -0.008048289738430584
+  },
+  {
+   "trade_id": "e09fa071-5f4e-4cfe-8ef0-309d319194c5",
+   "code": "7643",
+   "name": "ダイイチ",
+   "entry_date": "2026-09-18",
+   "entry_price": 1720.0,
+   "shares": 100,
+   "last_close": 1720.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 1599.6,
+   "high_water": 1720.0,
+   "market_value_jpy": 172000.0,
+   "unrealized_pnl_jpy": 0.0,
+   "unrealized_pnl_pct": 0.0
+  },
+  {
+   "trade_id": "c53a6244-dcfe-4b74-9a31-0c290973dcb7",
+   "code": "2883",
+   "name": "大冷",
+   "entry_date": "2026-09-22",
+   "entry_price": 2054.0,
+   "shares": 100,
+   "last_close": 2044.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 1910.22,
+   "high_water": 2054.0,
+   "market_value_jpy": 204400.0,
+   "unrealized_pnl_jpy": -1000.0,
+   "unrealized_pnl_pct": -0.004868549172346641
+  },
+  {
+   "trade_id": "3783f3a8-8b9c-472f-b4ef-0bc4f1a3924b",
+   "code": "3787",
+   "name": "テクノマセマティカル",
+   "entry_date": "2026-09-22",
+   "entry_price": 676.0,
+   "shares": 400,
+   "last_close": 677.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 629.61,
+   "high_water": 677.0,
+   "market_value_jpy": 270800.0,
+   "unrealized_pnl_jpy": 400.0,
+   "unrealized_pnl_pct": 0.0014792899408284023
+  },
+  {
+   "trade_id": "9404c80d-79dd-4350-b460-fa3fff064e37",
+   "code": "6807",
+   "name": "日本航空電子工業",
+   "entry_date": "2026-09-22",
+   "entry_price": 2523.0,
+   "shares": 100,
+   "last_close": 2570.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 2390.1,
+   "high_water": 2570.0,
+   "market_value_jpy": 257000.0,
+   "unrealized_pnl_jpy": 4700.0,
+   "unrealized_pnl_pct": 0.0186286167261197
+  },
+  {
+   "trade_id": "a79cd057-61d6-4ce3-9800-e7e371fc49c6",
+   "code": "7719",
+   "name": "東京衡機",
+   "entry_date": "2026-09-23",
+   "entry_price": 516.0,
+   "shares": 500,
+   "last_close": 534.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 496.62,
+   "high_water": 534.0,
+   "market_value_jpy": 267000.0,
+   "unrealized_pnl_jpy": 9000.0,
+   "unrealized_pnl_pct": 0.03488372093023256
+  },
+  {
+   "trade_id": "8b934006-468d-4a67-9030-6683c01950e2",
+   "code": "3388",
+   "name": "明治電機工業",
+   "entry_date": "2026-09-23",
+   "entry_price": 2127.0,
+   "shares": 100,
+   "last_close": 2134.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 1984.62,
+   "high_water": 2134.0,
+   "market_value_jpy": 213400.0,
+   "unrealized_pnl_jpy": 700.0,
+   "unrealized_pnl_pct": 0.003291020216267043
+  },
+  {
+   "trade_id": "0a61a18e-8bbd-496f-a3df-aadc4117f318",
+   "code": "8746",
+   "name": "ｕｎｂａｎｋｅｄ",
+   "entry_date": "2026-09-23",
+   "entry_price": 108.0,
+   "shares": 100,
+   "last_close": 106.0,
+   "last_close_date": "2026-09-24",
+   "stop_line": 100.44,
+   "high_water": 108.0,
+   "market_value_jpy": 10600.0,
+   "unrealized_pnl_jpy": -200.0,
+   "unrealized_pnl_pct": -0.018518518518518517
+  }
+ ]
+}
