@@ -1,0 +1,278 @@
+{
+ "date": "2026-09-24",
+ "generated_at": "2026-09-24T06:09:51",
+ "dry_run": false,
+ "params": {
+  "n_period": 20,
+  "entry_breakout_days": 55,
+  "exit_breakout_days": 20,
+  "unit_risk_pct": 0.01,
+  "stop_n_mult": 2.0,
+  "pyramid_add_n_mult": 0.5,
+  "max_units_per_market": 4,
+  "max_total_units": 20,
+  "max_new_units_per_day": 4,
+  "drawdown_throttle_pct": 0.2,
+  "drawdown_recover_pct": 0.1,
+  "reentry_cooldown_days": 10,
+  "min_price_jpy": 50.0,
+  "max_price_age_days": 5,
+  "lot_size": 100,
+  "ledger_id": "auto-turtle",
+  "ledger_name": "🐢 海龜投資法模擬交易",
+  "initial_cash_jpy": 3000000
+ },
+ "universe_size": 3747,
+ "throttled": false,
+ "unit_risk_pct_used": 0.01,
+ "opened": [],
+ "closed": [],
+ "missed": [],
+ "skipped": [
+  {
+   "code": "1301",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "130A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1332",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1333",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "135A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1375",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1376",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1377",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1379",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "137A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1380",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1381",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1382",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1384",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "138A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1401",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1407",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1414",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1417",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1418",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1419",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "141A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1420",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1429",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1430",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1431",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1433",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1434",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1435",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1436",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1438",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "143A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1443",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1444",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1446",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1447",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1450",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "145A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "146A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "147A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "148A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1491",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "149A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "150A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1514",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1515",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "1518",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "151A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "153A",
+   "reason": "價格資料過舊（2026-09-18）"
+  },
+  {
+   "code": "155A",
+   "reason": "價格資料過舊（2026-09-18）"
+  }
+ ],
+ "cash_jpy": 21500.0,
+ "market_value_jpy": 2978500.0,
+ "equity_jpy": 3000000.0,
+ "initial_cash_jpy": 3000000.0,
+ "realized_pnl_jpy": 0,
+ "unrealized_pnl_jpy": 0.0,
+ "total_return_pct": 0.0,
+ "open_units": 3,
+ "open_codes": 3,
+ "closed_count": 0,
+ "holdings": [
+  {
+   "trade_id": "64d1cdd0-b1b0-4a51-80d8-c4d6c788e299",
+   "code": "2160",
+   "unit_index": 1,
+   "entry_date": "2026-09-18",
+   "entry_price": 3250.0,
+   "shares": 200,
+   "last_close": 3250.0,
+   "stop_line": 3021.4,
+   "unrealized_pnl_jpy": 0.0
+  },
+  {
+   "trade_id": "346e606b-cf0b-4cae-94fd-8b9b9ae96f41",
+   "code": "1383",
+   "unit_index": 1,
+   "entry_date": "2026-09-18",
+   "entry_price": 3065.0,
+   "shares": 700,
+   "last_close": 3065.0,
+   "stop_line": 3032.5,
+   "unrealized_pnl_jpy": 0.0
+  },
+  {
+   "trade_id": "0087af66-a3bd-4652-b10f-93114a466280",
+   "code": "142A",
+   "unit_index": 1,
+   "entry_date": "2026-09-18",
+   "entry_price": 915.0,
+   "shares": 200,
+   "last_close": 915.0,
+   "stop_line": 867.1,
+   "unrealized_pnl_jpy": 0.0
+  }
+ ]
+}
