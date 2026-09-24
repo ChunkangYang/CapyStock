@@ -1,7 +1,42 @@
 # CapyStock — 專案進度
 
 ## 最後更新
-2026-08-22（自動模擬交易進出頻率過低：審計 + 修復已完成並部署，待線上觀察）
+2026-09-24（新增海龜投資法模擬交易模型，平行於舊三盤模型，已回測並啟動新一輪
+模擬交易本地種子；排程只 commit 未 push，待人工決定是否啟用）
+
+## 2026-09-24 海龜投資法（Turtle Trading）模擬交易上線
+
+使用者認為舊三盤口袋名單模型績效不理想（實跑 2026-07-21~09-18 期間總報酬
+-5.83%，`data/auto_trade_log/` 逐日 log 實測），要求設計一套以海龜投資法為基礎
+的新模型，**平行**於舊模型（不修改、不下架、不共用檔案），完整交付如下：
+
+- ✅ **核心邏輯**：`capystock/turtle.py`（TR/N/Donchian/unit sizing/pyramid/stop
+  純函式）+ `capystock/config.py` 新增 `TURTLE_*` 常數區塊，`tests/unit/test_turtle.py`
+  26 個測試全綠。規則理由詳見 [TURTLE_STRATEGY.md](TURTLE_STRATEGY.md)。
+- ✅ **全歷史回測**：`scripts/backtest_turtle.py` 對全市場 3747 檔（暖身 >=60 列）
+  跑 128 個交易日（2026-03-16~09-18，扣除 60 日暖身）的逐日事件驅動模擬：
+  - 總報酬 **26.83%**、年化 59.43%（樣本極短，僅供參考）、最大回撤 **21.99%**、
+    交易 41 筆、勝率 12.2%、獲利因子 1.77、平均持有 17.6 日。
+  - 與舊模型同窗口（2026-07-21~09-18）比較：舊模型該窗口總報酬 -5.83%、勝率
+    38.2%、34 筆交易——兩者時間基準不同（海龜是全期間回測、舊模型是實際上線
+    窗口），**不能直接視為海龜比較好的證據**，樣本太短、窗口不對齊，詳細方法論
+    與限制見 [TURTLE_BACKTEST_REPORT.md](TURTLE_BACKTEST_REPORT.md)。
+- ✅ **每日模擬交易服務**：`api/services/turtle_trade_service.py`（獨立帳本
+  `auto-turtle`、獨立 log 目錄 `data/auto_trade_log_turtle/`），
+  `tests/unit/test_turtle_trade_service.py` 22 個測試全綠，涵蓋進場選股/加碼
+  觸發/出場優先序/回撤節流。`Trade` schema 新增 `unit_index`/`n_at_fill` 選填
+  欄位（預設 None，不影響舊資料）與 `turtle_stop`/`turtle_donchian_exit` 出場理由。
+- ✅ **已啟動新一輪模擬交易**：本地用 `--materialize --as-of 2026-09-18` 跑過一次
+  真實種子交易，`data/ledgers/auto-turtle.json` 已有 3 個 unit 進場（2160/1383/142A），
+  `data/auto_trade_log_turtle/2026-09-18.json` 有第一筆 log。
+- ✅ **平行排程**：`.github/workflows/paper-trade-turtle.yml`，完全不修改
+  `paper-trade.yml`，commit 範圍只含海龜帳本與 log 目錄。
+- ✅ **文件**：[TURTLE_STRATEGY.md](TURTLE_STRATEGY.md) 完整規則與理由。
+- ⏳ **待人工**：[HUMAN_TODO.md](HUMAN_TODO.md) — 審視回測報告 + 決定是否
+  `git push` 讓平行排程真的每天自動跑（目前只是本地 commit）。
+- ⬜ 已知簡化/未做：舊模型無法重算歷史口袋名單（需要 EDINET/margin 歷史資料），
+  所以「兩模型同窗口回放」做不到，只能用舊模型實際上線期間的 daily log 做粗略對照；
+  海龜模型的個股名稱未填（只有代碼），之後如需要可從既有 name 對照表補上。
 
 ## 2026-08-22（下午）修復實作完成
 

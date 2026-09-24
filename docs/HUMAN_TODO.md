@@ -1,5 +1,19 @@
 # Human TODO — 需要人工介入的任務
 
+## 海龜投資法模擬交易上線（2026-09-24）
+
+審視 [TURTLE_BACKTEST_REPORT.md](TURTLE_BACKTEST_REPORT.md) 回測報告 + 決定是否
+`git push` 啟用平行排程 `.github/workflows/paper-trade-turtle.yml`。
+
+- 本地已跑過一次真實種子交易（`--materialize --as-of 2026-09-18`），
+  `data/ledgers/auto-turtle.json` 已有 3 個 unit 進場，`data/auto_trade_log_turtle/`
+  有第一筆 log，但**目前全部只是本地 commit，沒有 push**——排程不會自動開始跑，
+  要你自己 review 後決定是否 push。
+- push 之後，`paper-trade-turtle.yml` 會在每個交易日 UTC 14:30（JST 23:30，比舊模型
+  的 23:00 死線晚半小時錯開）自動跑一次，完全獨立於舊模型的 `paper-trade.yml`。
+- 回測樣本只有約 8 個月，報酬率/回撤數字僅供起始參考，不是策略有效性的證明，
+  建議先看過 `docs/TURTLE_STRATEGY.md` 的規則理由與限制章節再決定。
+
 ## 出場閥門修復的線上驗證（2026-08-22）
 
 本地不能代跑：`data/ledgers/auto-pocket.json` 唯一寫入者是 Actions（單一寫入者原則），
