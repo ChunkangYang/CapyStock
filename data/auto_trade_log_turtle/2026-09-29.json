@@ -1,0 +1,716 @@
+{
+ "date": "2026-09-29",
+ "generated_at": "2026-09-28T20:41:03",
+ "dry_run": false,
+ "params": {
+  "n_period": 20,
+  "entry_breakout_days": 55,
+  "exit_breakout_days": 20,
+  "unit_risk_pct": 0.01,
+  "stop_n_mult": 2.0,
+  "pyramid_add_n_mult": 0.5,
+  "max_units_per_market": 4,
+  "max_total_units": 20,
+  "max_new_units_per_day": 4,
+  "drawdown_throttle_pct": 0.2,
+  "drawdown_recover_pct": 0.1,
+  "reentry_cooldown_days": 10,
+  "min_price_jpy": 50.0,
+  "max_price_age_days": 5,
+  "lot_size": 100,
+  "ledger_id": "auto-turtle",
+  "ledger_name": "🐢 海龜投資法模擬交易",
+  "initial_cash_jpy": 3000000
+ },
+ "universe_size": 3747,
+ "throttled": false,
+ "unit_risk_pct_used": 0.01,
+ "opened": [
+  {
+   "code": "7897",
+   "action": "entry",
+   "unit_index": 1,
+   "shares": 100,
+   "entry_price": 136.0,
+   "cost_jpy": 13600.0,
+   "trade_id": "12a28fe2-4a97-4d25-9a65-94508141f2f9"
+  }
+ ],
+ "closed": [
+  {
+   "code": "5721",
+   "unit_index": 1,
+   "shares": 300,
+   "entry_date": "2026-09-25",
+   "entry_price": 69.0,
+   "exit_date": "2026-09-29",
+   "exit_price": 52.0,
+   "exit_reason": "turtle_stop",
+   "pnl_jpy": -5100.0,
+   "pnl_pct": -0.2463768115942029,
+   "proceeds_jpy": 15600.0
+  }
+ ],
+ "missed": [
+  {
+   "code": "142A",
+   "close": 983.0,
+   "n": 25.6,
+   "last_fill_price": 915.0,
+   "unit_index": 2,
+   "score": 2.65625,
+   "action": "pyramid",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7133",
+   "close": 1641.0,
+   "n": 33.5,
+   "score": 8.895522388059701,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "3143",
+   "close": 880.0,
+   "n": 19.55,
+   "score": 7.672634271099744,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "6533",
+   "close": 1528.0,
+   "n": 38.1,
+   "score": 6.955380577427821,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "4178",
+   "close": 651.0,
+   "n": 14.7,
+   "score": 6.598639455782314,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "5986",
+   "close": 294.0,
+   "n": 5.65,
+   "score": 5.486725663716814,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7590",
+   "close": 451.0,
+   "n": 8.2,
+   "score": 5.121951219512195,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7500",
+   "close": 11000.0,
+   "n": 88.0,
+   "score": 4.431818181818182,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "6943",
+   "close": 6450.0,
+   "n": 96.5,
+   "score": 3.626943005181347,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "6904",
+   "close": 1035.0,
+   "n": 41.55,
+   "score": 3.6101083032490977,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "5125",
+   "close": 555.0,
+   "n": 8.6,
+   "score": 3.372093023255814,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "9244",
+   "close": 1745.0,
+   "n": 52.95,
+   "score": 3.248347497639282,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7114",
+   "close": 864.0,
+   "n": 10.05,
+   "score": 2.9850746268656714,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7883",
+   "close": 515.0,
+   "n": 10.95,
+   "score": 2.7397260273972606,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "1401",
+   "close": 1550.0,
+   "n": 37.8,
+   "score": 2.671957671957672,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "9421",
+   "close": 541.0,
+   "n": 4.35,
+   "score": 2.528735632183908,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "2481",
+   "close": 738.0,
+   "n": 7.0,
+   "score": 2.4285714285714284,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7624",
+   "close": 179.0,
+   "n": 3.75,
+   "score": 2.4,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "148A",
+   "close": 1879.0,
+   "n": 30.4,
+   "score": 2.2697368421052633,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "9330",
+   "close": 922.0,
+   "n": 6.9,
+   "score": 2.1739130434782608,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "5542",
+   "close": 1357.0,
+   "n": 59.5,
+   "score": 2.033613445378151,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "3839",
+   "close": 663.0,
+   "n": 8.05,
+   "score": 1.9875776397515525,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "456A",
+   "close": 1967.0,
+   "n": 102.85,
+   "score": 1.866796305298979,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "3177",
+   "close": 4955.0,
+   "n": 113.5,
+   "score": 1.8061674008810573,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7127",
+   "close": 720.0,
+   "n": 4.45,
+   "score": 1.797752808988764,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "4524",
+   "close": 2265.0,
+   "n": 6.3,
+   "score": 1.746031746031746,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "2831",
+   "close": 3795.0,
+   "n": 27.0,
+   "score": 1.6666666666666667,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "9083",
+   "close": 2065.0,
+   "n": 24.4,
+   "score": 1.598360655737705,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7413",
+   "close": 3020.0,
+   "n": 44.5,
+   "score": 1.5730337078651686,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "332A",
+   "close": 1288.0,
+   "n": 34.3,
+   "score": 1.545189504373178,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7486",
+   "close": 852.0,
+   "n": 19.5,
+   "score": 1.5384615384615385,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "4627",
+   "close": 2038.0,
+   "n": 47.65,
+   "score": 1.5320041972717733,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "428A",
+   "close": 1869.0,
+   "n": 79.1,
+   "score": 1.504424778761062,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "6400",
+   "close": 318.0,
+   "n": 5.4,
+   "score": 1.4814814814814814,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "192A",
+   "close": 1347.0,
+   "n": 29.9,
+   "score": 1.4046822742474918,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "3607",
+   "close": 379.0,
+   "n": 6.45,
+   "score": 1.3953488372093024,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "8154",
+   "close": 5630.0,
+   "n": 151.0,
+   "score": 1.390728476821192,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7975",
+   "close": 1200.0,
+   "n": 15.0,
+   "score": 1.3333333333333333,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "1770",
+   "close": 2443.0,
+   "n": 60.5,
+   "score": 1.322314049586777,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "6467",
+   "close": 354.0,
+   "n": 3.8,
+   "score": 1.3157894736842106,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "6837",
+   "close": 417.0,
+   "n": 10.3,
+   "score": 1.262135922330097,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "3024",
+   "close": 1255.0,
+   "n": 22.25,
+   "score": 1.2584269662921348,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "2795",
+   "close": 998.0,
+   "n": 7.2,
+   "score": 1.25,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "2169",
+   "close": 1768.0,
+   "n": 11.55,
+   "score": 1.2121212121212122,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7381",
+   "close": 1418.0,
+   "n": 40.55,
+   "score": 1.183723797780518,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "3461",
+   "close": 645.0,
+   "n": 9.35,
+   "score": 1.1764705882352942,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "3484",
+   "close": 1261.0,
+   "n": 29.0,
+   "score": 1.1724137931034482,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "3494",
+   "close": 463.0,
+   "n": 4.3,
+   "score": 1.1627906976744187,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "4450",
+   "close": 2395.0,
+   "n": 24.2,
+   "score": 1.115702479338843,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7361",
+   "close": 1239.0,
+   "n": 14.7,
+   "score": 1.08843537414966,
+   "action": "entry",
+   "reason": "資金不足"
+  }
+ ],
+ "skipped": [
+  {
+   "code": "1726",
+   "reason": "價格資料過舊（2026-06-02）"
+  },
+  {
+   "code": "1776",
+   "reason": "價格資料過舊（2026-05-28）"
+  },
+  {
+   "code": "1909",
+   "reason": "價格資料過舊（2026-09-14）"
+  },
+  {
+   "code": "2134",
+   "reason": "股價過低（¥18.0）"
+  },
+  {
+   "code": "2162",
+   "reason": "價格資料過舊（2026-08-27）"
+  },
+  {
+   "code": "2180",
+   "reason": "價格資料過舊（2026-09-15）"
+  },
+  {
+   "code": "2344",
+   "reason": "價格資料過舊（2026-05-08）"
+  },
+  {
+   "code": "2370",
+   "reason": "股價過低（¥25.0）"
+  },
+  {
+   "code": "2388",
+   "reason": "股價過低（¥30.0）"
+  },
+  {
+   "code": "2540",
+   "reason": "價格資料過舊（2026-06-17）"
+  },
+  {
+   "code": "2686",
+   "reason": "價格資料過舊（2026-06-22）"
+  },
+  {
+   "code": "2692",
+   "reason": "價格資料過舊（2026-05-19）"
+  },
+  {
+   "code": "2763",
+   "reason": "價格資料過舊（2026-07-30）"
+  },
+  {
+   "code": "3070",
+   "reason": "股價過低（¥44.0）"
+  },
+  {
+   "code": "3079",
+   "reason": "價格資料過舊（2026-08-28）"
+  },
+  {
+   "code": "3133",
+   "reason": "股價過低（¥48.0）"
+  },
+  {
+   "code": "3198",
+   "reason": "價格資料過舊（2026-06-29）"
+  },
+  {
+   "code": "3271",
+   "reason": "價格資料過舊（2026-07-28）"
+  },
+  {
+   "code": "3294",
+   "reason": "價格資料過舊（2026-06-12）"
+  },
+  {
+   "code": "3480",
+   "reason": "價格資料過舊（2026-09-01）"
+  },
+  {
+   "code": "3546",
+   "reason": "價格資料過舊（2026-06-26）"
+  },
+  {
+   "code": "3593",
+   "reason": "價格資料過舊（2026-05-19）"
+  },
+  {
+   "code": "3664",
+   "reason": "股價過低（¥24.0）"
+  },
+  {
+   "code": "3667",
+   "reason": "股價過低（¥27.0）"
+  },
+  {
+   "code": "3672",
+   "reason": "股價過低（¥30.0）"
+  },
+  {
+   "code": "3681",
+   "reason": "價格資料過舊（2026-06-30）"
+  },
+  {
+   "code": "3777",
+   "reason": "股價過低（¥45.0）"
+  },
+  {
+   "code": "3823",
+   "reason": "股價過低（¥39.0）"
+  },
+  {
+   "code": "4171",
+   "reason": "價格資料過舊（2026-08-13）"
+  },
+  {
+   "code": "4316",
+   "reason": "股價過低（¥46.0）"
+  },
+  {
+   "code": "4367",
+   "reason": "價格資料過舊（2026-07-29）"
+  },
+  {
+   "code": "4384",
+   "reason": "價格資料過舊（2026-05-28）"
+  },
+  {
+   "code": "4449",
+   "reason": "價格資料過舊（2026-08-26）"
+  },
+  {
+   "code": "4494",
+   "reason": "價格資料過舊（2026-06-25）"
+  },
+  {
+   "code": "4530",
+   "reason": "價格資料過舊（2026-05-11）"
+  },
+  {
+   "code": "4556",
+   "reason": "價格資料過舊（2026-06-12）"
+  },
+  {
+   "code": "4563",
+   "reason": "股價過低（¥36.0）"
+  },
+  {
+   "code": "4564",
+   "reason": "股價過低（¥20.0）"
+  },
+  {
+   "code": "4594",
+   "reason": "股價過低（¥49.0）"
+  },
+  {
+   "code": "4597",
+   "reason": "股價過低（¥30.0）"
+  },
+  {
+   "code": "4659",
+   "reason": "價格資料過舊（2026-06-18）"
+  },
+  {
+   "code": "4881",
+   "reason": "股價過低（¥48.0）"
+  },
+  {
+   "code": "4883",
+   "reason": "股價過低（¥32.0）"
+  },
+  {
+   "code": "4917",
+   "reason": "價格資料過舊（2026-05-19）"
+  },
+  {
+   "code": "4974",
+   "reason": "價格資料過舊（2026-06-12）"
+  },
+  {
+   "code": "5103",
+   "reason": "價格資料過舊（2026-08-24）"
+  },
+  {
+   "code": "5660",
+   "reason": "價格資料過舊（2026-08-28）"
+  },
+  {
+   "code": "5721",
+   "reason": "再進場冷卻中（2026-10-09 前不進場）"
+  },
+  {
+   "code": "5727",
+   "reason": "價格資料過舊（2026-05-28）"
+  },
+  {
+   "code": "5856",
+   "reason": "價格資料過舊（2026-06-26）"
+  }
+ ],
+ "cash_jpy": 2800.0,
+ "market_value_jpy": 2975200.0,
+ "equity_jpy": 2978000.0,
+ "initial_cash_jpy": 3000000.0,
+ "realized_pnl_jpy": -5100.0,
+ "unrealized_pnl_jpy": -16900.0,
+ "total_return_pct": -0.007333333333333333,
+ "open_units": 4,
+ "open_codes": 4,
+ "closed_count": 1,
+ "holdings": [
+  {
+   "trade_id": "64d1cdd0-b1b0-4a51-80d8-c4d6c788e299",
+   "code": "2160",
+   "unit_index": 1,
+   "entry_date": "2026-09-18",
+   "entry_price": 3250.0,
+   "shares": 200,
+   "last_close": 3185.0,
+   "stop_line": 3021.4,
+   "unrealized_pnl_jpy": -13000.0
+  },
+  {
+   "trade_id": "346e606b-cf0b-4cae-94fd-8b9b9ae96f41",
+   "code": "1383",
+   "unit_index": 1,
+   "entry_date": "2026-09-18",
+   "entry_price": 3065.0,
+   "shares": 700,
+   "last_close": 3040.0,
+   "stop_line": 3032.5,
+   "unrealized_pnl_jpy": -17500.0
+  },
+  {
+   "trade_id": "0087af66-a3bd-4652-b10f-93114a466280",
+   "code": "142A",
+   "unit_index": 1,
+   "entry_date": "2026-09-18",
+   "entry_price": 915.0,
+   "shares": 200,
+   "last_close": 983.0,
+   "stop_line": 867.1,
+   "unrealized_pnl_jpy": 13600.0
+  },
+  {
+   "trade_id": "12a28fe2-4a97-4d25-9a65-94508141f2f9",
+   "code": "7897",
+   "unit_index": 1,
+   "entry_date": "2026-09-29",
+   "entry_price": 136.0,
+   "shares": 100,
+   "last_close": 136.0,
+   "stop_line": 128.7,
+   "unrealized_pnl_jpy": 0.0
+  }
+ ]
+}
