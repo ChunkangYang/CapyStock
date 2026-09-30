@@ -4,7 +4,7 @@
  "created_at": "2026-09-24T08:54:03",
  "owner": "bot",
  "initial_cash_jpy": 3000000.0,
- "cash_jpy": 14600.0,
+ "cash_jpy": 1700.0,
  "trades": [
   {
    "id": "64d1cdd0-b1b0-4a51-80d8-c4d6c788e299",
@@ -120,6 +120,29 @@
    "pnl_pct": -0.1323529411764706,
    "unit_index": 1,
    "n_at_fill": 3.65
+  },
+  {
+   "id": "1f654c36-cd2c-4f9a-91b3-875c8d6e6a9e",
+   "code": "6574",
+   "name": "",
+   "entry_date": "2026-10-01",
+   "entry_price": 129.0,
+   "shares": 100,
+   "stop_pct": 0.0,
+   "status": "open",
+   "entry_reason": "海龜 55 日突破",
+   "high_water": 129.0,
+   "stop_line": 119.3,
+   "last_advanced_date": "2026-10-01",
+   "entry_bar_date": "2026-10-01",
+   "last_on_list_date": null,
+   "exit_date": null,
+   "exit_price": null,
+   "exit_reason": null,
+   "pnl_jpy": null,
+   "pnl_pct": null,
+   "unit_index": 1,
+   "n_at_fill": 4.85
   }
  ]
 }
