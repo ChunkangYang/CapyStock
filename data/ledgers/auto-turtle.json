@@ -4,7 +4,7 @@
  "created_at": "2026-09-24T08:54:03",
  "owner": "bot",
  "initial_cash_jpy": 3000000.0,
- "cash_jpy": 3300.0,
+ "cash_jpy": 15900.0,
  "trades": [
   {
    "id": "64d1cdd0-b1b0-4a51-80d8-c4d6c788e299",
@@ -635,12 +635,35 @@
    "entry_price": 229.0,
    "shares": 2700,
    "stop_pct": 0.0,
-   "status": "open",
+   "status": "closed",
    "entry_reason": "海龜 55 日突破",
    "high_water": 229.0,
    "stop_line": 216.0,
    "last_advanced_date": "2026-10-31",
    "entry_bar_date": "2026-10-31",
+   "last_on_list_date": null,
+   "exit_date": "2026-11-04",
+   "exit_price": 195.0,
+   "exit_reason": "turtle_stop",
+   "pnl_jpy": -91800.0,
+   "pnl_pct": -0.14847161572052403,
+   "unit_index": 1,
+   "n_at_fill": 6.5
+  },
+  {
+   "id": "3d2bf8bc-f38a-4ae7-88fa-3ea1097dfec8",
+   "code": "6196",
+   "name": "",
+   "entry_date": "2026-11-04",
+   "entry_price": 1713.0,
+   "shares": 300,
+   "stop_pct": 0.0,
+   "status": "open",
+   "entry_reason": "海龜 55 日突破",
+   "high_water": 1713.0,
+   "stop_line": 1623.4,
+   "last_advanced_date": "2026-11-04",
+   "entry_bar_date": "2026-11-04",
    "last_on_list_date": null,
    "exit_date": null,
    "exit_price": null,
@@ -648,7 +671,7 @@
    "pnl_jpy": null,
    "pnl_pct": null,
    "unit_index": 1,
-   "n_at_fill": 6.5
+   "n_at_fill": 44.8
   }
  ]
 }
