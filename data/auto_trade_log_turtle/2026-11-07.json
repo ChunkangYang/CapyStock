@@ -1,0 +1,459 @@
+{
+ "date": "2026-11-07",
+ "generated_at": "2026-11-06T20:30:36",
+ "dry_run": false,
+ "params": {
+  "n_period": 20,
+  "entry_breakout_days": 55,
+  "exit_breakout_days": 20,
+  "unit_risk_pct": 0.01,
+  "stop_n_mult": 2.0,
+  "pyramid_add_n_mult": 0.5,
+  "max_units_per_market": 4,
+  "max_total_units": 20,
+  "max_new_units_per_day": 4,
+  "drawdown_throttle_pct": 0.2,
+  "drawdown_recover_pct": 0.1,
+  "reentry_cooldown_days": 10,
+  "min_price_jpy": 50.0,
+  "max_price_age_days": 5,
+  "lot_size": 100,
+  "ledger_id": "auto-turtle",
+  "ledger_name": "🐢 海龜投資法模擬交易",
+  "initial_cash_jpy": 3000000
+ },
+ "universe_size": 3747,
+ "throttled": false,
+ "unit_risk_pct_used": 0.01,
+ "opened": [
+  {
+   "code": "6262",
+   "action": "pyramid",
+   "unit_index": 2,
+   "shares": 1100,
+   "entry_price": 805.0,
+   "cost_jpy": 885500.0,
+   "trade_id": "6d58d894-5286-48c4-a410-9f2d32b6c7a0"
+  },
+  {
+   "code": "3639",
+   "action": "entry",
+   "unit_index": 1,
+   "shares": 3700,
+   "entry_price": 251.0,
+   "cost_jpy": 928700.0,
+   "trade_id": "e9080239-9431-40be-8a7c-fd18d1199acc"
+  }
+ ],
+ "closed": [
+  {
+   "code": "3042",
+   "unit_index": 1,
+   "shares": 200,
+   "entry_date": "2026-10-07",
+   "entry_price": 414.0,
+   "exit_date": "2026-11-07",
+   "exit_price": 826.0,
+   "exit_reason": "turtle_stop",
+   "pnl_jpy": 82400.0,
+   "pnl_pct": 0.9951690821256038,
+   "proceeds_jpy": 165200.0
+  },
+  {
+   "code": "3042",
+   "unit_index": 2,
+   "shares": 1100,
+   "entry_date": "2026-10-09",
+   "entry_price": 533.0,
+   "exit_date": "2026-11-07",
+   "exit_price": 826.0,
+   "exit_reason": "turtle_stop",
+   "pnl_jpy": 322300.0,
+   "pnl_pct": 0.549718574108818,
+   "proceeds_jpy": 908600.0
+  },
+  {
+   "code": "3042",
+   "unit_index": 3,
+   "shares": 800,
+   "entry_date": "2026-10-10",
+   "entry_price": 581.0,
+   "exit_date": "2026-11-07",
+   "exit_price": 826.0,
+   "exit_reason": "turtle_stop",
+   "pnl_jpy": 196000.0,
+   "pnl_pct": 0.42168674698795183,
+   "proceeds_jpy": 660800.0
+  },
+  {
+   "code": "3042",
+   "unit_index": 4,
+   "shares": 100,
+   "entry_date": "2026-10-23",
+   "entry_price": 1100.0,
+   "exit_date": "2026-11-07",
+   "exit_price": 826.0,
+   "exit_reason": "turtle_stop",
+   "pnl_jpy": -27400.0,
+   "pnl_pct": -0.24909090909090909,
+   "proceeds_jpy": 82600.0
+  }
+ ],
+ "missed": [
+  {
+   "code": "7133",
+   "close": 2108.0,
+   "n": 1.15,
+   "score": 0.8695652173913044,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7228",
+   "close": 4130.0,
+   "n": 69.0,
+   "score": 0.8695652173913043,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "6869",
+   "close": 2065.5,
+   "n": 55.9,
+   "score": 0.8676207513416816,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "9246",
+   "close": 2199.0,
+   "n": 1.35,
+   "score": 0.7407407407407407,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "6367",
+   "close": 21790.0,
+   "n": 389.0,
+   "score": 0.5526992287917738,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "3028",
+   "close": 2476.0,
+   "n": 49.95,
+   "score": 0.38038038038038036,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "4615",
+   "close": 151.0,
+   "n": 7.0,
+   "score": 0.2857142857142857,
+   "action": "entry",
+   "reason": "資金不足"
+  },
+  {
+   "code": "7956",
+   "close": 2189.5,
+   "n": 48.4,
+   "score": 0.1962809917355372,
+   "action": "entry",
+   "reason": "資金不足"
+  }
+ ],
+ "skipped": [
+  {
+   "code": "1726",
+   "reason": "價格資料過舊（2026-06-02）"
+  },
+  {
+   "code": "1776",
+   "reason": "價格資料過舊（2026-05-28）"
+  },
+  {
+   "code": "1909",
+   "reason": "價格資料過舊（2026-09-14）"
+  },
+  {
+   "code": "190A",
+   "reason": "股價過低（¥42.0）"
+  },
+  {
+   "code": "1948",
+   "reason": "價格資料過舊（2026-09-30）"
+  },
+  {
+   "code": "2134",
+   "reason": "股價過低（¥12.0）"
+  },
+  {
+   "code": "2162",
+   "reason": "價格資料過舊（2026-08-27）"
+  },
+  {
+   "code": "2180",
+   "reason": "價格資料過舊（2026-09-15）"
+  },
+  {
+   "code": "2315",
+   "reason": "股價過低（¥49.0）"
+  },
+  {
+   "code": "2344",
+   "reason": "價格資料過舊（2026-05-08）"
+  },
+  {
+   "code": "2370",
+   "reason": "股價過低（¥17.0）"
+  },
+  {
+   "code": "2388",
+   "reason": "股價過低（¥10.0）"
+  },
+  {
+   "code": "2540",
+   "reason": "價格資料過舊（2026-06-17）"
+  },
+  {
+   "code": "2586",
+   "reason": "股價過低（¥42.0）"
+  },
+  {
+   "code": "2686",
+   "reason": "價格資料過舊（2026-06-22）"
+  },
+  {
+   "code": "2692",
+   "reason": "價格資料過舊（2026-05-19）"
+  },
+  {
+   "code": "2763",
+   "reason": "價格資料過舊（2026-07-30）"
+  },
+  {
+   "code": "3042",
+   "reason": "再進場冷卻中（2026-11-17 前不進場）"
+  },
+  {
+   "code": "3070",
+   "reason": "股價過低（¥32.0）"
+  },
+  {
+   "code": "3079",
+   "reason": "價格資料過舊（2026-08-28）"
+  },
+  {
+   "code": "3133",
+   "reason": "股價過低（¥23.0）"
+  },
+  {
+   "code": "3189",
+   "reason": "股價過低（¥49.0）"
+  },
+  {
+   "code": "3198",
+   "reason": "價格資料過舊（2026-06-29）"
+  },
+  {
+   "code": "3271",
+   "reason": "價格資料過舊（2026-07-28）"
+  },
+  {
+   "code": "3294",
+   "reason": "價格資料過舊（2026-06-12）"
+  },
+  {
+   "code": "3480",
+   "reason": "價格資料過舊（2026-09-01）"
+  },
+  {
+   "code": "3546",
+   "reason": "價格資料過舊（2026-06-26）"
+  },
+  {
+   "code": "3593",
+   "reason": "價格資料過舊（2026-05-19）"
+  },
+  {
+   "code": "3624",
+   "reason": "股價過低（¥29.0）"
+  },
+  {
+   "code": "3664",
+   "reason": "股價過低（¥11.0）"
+  },
+  {
+   "code": "3667",
+   "reason": "股價過低（¥18.0）"
+  },
+  {
+   "code": "3670",
+   "reason": "價格資料過舊（2026-09-30）"
+  },
+  {
+   "code": "3672",
+   "reason": "股價過低（¥18.0）"
+  },
+  {
+   "code": "3681",
+   "reason": "價格資料過舊（2026-06-30）"
+  },
+  {
+   "code": "3777",
+   "reason": "股價過低（¥35.0）"
+  },
+  {
+   "code": "3787",
+   "reason": "價格資料過舊（2026-09-30）"
+  },
+  {
+   "code": "3823",
+   "reason": "股價過低（¥31.0）"
+  },
+  {
+   "code": "3856",
+   "reason": "價格資料過舊（2026-09-25）"
+  },
+  {
+   "code": "3909",
+   "reason": "再進場冷卻中（2026-11-10 前不進場）"
+  },
+  {
+   "code": "4171",
+   "reason": "價格資料過舊（2026-08-13）"
+  },
+  {
+   "code": "4316",
+   "reason": "價格資料過舊（2026-09-30）"
+  },
+  {
+   "code": "4367",
+   "reason": "價格資料過舊（2026-07-29）"
+  },
+  {
+   "code": "4384",
+   "reason": "價格資料過舊（2026-05-28）"
+  },
+  {
+   "code": "4449",
+   "reason": "價格資料過舊（2026-08-26）"
+  },
+  {
+   "code": "4494",
+   "reason": "價格資料過舊（2026-06-25）"
+  },
+  {
+   "code": "4530",
+   "reason": "價格資料過舊（2026-05-11）"
+  },
+  {
+   "code": "4556",
+   "reason": "價格資料過舊（2026-06-12）"
+  },
+  {
+   "code": "4563",
+   "reason": "股價過低（¥25.0）"
+  },
+  {
+   "code": "4564",
+   "reason": "股價過低（¥16.0）"
+  },
+  {
+   "code": "4586",
+   "reason": "股價過低（¥38.0）"
+  }
+ ],
+ "cash_jpy": 8200.0,
+ "market_value_jpy": 3447900.0,
+ "equity_jpy": 3456100.0,
+ "initial_cash_jpy": 3000000.0,
+ "realized_pnl_jpy": 458500.0,
+ "unrealized_pnl_jpy": -2400.0,
+ "total_return_pct": 0.15203333333333333,
+ "open_units": 7,
+ "open_codes": 6,
+ "closed_count": 26,
+ "holdings": [
+  {
+   "trade_id": "ee737cd6-e198-4359-8ddc-e0a928d90754",
+   "code": "4891",
+   "unit_index": 1,
+   "entry_date": "2026-10-27",
+   "entry_price": 139.0,
+   "shares": 100,
+   "last_close": 131.0,
+   "stop_line": 126.4,
+   "unrealized_pnl_jpy": -800.0
+  },
+  {
+   "trade_id": "05acb66f-37ad-4811-94ca-d1daf4a26d79",
+   "code": "4347",
+   "unit_index": 1,
+   "entry_date": "2026-10-31",
+   "entry_price": 2489.0,
+   "shares": 400,
+   "last_close": 2489.0,
+   "stop_line": 2320.4,
+   "unrealized_pnl_jpy": 0.0
+  },
+  {
+   "trade_id": "3d2bf8bc-f38a-4ae7-88fa-3ea1097dfec8",
+   "code": "6196",
+   "unit_index": 1,
+   "entry_date": "2026-11-04",
+   "entry_price": 1713.0,
+   "shares": 300,
+   "last_close": 1697.0,
+   "stop_line": 1623.4,
+   "unrealized_pnl_jpy": -4800.0
+  },
+  {
+   "trade_id": "72a60a66-77be-440c-99bf-ae9a7ba2aeac",
+   "code": "6262",
+   "unit_index": 1,
+   "entry_date": "2026-11-05",
+   "entry_price": 773.0,
+   "shares": 100,
+   "last_close": 805.0,
+   "stop_line": 746.6,
+   "unrealized_pnl_jpy": 3200.0
+  },
+  {
+   "trade_id": "6d58d894-5286-48c4-a410-9f2d32b6c7a0",
+   "code": "6262",
+   "unit_index": 2,
+   "entry_date": "2026-11-07",
+   "entry_price": 805.0,
+   "shares": 1100,
+   "last_close": 805.0,
+   "stop_line": 746.6,
+   "unrealized_pnl_jpy": 0.0
+  },
+  {
+   "trade_id": "73b5bd4f-8ec3-4d5c-a56a-92d33adbbcc1",
+   "code": "2345",
+   "unit_index": 1,
+   "entry_date": "2026-11-05",
+   "entry_price": 118.0,
+   "shares": 300,
+   "last_close": 118.0,
+   "stop_line": 93.2,
+   "unrealized_pnl_jpy": 0.0
+  },
+  {
+   "trade_id": "e9080239-9431-40be-8a7c-fd18d1199acc",
+   "code": "3639",
+   "unit_index": 1,
+   "entry_date": "2026-11-07",
+   "entry_price": 251.0,
+   "shares": 3700,
+   "last_close": 251.0,
+   "stop_line": 232.7,
+   "unrealized_pnl_jpy": 0.0
+  }
+ ]
+}
