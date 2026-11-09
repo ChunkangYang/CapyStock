@@ -1,5 +1,5 @@
 {
-  "started_utc": "2026-11-06T14:35:34.808534+00:00",
+  "started_utc": "2026-11-09T16:50:25.082084+00:00",
   "codes_total": 3747,
   "batch_offset": 0,
   "universe_total": 3747,
@@ -3528,7 +3528,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "9223",
       "kind": "price",
       "path": "data/cloud-cache/9223_price.csv"
@@ -16440,7 +16440,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "9508",
       "kind": "price",
       "path": "data/cloud-cache/9508_price.csv"
@@ -17200,7 +17200,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 209,
+      "rows": 210,
       "code": "75505",
       "kind": "price",
       "path": "data/cloud-cache/75505_price.csv"
@@ -17208,7 +17208,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 215,
+      "rows": 216,
       "code": "92025",
       "kind": "price",
       "path": "data/cloud-cache/92025_price.csv"
@@ -17640,7 +17640,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "1795",
       "kind": "price",
       "path": "data/cloud-cache/1795_price.csv"
@@ -17888,7 +17888,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "1992",
       "kind": "price",
       "path": "data/cloud-cache/1992_price.csv"
@@ -17990,12 +17990,12 @@
       "path": "data/cloud-cache/2139_price.csv"
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "yfinance",
-      "rows": 218,
+      "rows": 0,
       "code": "2152",
       "kind": "price",
-      "path": "data/cloud-cache/2152_price.csv"
+      "error": "empty"
     },
     {
       "ok": true,
@@ -19680,7 +19680,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "3184",
       "kind": "price",
       "path": "data/cloud-cache/3184_price.csv"
@@ -21120,7 +21120,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "3944",
       "kind": "price",
       "path": "data/cloud-cache/3944_price.csv"
@@ -21168,7 +21168,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "3954",
       "kind": "price",
       "path": "data/cloud-cache/3954_price.csv"
@@ -22264,7 +22264,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "4754",
       "kind": "price",
       "path": "data/cloud-cache/4754_price.csv"
@@ -23006,12 +23006,12 @@
       "path": "data/cloud-cache/5542_price.csv"
     },
     {
-      "ok": true,
+      "ok": false,
       "source": "yfinance",
-      "rows": 218,
+      "rows": 0,
       "code": "5571",
       "kind": "price",
-      "path": "data/cloud-cache/5571_price.csv"
+      "error": "empty"
     },
     {
       "ok": true,
@@ -23448,7 +23448,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "5966",
       "kind": "price",
       "path": "data/cloud-cache/5966_price.csv"
@@ -23544,7 +23544,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "5990",
       "kind": "price",
       "path": "data/cloud-cache/5990_price.csv"
@@ -26480,7 +26480,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "7565",
       "kind": "price",
       "path": "data/cloud-cache/7565_price.csv"
@@ -27656,7 +27656,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "8118",
       "kind": "price",
       "path": "data/cloud-cache/8118_price.csv"
@@ -27712,7 +27712,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "8139",
       "kind": "price",
       "path": "data/cloud-cache/8139_price.csv"
@@ -28976,7 +28976,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "9537",
       "kind": "price",
       "path": "data/cloud-cache/9537_price.csv"
@@ -29272,7 +29272,7 @@
     {
       "ok": true,
       "source": "yfinance",
-      "rows": 217,
+      "rows": 218,
       "code": "9778",
       "kind": "price",
       "path": "data/cloud-cache/9778_price.csv"
@@ -29983,10 +29983,10 @@
     }
   ],
   "summary": {
-    "ok": 3671,
-    "fail": 76,
+    "ok": 3669,
+    "fail": 78,
     "total": 3747
   },
-  "ended_utc": "2026-11-06T14:40:26.222368+00:00",
+  "ended_utc": "2026-11-09T16:55:16.484387+00:00",
   "elapsed_sec": 291.4
 }
